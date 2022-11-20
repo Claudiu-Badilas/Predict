@@ -14,13 +14,13 @@ namespace Server.Services {
             _userRepo = userRepo;
         }
 
-        public async Task RegisterUser(UserRequest registerDto) {
+        public async Task RegisterUser(UserRequest userRequest) {
             using var hmac = new HMACSHA512();
 
             await _userRepo.AddUser(new AppUser {
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userRequest.Password)),
                 PasswordSalt = hmac.Key,
-                Email = registerDto.Email,
+                Email = userRequest.Email,
                 JoinDate = DateTime.UtcNow,
                 LastLogin = DateTime.UtcNow,
                 IsActive = true,
@@ -28,12 +28,12 @@ namespace Server.Services {
             });
         }
 
-        public async Task<UserResponse> LoginUser(UserRequest loginDto) {
-            var isExistingUser = await _userRepo.IsExistingUser(loginDto.Email);
+        public async Task<UserResponse> LoginUser(UserRequest userRequest) {
+            var isExistingUser = await _userRepo.IsExistingUser(userRequest.Email);
             if (!isExistingUser) return null;
 
-            var user = await _userRepo.GetUserByEmail(loginDto.Email);
-            var isPasswordValid = IsPasswordValid(loginDto, user);
+            var user = await _userRepo.GetUserByEmail(userRequest.Email);
+            var isPasswordValid = IsPasswordValid(userRequest, user);
             if (!isPasswordValid) return null;
 
             return new UserResponse {
@@ -47,9 +47,9 @@ namespace Server.Services {
             };
         }
 
-        private bool IsPasswordValid(UserRequest loginDto, AppUser appUser) {
+        private bool IsPasswordValid(UserRequest userRequest, AppUser appUser) {
             using var hmac = new HMACSHA512(appUser.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userRequest.Password));
 
             for (int i = 0; i < computedHash.Length; i++) {
                 if (computedHash[i] != appUser.PasswordHash[i]) {

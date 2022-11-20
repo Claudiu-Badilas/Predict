@@ -19,8 +19,7 @@ namespace Server.Controllers {
 
         [HttpPost("register")]
         public async Task<ActionResult> RegisterUser([FromBody] UserRequest registerDto) {
-            var data = await _userRepo.IsExistingUser(registerDto.Email);
-            if (data) {
+            if (await _userRepo.IsExistingUser(registerDto.Email)) {
                 return BadRequest("Email is already used!");
             }
             await _accService.RegisterUser(registerDto);
