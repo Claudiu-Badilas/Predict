@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Server.DbConfig;
 
 namespace Server.Controllers {
-    [ApiController]
     [Route("api")]
-    public class WeatherForecastController : ControllerBase {
+    public class AccountContoller : BaseController {
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<AccountContoller> _logger;
         private readonly NpgsqlDbConnection _conn;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, NpgsqlDbConnection conn) {
+        public AccountContoller(ILogger<AccountContoller> logger, NpgsqlDbConnection conn) {
             _logger = logger;
             _conn = conn;
         }
