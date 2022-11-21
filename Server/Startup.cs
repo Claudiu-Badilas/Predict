@@ -24,14 +24,11 @@ namespace Server {
             services.AddCors();
 
             services.AddSingleton(new NpgsqlDbConnection(_config.GetConnectionString("PostgreSQLConnection")));
-
             services.AddSingleton<IUserRepository, UserRepository>();
-
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
 
             services.AddIdentityServices(_config);
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {

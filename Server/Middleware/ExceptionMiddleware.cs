@@ -1,4 +1,6 @@
-﻿using Server.Controllers.Models.Errors;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Server.Controllers.Models.Errors;
 using System.Net;
 using System.Text.Json;
 
@@ -22,10 +24,16 @@ namespace Server.Middleware {
                 _logger.LogError(ex, ex.Message);
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
                 var response = _env.IsDevelopment()
-                    ? new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
-                    : new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString());
+                    ? new ApiException {
+                        StatusCode = context.Response.StatusCode,
+                        Message = ex.Message,
+                        Details = ex.StackTrace?.ToString()
+                    }
+                    : new ApiException {
+                        StatusCode = context.Response.StatusCode,
+                        Message = "Internal Server Error"
+                    };
 
                 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
