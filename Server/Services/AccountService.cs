@@ -2,7 +2,6 @@
 using Server.Models;
 using Server.Repositories.Interfaces;
 using Server.Services.Interfaces;
-using System.Data;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -33,8 +32,7 @@ namespace Server.Services {
             if (!isExistingUser) return null;
 
             var user = await _userRepo.GetUserByEmail(userRequest.Email);
-            var isPasswordValid = IsPasswordValid(userRequest, user);
-            if (!isPasswordValid) return null;
+            if (!(IsPasswordValid(userRequest, user))) return null;
 
             return new UserResponse {
                 Id = user.Id,
