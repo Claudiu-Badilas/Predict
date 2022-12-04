@@ -8,7 +8,7 @@ module ParserConsole =
 
     [<EntryPoint>]
     let main _ =
-        let folderPath = @""
+        let folderPath = @"C:\Users\badicl\Desktop\My shortcuts\Extrase-data"
 
         let excelFiles = 
             Directory.EnumerateFiles(folderPath, "*.xlsx")
