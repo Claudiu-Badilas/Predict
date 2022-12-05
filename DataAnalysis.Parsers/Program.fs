@@ -1,7 +1,6 @@
 ﻿open System.IO
 open IronXL
 open DataAnalysis.Parsers
-open System
 
 module ParserConsole =
 
@@ -15,12 +14,30 @@ module ParserConsole =
 
     [<EntryPoint>]
     let main _ =
-        
-        let transactions = 
-            RaiffeisenExcelAccountStatement.parseRaiffExcels excelFiles
+    
+        let raitransactions = 
+            ParserRaiffeisenExcelAccountStatement.parseRaiffExcels (getLocalExcels @"")
             |> List.map(fun t -> 
-                printfn "%O" t
+                printfn "%O" t.Id.Value
                 t 
             )
 
+        let revtransactions = 
+            ParserRevolutExcelAccountStatement.parseRevolutExcels (getLocalExcels @"")
+            |> List.map(fun t -> 
+                printfn "%O" t.Id.Value
+                t 
+            )
+
+        printfn "%O" raitransactions.Length
+        printfn "%O" revtransactions.Length
+
+        let allTransactions = raitransactions @ revtransactions
+
+        let filtered = 
+            allTransactions
+            |> List.distinctBy(fun t -> t.Id)
+
+        printfn "%O" allTransactions.Length
+        printfn "%O" filtered.Length
         0
