@@ -40,12 +40,12 @@ module ParserOrangeMoneyExcelAccountStatement =
         description1 + description2 + description3
         
 
-    let mapTransactions (transaction: RawParsedTransaction list): ParsedTransaction list =
+    let mapTransactions (transaction: RawParsedTransaction list) userId: ParsedTransaction list =
         transaction
         |> List.indexed
         |> List.map(fun (i, rpt)-> 
             {   
-                Id = ParserUtils.generateUniqueGuid rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.OrangeMoney
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.OrangeMoney
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -59,7 +59,7 @@ module ParserOrangeMoneyExcelAccountStatement =
         )
 
 
-    let getTransactions (excel: WorkBook): ParsedTransaction list =
+    let getTransactions (excel: WorkBook) userId: ParsedTransaction list =
         let rows = 
             excel.DefaultWorkSheet.Rows
             |> Seq.toList
@@ -88,19 +88,19 @@ module ParserOrangeMoneyExcelAccountStatement =
         |> List.filter (fun d -> d.IsSome)
         |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
-        |> List.map(fun (_, t) -> mapTransactions t )
+        |> List.map(fun (_, t) -> mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Id)
 
 
-    let parseExcels (excels: WorkBook list): ParsedTransaction list =
+    let parseExcels userId (excels: WorkBook list): ParsedTransaction list =
         excels 
         |> List.toArray
         |> Array.chunkBySize 100
         |> Array.Parallel.map (fun chunk ->
             chunk 
             |> Array.toList
-            |> List.map(fun excel -> getTransactions excel)
+            |> List.map(fun excel -> getTransactions excel userId)
             |> List.concat
         )
         |> List.concat

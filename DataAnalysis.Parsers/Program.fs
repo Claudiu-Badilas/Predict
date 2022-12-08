@@ -15,34 +15,31 @@ module ParserConsole =
     let main _ =
     
         let raitransactions = 
-            getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\Raiff-Excels" 
-            |> ParserRaiffeisenExcelAccountStatement.parseExcels
+            ParserRaiffeisenExcelAccountStatement.parseExcels 2 (getLocalExcels @"C:\Users\Claudiu\Desktop\Raiff-Excels")
             |> List.map(fun t -> 
                 printfn "%O" t
                 t 
             )
 
         let revtransactions = 
-            getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\Revolut-Excels"
-            |> ParserRevolutExcelAccountStatement.parseExcels
+             ParserRevolutExcelAccountStatement.parseExcels 2 (getLocalExcels @"C:\Users\Claudiu\Desktop\Revolut-Excels")
             |> List.map(fun t -> 
                 printfn "%O" t
                 t 
             )
             
-        let omtransactions =
-            getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\OM\Excels"
-            |> ParserOrangeMoneyExcelAccountStatement.parseExcels
+       (* let omtransactions =
+            ParserOrangeMoneyExcelAccountStatement.parseExcels 2 (getLocalExcels @"C:\Users\Claudiu\Desktop\Raiff-Excels")
             |> List.map(fun t -> 
                 printfn "%O" t
                 t 
-            )
+            )*)
 
-        printfn "omtransactions %O" omtransactions.Length
+        //printfn "omtransactions %O" omtransactions.Length
         printfn "raitransactions %O" raitransactions.Length
-        printfn "revtransactions %O" revtransactions.Length
+        //printfn "revtransactions %O" revtransactions.Length
 
-        let allTransactions = raitransactions @ revtransactions @ omtransactions
+        let allTransactions = raitransactions //@ revtransactions @ omtransactions
 
         let filtereddublicate = 
             allTransactions

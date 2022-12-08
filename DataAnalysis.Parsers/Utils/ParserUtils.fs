@@ -20,12 +20,12 @@ module ParserUtils =
         | Provider.OrangeMoney -> 65983543.23
 
 
-    let generateUniqueGuid (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) provider: Guid option =
+    let generateUniqueGuid userId (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) provider: Guid option =
         let providerConstant = getProviderCalculationConstant provider
         let validAmount =
             match amount with
-            | Some 0.0 -> 694587965.34
-            | _ -> amount.Value
+            | Some 0.0 -> 694587965.34 * (double userId)
+            | _ -> amount.Value * (double userId)
         let constant = Double.Parse(((double index + 1.21487) * 987_654_321.13821).ToString())
         
         match registrationDate, completitonDate with 
