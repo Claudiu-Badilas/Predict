@@ -22,9 +22,9 @@ module ParserRaiffeisenExcelAccountStatement =
         let splitedDescription = checkDescriptionByText description "Transfer intre conturi proprii"
 
         match debit, credit, splitedDescription.IsEmpty with
-        | _ , Some (0.0), true -> Some TransactionType.Spend
-        | Some (0.0), _, true -> Some TransactionType.Received
-        | _ , _, false -> Some TransactionType.InternalTransfer
+        | _ , Some 0.0, true -> Some TransactionType.SPEND
+        | Some 0.0, _, true -> Some TransactionType.RECEIVED
+        | _ , _, false -> Some TransactionType.INTERNAL_TRANSFER
         | None, None, _ -> None
         | _, _, _ -> None
             
@@ -41,8 +41,9 @@ module ParserRaiffeisenExcelAccountStatement =
         transaction
         |> List.indexed
         |> List.map(fun (i, rpt)-> 
+            let provider = Provider.RAIFFEISEN
             {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.Raiffeisen
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -51,7 +52,7 @@ module ParserRaiffeisenExcelAccountStatement =
                 TransactionType = rpt.TransactionType
                 Currency = rpt.Currency
                 Status = rpt.Status
-                Provider = Provider.Raiffeisen |> Some
+                Provider = provider |> Some
             }
         )
 
@@ -85,7 +86,7 @@ module ParserRaiffeisenExcelAccountStatement =
                         Currency = CurrencyType.RON |> Some
                         Description = getDescription description
                         TransactionType = getTranasctionType debit credit description
-                        Status = TransactionStatus.Completed |> Some
+                        Status = TransactionStatus.COMPLETED |> Some
                     }
         )
         |> List.filter (fun d -> d.IsSome)

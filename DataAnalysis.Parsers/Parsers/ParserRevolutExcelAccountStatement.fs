@@ -13,20 +13,20 @@ module ParserRevolutExcelAccountStatement =
     
     let getTranasctionType (transactionType: string ): TransactionType option = 
         match transactionType with
-        |  "TOPUP" -> TransactionType.TopUp |> Some
+        |  "TOPUP" -> TransactionType.TOP_UP |> Some
         |  "FEE" -> TransactionType.FEE |> Some
         |  "ATM" -> TransactionType.ATM |> Some
-        |  "CARD_PAYMENT" -> TransactionType.CardPayment |> Some
-        |  "TRANSFER" -> TransactionType.Transfer |> Some
-        |  "REWARD" -> TransactionType.Reward |> Some
-        |  "EXCHANGE" -> TransactionType.Exchange |> Some
-        |  "CARD_REFUND" -> TransactionType.Refund |> Some
+        |  "CARD_PAYMENT" -> TransactionType.CARD_PAYMENT |> Some
+        |  "TRANSFER" -> TransactionType.TRANSFER |> Some
+        |  "REWARD" -> TransactionType.REWARD |> Some
+        |  "EXCHANGE" -> TransactionType.EXCHANGE |> Some
+        |  "CARD_REFUND" -> TransactionType.REFUND |> Some
         | _ -> None
 
 
     let getTranasctionStatus (transactionType: string ): TransactionStatus option = 
         match transactionType with
-        |  "COMPLETED" -> TransactionStatus.Completed |> Some
+        |  "COMPLETED" -> TransactionStatus.COMPLETED |> Some
         | _ -> None
             
 
@@ -34,8 +34,9 @@ module ParserRevolutExcelAccountStatement =
         transaction
         |> List.indexed
         |> List.map(fun (i, rpt)-> 
+            let provider = Provider.REVOLUT
             {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.Revolut
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -44,7 +45,7 @@ module ParserRevolutExcelAccountStatement =
                 Currency = rpt.Currency
                 Fee =  rpt.Fee
                 Status = rpt.Status
-                Provider = Provider.Revolut |> Some
+                Provider = provider |> Some
             }
         )
 

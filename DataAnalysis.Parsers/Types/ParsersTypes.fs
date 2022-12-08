@@ -6,11 +6,11 @@ module ParsersTypes =
 
     type CurrencyType = EUR | USD | RON
 
-    type TransactionType = Spend | Received | InternalTransfer | TopUp | Transfer | FEE | CardPayment | ATM | Exchange | Reward | Refund
-
-    type TransactionStatus = Completed | Pending 
-
-    type Provider = Raiffeisen | Revolut | OrangeMoney 
+    type TransactionType = SPEND | RECEIVED | INTERNAL_TRANSFER | TOP_UP | TRANSFER | FEE | CARD_PAYMENT | ATM | EXCHANGE | REWARD | REFUND 
+    
+    type TransactionStatus = COMPLETED | PENDING
+    
+    type Provider = RAIFFEISEN | REVOLUT | ORANGE_MONEY
     
     type RawParsedTransaction = 
         {

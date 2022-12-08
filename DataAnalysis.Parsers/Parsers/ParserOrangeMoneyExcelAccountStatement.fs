@@ -14,8 +14,8 @@ module ParserOrangeMoneyExcelAccountStatement =
     
     let getTranasctionType amount = 
         match amount > 0.0 with
-        |  true -> TransactionType.TopUp |> Some
-        |  false -> TransactionType.CardPayment |> Some
+        |  true -> TransactionType.TOP_UP |> Some
+        |  false -> TransactionType.CARD_PAYMENT |> Some
             
     
     let getDescription (rows: RangeRow list) (index: int) = 
@@ -44,8 +44,9 @@ module ParserOrangeMoneyExcelAccountStatement =
         transaction
         |> List.indexed
         |> List.map(fun (i, rpt)-> 
+            let provider = Provider.ORANGE_MONEY
             {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.OrangeMoney
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -54,7 +55,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                 Currency = rpt.Currency
                 Fee =  rpt.Fee
                 Status = rpt.Status
-                Provider = Provider.OrangeMoney |> Some
+                Provider = provider |> Some
             }
         )
 
@@ -82,7 +83,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                          Currency = CurrencyType.RON |> Some
                          Description = getDescription rows i |> Some
                          TransactionType = getTranasctionType amount
-                         Status = TransactionStatus.Completed |> Some
+                         Status = TransactionStatus.COMPLETED |> Some
                      }
         )
         |> List.filter (fun d -> d.IsSome)

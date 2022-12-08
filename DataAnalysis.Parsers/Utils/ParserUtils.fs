@@ -15,9 +15,9 @@ module ParserUtils =
 
     let getProviderCalculationConstant provider =
         match provider with
-        | Provider.Raiffeisen -> 9234236632.4
-        | Provider.Revolut -> 23247364.3
-        | Provider.OrangeMoney -> 65983543.23
+        | Provider.RAIFFEISEN -> 9234236632.4
+        | Provider.REVOLUT -> 23247364.3
+        | Provider.ORANGE_MONEY -> 65983543.23
 
 
     let generateUniqueGuid userId (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) provider: Guid option =
