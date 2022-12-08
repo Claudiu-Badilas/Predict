@@ -15,21 +15,21 @@ module ParserConsole =
     let main _ =
     
         let raitransactions = 
-            ParserRaiffeisenExcelAccountStatement.parseExcels (getLocalExcels @"")
+            ParserRaiffeisenExcelAccountStatement.parseExcels (getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\Raiff-Excels")
             |> List.map(fun t -> 
                 printfn "%O" t
                 t 
             )
 
         let revtransactions = 
-            ParserRevolutExcelAccountStatement.parseExcels (getLocalExcels @"")
+            ParserRevolutExcelAccountStatement.parseExcels (getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\Revolut-Excels")
             |> List.map(fun t -> 
                 printfn "%O" t
                 t 
             )
             
         let omtransactions = 
-            ParserOrangeMoneyExcelAccountStatement.parseExcels (getLocalExcels @"")
+            ParserOrangeMoneyExcelAccountStatement.parseExcels (getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\OM\Excels")
             |> List.map(fun t -> 
                 printfn "%O" t
                 t 

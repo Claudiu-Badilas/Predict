@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using DataAnalysis.Services.Interfaces;
 using DataAnalysis.Controllers.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAnalysis.Services {
     public class TokenService : ITokenService {

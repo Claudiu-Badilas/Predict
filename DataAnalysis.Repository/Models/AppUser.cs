@@ -11,7 +11,7 @@
         public string RoleName { get; set; }
     }
 
-    enum Role {
+    public enum Role {
         ADMIN = 1,
         USER = 2
     }
