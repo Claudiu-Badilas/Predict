@@ -19,25 +19,18 @@ module ParserOrangeMoneyExcelAccountStatement =
             
     
     let getDescription (rows: RangeRow list) (index: int) = 
-        let description1 = rows[index].Columns.ElementAtOrDefault(3).ToString()
-        let mutable nextRowIndex = index + 1
-        let description2 =
+        [1;2]
+        |> List.map(fun v ->
+            let nextRowIndex = index + v
             match nextRowIndex < rows.Length with
             | true ->
                 match rows[nextRowIndex].Columns.ElementAtOrDefault(0).ToString() with
                 | "" -> rows[nextRowIndex].Columns.ElementAtOrDefault(3).ToString()
                 | _ -> ""
             | _ -> ""
-        nextRowIndex <- index + 2
-        let description3 =
-            match nextRowIndex < rows.Length with
-            | true ->
-                match rows[nextRowIndex].Columns.ElementAtOrDefault(0).ToString() with
-                | "" -> rows[nextRowIndex].Columns.ElementAtOrDefault(3).ToString()
-                | _ -> ""
-            | _ -> ""
-
-        description1 + description2 + description3
+        )
+        |> List.append [rows[index].Columns.ElementAtOrDefault(3).ToString()]
+        |> List.fold (+) ""
         
 
     let mapTransactions (transaction: RawParsedTransaction list) userId: ParsedTransaction list =
