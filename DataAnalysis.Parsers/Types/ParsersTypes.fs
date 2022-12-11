@@ -22,6 +22,7 @@ module ParsersTypes =
             Description: string option
             TransactionType: TransactionType option
             Status: TransactionStatus option
+            ReferenceId: int option
         }
 
         
@@ -37,4 +38,5 @@ module ParsersTypes =
             TransactionType: TransactionType option
             Status: TransactionStatus option
             Provider: Provider option
+            ReferenceId: int option
         }

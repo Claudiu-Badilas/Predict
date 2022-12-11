@@ -22,7 +22,7 @@ module ParserRaiffeisenExcelAccountStatement =
         let splitedDescription = checkDescriptionByText description "Transfer intre conturi proprii"
 
         match debit, credit, splitedDescription.IsEmpty with
-        | Some d , None, true -> Some TransactionType.SPEND
+        | Some d, None, true -> Some TransactionType.SPEND
         | None, Some c, true -> Some TransactionType.RECEIVED
         | _ , _, false -> Some TransactionType.INTERNAL_TRANSFER
         | _, _, _ -> None
@@ -42,7 +42,7 @@ module ParserRaiffeisenExcelAccountStatement =
         |> List.map(fun (i, rpt)-> 
             let provider = Provider.RAIFFEISEN
             {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider rpt.ReferenceId
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -52,6 +52,7 @@ module ParserRaiffeisenExcelAccountStatement =
                 Currency = rpt.Currency
                 Status = rpt.Status
                 Provider = provider |> Some
+                ReferenceId = rpt.ReferenceId
             }
         )
 
@@ -74,8 +75,8 @@ module ParserRaiffeisenExcelAccountStatement =
                 match Regex.IsMatch(date, DATE_REGEX) with
                 | false -> None
                 | _ -> 
-                    let debit = row[2] |> Some |> ParserUtils.tryGetFloat
-                    let credit = row[3] |> Some |> ParserUtils.tryGetFloat
+                    let debit = row[2] |> Some |> ParserUtils.tryGetDouble
+                    let credit = row[3] |> Some |> ParserUtils.tryGetDouble
                     let description = row[11]
                     let registrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd/MM/yyyy"
                     Some {
@@ -87,6 +88,7 @@ module ParserRaiffeisenExcelAccountStatement =
                         Description = getDescription description
                         TransactionType = getTranasctionType debit credit description
                         Status = TransactionStatus.COMPLETED |> Some
+                        ReferenceId = None
                     }
         )
         |> List.filter (fun d -> d.IsSome)

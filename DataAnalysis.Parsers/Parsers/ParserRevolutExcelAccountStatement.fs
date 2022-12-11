@@ -36,7 +36,7 @@ module ParserRevolutExcelAccountStatement =
         |> List.map(fun (i, rpt)-> 
             let provider = Provider.REVOLUT
             {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider rpt.ReferenceId
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -46,6 +46,7 @@ module ParserRevolutExcelAccountStatement =
                 Fee =  rpt.Fee
                 Status = rpt.Status
                 Provider = provider |> Some
+                ReferenceId = rpt.ReferenceId
             }
         )
 
@@ -61,12 +62,13 @@ module ParserRevolutExcelAccountStatement =
                 Some {
                     RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "M/d/yyyy h:mm:ss tt"
                     CompletionDate = DateTimeUtils.convertStringToUTCDate (row[3] |> Some) "M/d/yyyy h:mm:ss tt"
-                    Amount = row[5] |> Some |> ParserUtils.tryGetFloat
-                    Fee = row[6] |> Some |> ParserUtils.tryGetFloat
+                    Amount = row[5] |> Some |> ParserUtils.tryGetDouble
+                    Fee = row[6] |> Some |> ParserUtils.tryGetDouble
                     Currency = ParserUtils.getCurrency (row[7])
                     Description = row[4] |> Some
                     TransactionType = getTranasctionType (row[0])
-                    Status = getTranasctionStatus (row[8])
+                    Status = getTranasctionStatus (row[8])      
+                    ReferenceId = None
                 }
         )
         |> List.filter (fun d -> d.IsSome)

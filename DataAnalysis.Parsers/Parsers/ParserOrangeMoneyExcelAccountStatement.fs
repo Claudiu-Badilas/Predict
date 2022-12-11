@@ -39,7 +39,7 @@ module ParserOrangeMoneyExcelAccountStatement =
         |> List.map(fun (i, rpt)-> 
             let provider = Provider.ORANGE_MONEY
             {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider
+                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider rpt.ReferenceId
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount
@@ -49,6 +49,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                 Fee =  rpt.Fee
                 Status = rpt.Status
                 Provider = provider |> Some
+                ReferenceId = rpt.ReferenceId
             }
         )
 
@@ -67,7 +68,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                  match Regex.IsMatch(date, DATE_REGEX) with
                  | false -> None
                  | _ -> 
-                     let amount = row[4] |> Some |> ParserUtils.tryGetFloat
+                     let amount = row[4] |> Some |> ParserUtils.tryGetDouble
                      Some {
                          RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "M/d/yyyy h:mm:ss tt"
                          CompletionDate = DateTimeUtils.convertStringToUTCDate (row[1] |> Some) "M/d/yyyy h:mm:ss tt"
@@ -77,6 +78,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                          Description = getDescription rows i |> Some
                          TransactionType = getTranasctionType amount.Value
                          Status = TransactionStatus.COMPLETED |> Some
+                         ReferenceId = row[2] |> Some |> ParserUtils.tryGetInt
                      }
         )
         |> List.filter (fun d -> d.IsSome)
