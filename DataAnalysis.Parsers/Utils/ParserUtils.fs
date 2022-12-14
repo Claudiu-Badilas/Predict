@@ -36,12 +36,13 @@ module ParserUtils =
 
     let getProviderCalculationConstant provider =
         match provider with
-        | Provider.RAIFFEISEN -> 9234236632.4
-        | Provider.REVOLUT -> 23247364.3
-        | Provider.ORANGE_MONEY -> 65983543.23
+        | Some Provider.RAIFFEISEN -> 9234236632.4
+        | Some Provider.REVOLUT -> 23247364.3
+        | Some Provider.ORANGE_MONEY -> 65983543.23
+        | _ -> 74758959.223
 
 
-    let generateUniqueGuid userId (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) provider (referenceId: int option): Guid option =
+    let generateUniqueGuid userId (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) (provider: Provider option) (referenceId: int option): Guid option =
         let providerConstant = getProviderCalculationConstant provider
         let referenceConst =
             match referenceId.IsSome with
@@ -61,4 +62,24 @@ module ParserUtils =
             let bytes2 = BitConverter.GetBytes(validAmount * providerConstant * constant * 55_123_456_789.52325 * referenceConst)
             new Guid(Array.append bytes bytes2) |> Some
         | _, _ -> None
+
+
+    let mapTransactions (transaction: ParsedTransaction list) userId: ParsedTransaction list =
+        transaction
+        |> List.indexed
+        |> List.map(fun (i, rpt)-> 
+            {   
+                Id = generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i rpt.Provider rpt.ReferenceId
+                RegistrationDate = rpt.RegistrationDate
+                CompletionDate = rpt.CompletionDate
+                Amount = rpt.Amount
+                Fee = rpt.Fee
+                Description = rpt.Description
+                TransactionType = rpt.TransactionType
+                Currency = rpt.Currency
+                Status = rpt.Status
+                Provider = rpt.Provider
+                ReferenceId = rpt.ReferenceId
+            }
+        )
 

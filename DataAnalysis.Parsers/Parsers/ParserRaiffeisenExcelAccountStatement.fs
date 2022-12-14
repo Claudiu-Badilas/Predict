@@ -22,9 +22,9 @@ module ParserRaiffeisenExcelAccountStatement =
         let splitedDescription = checkDescriptionByText description "Transfer intre conturi proprii"
 
         match debit, credit, splitedDescription.IsEmpty with
-        | Some d, None, true -> Some TransactionType.SPEND
-        | None, Some c, true -> Some TransactionType.RECEIVED
-        | _ , _, false -> Some TransactionType.INTERNAL_TRANSFER
+        | Some d, None, true -> TransactionType.SPEND |> Some
+        | None, Some c, true -> TransactionType.RECEIVED |> Some
+        | _ , _, false -> TransactionType.INTERNAL_TRANSFER |> Some
         | _, _, _ -> None
             
 
@@ -35,26 +35,6 @@ module ParserRaiffeisenExcelAccountStatement =
         | true -> description.Split("|")[0] |> Some
         | false -> description.Split("|")[1] |> Some
 
-
-    let mapTransactions (transaction: RawParsedTransaction list) userId: ParsedTransaction list =
-        transaction
-        |> List.indexed
-        |> List.map(fun (i, rpt)-> 
-            let provider = Provider.RAIFFEISEN
-            {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider rpt.ReferenceId
-                RegistrationDate = rpt.RegistrationDate
-                CompletionDate = rpt.CompletionDate
-                Amount = rpt.Amount
-                Fee = rpt.Fee
-                Description = rpt.Description
-                TransactionType = rpt.TransactionType
-                Currency = rpt.Currency
-                Status = rpt.Status
-                Provider = provider |> Some
-                ReferenceId = rpt.ReferenceId
-            }
-        )
 
     let getAmount debit credit =
         match debit, credit with
@@ -80,6 +60,7 @@ module ParserRaiffeisenExcelAccountStatement =
                     let description = row[11]
                     let registrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd/MM/yyyy"
                     Some {
+                        Id = None
                         RegistrationDate = registrationDate
                         CompletionDate = DateTimeUtils.convertStringToUTCDate (row[1] |> Some) "dd/MM/yyyy"
                         Amount = getAmount debit credit
@@ -89,12 +70,13 @@ module ParserRaiffeisenExcelAccountStatement =
                         TransactionType = getTranasctionType debit credit description
                         Status = TransactionStatus.COMPLETED |> Some
                         ReferenceId = None
+                        Provider = Provider.RAIFFEISEN |> Some
                     }
         )
         |> List.filter (fun d -> d.IsSome)
         |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
-        |> List.map(fun (_, t) -> mapTransactions t userId )
+        |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Id)
 

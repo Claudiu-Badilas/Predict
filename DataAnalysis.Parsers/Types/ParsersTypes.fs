@@ -11,19 +11,6 @@ module ParsersTypes =
     type TransactionStatus = COMPLETED | PENDING
     
     type Provider = RAIFFEISEN | REVOLUT | ORANGE_MONEY
-    
-    type RawParsedTransaction = 
-        {
-            RegistrationDate: DateTime option
-            CompletionDate: DateTime option
-            Amount: double option
-            Fee: double option
-            Currency: CurrencyType option
-            Description: string option
-            TransactionType: TransactionType option
-            Status: TransactionStatus option
-            ReferenceId: int option
-        }
 
         
     type ParsedTransaction = 

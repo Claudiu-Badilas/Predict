@@ -28,27 +28,6 @@ module ParserRevolutExcelAccountStatement =
         match transactionType with
         |  "COMPLETED" -> TransactionStatus.COMPLETED |> Some
         | _ -> None
-            
-
-    let mapTransactions (transaction: RawParsedTransaction list) userId: ParsedTransaction list =
-        transaction
-        |> List.indexed
-        |> List.map(fun (i, rpt)-> 
-            let provider = Provider.REVOLUT
-            {   
-                Id = ParserUtils.generateUniqueGuid userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i provider rpt.ReferenceId
-                RegistrationDate = rpt.RegistrationDate
-                CompletionDate = rpt.CompletionDate
-                Amount = rpt.Amount
-                Description = rpt.Description
-                TransactionType = rpt.TransactionType
-                Currency = rpt.Currency
-                Fee =  rpt.Fee
-                Status = rpt.Status
-                Provider = provider |> Some
-                ReferenceId = rpt.ReferenceId
-            }
-        )
 
 
     let getTransactions (excel: WorkBook) userId: ParsedTransaction list =
@@ -60,6 +39,7 @@ module ParserRevolutExcelAccountStatement =
             | null -> None
             | _ -> 
                 Some {
+                    Id = None
                     RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "M/d/yyyy h:mm:ss tt"
                     CompletionDate = DateTimeUtils.convertStringToUTCDate (row[3] |> Some) "M/d/yyyy h:mm:ss tt"
                     Amount = row[5] |> Some |> ParserUtils.tryGetDouble
@@ -69,12 +49,13 @@ module ParserRevolutExcelAccountStatement =
                     TransactionType = getTranasctionType (row[0])
                     Status = getTranasctionStatus (row[8])      
                     ReferenceId = None
+                    Provider = Provider.REVOLUT |> Some
                 }
         )
         |> List.filter (fun d -> d.IsSome)
         |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
-        |> List.map(fun (_, t) -> mapTransactions t userId )
+        |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Id)
 
