@@ -10,4 +10,8 @@
 		<PackageReference Include="Npgsql" Version="7.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\DataAnalysis.Common\DataAnalysis.Common.csproj" />
+	</ItemGroup>
+
 </Project>

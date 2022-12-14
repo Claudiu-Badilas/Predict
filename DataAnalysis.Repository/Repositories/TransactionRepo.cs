@@ -10,14 +10,14 @@ using System.Transactions;
 
 namespace DataAnalysis.Repository.Repositories {
     public class TransactionRepo : ITransactionRepo {
-        private readonly NpgsqlDbConnection _conn;
 
-        public TransactionRepo(NpgsqlDbConnection conn) {
-            _conn = conn;
+        public TransactionRepo() { }
+
         }
 
         public void InsertTransactions(Transaction transactions) {
             using (var connection = _conn.Connect()) {
+            using (var connection = new NpgsqlConnection(NpsqlConnectionString)) {
                 connection.Open();
                 var sql = @" ";
                 return (await connection.ExecuteScalarAsync(sql, new { transactions }));

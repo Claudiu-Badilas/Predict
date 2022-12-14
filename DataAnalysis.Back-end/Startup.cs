@@ -1,13 +1,11 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using DataAnalysis.Configuration;
 using DataAnalysis.Repositories.Interfaces;
 using DataAnalysis.Repositories;
 using DataAnalysis.Services.Interfaces;
 using DataAnalysis.Services;
-using System.Text;
 using DataAnalysis.Extensions;
 using DataAnalysis.Middleware;
+using DataAnalysis.Repository.Repositories;
+using DataAnalysis.Repository.Repositories.Interfaces;
 
 namespace DataAnalysis {
     public class Startup {
@@ -23,8 +21,8 @@ namespace DataAnalysis {
             services.AddControllers();
             services.AddCors();
 
-            services.AddSingleton(new NpgsqlDbConnection(_config.GetConnectionString("PostgreSQLConnection")));
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<ITransactionRepo, TransactionRepo>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
 
