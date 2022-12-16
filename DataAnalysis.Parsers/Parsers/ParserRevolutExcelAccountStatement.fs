@@ -5,10 +5,11 @@ open System.Linq
 open System
 open DataAnalysis.Types.ParsersTypes
 open DataAnalysis.Utils
+open DataAnalysis.DatabaseAccess
 
 module ParserRevolutExcelAccountStatement =
 
-    let DATE_REGEX = @"\d{2}/\d{2}/\d{4}\d{2}:\d{2}:\d{2}([A-Z]{2})";
+    let DATE_REGEX = @"\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}";
 
     
     let getTranasctionType (transactionType: string ): TransactionType option = 
@@ -40,8 +41,8 @@ module ParserRevolutExcelAccountStatement =
             | _ -> 
                 Some {
                     Id = None
-                    RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "M/d/yyyy h:mm:ss tt"
-                    CompletionDate = DateTimeUtils.convertStringToUTCDate (row[3] |> Some) "M/d/yyyy h:mm:ss tt"
+                    RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "M.d.yyyy h:mm:ss tt"
+                    CompletionDate = DateTimeUtils.convertStringToUTCDate (row[3] |> Some) "M.d.yyyy h:mm:ss tt"
                     Amount = row[5] |> Some |> ParserUtils.tryGetDouble
                     Fee = row[6] |> Some |> ParserUtils.tryGetDouble
                     Currency = ParserUtils.getCurrency (row[7])
@@ -60,16 +61,19 @@ module ParserRevolutExcelAccountStatement =
         |> List.distinctBy(fun t -> t.Id)
 
 
-    let parseExcels userId (excels: WorkBook list): ParsedTransaction list =
-        excels 
-        |> List.toArray
-        |> Array.chunkBySize 100
-        |> Array.Parallel.map (fun chunk ->
-            chunk 
-            |> Array.toList
-            |> List.map(fun excel -> getTransactions excel userId)
+    let parseExcels userId (excels: WorkBook list) =
+        let parsedTransaction =
+            excels 
+            |> List.toArray
+            |> Array.chunkBySize 100
+            |> Array.Parallel.map (fun chunk ->
+                chunk 
+                |> Array.toList
+                |> List.map(fun excel -> getTransactions excel userId)
+                |> List.concat
+            )
             |> List.concat
-        )
-        |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Id)
+
+        StoreTransactions.storeTransaction userId parsedTransaction
 

@@ -15,7 +15,7 @@ module ParsersTypes =
         
     type ParsedTransaction = 
         {
-            Id: Guid option
+            Id: string option
             RegistrationDate: DateTime option
             CompletionDate: DateTime option
             Amount: double option

@@ -6,6 +6,7 @@ open System.Text.RegularExpressions
 open System
 open DataAnalysis.Types.ParsersTypes
 open DataAnalysis.Utils
+open DataAnalysis.DatabaseAccess
 
 module ParserRaiffeisenExcelAccountStatement =
 
@@ -81,16 +82,19 @@ module ParserRaiffeisenExcelAccountStatement =
         |> List.distinctBy(fun t -> t.Id)
 
 
-    let parseExcels userId (excels: WorkBook list): ParsedTransaction list =
-        excels 
-        |> List.toArray
-        |> Array.chunkBySize 100
-        |> Array.Parallel.map (fun chunk ->
-            chunk 
-            |> Array.toList
-            |> List.map(fun excel -> getTransactions excel userId)
+    let parseExcels userId (excels: WorkBook list) =
+        let parsedTransaction =
+            excels 
+            |> List.toArray
+            |> Array.chunkBySize 100
+            |> Array.Parallel.map (fun chunk ->
+                chunk 
+                |> Array.toList
+                |> List.map(fun excel -> getTransactions excel userId)
+                |> List.concat
+            )
             |> List.concat
-        )
-        |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Id)
+
+        StoreTransactions.storeTransaction userId parsedTransaction
 

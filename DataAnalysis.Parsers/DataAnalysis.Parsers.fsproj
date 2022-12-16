@@ -10,6 +10,8 @@
 		<Compile Include="Utils\ExcelUtils.fs" />
 		<Compile Include="Utils\DateTimeUtils.fs" />
 		<Compile Include="Utils\ParserUtils.fs" />
+		<Compile Include="DatabaseAccess\Utils\StorerUtils.fs" />
+		<Compile Include="DatabaseAccess\StoreTransactions.fs" />
 		<Compile Include="Parsers\ParserRaiffeisenExcelAccountStatement.fs" />
 		<Compile Include="Parsers\ParserRevolutExcelAccountStatement.fs" />
 		<Compile Include="Parsers\ParserOrangeMoneyExcelAccountStatement.fs" />
@@ -19,5 +21,11 @@
 	<ItemGroup>
 		<PackageReference Include="IronXL.Excel" Version="2022.11.10251" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DataAnalysis.Repository\DataAnalysis.Repository.csproj" />
+	</ItemGroup>
+
+	<ItemGroup />
 
 </Project>
