@@ -2,36 +2,85 @@
 
 open DataAnalysis.Types.ParsersTypes
 open System
+open System.Globalization
 
 module ParserUtils =
 
+    let tryGetInt (value: string option) =
+        match value with
+        | Some value -> 
+            let isValid, intValue = Int32.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture)
+            match isValid with
+            | true -> intValue |> Some
+            | _ -> None
+        | _ -> None
+
+
+    let tryGetDouble (value: string option) =
+        match value with
+        | Some value -> 
+            let isValid, doubleValue = Double.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture)
+            match isValid with
+            | true -> doubleValue |> Some
+            | _ -> None
+        | _ -> None
+
+    
     let getCurrency value =
         match value with
-        | "RON" -> Some CurrencyType.RON
-        | "EUR" -> Some CurrencyType.EUR
-        | "USD" -> Some CurrencyType.USD
+        | "RON" -> CurrencyType.RON |> Some
+        | "EUR" -> CurrencyType.EUR |> Some
+        | "USD" -> CurrencyType.USD |> Some
         | _ -> None
         
-    let getProviderCalculationConstant provider =
+
+    let getProvider provider =
         match provider with
-        | Provider.Raiffeisen -> 9234236632.4
-        | Provider.Revolut -> 23247364.3
-        | Provider.OrangeMoney -> 65983543.23
-        | _ -> 1312312.123
+        | Some Provider.RAIFFEISEN -> "RAIFFEISEN" |> Some
+        | Some Provider.REVOLUT -> "REVOLUT" |> Some
+        | Some Provider.ORANGE_MONEY -> "ORANGE_MONEY" |> Some
+        | _ -> "" |> Some
 
 
-    let generateUniqueGuid (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) provider: Guid option =
-        let providerConstant = getProviderCalculationConstant provider
-        let validAmount =
-            match amount with
-            | Some 0.0 -> 694587965.34
-            | _ -> amount.Value
-        let constant = Double.Parse(((double index + 1.21487) * 987_654_321.13821).ToString())
-        
-        match registrationDate, completitonDate with 
-        | Some registrationDate, Some completitonDate -> 
-            let bytes = BitConverter.GetBytes(registrationDate.Ticks * completitonDate.Ticks * int64 validAmount )
-            let bytes2 = BitConverter.GetBytes(validAmount * providerConstant * constant * 55_123_456_789.52325)
-            Some (new Guid(Array.append bytes bytes2))
-        | _, _ -> None
+    let format value = "[" + value + "]@"
+
+
+    let formatOption value =
+        match value with
+        | Some value -> string value |> format
+        | _ -> "" |> format
+
+
+    let generateUniqueId (userId: int) (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) (provider: Provider option) (referenceId: int option) =
+        let userIdentifier = string userId |> format
+        let registrationIdentifier = registrationDate |> formatOption
+        let completitonIdentifier = completitonDate |> formatOption
+        let amountIdentifier = amount |> formatOption
+        let indexIdentifier = string (index + 1) |> format
+        let referenceIdentifier = referenceId |> formatOption
+        let providerIdentifier = getProvider provider |> formatOption
+
+        userIdentifier + registrationIdentifier + completitonIdentifier + amountIdentifier + 
+        indexIdentifier + referenceIdentifier + providerIdentifier 
+        |> Some
+
+
+    let mapTransactions (transaction: ParsedTransaction list) userId: ParsedTransaction list =
+        transaction
+        |> List.indexed
+        |> List.map(fun (i, rpt)-> 
+            {   
+                Id = generateUniqueId userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i rpt.Provider rpt.ReferenceId
+                RegistrationDate = rpt.RegistrationDate
+                CompletionDate = rpt.CompletionDate
+                Amount = rpt.Amount
+                Fee = rpt.Fee
+                Description = rpt.Description
+                TransactionType = rpt.TransactionType
+                Currency = rpt.Currency
+                Status = rpt.Status
+                Provider = rpt.Provider
+                ReferenceId = rpt.ReferenceId
+            }
+        )
 

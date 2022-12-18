@@ -1,109 +1,88 @@
 ﻿namespace DataAnalysis.Parsers
 
 open IronXL
-open System.Linq
 open System
 open DataAnalysis.Types.ParsersTypes
 open DataAnalysis.Utils
 open System.Text.RegularExpressions
+open DataAnalysis.DatabaseAccess
 
 module ParserOrangeMoneyExcelAccountStatement =
 
-    let DATE_REGEX = @"\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{1,2}:\d{1,2} \w{2}";
+    let DATE_REGEX = @"\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}";
 
     
     let getTranasctionType amount = 
         match amount > 0.0 with
-        |  true -> Some TransactionType.TopUp
-        |  false -> Some TransactionType.CardPayment
+        |  true -> TransactionType.TOP_UP |> Some
+        |  false -> TransactionType.CARD_PAYMENT |> Some
             
     
-    let getDescription (rows: RangeRow list) (index: int) = 
-        let description1 = rows[index].Columns.ElementAtOrDefault(3).ToString()
-        let mutable nextRowIndex = index + 1
-        let description2 =
+    let getDescription (rows: string [][]) (index: int) = 
+        [1; 2]
+        |> List.map(fun v ->
+            let nextRowIndex = index + v
             match nextRowIndex < rows.Length with
             | true ->
-                match rows[nextRowIndex].Columns.ElementAtOrDefault(0).ToString() with
-                | "" -> rows[nextRowIndex].Columns.ElementAtOrDefault(3).ToString()
+                match rows[nextRowIndex][0] with
+                | "" -> rows[nextRowIndex][3]
                 | _ -> ""
             | _ -> ""
-        nextRowIndex <- index + 2
-        let description3 =
-            match nextRowIndex < rows.Length with
-            | true ->
-                match rows[nextRowIndex].Columns.ElementAtOrDefault(0).ToString() with
-                | "" -> rows[nextRowIndex].Columns.ElementAtOrDefault(3).ToString()
-                | _ -> ""
-            | _ -> ""
-
-        description1 + description2 + description3
-        
-
-    let mapTransactions (transaction: RawParsedTransaction list): ParsedTransaction list =
-        transaction
-        |> List.indexed
-        |> List.map(fun (i, rpt)-> 
-            {   
-                Id = ParserUtils.generateUniqueGuid rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.OrangeMoney
-                RegistrationDate = rpt.RegistrationDate
-                CompletionDate = rpt.CompletionDate
-                Amount = rpt.Amount
-                Description = rpt.Description
-                TransactionType = rpt.TransactionType
-                Currency = rpt.Currency
-                Fee =  rpt.Fee
-                Status = rpt.Status
-                Provider = Some Provider.OrangeMoney
-            }
         )
+        |> List.append [rows[index][3]]
+        |> List.fold (+) ""
 
 
-    let getTransactions (excel: WorkBook): ParsedTransaction list =
-        let rows = 
-            excel.DefaultWorkSheet.Rows
-            |> Seq.toList
+    let getTransactions (excel: WorkBook) userId: ParsedTransaction list =
+        let rows = ExcelUtils.getExcelValues excel
         rows
+        |> Seq.toList
         |> List.indexed
         |> List.map (fun (i, row) ->
-            let date = row.ElementAtOrDefault(0).ToString()
+            let date = row[0]
             match date with
             | null -> None
             | _ -> 
                  match Regex.IsMatch(date, DATE_REGEX) with
                  | false -> None
                  | _ -> 
-                     let amount = row.Columns.ElementAtOrDefault(4).DoubleValue
+                     let amount = row[4] |> Some |> ParserUtils.tryGetDouble
                      Some {
-                         RegistrationDate = DateTimeUtils.convertStringToUTCDate (Some date) "M/d/yyyy h:mm:ss tt"
-                         CompletionDate = DateTimeUtils.convertStringToUTCDate (Some (row.ElementAtOrDefault(1).ToString())) "M/d/yyyy h:mm:ss tt"
-                         Amount = Some amount
+                         Id = None
+                         RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "d.M.yyyy h:mm:ss"
+                         CompletionDate = DateTimeUtils.convertStringToUTCDate (row[1] |> Some) "d.M.yyyy h:mm:ss"
+                         Amount = amount
                          Fee = None
-                         Currency = Some CurrencyType.RON
-                         Description = Some (getDescription rows i) 
-                         TransactionType = getTranasctionType amount
-                         Status = Some TransactionStatus.Completed
+                         Currency = CurrencyType.RON |> Some
+                         Description = getDescription rows i |> Some
+                         TransactionType = getTranasctionType amount.Value
+                         Status = TransactionStatus.COMPLETED |> Some
+                         ReferenceId = row[2] |> Some |> ParserUtils.tryGetInt
+                         Provider = Provider.ORANGE_MONEY |> Some
                      }
         )
         |> List.filter (fun d -> d.IsSome)
         |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
-        |> List.map(fun (_, t) -> mapTransactions t )
+        |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Id)
 
 
-    let parseExcels (excels: WorkBook list): ParsedTransaction list =
-        excels 
-        |> List.choose(fun excel -> Some excel)
-        |> List.toArray
-        |> Array.chunkBySize 100
-        |> Array.Parallel.map (fun chunk ->
-            chunk 
-            |> Array.toList
-            |> List.map(fun excel -> getTransactions excel)
+    let parseExcels userId (excels: WorkBook list) =
+        let parsedTransaction =
+            excels 
+            |> List.toArray
+            |> Array.chunkBySize 100
+            |> Array.Parallel.map (fun chunk ->
+                chunk 
+                |> Array.toList
+                |> List.map(fun excel -> getTransactions excel userId)
+                |> List.concat
+            )
             |> List.concat
-        )
-        |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Id)
+
+        StoreTransactions.storeTransaction userId parsedTransaction
+
 

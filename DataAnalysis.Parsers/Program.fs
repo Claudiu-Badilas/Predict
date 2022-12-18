@@ -1,6 +1,9 @@
 ﻿open System.IO
 open IronXL
 open DataAnalysis.Parsers
+open DataAnalysis.DatabaseAccess
+open Npgsql
+open DataAnalysis.Common.Configuration
 
 module ParserConsole =
 
@@ -8,43 +11,21 @@ module ParserConsole =
     let getLocalExcels path =
         Directory.EnumerateFiles(path, "*.xlsx")
         |> Seq.toList 
-        |> List.map(fun f -> WorkBook.Load(Path.Combine(path, f)))
+        |> List.map(fun f -> Path.Combine(path, f) |> WorkBook.Load)
 
 
     [<EntryPoint>]
     let main _ =
-    
-        let raitransactions = 
-            ParserRaiffeisenExcelAccountStatement.parseExcels (getLocalExcels @"")
-            |> List.map(fun t -> 
-                printfn "%O" t
-                t 
-            )
+        let userId = 1
+        let raifExcels = getLocalExcels @""
+        let revExcels = getLocalExcels @""
+        let omExcels = getLocalExcels @""
 
-        let revtransactions = 
-            ParserRevolutExcelAccountStatement.parseExcels (getLocalExcels @"")
-            |> List.map(fun t -> 
-                printfn "%O" t
-                t 
-            )
-            
-        let omtransactions = 
-            ParserOrangeMoneyExcelAccountStatement.parseExcels (getLocalExcels @"")
-            |> List.map(fun t -> 
-                printfn "%O" t
-                t 
-            )
+        let raitransactions = ParserRaiffeisenExcelAccountStatement.parseExcels userId raifExcels
+        let revtransactions = ParserRevolutExcelAccountStatement.parseExcels userId revExcels
+        let omtransactions = ParserOrangeMoneyExcelAccountStatement.parseExcels userId omExcels
 
-        printfn "omtransactions %O" omtransactions.Length
-        printfn "raitransactions %O" raitransactions.Length
-        printfn "revtransactions %O" revtransactions.Length
+        printfn "%O %O %O" raitransactions revtransactions omtransactions
 
-        let allTransactions = raitransactions @ revtransactions @ omtransactions
-
-        let filtereddublicate = 
-            allTransactions
-            |> List.distinctBy(fun t -> t.Id)
-
-        printfn "allTransactions %O" allTransactions.Length
-        printfn "filtereddublicate %O" filtereddublicate.Length
+        printfn "Run succesfully"
         0

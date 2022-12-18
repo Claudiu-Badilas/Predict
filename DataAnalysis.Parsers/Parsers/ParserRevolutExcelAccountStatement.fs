@@ -5,88 +5,75 @@ open System.Linq
 open System
 open DataAnalysis.Types.ParsersTypes
 open DataAnalysis.Utils
+open DataAnalysis.DatabaseAccess
 
 module ParserRevolutExcelAccountStatement =
 
-    let DATE_REGEX = @"\d{2}/\d{2}/\d{4}\d{2}:\d{2}:\d{2}([A-Z]{2})";
+    let DATE_REGEX = @"\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}";
 
     
     let getTranasctionType (transactionType: string ): TransactionType option = 
         match transactionType with
-        |  "TOPUP" -> Some TransactionType.TopUp
-        |  "FEE" -> Some TransactionType.FEE
-        |  "ATM" -> Some TransactionType.ATM
-        |  "CARD_PAYMENT" -> Some TransactionType.CardPayment
-        |  "TRANSFER" -> Some TransactionType.Transfer
-        |  "REWARD" -> Some TransactionType.Reward
-        |  "EXCHANGE" -> Some TransactionType.Exchange
-        |  "CARD_REFUND" -> Some TransactionType.Refund
+        |  "TOPUP" -> TransactionType.TOP_UP |> Some
+        |  "FEE" -> TransactionType.FEE |> Some
+        |  "ATM" -> TransactionType.ATM |> Some
+        |  "CARD_PAYMENT" -> TransactionType.CARD_PAYMENT |> Some
+        |  "TRANSFER" -> TransactionType.TRANSFER |> Some
+        |  "REWARD" -> TransactionType.REWARD |> Some
+        |  "EXCHANGE" -> TransactionType.EXCHANGE |> Some
+        |  "CARD_REFUND" -> TransactionType.REFUND |> Some
         | _ -> None
 
 
     let getTranasctionStatus (transactionType: string ): TransactionStatus option = 
         match transactionType with
-        |  "COMPLETED" -> Some TransactionStatus.Completed
+        |  "COMPLETED" -> TransactionStatus.COMPLETED |> Some
         | _ -> None
-            
-
-    let mapTransactions (transaction: RawParsedTransaction list): ParsedTransaction list =
-        transaction
-        |> List.indexed
-        |> List.map(fun (i, rpt)-> 
-            {   
-                Id = ParserUtils.generateUniqueGuid rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.Revolut
-                RegistrationDate = rpt.RegistrationDate
-                CompletionDate = rpt.CompletionDate
-                Amount = rpt.Amount
-                Description = rpt.Description
-                TransactionType = rpt.TransactionType
-                Currency = rpt.Currency
-                Fee =  rpt.Fee
-                Status = rpt.Status
-                Provider = Some Provider.Revolut
-            }
-        )
 
 
-    let getTransactions (excel: WorkBook): ParsedTransaction list =
-        excel.DefaultWorkSheet.Rows
+    let getTransactions (excel: WorkBook) userId: ParsedTransaction list =
+        ExcelUtils.getExcelValues excel
         |> Seq.toList
         |> List.map (fun row ->
-            let date = row.ElementAtOrDefault(2).ToString()
+            let date = row[2]
             match date with
             | null -> None
             | _ -> 
                 Some {
-                    RegistrationDate = DateTimeUtils.convertStringToUTCDate (Some date) "M/d/yyyy h:mm:ss tt"
-                    CompletionDate = DateTimeUtils.convertStringToUTCDate (Some (row.ElementAtOrDefault(3).ToString())) "M/d/yyyy h:mm:ss tt"
-                    Amount = Some (row.Columns.ElementAtOrDefault(5).DoubleValue)
-                    Fee = Some (row.Columns.ElementAtOrDefault(6).DoubleValue)
-                    Currency = ParserUtils.getCurrency (row.Columns.ElementAtOrDefault(7).ToString())
-                    Description = Some (row.Columns.ElementAtOrDefault(4).ToString())
-                    TransactionType = getTranasctionType (row.Columns.ElementAtOrDefault(0).ToString())
-                    Status = getTranasctionStatus (row.Columns.ElementAtOrDefault(8).ToString())
+                    Id = None
+                    RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd.MM.yyyy HH:mm:ss"
+                    CompletionDate = DateTimeUtils.convertStringToUTCDate (row[3] |> Some) "dd.MM.yyyy HH:mm:ss"
+                    Amount = row[5] |> Some |> ParserUtils.tryGetDouble
+                    Fee = row[6] |> Some |> ParserUtils.tryGetDouble
+                    Currency = ParserUtils.getCurrency (row[7])
+                    Description = row[4] |> Some
+                    TransactionType = getTranasctionType (row[0])
+                    Status = getTranasctionStatus (row[8])      
+                    ReferenceId = None
+                    Provider = Provider.REVOLUT |> Some
                 }
         )
         |> List.filter (fun d -> d.IsSome)
         |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
-        |> List.map(fun (_, t) -> mapTransactions t )
+        |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Id)
 
 
-    let parseExcels (excels: WorkBook list): ParsedTransaction list =
-        excels 
-        |> List.choose(fun excel -> Some excel)
-        |> List.toArray
-        |> Array.chunkBySize 100
-        |> Array.Parallel.map (fun chunk ->
-            chunk 
-            |> Array.toList
-            |> List.map(fun excel -> getTransactions excel)
+    let parseExcels userId (excels: WorkBook list) =
+        let parsedTransaction =
+            excels 
+            |> List.toArray
+            |> Array.chunkBySize 100
+            |> Array.Parallel.map (fun chunk ->
+                chunk 
+                |> Array.toList
+                |> List.map(fun excel -> getTransactions excel userId)
+                |> List.concat
+            )
             |> List.concat
-        )
-        |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Id)
+
+        StoreTransactions.storeTransaction userId parsedTransaction
 

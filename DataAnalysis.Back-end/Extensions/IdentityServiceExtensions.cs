@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using static DataAnalysis.Common.Configuration.ConfigurationUtils;
 
 namespace DataAnalysis.Extensions {
     public static class IdentityServiceExtensions {
@@ -10,7 +11,7 @@ namespace DataAnalysis.Extensions {
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenKey)),
                         ValidateIssuer = false,
                         ValidateAudience = false,
                     };

@@ -4,12 +4,15 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using DataAnalysis.Services.Interfaces;
 using DataAnalysis.Controllers.Models;
+using Microsoft.Extensions.Configuration;
+using static DataAnalysis.Common.Configuration.ConfigurationUtils;
+
 
 namespace DataAnalysis.Services {
     public class TokenService : ITokenService {
         private readonly SymmetricSecurityKey _key;
         public TokenService(IConfiguration config) {
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenKey));
         }
 
         public string CreateToken(UserResponse user) {

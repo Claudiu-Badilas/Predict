@@ -5,9 +5,11 @@ open System.Globalization
 
 module DateTimeUtils =
     
-
     let convertStringToUTCDate (date: string option) (pattern: string): DateTime option =
         match date with
-        | Some value -> Some (DateTime.ParseExact(value, pattern, CultureInfo.InvariantCulture).ToUniversalTime())
+        | Some value -> 
+            try DateTime.ParseExact(value, pattern, CultureInfo.InvariantCulture) |> Some
+            with 
+            | _ -> None
         | _ -> None
 

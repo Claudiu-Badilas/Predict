@@ -6,6 +6,7 @@ open System.Text.RegularExpressions
 open System
 open DataAnalysis.Types.ParsersTypes
 open DataAnalysis.Utils
+open DataAnalysis.DatabaseAccess
 
 module ParserRaiffeisenExcelAccountStatement =
 
@@ -22,10 +23,9 @@ module ParserRaiffeisenExcelAccountStatement =
         let splitedDescription = checkDescriptionByText description "Transfer intre conturi proprii"
 
         match debit, credit, splitedDescription.IsEmpty with
-        | _ , Some (0.0), true -> Some TransactionType.Spend
-        | Some (0.0), _, true -> Some TransactionType.Received
-        | _ , _, false -> Some TransactionType.InternalTransfer
-        | None, None, _ -> None
+        | Some d, None, true -> TransactionType.SPEND |> Some
+        | None, Some c, true -> TransactionType.RECEIVED |> Some
+        | _ , _, false -> TransactionType.INTERNAL_TRANSFER |> Some
         | _, _, _ -> None
             
 
@@ -33,80 +33,68 @@ module ParserRaiffeisenExcelAccountStatement =
         let splitedDescription = checkDescriptionByText description "Transfer intre conturi proprii"
 
         match splitedDescription.IsEmpty with
-        | true -> Some (description.Split("|")[0])
-        | false -> Some (description.Split("|")[1])
+        | true -> description.Split("|")[0] |> Some
+        | false -> description.Split("|")[1] |> Some
 
-
-    let mapTransactions (transaction: RawParsedTransaction list): ParsedTransaction list =
-        transaction
-        |> List.indexed
-        |> List.map(fun (i, rpt)-> 
-            {   
-                Id = ParserUtils.generateUniqueGuid rpt.RegistrationDate rpt.CompletionDate rpt.Amount i Provider.Raiffeisen
-                RegistrationDate = rpt.RegistrationDate
-                CompletionDate = rpt.CompletionDate
-                Amount = rpt.Amount
-                Fee = rpt.Fee
-                Description = rpt.Description
-                TransactionType = rpt.TransactionType
-                Currency = rpt.Currency
-                Status = rpt.Status
-                Provider = Some Provider.Raiffeisen
-            }
-        )
 
     let getAmount debit credit =
         match debit, credit with
-        | Some debit, Some 0.0 -> Some (debit * -1.0)
-        | Some 0.0, Some credit -> Some credit
+        | Some debit, None -> debit * -1.0 |> Some
+        | None, Some credit -> credit |> Some
         | _, _-> None
 
 
-    let getTransactions (excel: WorkBook): ParsedTransaction list =
-        excel.DefaultWorkSheet.Rows
+    let getTransactions (excel: WorkBook) userId: ParsedTransaction list =
+        ExcelUtils.getExcelValues excel
         |> Seq.toList
-        |> List.map (fun row ->
-            let date = row.ElementAtOrDefault(0).ToString()
+        |> List.indexed
+        |> List.map (fun (i, row) ->
+            let date = row[0]
             match date with
             | null -> None
             | _ -> 
                 match Regex.IsMatch(date, DATE_REGEX) with
                 | false -> None
                 | _ -> 
-                    let debit = Some (row.Columns.ElementAtOrDefault(2).DoubleValue)
-                    let credit = Some (row.Columns.ElementAtOrDefault(3).DoubleValue)
-                    let description = row.Columns.LastOrDefault().ToString()
-                    let registrationDate = DateTimeUtils.convertStringToUTCDate (Some date) "dd/MM/yyyy"
+                    let debit = row[2] |> Some |> ParserUtils.tryGetDouble
+                    let credit = row[3] |> Some |> ParserUtils.tryGetDouble
+                    let description = row[11]
+                    let registrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd/MM/yyyy"
                     Some {
+                        Id = None
                         RegistrationDate = registrationDate
-                        CompletionDate = DateTimeUtils.convertStringToUTCDate (Some (row.ElementAtOrDefault(1).ToString())) "dd/MM/yyyy"
+                        CompletionDate = DateTimeUtils.convertStringToUTCDate (row[1] |> Some) "dd/MM/yyyy"
                         Amount = getAmount debit credit
                         Fee = None
-                        Currency = Some CurrencyType.RON
+                        Currency = CurrencyType.RON |> Some
                         Description = getDescription description
                         TransactionType = getTranasctionType debit credit description
-                        Status = Some TransactionStatus.Completed
+                        Status = TransactionStatus.COMPLETED |> Some
+                        ReferenceId = None
+                        Provider = Provider.RAIFFEISEN |> Some
                     }
         )
         |> List.filter (fun d -> d.IsSome)
         |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
-        |> List.map(fun (_, t) -> mapTransactions t )
+        |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Id)
 
 
-    let parseExcels (excels: WorkBook list): ParsedTransaction list =
-        excels 
-        |> List.choose(fun excel -> Some excel)
-        |> List.toArray
-        |> Array.chunkBySize 100
-        |> Array.Parallel.map (fun chunk ->
-            chunk 
-            |> Array.toList
-            |> List.map(fun excel -> getTransactions excel)
+    let parseExcels userId (excels: WorkBook list) =
+        let parsedTransaction =
+            excels 
+            |> List.toArray
+            |> Array.chunkBySize 100
+            |> Array.Parallel.map (fun chunk ->
+                chunk 
+                |> Array.toList
+                |> List.map(fun excel -> getTransactions excel userId)
+                |> List.concat
+            )
             |> List.concat
-        )
-        |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Id)
+
+        StoreTransactions.storeTransaction userId parsedTransaction
 
