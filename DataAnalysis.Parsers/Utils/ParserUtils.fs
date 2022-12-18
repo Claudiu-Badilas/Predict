@@ -19,7 +19,7 @@ module ParserUtils =
     let tryGetDouble (value: string option) =
         match value with
         | Some value -> 
-            let isValid, doubleValue = Double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture)
+            let isValid, doubleValue = Double.TryParse(value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture)
             match isValid with
             | true -> doubleValue |> Some
             | _ -> None
