@@ -22,7 +22,7 @@ module ParserRevolutExcelAccountStatement =
         |  "REWARD" -> TransactionType.REWARD |> Some
         |  "EXCHANGE" -> TransactionType.EXCHANGE |> Some
         |  "CARD_REFUND" -> TransactionType.REFUND |> Some
-        | _ -> None
+        |  _ -> TransactionType.UNDEFINED |> Some
 
 
     let getTranasctionStatus (transactionType: string ): TransactionStatus option = 

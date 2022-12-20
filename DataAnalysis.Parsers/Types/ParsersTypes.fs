@@ -4,9 +4,23 @@ open System
 
 module ParsersTypes =
 
-    type CurrencyType = EUR | USD | RON
+    type CurrencyType = EUR | USD | RON 
 
-    type TransactionType = SPEND | RECEIVED | INTERNAL_TRANSFER | TOP_UP | TRANSFER | FEE | CARD_PAYMENT | ATM | EXCHANGE | REWARD | REFUND | BILL_PAYMENT
+    type TransactionType = 
+          SPEND 
+        | RECEIVED 
+        | INTERNAL_TRANSFER 
+        | TOP_UP 
+        | TRANSFER 
+        | FEE 
+        | CARD_PAYMENT 
+        | ATM 
+        | EXCHANGE 
+        | REWARD 
+        | REFUND 
+        | BILL_PAYMENT
+        | BALANCE_CHECK
+        | UNDEFINED
     
     type TransactionStatus = COMPLETED | PENDING
     

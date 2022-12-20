@@ -22,7 +22,11 @@ module ParserOrangeMoneyPdfAccountStatement =
         |  "Retragere numerar la ATM" -> TransactionType.ATM |> Some
         |  "Transfer bani" -> TransactionType.INTERNAL_TRANSFER |> Some
         |  "Transfer" -> TransactionType.INTERNAL_TRANSFER |> Some
-        |  _ -> TransactionType.CARD_PAYMENT |> Some
+        |  "Interogare sold la ATM" -> TransactionType.BALANCE_CHECK |> Some
+        |  "Returnare plata comerciant" -> TransactionType.REFUND |> Some
+        |  "Returnare" -> TransactionType.REFUND |> Some
+        |  "Tranzactie quasi-cash" -> TransactionType.CARD_PAYMENT |> Some
+        |  _ -> TransactionType.UNDEFINED |> Some
 
             
     let getFirstRowDescription (line: string) =

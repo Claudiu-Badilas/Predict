@@ -50,6 +50,8 @@ module StorerUtils =
             | TransactionType.REWARD -> Nullable(10)
             | TransactionType.REFUND -> Nullable(11)
             | TransactionType.BILL_PAYMENT -> Nullable(12)
+            | TransactionType.BALANCE_CHECK -> Nullable(13)
+            | TransactionType.UNDEFINED -> Nullable(14)
         | _ -> Nullable()
 
 
