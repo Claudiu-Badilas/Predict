@@ -11,7 +11,7 @@ module StoreTransactions =
     
     let filterDublicates (storedTransactionIds: string list) (transactions: Transaction list) =
         transactions
-        |> List.filter(fun t -> not (storedTransactionIds |> List.exists(fun st -> t.Id = st)))
+        |> List.filter(fun t -> not (storedTransactionIds |> List.exists(fun st -> t.Identifier = st)))
         
     
     
@@ -21,7 +21,7 @@ module StoreTransactions =
             parsedTransactions
             |> List.map(fun t ->
                 new Transaction (
-                    Id = t.Id.Value,
+                    Identifier = t.Identifier.Value,
                     RegistrationDate = StorerUtils.getNullableDateTimeFromOption t.RegistrationDate,
                     CompletionDate = StorerUtils.getNullableDateTimeFromOption t.CompletionDate,
                     ReferenceId = StorerUtils.getNullableIntFromOption t.ReferenceId,

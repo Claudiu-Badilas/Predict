@@ -40,7 +40,7 @@ module ParserRevolutExcelAccountStatement =
             | null -> None
             | _ -> 
                 Some {
-                    Id = None
+                    Identifier = None
                     RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd.MM.yyyy HH:mm:ss"
                     CompletionDate = DateTimeUtils.convertStringToUTCDate (row[3] |> Some) "dd.MM.yyyy HH:mm:ss"
                     Amount = row[5] |> Some |> ParserUtils.tryGetDouble
@@ -58,7 +58,7 @@ module ParserRevolutExcelAccountStatement =
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
         |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+        |> List.distinctBy(fun t -> t.Identifier)
 
 
     let parseExcels userId (excels: WorkBook list) =
@@ -73,7 +73,7 @@ module ParserRevolutExcelAccountStatement =
                 |> List.concat
             )
             |> List.concat
-            |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Identifier)
 
         StoreTransactions.storeTransaction userId parsedTransaction
 

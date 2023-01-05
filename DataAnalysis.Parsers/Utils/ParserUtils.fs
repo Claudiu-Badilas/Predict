@@ -70,7 +70,7 @@ module ParserUtils =
         |> List.indexed
         |> List.map(fun (i, rpt)-> 
             {   
-                Id = generateUniqueId userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i rpt.Provider rpt.ReferenceId
+                Identifier = generateUniqueId userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i rpt.Provider rpt.ReferenceId
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount

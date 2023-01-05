@@ -106,7 +106,7 @@ module ParserOrangeMoneyPdfAccountStatement =
                         | _ -> 
                             let amount = words[words.Length - 2] |> Some |> ParserUtils.tryGetDouble
                             Some {
-                                Id = None
+                                Identifier = None
                                 RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd.MM.yyyy"
                                 CompletionDate = DateTimeUtils.convertStringToUTCDate (words[1] |> Some) "dd.MM.yyyy"
                                 Amount = amount
@@ -129,7 +129,7 @@ module ParserOrangeMoneyPdfAccountStatement =
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
         |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+        |> List.distinctBy(fun t -> t.Identifier)
 
 
     let parsePdfs userId (pdfs: PdfReader list) =
@@ -144,7 +144,7 @@ module ParserOrangeMoneyPdfAccountStatement =
                 |> List.concat
             )
             |> List.concat
-            |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Identifier)
 
         StoreTransactions.storeTransaction userId parsedTransaction
 

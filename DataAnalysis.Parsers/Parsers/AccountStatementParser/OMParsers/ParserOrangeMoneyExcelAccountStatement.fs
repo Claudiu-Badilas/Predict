@@ -48,7 +48,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                  | _ -> 
                      let amount = row[4] |> Some |> ParserUtils.tryGetDouble
                      Some {
-                         Id = None
+                         Identifier = None
                          RegistrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "d.M.yyyy h:mm:ss"
                          CompletionDate = DateTimeUtils.convertStringToUTCDate (row[1] |> Some) "d.M.yyyy h:mm:ss"
                          Amount = amount
@@ -66,7 +66,7 @@ module ParserOrangeMoneyExcelAccountStatement =
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
         |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+        |> List.distinctBy(fun t -> t.Identifier)
 
 
     let parseExcels userId (excels: WorkBook list) =
@@ -81,7 +81,7 @@ module ParserOrangeMoneyExcelAccountStatement =
                 |> List.concat
             )
             |> List.concat
-            |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Identifier)
 
         StoreTransactions.storeTransaction userId parsedTransaction
 

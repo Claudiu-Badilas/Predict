@@ -4,6 +4,8 @@ open DataAnalysis.Parsers
 open iTextSharp.text.pdf
 open System
 open DataAnalysis.Parsers.OMParsers
+open DataAnalysis.Parsers.OMParsers.AccountStatementParser
+open DataAnalysis.Parsers.AccountStatementParser
 
 module ParserConsole =
 
@@ -22,10 +24,10 @@ module ParserConsole =
     [<EntryPoint>]
     let main _ =
         let userId = 1
-        let raifExcels = getLocalExcels @"C:\Users\Claudiu\Desktop\Raiff-Excels"
-        let revExcels = getLocalExcels @"C:\Users\Claudiu\Desktop\Revolut-Excels"
-        let omExcels = getLocalExcels @"C:\Users\Claudiu\Desktop\OM\Excels"
-        let omPdfs = getLocalPdfs @"C:\Users\Claudiu\Desktop\OM\PDFs"
+        let raifExcels = getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\Raiff-Excels"
+        let revExcels = getLocalExcels @"C:\Users\badicl\Desktop\My shortcuts\Revolut-Excels"
+        //let omExcels = getLocalExcels @"C:\Users\Claudiu\Desktop\OM\Excels"
+        let omPdfs = getLocalPdfs @"C:\Users\badicl\Desktop\My shortcuts\OM\PDFs"
 
         let raitransactions = ParserRaiffeisenExcelAccountStatement.parseExcels userId raifExcels
         let revtransactions = ParserRevolutExcelAccountStatement.parseExcels userId revExcels

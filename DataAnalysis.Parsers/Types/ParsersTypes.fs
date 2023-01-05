@@ -29,7 +29,7 @@ module ParsersTypes =
         
     type ParsedTransaction = 
         {
-            Id: string option
+            Identifier: string option
             RegistrationDate: DateTime option
             CompletionDate: DateTime option
             Amount: double option

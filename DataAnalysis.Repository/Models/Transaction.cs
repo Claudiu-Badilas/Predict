@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAnalysis.Repository.Models {
     public class Transaction {
-        public string Id { get; set; }
+        public string Identifier { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public double? Amount { get; set; }

@@ -10,7 +10,7 @@ namespace DataAnalysis.Repository.Repositories {
             using (var connection = new NpgsqlConnection(NpsqlConnectionString)) {
                 connection.Open();
                 var sql = @"
-                    SELECT Id 
+                    SELECT identifier 
                     FROM platform.transactions
                     WHERE user_id = @UserId;";
 
@@ -23,16 +23,16 @@ namespace DataAnalysis.Repository.Repositories {
                 connection.Open();
                 var sql = @"
                     INSERT INTO platform.transactions (
-                        id, registration_date, completition_date, amount, fee, description, 
+                        identifier, registration_date, completition_date, amount, fee, description, 
                         reference_id, provider_id, currency_id, status_id, transaction_type_id, 
                         user_id )
                     VALUES (
-                        @Id, @RegistrationDate, @CompletionDate, @Amount, @Fee, @Description, 
+                        @Identifier, @RegistrationDate, @CompletionDate, @Amount, @Fee, @Description, 
                         @ReferenceId, @ProviderId, @CurrencyId, @StatusId, @TransactionTypeId,
                         @UserId );";
 
                 return await connection.ExecuteAsync(sql, transactions.Select(t => new {
-                    Id = t.Id,
+                    Identifier = t.Identifier,
                     RegistrationDate = t.RegistrationDate.ToString(),
                     CompletionDate = t.CompletionDate.ToString(),
                     Amount = t.Amount,

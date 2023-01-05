@@ -61,7 +61,7 @@ module ParserRaiffeisenExcelAccountStatement =
                     let description = row[11]
                     let registrationDate = DateTimeUtils.convertStringToUTCDate (date |> Some) "dd/MM/yyyy"
                     Some {
-                        Id = None
+                        Identifier = None
                         RegistrationDate = registrationDate
                         CompletionDate = DateTimeUtils.convertStringToUTCDate (row[1] |> Some) "dd/MM/yyyy"
                         Amount = getAmount debit credit
@@ -79,7 +79,7 @@ module ParserRaiffeisenExcelAccountStatement =
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
         |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
-        |> List.distinctBy(fun t -> t.Id)
+        |> List.distinctBy(fun t -> t.Identifier)
 
 
     let parseExcels userId (excels: WorkBook list) =
@@ -94,7 +94,7 @@ module ParserRaiffeisenExcelAccountStatement =
                 |> List.concat
             )
             |> List.concat
-            |> List.distinctBy(fun t -> t.Id)
+            |> List.distinctBy(fun t -> t.Identifier)
 
         StoreTransactions.storeTransaction userId parsedTransaction
 
