@@ -1,8 +1,8 @@
 ﻿namespace DataAnalysis.Parsers.OMParsers.AccountStatementParser
 
 open IronXL
-open System
-open DataAnalysis.Types.ParsersTypes
+open DataAnalysis.Types.TransactionTypes
+open DataAnalysis.Types.CommonTypes
 open DataAnalysis.Utils
 open System.Text.RegularExpressions
 open DataAnalysis.DatabaseAccess
@@ -72,14 +72,7 @@ module ParserOrangeMoneyExcelAccountStatement =
     let parseExcels userId (excels: WorkBook list) =
         let parsedTransaction =
             excels 
-            |> List.toArray
-            |> Array.chunkBySize 100
-            |> Array.Parallel.map (fun chunk ->
-                chunk 
-                |> Array.toList
-                |> List.map(fun excel -> getTransactions excel userId)
-                |> List.concat
-            )
+            |> List.map(fun excel -> getTransactions excel userId)
             |> List.concat
             |> List.distinctBy(fun t -> t.Identifier)
 

@@ -1,8 +1,10 @@
 ﻿namespace DataAnalysis.Utils
 
-open DataAnalysis.Types.ParsersTypes
+open DataAnalysis.Types.TransactionTypes
+open DataAnalysis.Types.CommonTypes
 open System
 open System.Globalization
+open DataAnalysis.Types.ReceiptTypes
 
 module ParserUtils =
 
@@ -39,6 +41,8 @@ module ParserUtils =
         | Some Provider.RAIFFEISEN -> "RAIFFEISEN" |> Some
         | Some Provider.REVOLUT -> "REVOLUT" |> Some
         | Some Provider.ORANGE_MONEY -> "ORANGE_MONEY" |> Some
+        | Some Provider.CARREFOUR -> "CARREFOUR" |> Some
+        | Some Provider.KAUFLAND -> "KAUFLAND" |> Some
         | _ -> "" |> Some
 
 
@@ -51,7 +55,18 @@ module ParserUtils =
         | _ -> "" |> format
 
 
-    let generateUniqueId (userId: int) (registrationDate: DateTime option) (completitonDate: DateTime option) (amount: double option) (index: int) (provider: Provider option) (referenceId: int option) =
+    let generateReceiptUniqueId (userId: int) (date: DateTime option) (amount: double option) (provider: Provider option) =
+        let userIdentifier = string userId |> format
+        let dateIdentifier = date |> formatOption
+        let amountIdentifier = amount |> formatOption
+        let providerIdentifier = getProvider provider |> formatOption
+
+        let identifier = userIdentifier + dateIdentifier + amountIdentifier + providerIdentifier
+        identifier.Substring(0, identifier.Length - 1) |> Some
+
+
+    let generateTransactionUniqueId (userId: int) (registrationDate: DateTime option) (completitonDate: DateTime option) 
+        (amount: double option) (index: int) (provider: Provider option) (referenceId: int option) =
         let userIdentifier = string userId |> format
         let registrationIdentifier = registrationDate |> formatOption
         let completitonIdentifier = completitonDate |> formatOption
@@ -60,9 +75,8 @@ module ParserUtils =
         let referenceIdentifier = referenceId |> formatOption
         let providerIdentifier = getProvider provider |> formatOption
 
-        userIdentifier + registrationIdentifier + completitonIdentifier + amountIdentifier + 
-        indexIdentifier + referenceIdentifier + providerIdentifier 
-        |> Some
+        let identifier = userIdentifier + registrationIdentifier + completitonIdentifier + amountIdentifier + indexIdentifier + referenceIdentifier + providerIdentifier 
+        identifier.Substring(0, identifier.Length - 1) |> Some
 
 
     let mapTransactions (transaction: ParsedTransaction list) userId: ParsedTransaction list =
@@ -70,7 +84,7 @@ module ParserUtils =
         |> List.indexed
         |> List.map(fun (i, rpt)-> 
             {   
-                Identifier = generateUniqueId userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i rpt.Provider rpt.ReferenceId
+                Identifier = generateTransactionUniqueId userId rpt.RegistrationDate rpt.CompletionDate rpt.Amount i rpt.Provider rpt.ReferenceId
                 RegistrationDate = rpt.RegistrationDate
                 CompletionDate = rpt.CompletionDate
                 Amount = rpt.Amount

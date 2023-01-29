@@ -1,12 +1,13 @@
 ﻿namespace DataAnalysis.Parsers.OMParsers.AccountStatementParser
 
 open System
-open DataAnalysis.Types.ParsersTypes
+open DataAnalysis.Types.TransactionTypes
 open DataAnalysis.Utils
 open System.Text.RegularExpressions
 open DataAnalysis.DatabaseAccess
 open iTextSharp.text.pdf
 open iTextSharp.text.pdf.parser
+open DataAnalysis.Types.CommonTypes
 
 module ParserOrangeMoneyPdfAccountStatement =
 
@@ -135,14 +136,7 @@ module ParserOrangeMoneyPdfAccountStatement =
     let parsePdfs userId (pdfs: PdfReader list) =
         let parsedTransaction =
             pdfs 
-            |> List.toArray
-            |> Array.chunkBySize 100
-            |> Array.Parallel.map (fun chunk ->
-                chunk 
-                |> Array.toList
-                |> List.map(fun pdf -> getTransactions pdf userId)
-                |> List.concat
-            )
+            |> List.map(fun pdf -> getTransactions pdf userId)
             |> List.concat
             |> List.distinctBy(fun t -> t.Identifier)
 
