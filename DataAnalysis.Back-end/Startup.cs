@@ -23,6 +23,8 @@ namespace DataAnalysis {
 
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ITransactionRepo, TransactionRepo>();
+            services.AddSingleton<IReceiptRepo, ReceiptRepo>();
+
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
 

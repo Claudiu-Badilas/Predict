@@ -1,0 +1,92 @@
+﻿namespace DataAnalysis.DatabaseAccess
+
+open System
+open DataAnalysis.Repository.Repositories
+open DataAnalysis.Repository.Models
+open DataAnalysis.Types.TransactionTypes
+open DataAnalysis.DatabaseAccess.StorerUtils
+open DataAnalysis.Types.ReceiptTypes
+
+module StoreReceipts =
+    
+    let filterDublicates (storedReceiptsIds: Receipt list) (receipts: Receipt list) =
+        receipts
+        |> List.filter(fun r -> not (storedReceiptsIds |> List.exists(fun sr -> r.Identifier = sr.Identifier)))
+
+
+    let getQuantityTypeId quantityType =
+        match quantityType with
+        | Some quantityType ->
+            match quantityType with
+            | QuantityType.BUC -> Nullable(1)
+            | QuantityType.KG -> Nullable(2)
+        | _ -> Nullable()
+
+
+    let mapPurchasedProducts (products: ParsedPurchasedProduct option list) = 
+        products
+        |> List.map(fun p -> 
+            new PurchasedProduct(
+                Name = p.Value.Name.Value,
+                Price = StorerUtils.getNullableFloatFromOption p.Value.Price,
+                Quantity = StorerUtils.getNullableFloatFromOption p.Value.Quantity,
+                VAT = StorerUtils.getNullableFloatFromOption p.Value.VAT,
+                QuantityTypeId = getQuantityTypeId p.Value.QuantityType
+            )
+        )
+        
+    let mapPurchasedProduct (product: PurchasedProduct ) receiptId = 
+        new PurchasedProduct(
+            Name = product.Name,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            VAT = product.VAT,
+            QuantityTypeId = product.QuantityTypeId,
+            ReceiptId = receiptId
+        )
+
+
+    let storeReceipts userId (parsedReceipts: ParsedReceipt list) =
+        let receiptRepo = new ReceiptRepo()
+        let receipts = 
+            parsedReceipts
+            |> List.map(fun r ->
+                new Receipt (
+                    Identifier = r.Identifier.Value,
+                    Date = StorerUtils.getNullableDateTimeFromOption r.Date,
+                    TotalPrice = StorerUtils.getNullableFloatFromOption r.TotalPrice,
+                    TotalDiscount = StorerUtils.getNullableFloatFromOption r.TotalDiscount,
+                    Products = mapPurchasedProducts r.ParsedProducts,
+                    CurrencyId =  StorerUtils.getCurrencyTypeId r.Currency,
+                    ProviderId = StorerUtils.getTransactionProviderId r.Provider,
+                    UserId = userId
+                )
+            )
+
+        let storedReceiptsIds = 
+            receiptRepo.GetReceiptByUserId(userId).Result
+            |> Seq.toList
+
+        let filteredReceipts = filterDublicates storedReceiptsIds receipts
+        let storingResp = receiptRepo.StoreReceipts(filteredReceipts)
+        storingResp.Result
+
+        let allStoredReceiptsIds = 
+            receiptRepo.GetReceiptByUserId(userId).Result
+            |> Seq.toList
+        
+        let purchasedProducts =
+            filteredReceipts
+            |> List.map(fun receipt -> 
+                let foundReceipt = 
+                    allStoredReceiptsIds 
+                    |> List.find(fun storedReceipt -> receipt.Identifier = storedReceipt.Identifier)
+                let da =
+                    receipt.Products
+                    |> Seq.toList
+                    |> List.map(fun product -> mapPurchasedProduct product foundReceipt.Id)
+                da
+            )
+            |> List.concat
+        let storingResponse = receiptRepo.StorePurchasedProducts(purchasedProducts)
+        storingResponse.Result

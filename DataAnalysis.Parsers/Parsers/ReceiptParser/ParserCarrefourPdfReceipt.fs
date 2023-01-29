@@ -7,6 +7,7 @@ open System.Text.RegularExpressions
 open iTextSharp.text.pdf
 open DataAnalysis.Types.CommonTypes
 open DataAnalysis.Utils.ParserUtils
+open DataAnalysis.DatabaseAccess
 
 module ParserCarrefourPdfReceipt =
         
@@ -49,13 +50,13 @@ module ParserCarrefourPdfReceipt =
                         let percentValue = v.Split(" ")[0]
                         percentValue.Substring(0, percentValue.Length - 1) |> Some )
                     |> ParserUtils.tryGetDouble
-                let price, words = popLastElementOfList words
+                let _, words = popLastElementOfList words
                 Some {
                     Name = List.fold (fun acc x -> acc + " " + x) "" words |> Some
-                    Quanty = result.Groups[1].Value |> Some |> ParserUtils.tryGetDouble
+                    Quantity = result.Groups[1].Value |> Some |> ParserUtils.tryGetDouble
                     QuantityType = result.Groups[3].Value |> getQuantyType
                     VAT = vat
-                    Price = price |> Some |> ParserUtils.tryGetDouble
+                    Price = result.Groups[5].Value |> Some |> ParserUtils.tryGetDouble
                 }
             | _ -> None
         )
@@ -74,7 +75,7 @@ module ParserCarrefourPdfReceipt =
             Identifier = generateReceiptUniqueId userId dateTime total provider
             Date = dateTime
             TotalPrice = total
-            TotalDiscount = getValue text "DISCOUNT:" |> Option.bind(fun v -> v.Substring(0, v.Length - 2) |> Some) |> ParserUtils.tryGetDouble
+            TotalDiscount = getValue text "economisit" |> Option.bind(fun v -> v.Split(" ")[0] |> Some) |> ParserUtils.tryGetDouble
             Currency = CurrencyType.RON |> Some
             ParsedProducts = products
             Provider = provider
@@ -86,7 +87,7 @@ module ParserCarrefourPdfReceipt =
             pdfs 
             |> List.map(fun pdf -> getReceipt pdf userId)
             |> List.distinctBy(fun t -> t.Identifier)
-
-        parsedTransaction
+        
+        StoreReceipts.storeReceipts userId parsedTransaction
 
 

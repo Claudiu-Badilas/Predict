@@ -7,11 +7,11 @@ module ReceiptTypes =
 
     type QuantityType = BUC | KG
 
-    type ParsedProduct = 
+    type ParsedPurchasedProduct = 
         {
             Name: string option
             Price: double option
-            Quanty: double option
+            Quantity: double option
             QuantityType: QuantityType option
             VAT: double option
         }
@@ -23,7 +23,7 @@ module ReceiptTypes =
             TotalPrice: double option
             TotalDiscount: double option
             Currency: CurrencyType option
-            ParsedProducts: ParsedProduct option list 
+            ParsedProducts: ParsedPurchasedProduct option list 
             Provider: Provider option
         }
 
