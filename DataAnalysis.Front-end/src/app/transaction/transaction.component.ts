@@ -10,12 +10,21 @@ import { HttpClientModule } from '@angular/common/http';
   template: `<table>
     <tr *ngFor="let tran of transactions">
       {{
+        tran.id
+      }}
+      |{{
         tran.registrationDate
       }}
       |{{
         tran.amount
       }}
       |
+      {{
+        tran.provider
+      }}|
+      {{
+        tran.currency
+      }}|
       {{
         tran.description
       }}
