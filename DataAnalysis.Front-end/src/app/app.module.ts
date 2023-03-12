@@ -1,3 +1,4 @@
+import { AuthenticationService } from './platform/services/authentication.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { AppComponent } from './app.component';
 import { TransactionService } from './modules/transaction-module/services/transaction.service';
 import { TransactionModule } from './modules/transaction-module/transaction.module';
 import { AppRouting } from './app.routing';
+import { AuthenticationModule } from './platform/authentication/authentication.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,8 +20,9 @@ import { AppRouting } from './app.routing';
     ReactiveFormsModule,
     FormsModule,
     TransactionModule,
+    AuthenticationModule,
   ],
   bootstrap: [AppComponent],
-  providers: [TransactionService],
+  providers: [TransactionService, AuthenticationService],
 })
 export class AppModule {}

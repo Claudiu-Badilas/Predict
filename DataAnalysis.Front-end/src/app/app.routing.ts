@@ -4,7 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    children: [{ path: '', redirectTo: 'transactions', pathMatch: 'full' }],
+    children: [{ path: '', redirectTo: 'authentication', pathMatch: 'full' }],
+  },
+  {
+    path: 'authentication',
+    loadChildren: () =>
+      import('./platform/authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
   },
   {
     path: 'transactions',
@@ -15,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'transactions',
+    redirectTo: 'authentication',
     pathMatch: 'full',
   },
 ];
