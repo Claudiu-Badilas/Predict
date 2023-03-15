@@ -12,21 +12,15 @@
       name="emailId"
       formControlName="email"
       [ngClass]="{
-        'is-invalid':
-          credentialForm.get('email').invalid &&
-          (!credentialForm.get('email').pristine ||
-            credentialForm.get('email').dirty)
+        'is-invalid': isValidateInputValue(credentialForm, 'email')
       }"
     />
     <span
-      *ngIf="
-        credentialForm.get('email').invalid &&
-        (!credentialForm.get('email').pristine ||
-          credentialForm.get('email').dirty)
-      "
+      *ngIf="isValidateInputValue(credentialForm, 'email')"
       class="invalid-feedback d-flex position-absolute"
-      >{{ credentialForm.controls["email"]?.errors["value"] }}</span
     >
+      {{ getInputValidationError(credentialForm, "email") }}
+    </span>
     <label for="password">Password</label>
     <input
       class="form-control"
@@ -35,21 +29,14 @@
       name="passwordId"
       formControlName="password"
       [ngClass]="{
-        'is-invalid':
-          credentialForm.get('password').invalid &&
-          (!credentialForm.get('password').pristine ||
-            credentialForm.get('password').dirty)
+        'is-invalid': isValidateInputValue(credentialForm, 'password')
       }"
     />
     <span
-      *ngIf="
-        credentialForm.get('password').invalid &&
-        (!credentialForm.get('password').pristine ||
-          credentialForm.get('password').dirty)
-      "
+      *ngIf="isValidateInputValue(credentialForm, 'password')"
       class="invalid-feedback d-flex position-absolute"
     >
-      {{ credentialForm.controls["password"]?.errors["value"] }}
+      {{ getInputValidationError(credentialForm, "password") }}
     </span>
     <button class="" type="submit" [disabled]="credentialForm.invalid">
       Log In

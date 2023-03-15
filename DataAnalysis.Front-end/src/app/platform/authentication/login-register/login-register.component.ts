@@ -22,6 +22,17 @@ export class LoginRegisterComponent {
     });
   }
 
+  isValidateInputValue(form: FormGroup, inputName: string) {
+    return (
+      form.get(inputName).invalid &&
+      (!form.get(inputName).pristine || form.get(inputName).dirty)
+    );
+  }
+
+  getInputValidationError(form: FormGroup, inputName: string) {
+    return form.controls[inputName]?.errors['value'];
+  }
+
   onSubmitChanges(form: UntypedFormGroup) {
     console.log('invalid', form.get('email').invalid);
     console.log('pristine', !form.get('email').pristine);
