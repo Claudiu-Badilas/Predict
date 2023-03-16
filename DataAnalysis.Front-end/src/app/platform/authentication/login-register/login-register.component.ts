@@ -10,15 +10,15 @@ import { AuthenticationAction } from './models/authentication-actions.enum';
 })
 export class LoginRegisterComponent {
   credentialForm: FormGroup;
-  registerMessage = `You do not have an account, start journey with us from`;
-  loginMessage = `You already have an account, just log in from`;
+  registerMessage: string = `You do not have an account, start journey with us from`;
+  loginMessage: string = `You already have an account, just log in from`;
 
   constructor(private formBuilder: FormBuilder) {
     this.credentialForm = this.formBuilder.group({
       authenticationAction: new FormControl(AuthenticationAction.Login),
       authenticationMessage: new FormControl(this.registerMessage),
-      email: new FormControl(null, [CustomValidators.email]),
-      password: new FormControl(null, [CustomValidators.minLength(4)]),
+      email: new FormControl('', [CustomValidators.email]),
+      password: new FormControl('', [CustomValidators.minLength(4)]),
     });
   }
 
