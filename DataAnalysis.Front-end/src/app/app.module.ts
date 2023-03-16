@@ -15,7 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { NavigationEffects } from './store/navigation-state/navigation.effects';
 import * as fromAppStore from './store/app-state.reducer';
-import { AuthenticationEffects } from './platform/authentication/effects/authentication-effects.effects';
+import { AuthenticationEffects } from './platform/authentication/effects/authentication.effects';
 
 @NgModule({
   declarations: [AppComponent],
