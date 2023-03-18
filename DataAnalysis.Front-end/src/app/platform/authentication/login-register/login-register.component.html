@@ -4,7 +4,7 @@
     (ngSubmit)="onSubmitChanges(credentialForm)"
     class="form"
   >
-    <h3 class="text-center">
+    <h3 class="text-center text-capitalize">
       {{ getInputValue("authenticationAction") }}
     </h3>
     <label for="email">Email</label>
@@ -42,7 +42,7 @@
       {{ getInputValidationError("password") }}
     </span>
 
-    <div *ngIf="isRegisterFromSelected()">
+    <div *ngIf="isRegisterFromSelected">
       <label for="confirmPassword">Confirm Password</label>
       <input
         class="form-control"

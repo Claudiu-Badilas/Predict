@@ -1,4 +1,4 @@
 export enum AuthenticationAction {
-  Login = 'Login',
-  Register = 'Register',
+  Login = 'login',
+  Register = 'register',
 }
