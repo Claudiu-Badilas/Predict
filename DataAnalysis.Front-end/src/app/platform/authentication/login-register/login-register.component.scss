@@ -98,3 +98,19 @@ button {
     color: #00c9ff;
   }
 }
+
+.password-input {
+  position: relative;
+}
+.password-input input {
+  border: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+.password-input img {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  opacity: 0.2;
+}

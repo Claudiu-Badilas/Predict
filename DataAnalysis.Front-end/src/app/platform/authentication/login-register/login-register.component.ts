@@ -23,6 +23,8 @@ export class LoginRegisterComponent {
   registerMessage: string = `You do not have an account, start journey with us from`;
   loginMessage: string = `You already have an account, just log in from`;
   isRegisterActive: boolean = false;
+  isVisiblePassword: boolean = false;
+
   credentialForm: FormGroup = this.formBuilder.group(
     {
       authenticationAction: new FormControl(AuthenticationAction.Login),
@@ -151,5 +153,9 @@ export class LoginRegisterComponent {
       this.isInvalidInput('email') ||
       this.isInvalidInput('password')
     );
+  }
+
+  onChangePasswordInputType() {
+    this.isVisiblePassword = !this.isVisiblePassword;
   }
 }

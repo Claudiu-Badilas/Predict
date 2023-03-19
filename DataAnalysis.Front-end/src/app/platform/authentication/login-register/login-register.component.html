@@ -25,35 +25,48 @@
       {{ getInputValidationError("email") }}
     </span>
     <label for="password">Password</label>
-    <input
-      class="form-control"
-      type="password"
-      placeholder="Password"
-      name="passwordId"
-      formControlName="password"
-      [ngClass]="{
-        'is-invalid': isInvalidInput('password')
-      }"
-    />
-    <span
-      *ngIf="isInvalidInput('password')"
-      class="invalid-feedback d-flex position-absolute"
-    >
-      {{ getInputValidationError("password") }}
-    </span>
-
-    <div *ngIf="isRegisterActive">
-      <label for="confirmPassword">Confirm Password</label>
+    <div class="password-input">
       <input
         class="form-control"
-        type="password"
+        [type]="isVisiblePassword ? 'text' : 'password'"
         placeholder="Password"
-        name="confirmPasswordId"
-        formControlName="confirmPassword"
+        name="passwordId"
+        formControlName="password"
         [ngClass]="{
-          'is-invalid': isInvalidInput('confirmPassword')
+          'is-invalid': isInvalidInput('password')
         }"
+      /><img
+        src="assets/icons/eye.svg"
+        (click)="onChangePasswordInputType()"
+        alt="no-image"
+        width="25"
       />
+      <span
+        *ngIf="isInvalidInput('password')"
+        class="invalid-feedback d-flex position-absolute"
+      >
+        {{ getInputValidationError("password") }}
+      </span>
+    </div>
+    <div *ngIf="isRegisterActive">
+      <label for="confirmPassword">Confirm Password</label>
+      <div class="password-input">
+        <input
+          class="form-control"
+          [type]="isVisiblePassword ? 'text' : 'password'"
+          placeholder="Password"
+          name="confirmPasswordId"
+          formControlName="confirmPassword"
+          [ngClass]="{
+            'is-invalid': isInvalidInput('confirmPassword')
+          }"
+        /><img
+          src="assets/icons/eye.svg"
+          (click)="onChangePasswordInputType()"
+          alt="no-image"
+          width="25"
+        />
+      </div>
       <span
         *ngIf="credentialForm.errors?.['isMatchPasswords']"
         class="invalid-feedback d-flex position-absolute"
