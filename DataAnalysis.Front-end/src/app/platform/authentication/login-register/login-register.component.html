@@ -15,11 +15,11 @@
       name="emailId"
       formControlName="email"
       [ngClass]="{
-        'is-invalid': isValidateInputValue('email')
+        'is-invalid': isInvalidInput('email')
       }"
     />
     <span
-      *ngIf="isValidateInputValue('email')"
+      *ngIf="isInvalidInput('email')"
       class="invalid-feedback d-flex position-absolute"
     >
       {{ getInputValidationError("email") }}
@@ -32,17 +32,17 @@
       name="passwordId"
       formControlName="password"
       [ngClass]="{
-        'is-invalid': isValidateInputValue('password')
+        'is-invalid': isInvalidInput('password')
       }"
     />
     <span
-      *ngIf="isValidateInputValue('password')"
+      *ngIf="isInvalidInput('password')"
       class="invalid-feedback d-flex position-absolute"
     >
       {{ getInputValidationError("password") }}
     </span>
 
-    <div *ngIf="isRegisterFromSelected">
+    <div *ngIf="isRegisterActive">
       <label for="confirmPassword">Confirm Password</label>
       <input
         class="form-control"
@@ -51,17 +51,17 @@
         name="confirmPasswordId"
         formControlName="confirmPassword"
         [ngClass]="{
-          'is-invalid': isValidateInputValue('confirmPassword')
+          'is-invalid': isInvalidInput('confirmPassword')
         }"
       />
       <span
-        *ngIf="isValidateInputValue('confirmPassword')"
+        *ngIf="credentialForm.errors?.['isMatchPasswords']"
         class="invalid-feedback d-flex position-absolute"
       >
-        {{ getInputValidationError("confirmPassword") }}
+        Please make sure is matching password
       </span>
     </div>
-    <button class="" type="submit" [disabled]="credentialForm.invalid">
+    <button class="" type="submit" [disabled]="isFormInvalid()">
       {{ getInputValue("authenticationAction") }}
     </button>
 
