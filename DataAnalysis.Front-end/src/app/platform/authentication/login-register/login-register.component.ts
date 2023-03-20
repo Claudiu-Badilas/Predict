@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -10,7 +10,7 @@ import { AuthenticationAction } from './models/authentication-actions.enum';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
 import { select, Store } from '@ngrx/store';
 import * as AuthActions from '../actions/authentication.actions';
-import { combineLatest, debounceTime, filter } from 'rxjs';
+import { combineLatest, debounceTime, filter, Subject, takeUntil } from 'rxjs';
 import * as fromState from 'src/app/store/app-state.reducer';
 import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
 
@@ -19,7 +19,9 @@ import * as NavigationAction from 'src/app/store/navigation-state/navigation.act
   templateUrl: './login-register.component.html',
   styleUrls: ['./login-register.component.scss'],
 })
-export class LoginRegisterComponent {
+export class LoginRegisterComponent implements OnDestroy {
+  private ngUnsubscribe$: Subject<void> = new Subject<void>();
+
   registerMessage: string = `You do not have an account, start journey with us from`;
   loginMessage: string = `You already have an account, just log in from`;
   isRegisterActive: boolean = false;
@@ -57,7 +59,8 @@ export class LoginRegisterComponent {
         debounceTime(500),
         filter(
           ([url, params]) => url?.startsWith(`/authentication`) && !!params
-        )
+        ),
+        takeUntil(this.ngUnsubscribe$.asObservable())
       )
       .subscribe(([, params]) => {
         const authAction: AuthenticationAction = params['auth-type'];
@@ -69,7 +72,6 @@ export class LoginRegisterComponent {
             this.updateCredentialForm();
             break;
           default:
-            console.log('change route');
             this.store.dispatch(
               NavigationAction.navigateTo({ route: '/authentication/login' })
             );
@@ -157,5 +159,10 @@ export class LoginRegisterComponent {
 
   onChangePasswordInputType() {
     this.isVisiblePassword = !this.isVisiblePassword;
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }
