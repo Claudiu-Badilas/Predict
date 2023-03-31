@@ -1,3 +1,4 @@
+import { TopBarModule } from './shared/components/top-bar/top-bar.module';
 import { AuthenticationService } from './platform/services/authentication.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,6 +41,7 @@ import { ToastNotificationModule } from './platform/toast-notifications/toast-no
     ]),
     StoreRouterConnectingModule.forRoot(),
     ToastNotificationModule,
+    TopBarModule,
   ],
   bootstrap: [AppComponent],
   providers: [TransactionService, AuthenticationService],
