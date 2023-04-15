@@ -14,6 +14,7 @@ namespace DataAnalysis.Extensions {
                     migrationService.MigrateUp();
 
                 } catch (Exception e) {
+                    migrationService.Rollback(1);
                     throw new Exception(e.StackTrace);
                 }
             }
