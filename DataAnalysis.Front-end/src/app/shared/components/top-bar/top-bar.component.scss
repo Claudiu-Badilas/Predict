@@ -1,0 +1,108 @@
+@import "src/app/shared/styles/colors.scss";
+
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  background-color: $cyan-900;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+
+  .logo {
+    margin: 10px 100px 10px 40px;
+    max-width: 180px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+  }
+  .luncher {
+    margin: 7px 8px 7px 8px;
+    max-width: 30px;
+    max-height: 30px;
+    width: auto;
+    height: auto;
+  }
+  #module-dropdown {
+    color: $bs-white;
+    font-size: 21px;
+    padding: 10px 90px 10px 10px;
+
+    &:active {
+      background-color: $cyan-800;
+    }
+  }
+
+  .options {
+    display: flex;
+
+    div {
+      font-size: 19px;
+      color: $bs-white;
+      text-align: center;
+      padding: 18px 20px;
+      text-decoration: none;
+      border: none;
+
+      &:hover {
+        background-color: $cyan-500;
+      }
+
+      &:active {
+        background-color: $cyan-700;
+      }
+    }
+  }
+  .account {
+    padding: 16px 70px 16px 15px;
+    margin-left: 175px;
+    color: $bs-white;
+
+    &-avatar {
+      max-width: 40px;
+      max-height: 40px;
+      padding-right: 10px;
+    }
+
+    &:hover {
+      background-color: $cyan-700;
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: $cyan-800;
+      cursor: pointer;
+    }
+  }
+}
+
+.dropdown,
+.dropup {
+  &-menu {
+    background-color: $cyan-800;
+
+    .dropdown-item {
+      padding: 10px 100px 10px 50px;
+      background-color: $cyan-800;
+      color: $bs-white;
+      font-size: 19px;
+      border-radius: 0px;
+
+      &:hover {
+        background-color: $cyan-500;
+      }
+
+      &:active {
+        background-color: $cyan-700;
+      }
+    }
+  }
+
+  &-toggle {
+    cursor: pointer;
+
+    &::after {
+      display: none;
+    }
+  }
+}
