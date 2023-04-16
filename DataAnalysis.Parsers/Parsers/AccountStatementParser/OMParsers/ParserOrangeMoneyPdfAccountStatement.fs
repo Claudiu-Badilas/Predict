@@ -130,13 +130,13 @@ module ParserOrangeMoneyPdfAccountStatement =
         |> List.distinctBy(fun t -> t.Identifier)
 
 
-    let parsePdfs userId (pdfs: PdfReader list) =
+    let parsePdfs dataOwnerId (pdfs: PdfReader list) =
         let parsedTransaction =
             pdfs 
-            |> List.map(fun pdf -> getTransactions pdf userId)
+            |> List.map(fun pdf -> getTransactions pdf dataOwnerId)
             |> List.concat
             |> List.distinctBy(fun t -> t.Identifier)
 
-        StoreTransactions.storeTransaction userId parsedTransaction
+        StoreTransactions.storeTransaction dataOwnerId parsedTransaction
 
 

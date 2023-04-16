@@ -51,12 +51,12 @@ module ParserRevolutExcelAccountStatement =
         |> List.distinctBy(fun t -> t.Identifier)
 
 
-    let parseExcels userId (excels: WorkBook list) =
+    let parseExcels dataOwnerId (excels: WorkBook list) =
         let parsedTransaction =
             excels 
-            |> List.map(fun excel -> getTransactions excel userId)
+            |> List.map(fun excel -> getTransactions excel dataOwnerId)
             |> List.concat
             |> List.distinctBy(fun t -> t.Identifier)
 
-        StoreTransactions.storeTransaction userId parsedTransaction
+        StoreTransactions.storeTransaction dataOwnerId parsedTransaction
 
