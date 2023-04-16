@@ -2,25 +2,28 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using DataAnalysis.Services.Interfaces;
 using DataAnalysis.Common.Configuration;
 using DataAnalysis.Repository.UserRepo.Models;
 
-namespace DataAnalysis.Services
+namespace DataAnalysis.Service.TokenService
 {
-    public class TokenService : ITokenService {
+    public class TokenService : ITokenService
+    {
         private readonly SymmetricSecurityKey _key;
 
-        public TokenService(IEnvironmentConfiguration envConfig) {
+        public TokenService(IEnvironmentConfiguration envConfig)
+        {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(envConfig.GetJWTKey()));
         }
 
-        public string CreateToken(UserResponse user) {
+        public string CreateToken(UserResponse user)
+        {
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Email)
             };
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
-            var tokenDescriptor = new SecurityTokenDescriptor {
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = creds

@@ -1,5 +1,3 @@
-using DataAnalysis.Services.Interfaces;
-using DataAnalysis.Services;
 using DataAnalysis.Extensions;
 using DataAnalysis.Middleware;
 using DataAnalysis.Common.Configuration;
@@ -11,6 +9,8 @@ using DataAnalysis.Repository.HealthRepo;
 using DataAnalysis.Repository.ReceiptRepo;
 using DataAnalysis.Repository.TransactionRepo;
 using DataAnalysis.Repository.UserRepo;
+using DataAnalysis.Service.TokenService;
+using DataAnalysis.Service.AccountService;
 
 namespace DataAnalysis {
     public class Startup {
