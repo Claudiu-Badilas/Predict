@@ -1,11 +1,11 @@
 ﻿namespace DataAnalysis.DatabaseAccess
 
 open System
-open DataAnalysis.Repository.Repositories
-open DataAnalysis.Repository.Models
 open DataAnalysis.Types.TransactionTypes
 open DataAnalysis.DatabaseAccess.StorerUtils
 open DataAnalysis.Common.Configuration
+open DataAnalysis.Repository.TransactionRepo.Models
+open DataAnalysis.Repository.TransactionRepo
 
 module StoreTransactions =
     
@@ -49,7 +49,7 @@ module StoreTransactions =
                     Description = t.Description.Value,
                     CurrencyId = StorerUtils.getCurrencyTypeId t.Currency,
                     TransactionTypeId = getTransactionTypeId t.TransactionType,
-                    ProviderId = StorerUtils.getTransactionProviderId t.Provider,
+                    ProviderId = StorerUtils.getProviderId t.Provider,
                     DataOwnerId = dataOwnerId
                 )
             )

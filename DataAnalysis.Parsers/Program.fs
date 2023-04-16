@@ -7,6 +7,9 @@ open DataAnalysis.Parsers.OMParsers
 open DataAnalysis.Parsers.OMParsers.AccountStatementParser
 open DataAnalysis.Parsers.AccountStatementParser
 open DataAnalysis.Parsers.ReceiptParser
+open System.IO
+open Newtonsoft.Json
+open DataAnalysis.Parsers.HealthParser
 
 module ParserConsole =
 
@@ -21,7 +24,26 @@ module ParserConsole =
         Directory.EnumerateFiles(path, "*.pdf")
         |> Seq.toList 
         |> List.map(fun f -> new PdfReader(Path.Combine(path, f)))
+   
+   
+    let getLocalCsvs path =
+        Directory.EnumerateFiles(path, "*.csv")
+        |> Seq.toList 
+        |> List.map(fun f -> new StreamReader(f))
+        
+    let getLocalJsons path =
+        Directory.EnumerateFiles(path, "*.json")
+        |> Seq.toList 
+        |> List.map(fun f -> new StreamReader(f))
 
+    type Data =
+        {
+            Calorie: double option
+            Distance: double option
+            Segment: double option
+            Speed: double option
+            Start_time: double option
+        }
 
     [<EntryPoint>]
     let main _ =
@@ -29,19 +51,21 @@ module ParserConsole =
 
         //let raifExcels = getLocalExcels @""
         //let raitransactions = ParserRaiffeisenExcelAccountStatement.parseExcels dataOwnerId raifExcels
+        
+        //let raifExcels = getLocalCsvs @""
+        //let raitransactions = ParserRaiffeisenExcelAccountStatement.parseExcels dataOwnerId raifExcels
 
         //let revExcels = getLocalExcels @""
         //let revtransactions = ParserRevolutExcelAccountStatement.parseExcels dataOwnerId revExcels
 
-        //let omExcels = getLocalExcels @""
-        //let omtransactions = ParserOrangeMoneyExcelAccountStatement.parseExcels dataOwnerId omExcels
-
         //let omPdfs = getLocalPdfs @""
         //let omtransactions = ParserOrangeMoneyPdfAccountStatement.parsePdfs dataOwnerId omPdfs
 
-        let carrPdfs = getLocalPdfs @""
-        let carrReceipts = ParserCarrefourPdfReceipt.parsePdfs dataOwnerId carrPdfs
-
+        //let carrPdfs = getLocalPdfs @"r"
+        //let carrReceipts = ParserCarrefourPdfReceipt.parsePdfs dataOwnerId carrPdfs
+        
+        let heartRatecsv = getLocalCsvs @""
+        let rates = ParserZeppLifeHeartRate.parseCsvs dataOwnerId heartRatecsv
 
         printfn "Run succesfully"
         0

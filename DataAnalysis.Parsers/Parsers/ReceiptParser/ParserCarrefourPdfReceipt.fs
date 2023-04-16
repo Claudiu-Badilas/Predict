@@ -82,12 +82,12 @@ module ParserCarrefourPdfReceipt =
         }
     
     
-    let parsePdfs userId (pdfs: PdfReader list) =
+    let parsePdfs dataOwnerId (pdfs: PdfReader list) =
         let parsedTransaction =
             pdfs 
-            |> List.map(fun pdf -> getReceipt pdf userId)
+            |> List.map(fun pdf -> getReceipt pdf dataOwnerId)
             |> List.distinctBy(fun t -> t.Identifier)
         
-        StoreReceipts.storeReceipts userId parsedTransaction
+        StoreReceipts.storeReceipts dataOwnerId parsedTransaction
 
 
