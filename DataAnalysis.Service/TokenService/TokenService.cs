@@ -4,26 +4,22 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using DataAnalysis.Common.Configuration;
 using DataAnalysis.Repository.UserRepo.Models;
+using System.Net;
 
-namespace DataAnalysis.Service.TokenService
-{
-    public class TokenService : ITokenService
-    {
+namespace DataAnalysis.Service.TokenService {
+    public class TokenService : ITokenService {
         private readonly SymmetricSecurityKey _key;
 
-        public TokenService(IEnvironmentConfiguration envConfig)
-        {
+        public TokenService(IEnvironmentConfiguration envConfig) {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(envConfig.GetJWTKey()));
         }
 
-        public string CreateToken(UserResponse user)
-        {
+        public string CreateToken(UserResponse user) {
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Email)
             };
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
+            var tokenDescriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = creds
@@ -31,6 +27,13 @@ namespace DataAnalysis.Service.TokenService
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public string GetEmailFromClaims(string token) {
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token.Split(" ")[1]);
+            var tokenS = jsonToken as JwtSecurityToken;
+            return tokenS.Claims.FirstOrDefault()?.Value;
         }
     }
 }

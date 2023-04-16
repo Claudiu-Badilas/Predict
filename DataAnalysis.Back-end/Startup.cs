@@ -11,6 +11,7 @@ using DataAnalysis.Repository.TransactionRepo;
 using DataAnalysis.Repository.UserRepo;
 using DataAnalysis.Service.TokenService;
 using DataAnalysis.Service.AccountService;
+using DataAnalysis.Service.AuthorizationService;
 
 namespace DataAnalysis {
     public class Startup {
@@ -40,8 +41,9 @@ namespace DataAnalysis {
             services.AddSingleton<IReceiptRepo, ReceiptRepo>();
             services.AddSingleton<IHealthRepo, HealthRepo>();
 
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddSingleton<ITokenService, TokenService>();
+            services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<IAuthorizationService, AuthorizationService>();
 
             services.AddSingleton<IEnvironmentConfiguration, EnvironmentConfiguration>();
 
