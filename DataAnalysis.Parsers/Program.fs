@@ -9,6 +9,8 @@ open DataAnalysis.Parsers.AccountStatementParser
 open DataAnalysis.Parsers.ReceiptParser
 open System.IO
 open Newtonsoft.Json
+open DataAnalysis.Parsers.HealthParser
+
 module ParserConsole =
 
     let getLocalExcels path =
@@ -47,51 +49,23 @@ module ParserConsole =
     let main _ =
         let dataOwnerId = 1
 
-        //let raifExcels = getLocalExcels @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\AccountStatements\Raiffaisen"
+        //let raifExcels = getLocalExcels @""
         //let raitransactions = ParserRaiffeisenExcelAccountStatement.parseExcels dataOwnerId raifExcels
         
-        let raifExcels = getLocalCsvs @"C:\Users\Claudiu\Desktop\samsunghealth_claudiu.badilas_20230409204798"
+        //let raifExcels = getLocalCsvs @""
         //let raitransactions = ParserRaiffeisenExcelAccountStatement.parseExcels dataOwnerId raifExcels
 
         //let revExcels = getLocalExcels @""
         //let revtransactions = ParserRevolutExcelAccountStatement.parseExcels dataOwnerId revExcels
 
-        //let omExcels = getLocalExcels @""
-        //let omtransactions = ParserOrangeMoneyExcelAccountStatement.parseExcels dataOwnerId omExcels
-
-        //let omPdfs = getLocalPdfs @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\AccountStatements\OrangeMoney\PDFs"
+        //let omPdfs = getLocalPdfs @""
         //let omtransactions = ParserOrangeMoneyPdfAccountStatement.parsePdfs dataOwnerId omPdfs
 
-        //let carrPdfs = getLocalPdfs @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\Receipts\Carrefour"
+        //let carrPdfs = getLocalPdfs @"r"
         //let carrReceipts = ParserCarrefourPdfReceipt.parsePdfs dataOwnerId carrPdfs
         
-        let carrPdfs = 
-            getLocalCsvs @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\Health\Mi Band\HEARTRATE_AUTO"
-            |> List.iter(fun reader -> 
-                let mutable data = []
-                while not reader.EndOfStream do
-                    let values = reader.ReadLine().Split(',')
-                    data <- values :: data
-                reader.Close()
+        let heartRatecsv = getLocalCsvs @""
+        let rates = ParserZeppLifeHeartRate.parseCsvs dataOwnerId heartRatecsv
 
-                data
-                |> List.toArray
-                |> Array.Parallel.iter(fun row ->
-                    row |> Array.iter(fun r -> printf "%s " r)
-                    printfn ""
-                )
-            )
-        //let carrReceipts = ParserCarrefourPdfReceipt.parsePdfs dataOwnerId carrPdfs
-        (*let data =
-            ["\\1"; "\\2"; "\\3"; "\\4"; "\\5"; "\\6"; "\\7"; "\\8"; "\\9"; "\\a"; "\\b"; "\\c"; "\\d"; "\\e"; "\\f"]
-            |> List.map(fun n -> 
-                getLocalJsons ("C:\Users\Claudiu\Desktop\samsunghealth_claudiu.badilas_20230409204798\jsons\com.samsung.shealth.exercise" +  n)
-            )
-            |> List.concat
-            |> List.map(fun reader ->
-                let json = reader.ReadToEnd()
-                //let parsedJson = JsonConvert.DeserializeObject(json)
-                0
-            )*)
         printfn "Run succesfully"
         0
