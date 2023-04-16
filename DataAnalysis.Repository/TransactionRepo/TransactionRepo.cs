@@ -13,14 +13,14 @@ namespace DataAnalysis.Repository.TransactionRepo {
             _npsqlConnectionString = envConfig.GetNpsqlConnectionString();
         }
 
-        public async Task<IEnumerable<TransactionResponse>> GetTransactionByUserId(int dataOwnerId) {
+        public async Task<IEnumerable<TransactionResponse>> GetTransactionByUserIdAndOwnerId(int userId, int ownerId) {
             using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
                 connection.Open();
                 var sql = @"
                     SELECT 
                         t.id as Id, 
-                        t.registration_date::timestamp as RegistrationDate, 
-                        t.completition_date::timestamp as CompletitionDate, 
+                        t.registration_date as RegistrationDate, 
+                        t.completition_date as CompletitionDate, 
                         t.amount as Amount, 
                         t.fee as Fee, 
                         t.description as Description, 
@@ -28,14 +28,17 @@ namespace DataAnalysis.Repository.TransactionRepo {
                         p.""name""  as Provider, 
                         c.""type""  as Currency, 
                         tt.""type""  as TransactionType, 
-                        data_owner_id as DataOwnerId
+                        do2.id as DataOwnerId
                     FROM public.""transaction"" t
+                    JOIN public.data_owner do2 on do2.id = t.data_owner_id
+                    JOIN public.""user"" u on u.id = do2.user_id
                     JOIN public.currency c ON c.id = t.currency_id
                     JOIN public.provider p ON p.id = t.provider_id 
                     JOIN public.transaction_type tt ON tt.id = t.transaction_type_id  
-                    WHERE data_owner_id = @dataOwnerId;";
+                    WHERE u.id = @userId 
+                        AND do2.id = @ownerId;";
 
-                return await connection.QueryAsync<TransactionResponse>(sql, new { dataOwnerId });
+                return await connection.QueryAsync<TransactionResponse>(sql, new { userId, ownerId });
             };
         }
 

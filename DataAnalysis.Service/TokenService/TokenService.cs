@@ -14,9 +14,9 @@ namespace DataAnalysis.Service.TokenService {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(envConfig.GetJWTKey()));
         }
 
-        public string CreateToken(UserResponse user) {
+        public string CreateToken(string email) {
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Email)
+                new Claim(JwtRegisteredClaimNames.NameId, email)
             };
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor {

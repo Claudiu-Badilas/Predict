@@ -25,21 +25,14 @@ namespace DataAnalysis.Service.AccountService {
             });
         }
 
-        public async Task<UserResponse> LoginUser(UserRequest userRequest) {
+        public async Task<string> LoginUser(UserRequest userRequest) {
             var isExistingUser = await _userRepo.IsExistingUser(userRequest.Email);
             if (!isExistingUser) return null;
 
-            var user = await _userRepo.GetUserByEmail(userRequest.Email);
-            if (!IsPasswordValid(userRequest, user)) return null;
+            var appUser = await _userRepo.GetAppUserByEmail(userRequest.Email);
+            if (!IsPasswordValid(userRequest, appUser)) return null;
 
-            return new UserResponse {
-                Id = user.Id,
-                Email = user.Email,
-                JoinDate = user.JoinDate,
-                LastLogin = user.LastLogin,
-                IsActive = user.IsActive,
-                IsAdmin = user.IsAdmin
-            };
+            return appUser.Email;
         }
 
         private bool IsPasswordValid(UserRequest userRequest, AppUser appUser) {

@@ -16,14 +16,16 @@ namespace DataAnalysis.Repository.UserRepo {
             using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
                 connection.Open();
                 var sql = @"
-                    SELECT email FROM public.""user"" 
-                    WHERE email = @email;";
-
-                return (await connection.QueryAsync<string>(sql, new { email })).ToList().Count > 0;
+                    SELECT EXISTS(
+                        SELECT 1 
+                        FROM public.""user""    
+                        WHERE email = @email
+                    )";
+                return (await connection.QueryAsync<bool>(sql, new { email })).FirstOrDefault();
             };
         }
 
-        public async Task<AppUser> GetUserByEmail(string email) {
+        public async Task<AppUser> GetAppUserByEmail(string email) {
             using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
                 connection.Open();
                 var sql = @"
@@ -52,6 +54,37 @@ namespace DataAnalysis.Repository.UserRepo {
                         (@Email, @PasswordHash, @PasswordSalt, @JoinDate, @LastLogin, @IsActive, @IsAdmin);";
 
                 await connection.ExecuteAsync(sql, user);
+            };
+        }
+
+        public async Task<User> GetUserByEmail(string email) {
+            using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
+                connection.Open();
+                var sql = @"
+                    SELECT 
+                        u.id as Id, 
+                        u.email as Email,
+                        u.join_date as JoinDate,
+                        u.last_login as LastLogin,
+                        u.is_active as IsActive,
+                        u.is_admin as IsAdmin
+                    FROM public.""user"" u 
+                    WHERE u.email = @email;";
+                return (await connection.QueryAsync<User>(sql, new { email })).FirstOrDefault();
+            };
+        }
+
+        public async Task<IEnumerable<DataOwner>> GetDataOwnersByUserId(int userId) {
+            using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
+                connection.Open();
+                var sql = @"
+                    SELECT 
+	                    do2.id as Id,
+	                    do2.""name"" as Name
+                    FROM public.data_owner do2 
+                    JOIN public.""user"" u ON u.id = do2.user_id
+                    WHERE u.id = @userId;";
+                return await connection.QueryAsync<DataOwner>(sql, new { userId });
             };
         }
     }

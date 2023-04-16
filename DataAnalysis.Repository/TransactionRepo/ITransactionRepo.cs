@@ -7,7 +7,7 @@ using DataAnalysis.Repository.TransactionRepo.Models;
 
 namespace DataAnalysis.Repository.TransactionRepo {
     public interface ITransactionRepo {
-        Task<IEnumerable<TransactionResponse>> GetTransactionByUserId(int userId);
+        Task<IEnumerable<TransactionResponse>> GetTransactionByUserIdAndOwnerId(int userId, int dataOwnerId);
         public Task<IEnumerable<string>> GetTransactionIds(int ownderDataId, int providerId);
         public Task<int> StoreTransactions(IEnumerable<Transaction> transactions);
     }
