@@ -49,7 +49,7 @@ module StoreTransactions =
                     Description = t.Description.Value,
                     CurrencyId = StorerUtils.getCurrencyTypeId t.Currency,
                     TransactionTypeId = getTransactionTypeId t.TransactionType,
-                    ProviderId = StorerUtils.getTransactionProviderId t.Provider,
+                    ProviderId = StorerUtils.getProviderId t.Provider,
                     DataOwnerId = dataOwnerId
                 )
             )

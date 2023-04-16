@@ -59,7 +59,7 @@ module StoreReceipts =
                     TotalDiscount = StorerUtils.getNullableFloatFromOption r.TotalDiscount,
                     Products = mapPurchasedProducts r.ParsedProducts,
                     CurrencyId =  StorerUtils.getCurrencyTypeId r.Currency,
-                    ProviderId = StorerUtils.getTransactionProviderId r.Provider,
+                    ProviderId = StorerUtils.getProviderId r.Provider,
                     DataOwnerId = dataOwnerId
                 )
             )

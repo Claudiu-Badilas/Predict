@@ -59,7 +59,7 @@ namespace DataAnalysis.Repository.TransactionRepo {
                     INSERT INTO public.""transaction"" (
                         identifier, registration_date, completition_date, amount, fee, description, 
                         reference_id, provider_id, currency_id, transaction_type_id, data_owner_id )
-                    VALUES(
+                    VALUES (
                         unnest(@identifiers),
                         unnest(@registrationDates),
                         unnest(@completionDates),

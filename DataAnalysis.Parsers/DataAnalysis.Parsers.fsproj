@@ -17,6 +17,7 @@
 		<Compile Include="DatabaseAccess\Utils\StorerUtils.fs" />
 		<Compile Include="DatabaseAccess\StoreTransactions.fs" />
 		<Compile Include="DatabaseAccess\StoreReceipts.fs" />
+		<Compile Include="DatabaseAccess\StoreHearthRate.fs" />
 		<Compile Include="Parsers\AccountStatementParser\OMParsers\ParserOrangeMoneyPdfAccountStatement.fs" />
 		<Compile Include="Parsers\AccountStatementParser\OMParsers\ParserOrangeMoneyExcelAccountStatement.fs" />
 		<Compile Include="Parsers\AccountStatementParser\ParserRevolutExcelAccountStatement.fs" />

@@ -4,6 +4,7 @@ open System.IO
 open DataAnalysis.Types.HealthTypes
 open DataAnalysis.Utils
 open DataAnalysis.Types.CommonTypes
+open DataAnalysis.DatabaseAccess
 
 module ParserZeppLifeHeartRate =
     
@@ -39,5 +40,5 @@ module ParserZeppLifeHeartRate =
             |> List.map(fun csv -> getHeartRate dataOwnerId csv)
             |> List.concat
             |> List.distinctBy(fun p -> p.Date, p.Rate, p.IsAutomation)
-        0
-        //StoreTransactions.storeTransaction dataOwnerId parsedTransaction
+        
+        StoreHearthRate.storeHearthRates dataOwnerId parsedHeartRates
