@@ -1,11 +1,11 @@
 ﻿namespace DataAnalysis.DatabaseAccess
 
 open System
-open DataAnalysis.Repository.Repositories
-open DataAnalysis.Repository.Models
 open DataAnalysis.DatabaseAccess.StorerUtils
 open DataAnalysis.Types.ReceiptTypes
 open DataAnalysis.Common.Configuration
+open DataAnalysis.Repository.ReceiptRepo.Models
+open DataAnalysis.Repository.ReceiptRepo
 
 module StoreReceipts =
     
@@ -48,7 +48,7 @@ module StoreReceipts =
 
     let storeReceipts dataOwnerId (parsedReceipts: ParsedReceipt list) =
         let envConfig = EnvironmentConfiguration()
-        let receiptRepo = new ReceiptRepo(envConfig)
+        let receiptRepo = new ReceiptRepo(EnvironmentConfiguration())
         let receipts = 
             parsedReceipts
             |> List.map(fun r ->
@@ -59,7 +59,7 @@ module StoreReceipts =
                     TotalDiscount = StorerUtils.getNullableFloatFromOption r.TotalDiscount,
                     Products = mapPurchasedProducts r.ParsedProducts,
                     CurrencyId =  StorerUtils.getCurrencyTypeId r.Currency,
-                    ProviderId = StorerUtils.getTransactionProviderId r.Provider,
+                    ProviderId = StorerUtils.getProviderId r.Provider,
                     DataOwnerId = dataOwnerId
                 )
             )

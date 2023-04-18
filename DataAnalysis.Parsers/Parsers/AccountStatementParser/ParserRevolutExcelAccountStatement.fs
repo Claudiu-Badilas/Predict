@@ -27,7 +27,7 @@ module ParserRevolutExcelAccountStatement =
     let getTransactions (excel: WorkBook) userId: ParsedTransaction list =
         ExcelUtils.getExcelValues excel
         |> Seq.toList
-        |> List.map (fun row ->
+        |> List.choose (fun row ->
             let date = row[2]
             match date with
             | null -> None
@@ -45,20 +45,18 @@ module ParserRevolutExcelAccountStatement =
                     Provider = Provider.REVOLUT |> Some
                 }
         )
-        |> List.filter (fun d -> d.IsSome)
-        |> List.choose(fun t -> t)
         |> List.groupBy(fun t -> t.RegistrationDate, t.Amount)
         |> List.map(fun (_, t) -> ParserUtils.mapTransactions t userId )
         |> List.concat
         |> List.distinctBy(fun t -> t.Identifier)
 
 
-    let parseExcels userId (excels: WorkBook list) =
+    let parseExcels dataOwnerId (excels: WorkBook list) =
         let parsedTransaction =
             excels 
-            |> List.map(fun excel -> getTransactions excel userId)
+            |> List.map(fun excel -> getTransactions excel dataOwnerId)
             |> List.concat
             |> List.distinctBy(fun t -> t.Identifier)
 
-        StoreTransactions.storeTransaction userId parsedTransaction
+        StoreTransactions.storeTransaction dataOwnerId parsedTransaction
 

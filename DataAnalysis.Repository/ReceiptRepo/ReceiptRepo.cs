@@ -1,10 +1,9 @@
-﻿using DataAnalysis.Repository.Models;
-using DataAnalysis.Repository.Repositories.Interfaces;
-using Npgsql;
+﻿using Npgsql;
 using Dapper;
 using DataAnalysis.Common.Configuration;
+using DataAnalysis.Repository.ReceiptRepo.Models;
 
-namespace DataAnalysis.Repository.Repositories {
+namespace DataAnalysis.Repository.ReceiptRepo {
     public class ReceiptRepo : IReceiptRepo {
 
         private string _npsqlConnectionString;
@@ -30,17 +29,17 @@ namespace DataAnalysis.Repository.Repositories {
         public async Task<int> StoreReceipts(IEnumerable<Receipt> receipts) {
             await using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
                 var sql = @"
-                INSERT INTO public.receipt
-                    (identifier, ""date"", total_price, total_discount, provider_id, currency_id, data_owner_id)
-                VALUES (
-                    unnest(@identifiers),
-                    unnest(@dates),
-                    unnest(@total_prices),
-                    unnest(@total_discounts),
-                    unnest(@provider_ids),
-                    unnest(@currency_ids),
-                    unnest(@data_owner_ids)
-                )";
+                    INSERT INTO public.receipt
+                        (identifier, ""date"", total_price, total_discount, provider_id, currency_id, data_owner_id)
+                    VALUES (
+                        unnest(@identifiers),
+                        unnest(@dates),
+                        unnest(@total_prices),
+                        unnest(@total_discounts),
+                        unnest(@provider_ids),
+                        unnest(@currency_ids),
+                        unnest(@data_owner_ids)
+                    )";
 
                 return await connection.ExecuteScalarAsync<int>(sql, new {
                     identifiers = receipts.Select(x => x.Identifier).ToList(),

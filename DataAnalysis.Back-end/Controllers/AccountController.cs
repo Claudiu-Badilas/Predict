@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using DataAnalysis.Controllers.Models;
-using DataAnalysis.Repositories.Interfaces;
-using DataAnalysis.Services.Interfaces;
+using DataAnalysis.Repository.UserRepo.Models;
+using DataAnalysis.Repository.UserRepo;
+using DataAnalysis.Service.TokenService;
+using DataAnalysis.Service.AccountService;
 
 namespace DataAnalysis.Controllers {
     [Route("api/v1/account")]
