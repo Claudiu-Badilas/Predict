@@ -29,13 +29,13 @@ namespace DataAnalysis.Controllers {
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UserRequest userRequest) {
-            var user = await _accService.LoginUser(userRequest);
-            if (user == null) {
+            var email = await _accService.LoginUser(userRequest);
+            if (email == null) {
                 return Unauthorized("Invalid Email or Password!");
             }
 
             return Ok(new {
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(email)
             });
         }
     }

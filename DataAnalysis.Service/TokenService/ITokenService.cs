@@ -2,6 +2,7 @@
 
 namespace DataAnalysis.Service.TokenService {
     public interface ITokenService {
-        string CreateToken(UserResponse user);
+        string CreateToken(string email);
+        string GetEmailFromClaims(string token);
     }
 }
