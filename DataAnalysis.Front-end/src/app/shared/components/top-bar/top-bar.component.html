@@ -1,29 +1,45 @@
-<div class="navigation-bar">
-  <div class="logo d-flex align-items-center">
-    <img class="logo-img" src="favicon.ico" alt="" />
-    <div class="logo-name">SMART Analysis</div>
-  </div>
-
-  <div class="">
-    <div ngbDropdown class="d-inline-block" style="border: none">
-      <div id="module-dropdown" ngbDropdownToggle>
-        <div class="d-flex align-items-center">
-          <img class="luncher" src="assets/top-bar/launcher.png" alt="" />
-          <div>
-            {{ modules[0] }}
+<div class="wrapper">
+  <div class="top-bar">
+    <div class="logo d-flex align-items-center">
+      <img class="logo-img" src="favicon.ico" alt="" />
+      <div class="logo-name">SMART Analysis</div>
+    </div>
+    <div class="dropdown">
+      <div ngbDropdown class="d-inline-block" placement="bottom-start">
+        <div id="module-dropdown" ngbDropdownToggle>
+          <div class="d-flex align-items-center">
+            <img class="luncher" src="assets/top-bar/launcher.png" alt="" />
+            <div>
+              {{ modules[0] }}
+            </div>
           </div>
         </div>
-      </div>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem *ngFor="let module of modules">
-          {{ module }}
-        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem *ngFor="let option of modules">
+            {{ option }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="right-dropdown">
+      <div ngbDropdown class="d-inline-block" placement="bottom-end">
+        <div id="settings-dropdown" ngbDropdownToggle>
+          <div class="d-flex align-items-center">
+            <img
+              class="account-avatar"
+              src="assets/top-bar/profile.png"
+              alt=""
+            />
+            <div>test_email_address@test.email</div>
+          </div>
+        </div>
 
-  <div class="ml-5 account d-flex align-items-center">
-    <img class="account-avatar" src="assets/top-bar/profile.png" alt="" />
-    <div>claudiu.badilas@gmail.com</div>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem *ngFor="let option of settings">
+            {{ option }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

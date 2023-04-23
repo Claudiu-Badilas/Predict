@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent {
-  modules = ['Transactions', 'Receipts', 'Settings'];
+  modules = ['Transactions', 'Receipts', 'Health'];
+  settings = ['Settings', 'Log out'];
 }
