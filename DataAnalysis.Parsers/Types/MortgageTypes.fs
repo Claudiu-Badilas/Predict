@@ -5,7 +5,7 @@ open CommonTypes
 
 module MortgageTypes =    
             
-    type ParsedRata = 
+    type Rata = 
         {
             NrCtr: int option
             DataPlatii: DateTime option
@@ -17,4 +17,10 @@ module MortgageTypes =
             DobadaRecalculata: double option
             TotalRata: double option
             SoldRestPlata: double option
+        }
+
+    type GraficRambursare =
+        {   
+            Name: string
+            Rate: Rata list
         }

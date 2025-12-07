@@ -14,8 +14,8 @@ export class MortgageComponent {
     this._mortgageService
       .getMortgages()
       .pipe(first())
-      .subscribe((res: any) => {
-        this.transactions = res[0];
+      .subscribe((res: any[]) => {
+        this.transactions = res;
       });
   }
 }

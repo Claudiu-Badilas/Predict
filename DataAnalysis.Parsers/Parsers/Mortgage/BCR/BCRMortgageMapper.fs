@@ -14,7 +14,7 @@ module BCRMortgageMapper =
     let getLocalPdfs path =
         Directory.EnumerateFiles(path, "*.pdf")
         |> Seq.toList 
-        |> List.map(fun f -> new PdfReader(Path.Combine(path, f)))
+        |> List.map(fun f -> (Path.GetFileName(f), new PdfReader(Path.Combine(path, f))))
 
 
     let tryGetDouble (value: string option) =
@@ -45,8 +45,11 @@ module BCRMortgageMapper =
         | None -> None
 
 
+    let getFileName (filePath: string) =
+        Path.GetFileName(filePath)
 
-    let getMorgageDetails (pdf: PdfReader): ParsedRata list =
+
+    let getMorgageDetails (pdf: PdfReader): Rata list =
         let text = PdfUtils.getTextFromPdf pdf
         let pages = 
             text.Split("Nr. Data plății Rată Credit Rată Comision de Costuri de Comision de Dobânda Total rată Sold (rest de")
@@ -74,12 +77,19 @@ module BCRMortgageMapper =
                 }
             )
             |> Array.toList
+
         rate
+ 
 
     let getBcrMorgages () =
         let details =
             getLocalPdfs @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\Morgages\BCR" 
-            |> List.map(fun pdf -> getMorgageDetails pdf)
+            |> List.map(fun (fileName, pdf) -> 
+                {
+                    Name = fileName
+                    Rate = getMorgageDetails pdf
+                }
+            )
 
         details
 
