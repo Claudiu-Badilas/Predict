@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAnalysis.Parsers.ReceiptParser;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysis.Controllers;
 
@@ -10,9 +11,7 @@ public class MorgageController : BaseController {
     [HttpGet("mortgage/bcr")]
     public async Task<ActionResult> GetMortgageDetails() {
 
-
-
-        return Ok(new { Id = 1 });
+        return Ok(BCRMortgageMapper.getBcrMorgages());
     }
 
 }
