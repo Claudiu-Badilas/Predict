@@ -1,40 +1,39 @@
 @for (grafic of transactions; track grafic) {
-  <div class="m-2">
-    @if (!!rateSelectate?.length) {
+<div class="m-2">
+  @if (!!rateSelectate?.length) {
+  <div>
+    <button class="btn btn-primary mb-2" (click)="toggleDetails()">
+      {{ showDetails ? "Hide details" : "Show details" }}
+    </button>
+    @if (showDetails) {
+    <div>
       <div>
-        <button class="btn btn-primary mb-2" (click)="toggleDetails()">
-          {{ showDetails ? "Hide details" : "Show details" }}
-        </button>
-        @if (showDetails) {
-          <div>
-            <div>
-              Rata
-              {{ rata.nrCtr }}{{ rata.dataPlatii | date : "yyyy-MM-dd" }}
-              {{ rata.totalRata }}
-            </div>
-            @if (!!anticipate?.length) {
-              <div>
-                Anticipat
-                @for (anticipat of anticipate; track anticipat) {
-                  <div>
-                    {{ anticipat.nrCtr }}{{ anticipat.dataPlatii | date : "yyyy-MM-dd" }}
-                    {{ anticipat.rataCredit }}
-                  </div>
-                }
-              </div>
-            }
-          </div>
-        }
-        <div>
-          Total: {{ rata.totalRata }} + {{ totalAnticipate }} = {{ total }} leusteni
-          || Dobanda salvata {{ totalDobandaSalvata }}
-        </div>
+        Rata
+        {{ rata.nrCtr }}{{ rata.dataPlatii | date : "yyyy-MM-dd" }}
+        {{ rata.totalRata }}
       </div>
+      @if (!!anticipate?.length) {
+      <div>
+        Anticipat @for (anticipat of anticipate; track anticipat) {
+        <div>
+          {{ anticipat.nrCtr }}{{ anticipat.dataPlatii | date : "yyyy-MM-dd" }}
+          {{ anticipat.rataCredit }}
+        </div>
+        }
+      </div>
+      }
+    </div>
     }
-    <div class="m-2">
-      <table class="table table-light">
-        <thead>
-          <!-- <tr>
+    <div>
+      Total: {{ rata.totalRata }} + {{ totalAnticipate }} = {{ total }} leusteni
+      || Dobanda salvata {{ totalDobandaSalvata }}
+    </div>
+  </div>
+  }
+  <div class="m-2">
+    <table class="table">
+      <thead>
+        <!-- <tr>
           <th scope="col">{{ grafic.name }}</th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -63,21 +62,21 @@
       </thead>
       <tbody>
         @for (rata of grafic.rate; track rata) {
-          <tr>
-            <td>
-              <input [id]="rata.nrCtr" type="checkbox" (click)="onSelect(rata)" />
-            </td>
-            <td>{{ rata.nrCtr }}</td>
-            <td>{{ rata.dataPlatii | date : "yyyy-MM-dd" }}</td>
-            <td>{{ rata.rataCredit }}</td>
-            <td>{{ rata.rataDobanda }}</td>
-            <td>{{ rata.comisionAdministrare }}</td>
-            <td>{{ rata.costuruAsigurare }}</td>
-            <td>{{ rata.comisionGestiune }}</td>
-            <td>{{ rata.dobadaRecalculata }}</td>
-            <td>{{ rata.totalRata }}</td>
-            <td>{{ rata.soldRestPlata }}</td>
-          </tr>
+        <tr>
+          <td>
+            <input [id]="rata.nrCtr" type="checkbox" (click)="onSelect(rata)" />
+          </td>
+          <td>{{ rata.nrCtr }}</td>
+          <td>{{ rata.dataPlatii | date : "yyyy-MM-dd" }}</td>
+          <td>{{ rata.rataCredit }}</td>
+          <td>{{ rata.rataDobanda }}</td>
+          <td>{{ rata.comisionAdministrare }}</td>
+          <td>{{ rata.costuruAsigurare }}</td>
+          <td>{{ rata.comisionGestiune }}</td>
+          <td>{{ rata.dobadaRecalculata }}</td>
+          <td>{{ rata.totalRata }}</td>
+          <td>{{ rata.soldRestPlata }}</td>
+        </tr>
         }
       </tbody>
     </table>
