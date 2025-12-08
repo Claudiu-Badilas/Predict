@@ -4,10 +4,10 @@ import { GraficRambursare, Rata } from '../models/mortgage.model';
 import { MortgageService } from '../services/mortgage.service';
 
 @Component({
-    selector: 'app-mortgage',
-    templateUrl: './mortgage.component.html',
-    styleUrls: ['./mortgage.component.scss'],
-    standalone: false
+  selector: 'app-mortgage',
+  templateUrl: './mortgage.component.html',
+  styleUrls: ['./mortgage.component.scss'],
+  standalone: false,
 })
 export class MortgageComponent {
   transactions: GraficRambursare[] = [];
@@ -23,11 +23,6 @@ export class MortgageComponent {
   }
 
   rateSelectate: Rata[] = [];
-  showDetails = false;
-
-  toggleDetails() {
-    this.showDetails = !this.showDetails;
-  }
 
   onSelect(rata: Rata) {
     const index = this.rateSelectate.findIndex((r) => r.nrCtr === rata.nrCtr);
