@@ -15,15 +15,13 @@
         </tr>
       </thead>
       <tbody>
-        @for (tran of transactions; track tran) {
-          <tr>
-            <td>{{ tran.id }}</td>
-            <td>{{ tran.registrationDate }}</td>
-            <td>{{ tran.amount }}</td>
-            <td>{{ tran.provider }}</td>
-            <td>{{ tran.description }}</td>
-          </tr>
-        }
+        <tr *ngFor="let tran of transactions">
+          <td>{{ tran.id }}</td>
+          <td>{{ tran.registrationDate }}</td>
+          <td>{{ tran.amount }}</td>
+          <td>{{ tran.provider }}</td>
+          <td>{{ tran.description }}</td>
+        </tr>
       </tbody>
     </table>
   </ng-container>
