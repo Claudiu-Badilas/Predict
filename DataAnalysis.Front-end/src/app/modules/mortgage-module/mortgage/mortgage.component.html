@@ -5,36 +5,49 @@
 
   <ng-container main-content
     ><div>
-      <div class="header-cards mb-3 d-flex gap-3">
-        <!-- Card 1 -->
-        <div class="card divided-card flex-fill shadow-sm p-3">
-          <div class="section left">
-            <h6 class="label">Total Rată</h6>
-            <div class="value">{{ rata?.totalRata ?? "-" }}</div>
+      <div class="header-cards">
+        <div class="divided-card">
+          <div class="section">
+            <p class="label">Total Rata</p>
+            <p class="value">
+              {{ rata?.totalRata != null ? rata.totalRata.toFixed(2) : "0.00" }}
+            </p>
           </div>
           <div class="divider"></div>
           <div class="section right">
-            <h6 class="label">Total Anticipate</h6>
-            <div class="value">{{ totalAnticipate ?? "-" }}</div>
+            <p class="label">Total Anticipate</p>
+            <p class="value">
+              {{
+                totalAnticipate != null ? totalAnticipate.toFixed(2) : "0.00"
+              }}
+            </p>
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="card divided-card flex-fill shadow-sm p-3">
-          <div class="section left">
-            <h6 class="label">Dobândă Salvată</h6>
-            <div class="value">{{ totalDobandaSalvata ?? "-" }}</div>
+        <div class="divided-card">
+          <div class="section">
+            <p class="label">Dobândă Salvată</p>
+            <p class="value increase">
+              {{
+                totalDobandaSalvata != null
+                  ? totalDobandaSalvata.toFixed(2)
+                  : "0.00"
+              }}
+            </p>
           </div>
           <div class="divider"></div>
           <div class="section right">
-            <h6 class="label">Total Final</h6>
-            <div class="value">{{ total ?? "-" }}</div>
+            <p class="label">Total Final de Plata</p>
+            <p class="value decrease">
+              {{ total != null ? total.toFixed(2) : "0.00" }}
+              ({{ total != null ? (total / 2).toFixed(2) : "0.00" }})
+            </p>
           </div>
         </div>
       </div>
 
       @for (grafic of transactions; track grafic.name) {
-      <div class="scrollable-container">
+      <div class="scrollable-container mt-3">
         <table class="table">
           <thead>
             <tr>
@@ -62,7 +75,7 @@
                 />
               </td>
               <td>{{ rata.nrCtr }}</td>
-              <td>{{ rata.dataPlatii }}</td>
+              <td>{{ rata.dataPlatii | date : "yyyy-MM-dd" }}</td>
               <td>{{ rata.rataCredit }}</td>
               <td>{{ rata.rataDobanda }}</td>
               <td>{{ rata.comisionAdministrare }}</td>
