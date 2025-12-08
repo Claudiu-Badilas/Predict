@@ -1,5 +1,5 @@
 .sidebar {
-  background-color: #e91e63;
+  background-color: #801136;
   height: 100%;
   position: fixed;
   left: 0;
@@ -15,7 +15,7 @@
   }
 
   &-partial-size {
-    background-color: #e91e63;
+    background-color: #801136;
     height: 100%;
     position: fixed;
     left: 0;
@@ -47,16 +47,26 @@
   padding: 0;
 }
 
+/* ----- CONTENT POSITIONING ----- */
 .content {
   margin-left: 300px;
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
 .content-full {
   margin-left: 50px;
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
+/* ----- PUSH CONTENT ON HOVER ----- */
+.sidebar-partial-size:hover ~ .content-full {
+  margin-left: 300px !important;
+  // transition: all 0.3s ease;
+}
+
+/* ----- ARROW STYLES ----- */
 .arrows {
   width: 100%;
   height: 40px;
@@ -67,7 +77,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #ed4981;
+    background-color: #a31545;
   }
 
   img {
