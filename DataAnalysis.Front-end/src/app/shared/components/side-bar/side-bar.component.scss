@@ -25,15 +25,6 @@
     color: white;
     margin-top: 50px;
 
-    &:hover {
-      width: 300px;
-
-      img {
-        left: 255px;
-        transition: all 0.3s ease;
-      }
-    }
-
     img {
       transform: rotate(0deg);
       left: 5px;
@@ -58,12 +49,6 @@
   margin-left: 50px;
   padding: 20px;
   transition: all 0.3s ease;
-}
-
-/* ----- PUSH CONTENT ON HOVER ----- */
-.sidebar-partial-size:hover ~ .content-full {
-  margin-left: 300px !important;
-  // transition: all 0.3s ease;
 }
 
 /* ----- ARROW STYLES ----- */
