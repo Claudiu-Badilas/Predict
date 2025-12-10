@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { OverviewLoanRate } from '../../models/mortgage-loan-overview.model';
 
 @Component({
   selector: 'app-overview-mortgage-loan-header',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './overview-mortgage-loan-header.component.html',
   styleUrls: ['./overview-mortgage-loan-header.component.scss'],
 })
@@ -16,14 +15,14 @@ export class OverviewMortgageLoanHeaderComponent {
   }
 
   get rata() {
-    return this.overviewLoanRates[0] || null;
+    return this.overviewLoanRates.find((r) => r.nextRate) || null;
   }
 
   get anticipate() {
-    return this.overviewLoanRates.slice(1);
+    return this.overviewLoanRates.filter((r) => !r.nextRate && r.selected);
   }
 
-  get lastAnticipate() {
+  get lastAnticipat() {
     return this.anticipate.at(-1);
   }
 
