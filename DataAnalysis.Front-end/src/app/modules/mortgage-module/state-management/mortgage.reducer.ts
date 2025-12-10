@@ -1,4 +1,3 @@
-import { RepaymentSchedule } from './../models/mortgage.model';
 import {
   Action,
   createFeatureSelector,
@@ -7,15 +6,30 @@ import {
   on,
 } from '@ngrx/store';
 import * as MortgageActions from 'src/app/modules/mortgage-module/state-management/mortgage.actions';
+import {
+  mapBaseRepaymentScheduleToOverview,
+  OverviewRepaymentSchedule,
+} from '../mortgage-overview/models/mortgage-loan-overview.model';
+import { RepaymentSchedule } from './../models/mortgage.model';
+
+interface MortgageLoanOverviewState {
+  repaymentSchedules: OverviewRepaymentSchedule[];
+}
 
 export interface MortgageState {
   repaymentSchedules: RepaymentSchedule[];
   selectedRepaymentScheduleName: string;
+
+  overview: MortgageLoanOverviewState;
 }
 
 const initialState: MortgageState = {
   repaymentSchedules: [],
   selectedRepaymentScheduleName: null,
+
+  overview: {
+    repaymentSchedules: [],
+  },
 };
 
 const mortgageReducer = createReducer(
@@ -56,4 +70,9 @@ export const getSelectedRepaymentSchedule = createSelector(
     repaymentSchedules?.find(
       (rs) => rs.name === selectedRepaymentScheduleName
     ) ?? null
+);
+
+export const getSelectedRepaymentScheduleOverview = createSelector(
+  getSelectedRepaymentSchedule,
+  mapBaseRepaymentScheduleToOverview
 );

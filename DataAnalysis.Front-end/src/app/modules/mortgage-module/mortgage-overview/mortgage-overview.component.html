@@ -87,12 +87,13 @@
             </tr>
           </thead>
           <tbody>
-            @for (rata of (selectedRepaymentSchedule$ | async )?.rate ?? [];
-            track rata.nrCtr) {
+            @for (rata of (selectedRepaymentSchedule$ | async
+            )?.overviewLoanRates ?? []; track rata.nrCtr) {
             <tr>
               <td>
                 <input
                   [id]="rata.nrCtr"
+                  [checked]="rata.selected"
                   type="checkbox"
                   (click)="onSelect(rata)"
                 />

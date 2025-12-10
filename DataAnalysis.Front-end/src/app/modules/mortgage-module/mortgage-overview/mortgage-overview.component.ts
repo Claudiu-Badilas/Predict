@@ -25,7 +25,7 @@ import { Rata } from '../models/mortgage.model';
 })
 export class MortgageOverviewComponent {
   selectedRepaymentSchedule$ = this.store.select(
-    fromMortgage.getSelectedRepaymentSchedule
+    fromMortgage.getSelectedRepaymentScheduleOverview
   );
   selectedRepaymentScheduleName$ = this.store.select(
     fromMortgage.getSelectedRepaymentScheduleName
