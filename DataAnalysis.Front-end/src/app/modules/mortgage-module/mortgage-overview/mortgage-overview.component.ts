@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as MortgageActions from 'src/app/modules/mortgage-module/state-management/mortgage.actions';
@@ -16,7 +15,6 @@ import { Rata } from '../models/mortgage.model';
   selector: 'app-mortgage-overview',
   imports: [
     CommonModule,
-    NgbModule,
     SideBarModule,
     DatePickerComponent,
     ToggleButtonComponent,
