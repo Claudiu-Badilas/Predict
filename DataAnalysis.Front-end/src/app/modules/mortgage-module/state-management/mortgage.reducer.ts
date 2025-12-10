@@ -16,6 +16,7 @@ interface MortgageLoanOverviewState {
   repaymentSchedules: OverviewRepaymentSchedule[];
   selectedLoanRates: number[];
   startDate: Date;
+  selectAll: boolean;
 }
 
 export interface MortgageState {
@@ -33,6 +34,7 @@ const initialState: MortgageState = {
     repaymentSchedules: [],
     selectedLoanRates: [],
     startDate: new Date(),
+    selectAll: undefined,
   },
 };
 
@@ -49,16 +51,26 @@ const mortgageReducer = createReducer(
 
   on(MortgageActions.selectedOverviewLoanRateChanged, (state, { selected }) => {
     const arr = [...state.overview.selectedLoanRates];
-    const index = arr.findIndex((r) => r === selected);
 
-    if (index !== -1) arr.splice(index, 1);
-    else arr.push(selected);
+    selected.forEach((val) => {
+      const index = arr.findIndex((r) => r === val);
+
+      if (index !== -1) arr.splice(index, 1);
+      else arr.push(val);
+    });
 
     return {
       ...state,
       overview: { ...state.overview, selectedLoanRates: [...arr] },
     };
   }),
+  on(
+    MortgageActions.selectAllOverviewLoanRateChanged,
+    (state, { selectAll }) => ({
+      ...state,
+      overview: { ...state.overview, selectAll },
+    })
+  ),
   on(MortgageActions.startDateChanged, (state, { date }) => ({
     ...state,
     overview: { ...state.overview, startDate: date },
@@ -106,9 +118,26 @@ export const getOverviewStartDate = createSelector(
   (state) => state.startDate
 );
 
-export const getSelectedLoanRates = createSelector(
+export const getSelectAll = createSelector(
+  getOverviewMortgageLoanState,
+  (state) => state.selectAll
+);
+
+export const selectedLoanRates = createSelector(
   getOverviewMortgageLoanState,
   (state) => state.selectedLoanRates
+);
+
+export const getSelectedLoanRates = createSelector(
+  getSelectedRepaymentSchedule,
+  selectedLoanRates,
+  getSelectAll,
+  (selectedRepaymentSchedule, selectedLoanRates, selectAll) =>
+    selectAll === undefined
+      ? selectedLoanRates
+      : !selectAll
+      ? []
+      : selectedRepaymentSchedule?.rate?.map((r) => r.nrCtr) ?? []
 );
 
 export const getSelectedRepaymentScheduleOverview = createSelector(

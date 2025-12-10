@@ -36,7 +36,14 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Selected</th>
+              <th scope="col">
+                <app-checkbox
+                  label="Select All"
+                  [checked]="false"
+                  [disabled]="false"
+                  (valueChange)="onSelectAllLoanRates($event)"
+                />
+              </th>
               <th scope="col">Nr.</th>
               <th scope="col">Data Plății</th>
               <th scope="col">Rată Credit</th>
@@ -54,12 +61,11 @@
             )?.overviewLoanRates ?? []; track rata.nrCtr) {
             <tr [ngStyle]="{ 'background-color': rata.color }">
               <td>
-                <input
+                <app-checkbox
                   [id]="rata.nrCtr"
                   [checked]="rata.selected"
-                  type="checkbox"
                   [disabled]="rata.disabled"
-                  (click)="onSelect(rata)"
+                  (valueChange)="onSelect(rata)"
                 />
               </td>
               <td>{{ rata.nrCtr }}</td>

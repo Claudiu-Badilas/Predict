@@ -22,5 +22,10 @@ export const startDateChanged = createAction(
 
 export const selectedOverviewLoanRateChanged = createAction(
   '[Overview Mortgage Loan] Selected selected Overview Loan Rate Changed',
-  props<{ selected: number }>()
+  props<{ selected: number[] }>()
+);
+
+export const selectAllOverviewLoanRateChanged = createAction(
+  '[Overview Mortgage Loan] Select All selected Overview Loan Rate Changed',
+  props<{ selectAll: boolean }>()
 );
