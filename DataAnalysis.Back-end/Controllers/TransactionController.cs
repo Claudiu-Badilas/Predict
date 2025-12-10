@@ -30,5 +30,14 @@ namespace DataAnalysis.Controllers {
 
             return Ok(await _transactionRepo.GetTransactionByUserIdAndOwnerId(user.Id.Value, dataOwnerId));
         }
+
+        [HttpGet("free-transactions/{dataOwnerId}")]
+        public async Task<ActionResult> GetFreeTransactions(
+            [FromHeader] string Authorization,
+            [FromRoute] int dataOwnerId
+            ) {
+
+            return Ok(await _transactionRepo.GetTransactionByUserIdAndOwnerId(2, dataOwnerId));
+        }
     }
 }

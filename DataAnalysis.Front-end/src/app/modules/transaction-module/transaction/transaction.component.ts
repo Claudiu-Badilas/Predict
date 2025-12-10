@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
 
 @Component({
-    selector: 'app-transaction',
-    templateUrl: './transaction.component.html',
-    styles: [],
-    standalone: false
+  selector: 'app-transaction',
+  templateUrl: './transaction.component.html',
+  styleUrls: ['./transaction.component.scss'],
+  standalone: false,
 })
 export class TransactionComponent implements OnInit {
   transactions: any[] = [];

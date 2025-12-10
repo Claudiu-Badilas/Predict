@@ -1,30 +1,29 @@
 <app-side-bar>
   <ng-container filters-full-size> </ng-container>
-
   <ng-container filters-partial-size> </ng-container>
 
   <ng-container main-content>
-    <table class="table table-dark">
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Date</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Provider</th>
-          <th scope="col">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (tran of transactions; track tran) {
+    <div class="scrollable-container">
+      <table class="table">
+        <thead>
           <tr>
-            <td>{{ tran.id }}</td>
-            <td>{{ tran.registrationDate }}</td>
+            <th scope="col">Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Provider</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tran of transactions; track tran) {
+          <tr>
+            <td>{{ tran.registrationDate | date : "dd-MM-yyyy" }}</td>
             <td>{{ tran.amount }}</td>
             <td>{{ tran.provider }}</td>
             <td>{{ tran.description }}</td>
           </tr>
-        }
-      </tbody>
-    </table>
+          }
+        </tbody>
+      </table>
+    </div>
   </ng-container>
 </app-side-bar>
