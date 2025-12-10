@@ -18,12 +18,12 @@ import * as fromState from 'src/app/store/app-state.reducer';
 import { EMPTY, of } from 'rxjs';
 import * as ToastActions from '../../toast-notifications/actions/toast-notification.actions';
 import { ToastType } from '../../toast-notifications/models/toast-type.model';
- 
+
 @Injectable()
 export class AuthenticationEffects {
   constructor(
     private actions$: Actions,
- 
+
     private _authService: AuthenticationService,
     private store: Store<fromAppStore.AppState>
   ) {}
@@ -34,7 +34,7 @@ export class AuthenticationEffects {
       filter((url) => url && url === '/'),
       map((_) => {
         const route = AuthenticationUtils.isTokenValid()
-          ? '/mortgage/1'
+          ? '/mortgage/overview'
           : '/authentication/login';
         return NavigationAction.navigateTo({
           route,

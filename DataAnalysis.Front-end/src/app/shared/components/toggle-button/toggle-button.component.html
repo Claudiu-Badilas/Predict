@@ -1,14 +1,15 @@
 <div class="toggle-wrapper d-flex">
   <div class="toggle-background"></div>
 
+  @for (option of options; track option) {
   <div
     class="toggle-option"
-    *ngFor="let option of options; let i = index"
     [ngClass]="{ active: option === _selected() }"
     (click)="select(option)"
   >
     {{ option }}
   </div>
+  }
 
   <div
     class="toggle-slider"
