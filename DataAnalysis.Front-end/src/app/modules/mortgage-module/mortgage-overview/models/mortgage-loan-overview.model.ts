@@ -1,4 +1,4 @@
-import { Rata, RepaymentSchedule } from '../../models/mortgage.model';
+import { RepaymentSchedule } from '../../models/mortgage.model';
 
 export type OverviewLoanRate = {
   nrCtr: number | null;
@@ -20,9 +20,11 @@ export type OverviewRepaymentSchedule = {
 };
 
 export function mapBaseRepaymentScheduleToOverview(
-  base: RepaymentSchedule
+  base: RepaymentSchedule,
+  selectedLoanRates: number[]
 ): OverviewRepaymentSchedule | null {
   if (!base) return null;
+
   const overviewLoanRates: OverviewLoanRate[] = base.rate.map(
     (r) =>
       ({
@@ -36,14 +38,10 @@ export function mapBaseRepaymentScheduleToOverview(
         dobadaRecalculata: r.dobadaRecalculata,
         totalRata: r.totalRata,
         soldRestPlata: r.soldRestPlata,
-        selected: true,
+        selected: selectedLoanRates.some((s) => s === r.nrCtr),
       } as OverviewLoanRate)
   );
 
-  console.log(
-    '🚀 ~ mapBaseRepaymentScheduleToOverview ~ overviewLoanRates:',
-    overviewLoanRates
-  );
   return {
     name: base.name,
     overviewLoanRates,

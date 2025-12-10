@@ -63,6 +63,10 @@ export class MortgageOverviewComponent {
     }
 
     this.rateSelectate = this.rateSelectate.sort((a, b) => a.nrCtr - b.nrCtr);
+
+    this.store.dispatch(
+      MortgageActions.selectedOverviewLoanRateChanged({ selected: rata.nrCtr })
+    );
   }
 
   get anySelected(): boolean {

@@ -14,6 +14,7 @@ import { RepaymentSchedule } from './../models/mortgage.model';
 
 interface MortgageLoanOverviewState {
   repaymentSchedules: OverviewRepaymentSchedule[];
+  selectedLoanRates: number[];
 }
 
 export interface MortgageState {
@@ -29,6 +30,7 @@ const initialState: MortgageState = {
 
   overview: {
     repaymentSchedules: [],
+    selectedLoanRates: [2],
   },
 };
 
@@ -41,7 +43,20 @@ const mortgageReducer = createReducer(
   on(MortgageActions.selectedMortgageLoanChanged, (state, { selected }) => ({
     ...state,
     selectedRepaymentScheduleName: selected,
-  }))
+  })),
+
+  on(MortgageActions.selectedOverviewLoanRateChanged, (state, { selected }) => {
+    const arr = [...state.overview.selectedLoanRates];
+    const index = arr.findIndex((r) => r === selected);
+
+    if (index !== -1) arr.splice(index, 1);
+    else arr.push(selected);
+
+    return {
+      ...state,
+      overview: { ...state.overview, selectedLoanRates: [...arr] },
+    };
+  })
 );
 
 export function reducer(state: MortgageState, action: Action) {
@@ -72,7 +87,21 @@ export const getSelectedRepaymentSchedule = createSelector(
     ) ?? null
 );
 
+//################
+// OVERVIEW
+//################
+export const getOverviewMortgageLoanState = createSelector(
+  getMortgageState,
+  (state) => state.overview
+);
+
+export const getSelectedLoanRates = createSelector(
+  getOverviewMortgageLoanState,
+  (state) => state.selectedLoanRates
+);
+
 export const getSelectedRepaymentScheduleOverview = createSelector(
   getSelectedRepaymentSchedule,
+  getSelectedLoanRates,
   mapBaseRepaymentScheduleToOverview
 );
