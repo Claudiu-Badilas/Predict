@@ -2,6 +2,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MortgageDetailedComponent } from './mortgage-detailed/mortgage-detailed.component';
 import { MortgageOverviewComponent } from './mortgage-overview/mortgage-overview.component';
+import { MortgageSimulationComponent } from './mortgage-simulation/mortgage-simulation.component';
 import { MortgageComponent } from './mortgage.component';
 import { MortgageModule } from './mortgage.module';
 
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'detailed',
         component: MortgageDetailedComponent,
+      },
+      {
+        path: 'simulation',
+        component: MortgageSimulationComponent,
       },
     ],
   },

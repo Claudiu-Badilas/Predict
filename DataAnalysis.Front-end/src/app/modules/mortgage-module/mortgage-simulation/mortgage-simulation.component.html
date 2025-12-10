@@ -2,12 +2,12 @@
   <ng-container filters-full-size
     ><app-toggle-button
       [options]="['Overview', 'Detailed', 'Simulation']"
-      [selected]="'Detailed'"
+      [selected]="'Simulation'"
       (selectionChange)="onSelectionChange($event)"
     />
   </ng-container>
 
   <ng-container filters-partial-size> </ng-container>
 
-  <ng-container main-content> <h1>DETAILED</h1> </ng-container>
+  <ng-container main-content> <h1>SIMULATION</h1> </ng-container>
 </app-side-bar>
