@@ -8,12 +8,11 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [NgbDropdownModule],
 })
 export class DropdownSelectComponent {
-  @Input() items: string[] = [];
+  @Input({ required: true }) items: string[] = [];
+  @Input({ required: true }) selectedItem: string;
   @Input() placeholder = 'Select';
 
   @Output() selectionChange = new EventEmitter<string>();
-
-  selectedItem?: string;
 
   selectItem(item: string) {
     this.selectedItem = item;

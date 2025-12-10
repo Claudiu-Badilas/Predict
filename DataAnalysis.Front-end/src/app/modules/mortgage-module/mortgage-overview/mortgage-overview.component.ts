@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
+import * as MortgageActions from 'src/app/modules/mortgage-module/state-management/mortgage.actions';
 import * as fromMortgage from 'src/app/modules/mortgage-module/state-management/mortgage.reducer';
 import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
@@ -24,12 +26,16 @@ import { Rata } from '../models/mortgage.model';
   styleUrls: ['./mortgage-overview.component.scss'],
 })
 export class MortgageOverviewComponent {
-  repaymentSchedules$ = this.store.select(fromMortgage.getRepaymentSchedules);
-  fruits = ['Apple', 'Banana', 'Grapes'];
+  selectedRepaymentSchedule$ = this.store.select(
+    fromMortgage.getSelectedRepaymentSchedule
+  );
+  selectedRepaymentScheduleName$ = this.store.select(
+    fromMortgage.getSelectedRepaymentScheduleName
+  );
+  dropDownSelectOptions$ = this.store
+    .select(fromMortgage.getRepaymentSchedules)
+    .pipe(map((rs) => rs.map((r) => r.name)));
 
-  onFruitSelected(value: any) {
-    console.log('Selected:', value);
-  }
   constructor(private readonly store: Store<fromMortgage.MortgageState>) {}
 
   onSelectionChange(module: string) {
@@ -40,6 +46,13 @@ export class MortgageOverviewComponent {
     );
   }
 
+  onDropdownSelected(value: string) {
+    this.store.dispatch(
+      MortgageActions.selectedMortgageLoanChanged({
+        selected: value,
+      })
+    );
+  }
   rateSelectate: Rata[] = [];
 
   onSelect(rata: Rata) {

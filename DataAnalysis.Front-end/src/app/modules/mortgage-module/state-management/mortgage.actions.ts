@@ -9,3 +9,8 @@ export const setMortgagesSuccess = createAction(
   '[Mortgage] Set Mortgages Success',
   props<{ repaymentSchedules: RepaymentSchedule[] }>()
 );
+
+export const selectedMortgageLoanChanged = createAction(
+  '[Mortgage] Selected Mortgages Loan Changed',
+  props<{ selected: string }>()
+);
