@@ -15,6 +15,7 @@ import { RepaymentSchedule } from './../models/mortgage.model';
 interface MortgageLoanOverviewState {
   repaymentSchedules: OverviewRepaymentSchedule[];
   selectedLoanRates: number[];
+  startDate: Date;
 }
 
 export interface MortgageState {
@@ -30,7 +31,8 @@ const initialState: MortgageState = {
 
   overview: {
     repaymentSchedules: [],
-    selectedLoanRates: [2],
+    selectedLoanRates: [],
+    startDate: new Date(),
   },
 };
 
@@ -56,7 +58,11 @@ const mortgageReducer = createReducer(
       ...state,
       overview: { ...state.overview, selectedLoanRates: [...arr] },
     };
-  })
+  }),
+  on(MortgageActions.startDateChanged, (state, { date }) => ({
+    ...state,
+    overview: { ...state.overview, startDate: date },
+  }))
 );
 
 export function reducer(state: MortgageState, action: Action) {
@@ -95,6 +101,11 @@ export const getOverviewMortgageLoanState = createSelector(
   (state) => state.overview
 );
 
+export const getOverviewStartDate = createSelector(
+  getOverviewMortgageLoanState,
+  (state) => state.startDate
+);
+
 export const getSelectedLoanRates = createSelector(
   getOverviewMortgageLoanState,
   (state) => state.selectedLoanRates
@@ -102,6 +113,7 @@ export const getSelectedLoanRates = createSelector(
 
 export const getSelectedRepaymentScheduleOverview = createSelector(
   getSelectedRepaymentSchedule,
+  getOverviewStartDate,
   getSelectedLoanRates,
   mapBaseRepaymentScheduleToOverview
 );

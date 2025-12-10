@@ -8,6 +8,7 @@ import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
+import { DateUtils } from 'src/app/shared/utils/date.utils';
 import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
 import { Rata } from '../models/mortgage.model';
 
@@ -33,6 +34,9 @@ export class MortgageOverviewComponent {
   dropDownSelectOptions$ = this.store
     .select(fromMortgage.getRepaymentSchedules)
     .pipe(map((rs) => rs.map((r) => r.name)));
+  overviewStartDate$ = this.store
+    .select(fromMortgage.getOverviewStartDate)
+    .pipe(map((date) => DateUtils.fromJsDateToString(date)));
 
   constructor(private readonly store: Store<fromMortgage.MortgageState>) {}
 
@@ -46,11 +50,18 @@ export class MortgageOverviewComponent {
 
   onDropdownSelected(value: string) {
     this.store.dispatch(
-      MortgageActions.selectedMortgageLoanChanged({
-        selected: value,
+      MortgageActions.selectedMortgageLoanChanged({ selected: value })
+    );
+  }
+
+  onSelectedDateChange(date: string) {
+    this.store.dispatch(
+      MortgageActions.startDateChanged({
+        date: DateUtils.fromStringToJsDate(date),
       })
     );
   }
+
   rateSelectate: Rata[] = [];
 
   onSelect(rata: Rata) {
@@ -79,6 +90,10 @@ export class MortgageOverviewComponent {
 
   get anticipate() {
     return this.rateSelectate.slice(1);
+  }
+
+  get lastAnticipate() {
+    return this.anticipate.at(-1);
   }
 
   get totalAnticipate() {

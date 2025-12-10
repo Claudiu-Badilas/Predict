@@ -17,9 +17,10 @@
     <div class="space">
       <date-picker
         [label]="'Select start date'"
-        [selectedDate]="'2025-10-10'"
+        [selectedDate]="overviewStartDate$ | async"
         [minDate]="'2025-12-01'"
         [maxDate]="'2055-12-01'"
+        (selectedDateChange)="onSelectedDateChange($event)"
       />
     </div>
   </ng-container>
@@ -78,7 +79,11 @@
           <div class="section right">
             <p class="label">Sold Rest dupa Plata</p>
             <p class="value increase">
-              {{ rata != null ? rata.soldRestPlata.toFixed(2) : "0.00" }}
+              {{
+                lastAnticipate != null
+                  ? lastAnticipate.soldRestPlata.toFixed(2)
+                  : "0.00"
+              }}
             </p>
           </div>
         </div>
@@ -104,12 +109,13 @@
           <tbody>
             @for (rata of (selectedRepaymentSchedule$ | async
             )?.overviewLoanRates ?? []; track rata.nrCtr) {
-            <tr>
+            <tr [ngStyle]="{ 'background-color': rata.color }">
               <td>
                 <input
                   [id]="rata.nrCtr"
                   [checked]="rata.selected"
                   type="checkbox"
+                  [disabled]="rata.disabled"
                   (click)="onSelect(rata)"
                 />
               </td>
