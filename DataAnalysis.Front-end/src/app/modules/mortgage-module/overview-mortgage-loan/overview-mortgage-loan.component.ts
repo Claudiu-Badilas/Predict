@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import * as MortgageActions from 'src/app/modules/mortgage-module/state-management/mortgage.actions';
-import * as fromMortgage from 'src/app/modules/mortgage-module/state-management/mortgage.reducer';
+import * as MortgageLoanActions from 'src/app/modules/mortgage-module/state-management/mortgage-loan.actions';
+import * as fromMortgageLoan from 'src/app/modules/mortgage-module/state-management/mortgage-loan.reducer';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
@@ -15,7 +15,7 @@ import { Rata } from '../models/mortgage.model';
 import { OverviewMortgageLoanHeaderComponent } from './components/overview-mortgage-loan-header/overview-mortgage-loan-header.component';
 
 @Component({
-  selector: 'app-mortgage-overview',
+  selector: 'app-overview-mortgage-loan',
   imports: [
     CommonModule,
     SideBarModule,
@@ -25,44 +25,46 @@ import { OverviewMortgageLoanHeaderComponent } from './components/overview-mortg
     OverviewMortgageLoanHeaderComponent,
     CheckboxComponent,
   ],
-  templateUrl: './mortgage-overview.component.html',
-  styleUrls: ['./mortgage-overview.component.scss'],
+  templateUrl: './overview-mortgage-loan.component.html',
+  styleUrls: ['./overview-mortgage-loan.component.scss'],
 })
-export class MortgageOverviewComponent {
+export class OverviewMortgageLoanComponent {
   selectedRepaymentSchedule$ = this.store.select(
-    fromMortgage.getSelectedRepaymentScheduleOverview
+    fromMortgageLoan.getSelectedRepaymentScheduleOverview
   );
   selectedRepaymentScheduleName$ = this.store.select(
-    fromMortgage.getSelectedRepaymentScheduleName
+    fromMortgageLoan.getSelectedRepaymentScheduleName
   );
   dropDownSelectOptions$ = this.store
-    .select(fromMortgage.getRepaymentSchedules)
+    .select(fromMortgageLoan.getRepaymentSchedules)
     .pipe(map((rs) => rs.map((r) => r.name)));
   overviewStartDate$ = this.store
-    .select(fromMortgage.getOverviewStartDate)
+    .select(fromMortgageLoan.getOverviewStartDate)
     .pipe(map((date) => DateUtils.fromJsDateToString(date)));
   overviewLoanRates$ = this.selectedRepaymentSchedule$.pipe(
     map((srs) => srs?.overviewLoanRates?.filter((r) => r.selected) ?? [])
   );
-  constructor(private readonly store: Store<fromMortgage.MortgageState>) {}
+  constructor(
+    private readonly store: Store<fromMortgageLoan.MortgageLoanState>
+  ) {}
 
   onSelectionChange(module: string) {
     this.store.dispatch(
       NavigationAction.navigateTo({
-        route: `/mortgage/${module.toLocaleLowerCase()}`,
+        route: `/mortgage-loan/${module.toLocaleLowerCase()}`,
       })
     );
   }
 
   onDropdownSelected(value: string) {
     this.store.dispatch(
-      MortgageActions.selectedMortgageLoanChanged({ selected: value })
+      MortgageLoanActions.selectedMortgageLoanChanged({ selected: value })
     );
   }
 
   onSelectedDateChange(date: string) {
     this.store.dispatch(
-      MortgageActions.startDateChanged({
+      MortgageLoanActions.startDateChanged({
         date: DateUtils.fromStringToJsDate(date),
       })
     );
@@ -70,16 +72,18 @@ export class MortgageOverviewComponent {
 
   onSelectAllLoanRates(value: boolean) {
     this.store.dispatch(
-      MortgageActions.selectAllOverviewLoanRateChanged({ selectAll: value })
+      MortgageLoanActions.selectAllOverviewLoanRateChanged({ selectAll: value })
     );
   }
 
   onSelect(rata: Rata) {
     this.store.dispatch(
-      MortgageActions.selectAllOverviewLoanRateChanged({ selectAll: undefined })
+      MortgageLoanActions.selectAllOverviewLoanRateChanged({
+        selectAll: undefined,
+      })
     );
     this.store.dispatch(
-      MortgageActions.selectedOverviewLoanRateChanged({
+      MortgageLoanActions.selectedOverviewLoanRateChanged({
         selected: [rata.nrCtr],
       })
     );

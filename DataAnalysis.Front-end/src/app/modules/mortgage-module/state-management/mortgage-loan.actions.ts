@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { RepaymentSchedule } from './../models/mortgage.model';
+import { RepaymentSchedule } from '../models/mortgage.model';
 
 export const loadRepaymentSchedules = createAction(
   '[Mortgage Loan] Load Repayment Schedule'

@@ -21,8 +21,8 @@ import { NavigationEffects } from 'src/app/store/navigation-state/navigation.eff
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastNotificationEffects } from 'src/app/platform/toast-notifications/effects/toast-notification.effects';
 import { ToastNotificationModule } from 'src/app/platform/toast-notifications/toast-notification.module';
-import { MortgageModule } from './modules/mortgage-module/mortgage.module';
-import { MortgageService } from './modules/mortgage-module/services/mortgage.service';
+import { MortgageLoanModule } from './modules/mortgage-module/mortgage-loan.module';
+import { MortgageLoanService } from './modules/mortgage-module/services/overview-mortgage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,9 +44,9 @@ import { MortgageService } from './modules/mortgage-module/services/mortgage.ser
     StoreRouterConnectingModule.forRoot(),
     ToastNotificationModule,
     TopBarModule,
-    MortgageModule,
+    MortgageLoanModule,
   ],
   bootstrap: [AppComponent],
-  providers: [TransactionService, AuthenticationService, MortgageService],
+  providers: [TransactionService, AuthenticationService, MortgageLoanService],
 })
 export class AppModule {}

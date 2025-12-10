@@ -5,28 +5,28 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import * as MortgageActions from 'src/app/modules/mortgage-module/state-management/mortgage.actions';
+import * as MortgageLoanActions from 'src/app/modules/mortgage-module/state-management/mortgage-loan.actions';
 import {
   mapBaseRepaymentScheduleToOverview,
   OverviewRepaymentSchedule,
-} from '../mortgage-overview/models/mortgage-loan-overview.model';
+} from '../overview-mortgage-loan/models/overview-mortgage-loan.model';
 import { RepaymentSchedule } from './../models/mortgage.model';
 
-interface MortgageLoanOverviewState {
+interface OverviewMortgageLoanState {
   repaymentSchedules: OverviewRepaymentSchedule[];
   selectedLoanRates: number[];
   startDate: Date;
   selectAll: boolean;
 }
 
-export interface MortgageState {
+export interface MortgageLoanState {
   repaymentSchedules: RepaymentSchedule[];
   selectedRepaymentScheduleName: string;
 
-  overview: MortgageLoanOverviewState;
+  overview: OverviewMortgageLoanState;
 }
 
-const initialState: MortgageState = {
+const initialState: MortgageLoanState = {
   repaymentSchedules: [],
   selectedRepaymentScheduleName: null,
 
@@ -40,56 +40,66 @@ const initialState: MortgageState = {
 
 const mortgageReducer = createReducer(
   initialState,
-  on(MortgageActions.setMortgagesSuccess, (state, { repaymentSchedules }) => ({
-    ...state,
-    repaymentSchedules,
-  })),
-  on(MortgageActions.selectedMortgageLoanChanged, (state, { selected }) => ({
-    ...state,
-    selectedRepaymentScheduleName: selected,
-  })),
-
-  on(MortgageActions.selectedOverviewLoanRateChanged, (state, { selected }) => {
-    const arr = [...state.overview.selectedLoanRates];
-
-    selected.forEach((val) => {
-      const index = arr.findIndex((r) => r === val);
-
-      if (index !== -1) arr.splice(index, 1);
-      else arr.push(val);
-    });
-
-    return {
-      ...state,
-      overview: { ...state.overview, selectedLoanRates: [...arr] },
-    };
-  }),
   on(
-    MortgageActions.selectAllOverviewLoanRateChanged,
+    MortgageLoanActions.setMortgagesSuccess,
+    (state, { repaymentSchedules }) => ({
+      ...state,
+      repaymentSchedules,
+    })
+  ),
+  on(
+    MortgageLoanActions.selectedMortgageLoanChanged,
+    (state, { selected }) => ({
+      ...state,
+      selectedRepaymentScheduleName: selected,
+    })
+  ),
+
+  on(
+    MortgageLoanActions.selectedOverviewLoanRateChanged,
+    (state, { selected }) => {
+      const arr = [...state.overview.selectedLoanRates];
+
+      selected.forEach((val) => {
+        const index = arr.findIndex((r) => r === val);
+
+        if (index !== -1) arr.splice(index, 1);
+        else arr.push(val);
+      });
+
+      return {
+        ...state,
+        overview: { ...state.overview, selectedLoanRates: [...arr] },
+      };
+    }
+  ),
+  on(
+    MortgageLoanActions.selectAllOverviewLoanRateChanged,
     (state, { selectAll }) => ({
       ...state,
       overview: { ...state.overview, selectAll },
     })
   ),
-  on(MortgageActions.startDateChanged, (state, { date }) => ({
+  on(MortgageLoanActions.startDateChanged, (state, { date }) => ({
     ...state,
     overview: { ...state.overview, startDate: date },
   }))
 );
 
-export function reducer(state: MortgageState, action: Action) {
+export function reducer(state: MortgageLoanState, action: Action) {
   return mortgageReducer(state, action);
 }
 
-const getMortgageState = createFeatureSelector<MortgageState>('MortgageState');
+const getMortgageLoanState =
+  createFeatureSelector<MortgageLoanState>('MortgageLoanState');
 
 export const getRepaymentSchedules = createSelector(
-  getMortgageState,
+  getMortgageLoanState,
   (state) => state.repaymentSchedules
 );
 
 export const getSelectedRepaymentScheduleName = createSelector(
-  getMortgageState,
+  getMortgageLoanState,
   (state) =>
     state.selectedRepaymentScheduleName ??
     state.repaymentSchedules[0]?.name ??
@@ -109,7 +119,7 @@ export const getSelectedRepaymentSchedule = createSelector(
 // OVERVIEW
 //################
 export const getOverviewMortgageLoanState = createSelector(
-  getMortgageState,
+  getMortgageLoanState,
   (state) => state.overview
 );
 

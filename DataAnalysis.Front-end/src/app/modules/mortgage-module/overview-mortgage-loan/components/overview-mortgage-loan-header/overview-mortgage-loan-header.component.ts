@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OverviewLoanRate } from '../../models/mortgage-loan-overview.model';
+import { OverviewLoanRate } from '../../models/overview-mortgage-loan.model';
 
 @Component({
   selector: 'app-overview-mortgage-loan-header',

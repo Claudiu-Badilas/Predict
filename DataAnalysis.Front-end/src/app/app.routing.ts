@@ -10,8 +10,8 @@ const routes: Routes = [
   {
     path: 'mortgage',
     loadChildren: () =>
-      import('./modules/mortgage-module/mortgage.module').then(
-        (m) => m.MortgageModule
+      import('./modules/mortgage-module/mortgage-loan.module').then(
+        (m) => m.MortgageLoanModule
       ),
   },
   {

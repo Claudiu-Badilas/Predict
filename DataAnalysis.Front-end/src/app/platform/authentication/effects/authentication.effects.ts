@@ -34,7 +34,7 @@ export class AuthenticationEffects {
       filter((url) => url && url === '/'),
       map((_) => {
         const route = AuthenticationUtils.isTokenValid()
-          ? '/mortgage/overview'
+          ? '/mortgage-loan/overview'
           : '/authentication/login';
         return NavigationAction.navigateTo({
           route,
