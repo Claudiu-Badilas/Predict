@@ -7,12 +7,14 @@ import { RepaymentSchedule } from '../models/mortgage.model';
 @Injectable({
   providedIn: 'root',
 })
-export class MortgageService {
+export class MortgageLoanService {
   constructor(private httpClient: HttpClient) {}
 
   getRepaymentSchedules(): Observable<RepaymentSchedule[]> {
     return this.httpClient
-      .get<RepaymentSchedule[]>('https://localhost:8080/api/v1/mortgage/bcr')
+      .get<RepaymentSchedule[]>(
+        'https://localhost:8080/api/v1/mortgage-loan/bcr'
+      )
       .pipe(map((response) => response));
   }
 }
