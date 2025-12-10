@@ -11,6 +11,7 @@ import { MortgageService } from '../services/mortgage.service';
 })
 export class MortgageComponent {
   transactions: GraficRambursare[] = [];
+  state = 'Overview';
 
   constructor(private readonly _mortgageService: MortgageService) {
     this._mortgageService
