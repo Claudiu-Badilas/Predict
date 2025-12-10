@@ -1,10 +1,9 @@
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-toggle-button',
-  standalone: true,
-  imports: [NgFor, NgClass],
+  imports: [NgClass],
   templateUrl: './toggle-button.component.html',
   styleUrl: './toggle-button.component.scss',
 })
@@ -21,6 +20,5 @@ export class ToggleButtonComponent {
   select(option: string) {
     this._selected.set(option);
     this.selectionChange.emit(option);
-    console.log('🚀 ~ ToggleButtonComponent ~ select ~ option:', option);
   }
 }
