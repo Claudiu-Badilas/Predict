@@ -9,33 +9,30 @@ export namespace MonthlyTransactionChartUtils {
     endDate: Date,
     transactions: TransactionDomain[]
   ): Highcharts.Options {
+    const validTransactions = transactions.filter((t) => !t.ignored);
+    const incomes = validTransactions.filter((t) => t.amount > 0);
+    const expenses = validTransactions.filter((t) => t.amount < 0);
+
+    const groupTransactionByDate = (trans: TransactionDomain[]) =>
+      ObjectUtil.groupBy(trans, (t) =>
+        t.registrationDate.toLocaleString('en-US', {
+          month: 'short',
+          year: 'numeric',
+        })
+      );
+    const groupedIncomesByMonth = groupTransactionByDate(incomes);
+    const groupedExpensesByMonth = groupTransactionByDate(expenses);
+
     const categories = getAvailableMonths(startDate, endDate);
+    const getData = (group: Record<string, TransactionDomain[]>) =>
+      categories.map((cat) =>
+        CalculatorUtil.sum((group[cat] ?? []).map((t) => t.amount))
+      );
 
-    const incomes = transactions.filter((t) => !t.ignored && t.amount > 0);
-    const expenses = transactions.filter((t) => !t.ignored && t.amount < 0);
-
-    const groupedIncomesByMonth = ObjectUtil.groupBy(incomes, (t) =>
-      t.registrationDate.toLocaleString('en-US', {
-        month: 'short',
-        year: 'numeric',
-      })
+    const incomesData = getData(groupedIncomesByMonth);
+    const expensesData = getData(groupedExpensesByMonth).map((d) =>
+      Math.abs(d)
     );
-    const groupedExpensesByMonth = ObjectUtil.groupBy(expenses, (t) =>
-      t.registrationDate.toLocaleString('en-US', {
-        month: 'short',
-        year: 'numeric',
-      })
-    );
-
-    const incomesData: number[] = categories.map((cat) => {
-      const trans = groupedIncomesByMonth[cat] ?? [];
-      return CalculatorUtil.sum(trans.map((t) => t.amount));
-    });
-
-    const expensesData: number[] = categories.map((cat) => {
-      const trans = groupedExpensesByMonth[cat] ?? [];
-      return CalculatorUtil.sum(trans.map((t) => Math.abs(t.amount)));
-    });
 
     return {
       chart: { type: 'column' },
