@@ -43,9 +43,9 @@
           </tr>
         </thead>
         <tbody>
-          @for (tran of transactions$ | async; track tran) {
+          @for (tran of transactions$ | async; track tran.id) {
           <tr [ngStyle]="{ 'background-color': tran.color }">
-            <td>{{ tran.registrationDate | date : "dd-MM-yyyy" }}</td>
+            <td>{{ tran.registrationDate | date : "dd-MMM-yyyy" }}</td>
             <td>{{ tran.amount }}</td>
             <td>{{ tran.provider }}</td>
             <td>{{ tran.serviceProvider }}</td>

@@ -19,7 +19,7 @@ export class TransactionService {
   ): Observable<TransactionDomain[]> {
     return this.httpClient
       .get<TransactionResponse[]>(
-        `https://localhost:8080/api/v1/free-transactions/1?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
+        `/server/api/v1/free-transactions/1?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
       )
       .pipe(map((res) => res.map((r) => new TransactionDomain(r))));
   }

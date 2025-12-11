@@ -12,9 +12,7 @@ export class MortgageLoanService {
 
   getRepaymentSchedules(): Observable<RepaymentSchedule[]> {
     return this.httpClient
-      .get<RepaymentSchedule[]>(
-        'https://localhost:8080/api/v1/mortgage-loan/bcr'
-      )
+      .get<RepaymentSchedule[]>('/server/api/v1/mortgage-loan/bcr')
       .pipe(map((response) => response));
   }
 }
