@@ -13,7 +13,7 @@ namespace DataAnalysis.Repository.TransactionRepo {
             _npsqlConnectionString = envConfig.GetNpsqlConnectionString();
         }
 
-        public async Task<IEnumerable<TransactionResponse>> GetTransactionByUserIdAndOwnerId(int userId, int ownerId) {
+        public async Task<IEnumerable<TransactionResponse>> GetTransactionByUserIdAndOwnerId(int userId, int ownerId, DateTime startDate, DateTime endDate) {
             using (var connection = new NpgsqlConnection(_npsqlConnectionString)) {
                 connection.Open();
                 var sql = @"
@@ -36,9 +36,16 @@ namespace DataAnalysis.Repository.TransactionRepo {
                     JOIN public.provider p ON p.id = t.provider_id 
                     JOIN public.transaction_type tt ON tt.id = t.transaction_type_id  
                     WHERE u.id = @userId 
-                        AND do2.id = @ownerId;";
+                        AND do2.id = @ownerId
+                        AND t.completition_date >= @startDate
+                        AND t.completition_date <= @endDate;";
 
-                return await connection.QueryAsync<TransactionResponse>(sql, new { userId, ownerId });
+                return await connection.QueryAsync<TransactionResponse>(sql, new {
+                    userId,
+                    ownerId,
+                    startDate,
+                    endDate
+                });
             };
         }
 

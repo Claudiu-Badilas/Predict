@@ -31,4 +31,8 @@ export namespace DateUtils {
 
     return jsDate;
   }
+
+  export function getStartOfTheYear({ subtractYears = 0 } = {}) {
+    return new Date(`${new Date().getFullYear() - subtractYears}-01-01`);
+  }
 }

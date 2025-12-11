@@ -2,8 +2,8 @@
   <ng-container filters-full-size>
     <div class="space">
       <app-date-range-picker
-        [startDate]="startDate"
-        [endDate]="endDate"
+        [startDate]="startDate$ | async"
+        [endDate]="endDate$ | async"
         (valueChanged)="handleRangeChange($event)"
       ></app-date-range-picker>
     </div>

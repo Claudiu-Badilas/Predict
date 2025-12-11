@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 import * as TransactionsActions from 'src/app/modules/transaction-module/actions/transactions.actions';
 import * as fromTransactions from 'src/app/modules/transaction-module/reducers/transactions.reducer';
+import { DateUtils } from 'src/app/shared/utils/date.utils';
 
 @Component({
   selector: 'app-transaction',
@@ -10,10 +12,14 @@ import * as fromTransactions from 'src/app/modules/transaction-module/reducers/t
   standalone: false,
 })
 export class TransactionComponent {
-  transactions$ = this.store.select(fromTransactions.getTransactions);
+  startDate$ = this.store
+    .select(fromTransactions.getStartDate)
+    .pipe(map((d) => DateUtils.fromJsDateToString(d)));
+  endDate$ = this.store
+    .select(fromTransactions.getEndDate)
+    .pipe(map((d) => DateUtils.fromJsDateToString(d)));
 
-  startDate = '2025-01-01';
-  endDate = '2026-02-01';
+  transactions$ = this.store.select(fromTransactions.getTransactions);
 
   handleRangeChange(value: any) {
     console.log('Range updated:', value);
