@@ -24,19 +24,34 @@ export namespace MonthlyTransactionChartUtils {
     const groupedExpensesByMonth = groupTransactionByDate(expenses);
 
     const categories = getAvailableMonths(startDate, endDate);
-    const getData = (group: Record<string, TransactionDomain[]>) =>
-      categories.map((cat) =>
-        CalculatorUtil.sum((group[cat] ?? []).map((t) => t.amount))
-      );
+    const getData = (
+      group: Record<string, TransactionDomain[]>
+    ): [string, number][] =>
+      categories.map((cat) => [
+        cat,
+        CalculatorUtil.sum((group[cat] ?? []).map((t) => t.amount)),
+      ]);
 
     const incomesData = getData(groupedIncomesByMonth);
-    const expensesData = getData(groupedExpensesByMonth).map((d) =>
-      Math.abs(d)
-    );
+    const expensesData = getData(groupedExpensesByMonth);
+
+    const savesData = categories.map((cat) => {
+      const incomesTotal = incomesData.find(([c, _]) => c === cat)[1];
+      const expensesTotal = expensesData.find(([c, _]) => c === cat)[1];
+      const total = incomesTotal - Math.abs(expensesTotal);
+      return total > 0 ? total : 0;
+    });
+
+    const losesData = categories.map((cat) => {
+      const incomesTotal = incomesData.find(([c, _]) => c === cat)[1];
+      const expensesTotal = expensesData.find(([c, _]) => c === cat)[1];
+      const total = incomesTotal - Math.abs(expensesTotal);
+      return total < 0 ? total : 0;
+    });
 
     return {
       chart: { type: 'column' },
-      title: { text: 'Monthly Transactions' },
+      title: { text: 'Monthly Transactions', align: 'left' },
       xAxis: { categories },
       yAxis: { title: { text: 'Amount (RON)' } },
       series: [
@@ -44,13 +59,25 @@ export namespace MonthlyTransactionChartUtils {
           type: 'column',
           name: 'Income',
           color: Colors.GREEN_500,
-          data: incomesData,
+          data: incomesData.map(([_, v]) => v),
         },
         {
           type: 'column',
           name: 'Expenses',
           color: Colors.PINK_500,
-          data: expensesData,
+          data: expensesData.map(([_, v]) => Math.abs(v)),
+        },
+        {
+          type: 'column',
+          name: 'Saves',
+          color: Colors.BLUE_500,
+          data: savesData,
+        },
+        {
+          type: 'column',
+          name: 'Loses',
+          color: Colors.BS_BLACK,
+          data: losesData,
         },
       ],
     };
