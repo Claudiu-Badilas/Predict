@@ -12,6 +12,13 @@ export class TransactionComponent implements OnInit {
   transactions: any[] = [];
   ngOnInit(): void {}
 
+  startDate = '2025-01-01';
+  endDate = '2026-02-01';
+
+  handleRangeChange(value: any) {
+    console.log('Range updated:', value);
+  }
+
   constructor(private _transactionService: TransactionService) {
     this._transactionService
       .getTransactions()
