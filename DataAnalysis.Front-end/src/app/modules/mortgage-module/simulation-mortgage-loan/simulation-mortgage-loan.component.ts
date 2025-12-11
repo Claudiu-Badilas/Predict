@@ -21,7 +21,7 @@ export class SimulationMortgageLoanComponent {
   onSelectionChange(module: string) {
     this.store.dispatch(
       NavigationAction.navigateTo({
-        route: `/mortgage-loan/${module.toLocaleLowerCase()}`,
+        route: `/mortgage-loan/${module.toLowerCase()}`,
       })
     );
   }

@@ -24,3 +24,8 @@ export const selectedServiceProviderChanged = createAction(
   '[Transactions] Selected Service Provider Changed',
   props<{ serviceProvider: string }>()
 );
+
+export const searchTermChanged = createAction(
+  '[Transactions] Search Term Changed',
+  props<{ searchTerm: string }>()
+);

@@ -25,6 +25,9 @@
         (selectionChange)="onDropdownSelected($event)"
       />
     </div>
+    <div class="space">
+      <app-search-input (search)="onSearch($event)"></app-search-input>
+    </div>
   </ng-container>
   <ng-container filters-partial-size> </ng-container>
 
@@ -36,29 +39,29 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Provider</th>
-            <th scope="col">Service Provider</th>
-            <th scope="col">Ignored</th>
-            <th scope="col">Description</th>
+            <th class="col-2">Date</th>
+            <th class="col-2">Amount</th>
+            <th class="col-2">Ignored</th>
+            <th class="col-2">Service Provider</th>
+            <th class="col-4">Description</th>
           </tr>
         </thead>
         <tbody>
           @for (tran of transactions$ | async; track tran.id) {
           <tr [ngStyle]="{ 'background-color': tran.color }">
-            <td>{{ tran.registrationDate | date : "dd-MMM-yyyy" }}</td>
-            <td>{{ tran.amount }}</td>
-            <td>{{ tran.provider }}</td>
-            <td>{{ tran.serviceProvider }}</td>
-            <td>
+            <td class="col-2">
+              {{ tran.registrationDate | date : "dd-MMM-yyyy" }}
+            </td>
+            <td class="col-2">{{ tran.amount }}</td>
+            <td class="col-2">
               <app-checkbox
                 [id]="tran.id"
                 [checked]="tran.ignored"
                 [disabled]="true"
               />
             </td>
-            <td>{{ tran.description }}</td>
+            <td class="col-2">{{ tran.serviceProvider }}</td>
+            <td class="col-4">{{ tran.description }}</td>
           </tr>
           }
         </tbody>

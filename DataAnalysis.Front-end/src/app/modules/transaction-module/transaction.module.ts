@@ -13,6 +13,7 @@ import { TransactionsEffects } from './effects/transactions.effects';
 import { TransactionComponent } from './transaction.component';
 import { TransactionRoutingModule } from './transaction.routing';
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
+import { SearchInputComponent } from 'src/app/shared/components/search-input/search-input.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-
     TransactionHeaderComponent,
     CheckboxComponent,
     HighchartWrapperComponent,
+    SearchInputComponent,
   ],
   declarations: [TransactionComponent],
   exports: [TransactionComponent],

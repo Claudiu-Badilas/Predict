@@ -61,4 +61,10 @@ export class TransactionComponent {
       })
     );
   }
+
+  onSearch(value: string) {
+    this.store.dispatch(
+      TransactionsActions.searchTermChanged({ searchTerm: value })
+    );
+  }
 }

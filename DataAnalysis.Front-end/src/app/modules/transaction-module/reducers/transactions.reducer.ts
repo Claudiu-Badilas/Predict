@@ -15,6 +15,7 @@ export interface State {
   endDate: Date;
   selectedProvider: string;
   selectedServiceProvider: string;
+  searchTerm: string;
 }
 
 const initialState: State = {
@@ -23,6 +24,7 @@ const initialState: State = {
   endDate: new Date(),
   selectedProvider: 'No Selection',
   selectedServiceProvider: 'No Selection',
+  searchTerm: null,
 };
 
 const transactionsReducer = createReducer(
@@ -46,7 +48,11 @@ const transactionsReducer = createReducer(
       ...state,
       selectedServiceProvider: serviceProvider,
     })
-  )
+  ),
+  on(TransactionsActions.searchTermChanged, (state, { searchTerm }) => ({
+    ...state,
+    searchTerm,
+  }))
 );
 
 export function reducer(state: State, action: Action) {
@@ -80,6 +86,11 @@ export const getSelectedServiceProvider = createSelector(
   (state) => state.selectedServiceProvider
 );
 
+export const getSearchTerm = createSelector(
+  getTransactionsState,
+  (state) => state.searchTerm
+);
+
 export const getAvailableProviderTransactions = createSelector(
   getTransactions,
   getSelectedProvider,
@@ -93,10 +104,12 @@ export const getAvailableProviderTransactions = createSelector(
 export const getAvailableTransactions = createSelector(
   getAvailableProviderTransactions,
   getSelectedServiceProvider,
-  (transactions, selectedServiceProvider) =>
-    transactions.filter(
-      (t) =>
-        selectedServiceProvider === 'No Selection' ||
-        t.serviceProvider === selectedServiceProvider
+  getSearchTerm,
+  (transactions, selectedServiceProvider, searchTerm) =>
+    transactions.filter((t) =>
+      !!searchTerm
+        ? t.description.toLowerCase().includes(searchTerm.toLowerCase())
+        : selectedServiceProvider === 'No Selection' ||
+          t.serviceProvider === selectedServiceProvider
     )
 );

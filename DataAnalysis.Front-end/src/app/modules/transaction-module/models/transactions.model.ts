@@ -41,9 +41,10 @@ export class TransactionDomain {
     );
 
     this.serviceProvider = res.description?.split('|')[0] ?? null;
-    this.ignored = this.description.includes(
-      'Transfer intre conturile proprii'
-    );
+    this.ignored = [
+      'Transfer intre conturile proprii',
+      'WWW.ORANGE.RO CONTUL-MEU',
+    ].some((x) => this.description.includes(x));
     this.color = this.ignored
       ? Colors.GRAY_100
       : this.amount > 0
