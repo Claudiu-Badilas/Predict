@@ -7,16 +7,17 @@ import {
 } from '@ngrx/store';
 import * as TransactionsActions from 'src/app/modules/transaction-module/actions/transactions.actions';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
+import { TransactionDomain } from '../models/transactions.model';
 
 export interface State {
-  transactions: any[];
+  transactions: TransactionDomain[];
   startDate: Date;
   endDate: Date;
 }
 
 const initialState: State = {
   transactions: [],
-  startDate: DateUtils.getStartOfTheYear({ subtractYears: 5 }),
+  startDate: DateUtils.getStartOfTheYear({ subtractYears: 0 }),
   endDate: new Date(),
 };
 

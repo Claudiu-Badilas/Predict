@@ -20,7 +20,7 @@ namespace DataAnalysis.Repository.TransactionRepo {
                     SELECT 
                         t.id as Id, 
                         t.registration_date as RegistrationDate, 
-                        t.completition_date as CompletitionDate, 
+                        t.completition_date as CompletionDate, 
                         t.amount as Amount, 
                         t.fee as Fee, 
                         t.description as Description, 
@@ -37,8 +37,9 @@ namespace DataAnalysis.Repository.TransactionRepo {
                     JOIN public.transaction_type tt ON tt.id = t.transaction_type_id  
                     WHERE u.id = @userId 
                         AND do2.id = @ownerId
-                        AND t.completition_date >= @startDate
-                        AND t.completition_date <= @endDate;";
+                        AND t.registration_date >= @startDate
+                        AND t.registration_date <= @endDate
+                    order by t.registration_date desc;";
 
                 return await connection.QueryAsync<TransactionResponse>(sql, new {
                     userId,
