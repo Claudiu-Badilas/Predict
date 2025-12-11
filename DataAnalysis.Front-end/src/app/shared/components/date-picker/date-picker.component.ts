@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  input,
-  Output,
-  output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   selector: 'date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
-  standalone: true,
   imports: [CommonModule, FormsModule, NgbModule],
 })
 export class DatePickerComponent {
