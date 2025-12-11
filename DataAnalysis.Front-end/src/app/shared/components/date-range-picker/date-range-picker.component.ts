@@ -11,10 +11,10 @@ import { DatePickerComponent } from '../date-picker/date-picker.component';
   styleUrls: ['./date-range-picker.component.scss'],
 })
 export class RangeSelectorComponent {
-  @Input({ required: true }) startDate: string | null = null;
-  @Input({ required: true }) endDate: string | null = null;
-  @Input() minDate: string = '2025-12-01';
-  @Input() maxDate: string = '2055-12-01';
+  @Input({ required: true }) startDate: string;
+  @Input({ required: true }) endDate: string;
+  @Input({ required: true }) minDate: string;
+  @Input({ required: true }) maxDate: string;
 
   @Output() valueChanged = new EventEmitter<{
     startDate: Date;
