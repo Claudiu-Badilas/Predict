@@ -15,11 +15,6 @@ export namespace DailyTransactionChartUtils {
     const incomes = validTransactions.filter((t) => t.amount > 0);
     const expenses = validTransactions.filter((t) => t.amount < 0);
 
-    const groupTransactionByDay = (trans: TransactionDomain[]) =>
-      ObjectUtil.groupBy(trans, (t) =>
-        DateUtils.fromJsDateToString(t.registrationDate)
-      );
-
     const getData = (transactions: TransactionDomain[], multiplier: number) => {
       const group = ObjectUtil.groupBy(transactions, (t) =>
         DateUtils.fromJsDateToString(t.registrationDate)
@@ -40,7 +35,11 @@ export namespace DailyTransactionChartUtils {
     return {
       title: { text: 'Daily Transactions', align: 'left' },
       chart: { zooming: { type: 'xy' } },
-      xAxis: { type: 'datetime' },
+      xAxis: {
+        type: 'datetime',
+        min: startDate.getTime(),
+        max: endDate.getTime(),
+      },
       tooltip: {
         formatter: function () {
           return `
