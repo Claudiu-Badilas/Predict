@@ -20,6 +20,11 @@ export class TransactionComponent {
     .pipe(map((d) => DateUtils.fromJsDateToString(d)));
 
   transactions$ = this.store.select(fromTransactions.getAvailableTransactions);
+  providerDropDownSelectOptions$ = this.store
+    .select(fromTransactions.getTransactions)
+    .pipe(map((t) => ['No Selection', ...new Set(t.map((x) => x.provider))]));
+  selectedProvider$ = this.store.select(fromTransactions.getSelectedProvider);
+
   dropDownSelectOptions$ = this.store
     .select(fromTransactions.getTransactions)
     .pipe(
@@ -41,6 +46,12 @@ export class TransactionComponent {
       })
     );
     this.store.dispatch(TransactionsActions.loadTransactions());
+  }
+
+  onProviderDropdownSelected(value: string) {
+    this.store.dispatch(
+      TransactionsActions.selectedProviderChanged({ provider: value })
+    );
   }
 
   onDropdownSelected(value: string) {

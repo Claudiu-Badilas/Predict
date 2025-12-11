@@ -15,6 +15,11 @@ export const dateRangeChanged = createAction(
   props<{ startDate: Date; endDate: Date }>()
 );
 
+export const selectedProviderChanged = createAction(
+  '[Transactions] Selected Provider Changed',
+  props<{ provider: string }>()
+);
+
 export const selectedServiceProviderChanged = createAction(
   '[Transactions] Selected Service Provider Changed',
   props<{ serviceProvider: string }>()

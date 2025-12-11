@@ -9,6 +9,14 @@
     </div>
     <div class="space">
       <app-dropdown-select
+        [items]="providerDropDownSelectOptions$ | async"
+        [selectedItem]="selectedProvider$ | async"
+        placeholder="No Selection"
+        (selectionChange)="onProviderDropdownSelected($event)"
+      />
+    </div>
+    <div class="space">
+      <app-dropdown-select
         [items]="dropDownSelectOptions$ | async"
         [selectedItem]="selectedServiceProvider$ | async"
         placeholder="No Selection"
