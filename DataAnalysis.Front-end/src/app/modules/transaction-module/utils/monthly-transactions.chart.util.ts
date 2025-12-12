@@ -46,7 +46,7 @@ export namespace MonthlyTransactionChartUtils {
       const incomesTotal = incomesData.find(([c, _]) => c === cat)[1];
       const expensesTotal = expensesData.find(([c, _]) => c === cat)[1];
       const total = incomesTotal - Math.abs(expensesTotal);
-      return total < 0 ? total : 0;
+      return total < 0 ? Math.abs(total) : 0;
     });
 
     return {
