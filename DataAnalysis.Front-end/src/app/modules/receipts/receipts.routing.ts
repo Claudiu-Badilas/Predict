@@ -1,16 +1,16 @@
-import { TransactionModule } from './transaction.module';
-import { TransactionComponent } from './transaction.component';
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationGuard } from 'src/app/platform/authentication/guard/authentication.guard';
+import { ReceiptsComponent } from './receipts.component';
+import { ReceiptsModule } from './receipts.module';
 
 const routes: Routes = [
   {
-    path: 'transactions',
-    component: TransactionComponent,
+    path: 'receipts',
+    component: ReceiptsComponent,
     canActivate: [AuthenticationGuard],
   },
 ];
 
-export const TransactionRoutingModule: ModuleWithProviders<TransactionModule> =
+export const ReceiptsRoutingModule: ModuleWithProviders<ReceiptsModule> =
   RouterModule.forChild(routes);

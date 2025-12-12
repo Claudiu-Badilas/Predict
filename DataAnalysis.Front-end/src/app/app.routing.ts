@@ -8,7 +8,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'mortgage',
+    path: 'mortgage-loan',
     loadChildren: () =>
       import('./modules/mortgage-module/mortgage-loan.module').then(
         (m) => m.MortgageLoanModule
@@ -19,6 +19,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/transaction-module/transaction.module').then(
         (m) => m.TransactionModule
+      ),
+  },
+  {
+    path: 'receipts',
+    loadChildren: () =>
+      import('./modules/receipts/receipts.module').then(
+        (m) => m.ReceiptsModule
       ),
   },
   // {

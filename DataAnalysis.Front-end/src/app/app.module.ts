@@ -23,6 +23,7 @@ import { ToastNotificationEffects } from 'src/app/platform/toast-notifications/e
 import { ToastNotificationModule } from 'src/app/platform/toast-notifications/toast-notification.module';
 import { MortgageLoanModule } from './modules/mortgage-module/mortgage-loan.module';
 import { MortgageLoanService } from './modules/mortgage-module/services/overview-mortgage.service';
+import { ReceiptsModule } from './modules/receipts/receipts.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,6 +46,7 @@ import { MortgageLoanService } from './modules/mortgage-module/services/overview
     ToastNotificationModule,
     TopBarModule,
     MortgageLoanModule,
+    ReceiptsModule,
   ],
   bootstrap: [AppComponent],
   providers: [TransactionService, AuthenticationService, MortgageLoanService],
