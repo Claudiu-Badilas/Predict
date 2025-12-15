@@ -12,3 +12,9 @@ export const dateRangeChanged = createAction(
   '[Receipts] Date Range Changed',
   props<{ startDate: Date; endDate: Date }>()
 );
+
+// Receipts Products
+export const searchTermChanged = createAction(
+  '[Receipts Products] Search Term Changed',
+  props<{ searchTerm: string }>()
+);

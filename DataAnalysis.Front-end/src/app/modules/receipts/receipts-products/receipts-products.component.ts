@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.actions';
 import * as fromReceipts from 'src/app/modules/receipts/reducers/receipts.reducer';
 import { RangeSelectorComponent } from 'src/app/shared/components/date-range-picker/date-range-picker.component';
+import { SearchInputComponent } from 'src/app/shared/components/search-input/search-input.component';
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
@@ -17,6 +18,7 @@ import * as NavigationAction from 'src/app/store/navigation-state/navigation.act
     SideBarModule,
     RangeSelectorComponent,
     ToggleButtonComponent,
+    SearchInputComponent,
   ],
   templateUrl: './receipts-products.component.html',
   styleUrl: './receipts-products.component.scss',
@@ -28,7 +30,9 @@ export class ReceiptsProductsComponent {
   endDate$ = this.store
     .select(fromReceipts.getEndDate)
     .pipe(map((d) => DateUtils.fromJsDateToString(d)));
-  receipts$ = this.store.select(fromReceipts.getReceipts);
+  availableReceiptsProduct$ = this.store.select(
+    fromReceipts.getAvailableReceiptsProductBySearchTerm
+  );
 
   constructor(private readonly store: Store<fromReceipts.State>) {
     this.store.dispatch(ReceiptsActions.loadReceipts());
@@ -50,5 +54,11 @@ export class ReceiptsProductsComponent {
       })
     );
     this.store.dispatch(ReceiptsActions.loadReceipts());
+  }
+
+  onSearch(value: string) {
+    this.store.dispatch(
+      ReceiptsActions.searchTermChanged({ searchTerm: value })
+    );
   }
 }

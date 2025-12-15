@@ -20,7 +20,7 @@ export class SearchInputComponent {
     clearTimeout(this.debounceTimer);
     this.debounceTimer = setTimeout(() => {
       this.search.emit(this.query());
-    }, 1000);
+    }, 500);
   }
 
   clear() {
