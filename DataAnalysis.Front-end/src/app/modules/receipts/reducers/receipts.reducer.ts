@@ -7,9 +7,11 @@ import {
 } from '@ngrx/store';
 import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.actions';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
+import { ReceiptDomain } from '../models/receipts-domain.model';
+
 
 export interface State {
-  receipts: any[];
+  receipts: ReceiptDomain[];
   startDate: Date;
   endDate: Date;
 }

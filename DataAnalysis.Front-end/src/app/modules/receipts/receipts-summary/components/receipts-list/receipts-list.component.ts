@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { ReceiptDomain } from '../../../models/receipts-domain.model';
 
 @Component({
   selector: 'app-receipts-list',
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./receipts-list.component.scss'],
 })
 export class ReceiptListComponent {
-  @Input() receipts: any[] = [];
+  @Input() receipts: ReceiptDomain[] = [];
 
   expanded = new Set<number>();
 
