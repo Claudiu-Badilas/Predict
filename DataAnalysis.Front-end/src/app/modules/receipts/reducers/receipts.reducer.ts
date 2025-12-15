@@ -9,6 +9,7 @@ import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.acti
 import { DateUtils } from 'src/app/shared/utils/date.utils';
 import { ReceiptDomain } from '../models/receipts-domain.model';
 import { ReceiptsProductDomain } from '../receipts-products/models/receipts-products.model';
+import { DailyPurchasedProductChartUtils } from '../receipts-products/utils/daily-purchased-products.chart.util';
 
 interface ReceiptsProductsState {
   searchTerm: string;
@@ -110,4 +111,11 @@ export const getAvailableReceiptsProductBySearchTerm = createSelector(
             .some((term) => p.name.toLowerCase().includes(term))
         : receiptsProduct
     )
+);
+
+export const getDailyPurchasedProductChart = createSelector(
+  getStartDate,
+  getEndDate,
+  getAvailableReceiptsProductBySearchTerm,
+  DailyPurchasedProductChartUtils.getChart
 );

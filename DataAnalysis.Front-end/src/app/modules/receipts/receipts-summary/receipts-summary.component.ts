@@ -36,6 +36,8 @@ export class ReceiptsSummaryComponent {
     this.store.dispatch(ReceiptsActions.loadReceipts());
   }
 
+  now = DateUtils.fromJsDateToString(new Date());
+
   onSelectionChange(module: string) {
     this.store.dispatch(
       NavigationAction.navigateTo({

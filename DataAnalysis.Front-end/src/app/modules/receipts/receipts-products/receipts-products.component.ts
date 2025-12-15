@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.actions';
 import * as fromReceipts from 'src/app/modules/receipts/reducers/receipts.reducer';
 import { RangeSelectorComponent } from 'src/app/shared/components/date-range-picker/date-range-picker.component';
+import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { SearchInputComponent } from 'src/app/shared/components/search-input/search-input.component';
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
@@ -19,6 +20,7 @@ import * as NavigationAction from 'src/app/store/navigation-state/navigation.act
     RangeSelectorComponent,
     ToggleButtonComponent,
     SearchInputComponent,
+    HighchartWrapperComponent,
   ],
   templateUrl: './receipts-products.component.html',
   styleUrl: './receipts-products.component.scss',
@@ -30,9 +32,11 @@ export class ReceiptsProductsComponent {
   endDate$ = this.store
     .select(fromReceipts.getEndDate)
     .pipe(map((d) => DateUtils.fromJsDateToString(d)));
-  availableReceiptsProduct$ = this.store.select(
-    fromReceipts.getAvailableReceiptsProductBySearchTerm
+  dailyPurchasedProductChart$ = this.store.select(
+    fromReceipts.getDailyPurchasedProductChart
   );
+
+  now = DateUtils.fromJsDateToString(new Date());
 
   constructor(private readonly store: Store<fromReceipts.State>) {
     this.store.dispatch(ReceiptsActions.loadReceipts());

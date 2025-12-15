@@ -11,8 +11,8 @@
       <app-date-range-picker
         [startDate]="startDate$ | async"
         [endDate]="endDate$ | async"
-        minDate="2018-01-01"
-        maxDate="2030-01-01"
+        minDate="2021-12-01"
+        [maxDate]="now"
         (valueChanged)="handleRangeChange($event)"
       />
     </div>
@@ -24,8 +24,10 @@
   <ng-container filters-partial-size> </ng-container>
 
   <ng-container main-content>
-    @for( item of availableReceiptsProduct$ | async; track item.id ){
-    <div>{{ item.name }}</div>
-    }
+    <div>
+      <app-highcharts-wrapper
+        [chartOptions]="dailyPurchasedProductChart$ | async"
+      />
+    </div>
   </ng-container>
 </app-side-bar>
