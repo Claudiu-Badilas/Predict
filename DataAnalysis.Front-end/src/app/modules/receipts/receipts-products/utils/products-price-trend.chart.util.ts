@@ -48,7 +48,7 @@ export namespace ProductPriceTrendChartUtils {
         formatter: function () {
           const point = (this as any).point;
           return `
-            Product: <b>${this.series.name}</b><br/>
+            <b>${this.series.name}</b><br/>
             Date: <b>${point.date}</b><br/>
             Price: <b>${this.y}</b>
           `;

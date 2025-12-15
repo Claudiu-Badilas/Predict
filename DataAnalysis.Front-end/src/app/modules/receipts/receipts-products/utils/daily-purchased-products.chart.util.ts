@@ -1,8 +1,6 @@
 import Highcharts from 'highcharts';
 import { Colors } from 'src/app/shared/styles/colors';
-import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
-import { ObjectUtil } from 'src/app/shared/utils/object.utils';
 import { ReceiptsProductDomain } from '../models/receipts-products.model';
 
 export namespace DailyPurchasedProductChartUtils {
@@ -16,7 +14,6 @@ export namespace DailyPurchasedProductChartUtils {
         x: p.purchasedDate.valueOf(),
         y: Number(p.price.toFixed(2)),
         date: DateUtils.fromJsDateToString(p.purchasedDate),
-        name: p.name,
       }));
     };
 
@@ -31,7 +28,7 @@ export namespace DailyPurchasedProductChartUtils {
       tooltip: {
         formatter: function () {
           return `
-             Date: <b>${(this as any).point.name}</b><br/>
+            <b>${this.series.name}</b><br/>
             Date: <b>${(this as any).point.date}</b><br/>
             Amount: <b>${(this as any).point.y}</b>
           `;
