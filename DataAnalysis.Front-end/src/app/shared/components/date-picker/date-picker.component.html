@@ -37,9 +37,9 @@
         class="month-dropdown"
         title="Select month"
       >
-        @for (month of availableMonths(); let i = $index; track i) {
-        <option [value]="i">
-          {{ monthShortNames[i] }}
+        @for (month of availableMonths(); track month) {
+        <option [value]="month">
+          {{ monthShortNames[month] }}
         </option>
         }
       </select>
@@ -66,7 +66,7 @@
 
     <!-- Weekdays -->
     <div class="weekdays">
-      @for (day of weekDays; track day) {
+      @for (day of reorderedWeekDays(); track day) {
       <span class="weekday">{{ day }}</span>
       }
     </div>

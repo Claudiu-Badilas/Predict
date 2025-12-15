@@ -1,60 +1,28 @@
+import { CommonModule, DOCUMENT } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  HostListener,
+  Inject,
   Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
   Output,
   signal,
-  HostListener,
-  OnInit,
-  OnChanges,
   SimpleChanges,
-  Inject,
-  OnDestroy,
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DatePickerService } from './services/date-picker.service';
 
-class DatepickerService {
-  private openDatepickers: Set<string> = new Set();
-  private closeCallbacks: Map<string, () => void> = new Map();
-
-  registerDatepicker(id: string, closeCallback: () => void) {
-    this.closeCallbacks.set(id, closeCallback);
-  }
-
-  unregisterDatepicker(id: string) {
-    this.closeCallbacks.delete(id);
-    this.openDatepickers.delete(id);
-  }
-
-  openDatepicker(id: string) {
-    // Close all other open datepickers
-    this.openDatepickers.forEach((openId) => {
-      if (openId !== id && this.closeCallbacks.has(openId)) {
-        this.closeCallbacks.get(openId)!();
-      }
-    });
-
-    this.openDatepickers.add(id);
-  }
-
-  closeDatepicker(id: string) {
-    this.openDatepickers.delete(id);
-  }
-
-  isDatepickerOpen(id: string): boolean {
-    return this.openDatepickers.has(id);
-  }
-}
-
-// Global instance of the service
-const datepickerService = new DatepickerService();
+const datepickerService = new DatePickerService();
 
 @Component({
   selector: 'date-picker',
   imports: [CommonModule, FormsModule],
   templateUrl: `./date-picker.component.html`,
   styleUrls: ['./date-picker.component.scss'],
+  providers: [DatePickerService],
 })
 export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() minDate: Date | null = null;
@@ -64,6 +32,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
     .toString(36)
     .substr(2, 9)}`;
   @Input() openSide: 'left' | 'right' = 'left';
+  @Input() firstDayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 1; // Default to Monday
 
   @Output() dateChange = new EventEmitter<Date>();
 
@@ -76,7 +45,9 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
 
   today = new Date();
 
+  // Original week days
   weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
   monthShortNames = [
     'Jan',
     'Feb',
@@ -106,7 +77,12 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['minDate'] || changes['maxDate'] || changes['initialDate']) {
+    if (
+      changes['minDate'] ||
+      changes['maxDate'] ||
+      changes['initialDate'] ||
+      changes['firstDayOfWeek']
+    ) {
       this.initializeDate();
     }
   }
@@ -142,6 +118,22 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
     return `${day}-${month}-${year}`;
   }
 
+  // Reorder week days based on firstDayOfWeek
+  reorderedWeekDays(): string[] {
+    const weekDaysCopy = [...this.weekDays];
+    const reordered = [];
+
+    // Start from the specified first day of week
+    for (let i = this.firstDayOfWeek; i < weekDaysCopy.length; i++) {
+      reordered.push(weekDaysCopy[i]);
+    }
+    for (let i = 0; i < this.firstDayOfWeek; i++) {
+      reordered.push(weekDaysCopy[i]);
+    }
+
+    return reordered;
+  }
+
   // Available years based on min/max
   availableYears(): number[] {
     const minYear = this.minDate
@@ -158,7 +150,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
     return years;
   }
 
-  // Available months for current year
+  // Available months for current year - FIXED
   availableMonths(): number[] {
     const currentYear = this.selectedYear;
     const months = [];
@@ -167,22 +159,26 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
       const date = new Date(currentYear, month, 1);
 
       // Check if month is within min/max range
-      if (
-        this.minDate &&
-        date < this.minDate &&
-        (date.getFullYear() < this.minDate.getFullYear() ||
-          date.getMonth() < this.minDate.getMonth())
-      ) {
-        continue;
+      if (this.minDate && date < this.minDate) {
+        const minYear = this.minDate.getFullYear();
+        const minMonth = this.minDate.getMonth();
+        if (
+          currentYear < minYear ||
+          (currentYear === minYear && month < minMonth)
+        ) {
+          continue;
+        }
       }
 
-      if (
-        this.maxDate &&
-        date > this.maxDate &&
-        (date.getFullYear() > this.maxDate.getFullYear() ||
-          date.getMonth() > this.maxDate.getMonth())
-      ) {
-        continue;
+      if (this.maxDate && date > this.maxDate) {
+        const maxYear = this.maxDate.getFullYear();
+        const maxMonth = this.maxDate.getMonth();
+        if (
+          currentYear > maxYear ||
+          (currentYear === maxYear && month > maxMonth)
+        ) {
+          continue;
+        }
       }
 
       months.push(month);
@@ -192,20 +188,23 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onYearMonthChange() {
-    // Ensure selected month is available for the year
     const availableMonths = this.availableMonths();
-    if (!availableMonths.includes(this.selectedMonth)) {
+    if (!availableMonths.includes(+this.selectedMonth)) {
       this.selectedMonth = availableMonths[0] || 0;
     }
   }
 
   getEmptyDays(): number[] {
-    const firstDay = new Date(
+    const firstDayOfMonth = new Date(
       this.selectedYear,
       this.selectedMonth,
       1
-    ).getDay();
-    return Array(firstDay).fill(0);
+    ).getDay(); // 0 = Sunday, 1 = Monday, etc.
+
+    // Adjust for custom first day of week
+    let emptyDaysCount = (firstDayOfMonth - this.firstDayOfWeek + 7) % 7;
+
+    return Array(emptyDaysCount).fill(0);
   }
 
   daysInMonth(): number[] {
@@ -261,32 +260,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedDate.set(date);
     this.dateChange.emit(date);
     this.closeCalendar();
-  }
-
-  setToMinDate() {
-    if (!this.minDate) return;
-
-    const minDate = new Date(this.minDate);
-    minDate.setHours(0, 0, 0, 0);
-
-    this.selectedDate.set(minDate);
-    this.selectedYear = minDate.getFullYear();
-    this.selectedMonth = minDate.getMonth();
-
-    this.dateChange.emit(minDate);
-  }
-
-  setToMaxDate() {
-    if (!this.maxDate) return;
-
-    const maxDate = new Date(this.maxDate);
-    maxDate.setHours(0, 0, 0, 0);
-
-    this.selectedDate.set(maxDate);
-    this.selectedYear = maxDate.getFullYear();
-    this.selectedMonth = maxDate.getMonth();
-
-    this.dateChange.emit(maxDate);
   }
 
   canGoPrev(): boolean {
@@ -353,14 +326,6 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
       month: 'long',
       day: 'numeric',
     });
-  }
-
-  formatDate(date: Date): string {
-    return `${date.getDate().toString().padStart(2, '0')}/${(
-      date.getMonth() + 1
-    )
-      .toString()
-      .padStart(2, '0')}/${date.getFullYear()}`;
   }
 
   toggle() {
