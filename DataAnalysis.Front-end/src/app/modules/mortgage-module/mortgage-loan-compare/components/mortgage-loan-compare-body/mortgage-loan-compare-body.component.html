@@ -1,0 +1,39 @@
+<div class="scrollable-container">
+  <table class="diff-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="text-center" colspan="4">{{ leftName() }}</th>
+        <th class="text-center" colspan="4">{{ rightName() }}</th>
+      </tr>
+      <tr>
+        <th>#</th>
+        <th>Data Plății</th>
+        <th>Rată Credit</th>
+        <th>Rată Dobândă</th>
+        <th>Total Plata</th>
+        <th>Data Plății</th>
+        <th>Rată Credit</th>
+        <th>Rată Dobândă</th>
+        <th>Total Plata</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(row of compareRows(); track row.id) {
+
+      <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ (row.left?.dataPlatii | date : "yyyy-MM-dd") ?? "-" }}</td>
+        <td>{{ row.left?.rataCredit ?? "-" }}</td>
+        <td>{{ row.left?.rataDobanda ?? "-" }}</td>
+        <td>{{ row.left?.totalRata ?? "-" }}</td>
+        <td>{{ (row.right?.dataPlatii | date : "yyyy-MM-dd") ?? "-" }}</td>
+        <td>{{ row.right?.rataCredit ?? "-" }}</td>
+        <td>{{ row.right?.rataDobanda ?? "-" }}</td>
+        <td>{{ row.right?.totalRata ?? "-" }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

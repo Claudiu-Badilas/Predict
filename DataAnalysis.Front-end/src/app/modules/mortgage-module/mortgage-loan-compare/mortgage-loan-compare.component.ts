@@ -6,16 +6,24 @@ import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/t
 import * as fromAppStore from 'src/app/store/app-state.reducer';
 import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
 import { RepaymentSchedule } from '../models/mortgage.model';
+import { MortgageLoanCompareBodyComponent } from './components/mortgage-loan-compare-body/mortgage-loan-compare-body.component';
+import * as fromMortgageLoan from 'src/app/modules/mortgage-module/state-management/mortgage-loan.reducer';
 
 @Component({
-  selector: 'app-mortgage-loan-detailed',
-  imports: [CommonModule, SideBarModule, ToggleButtonComponent],
-  templateUrl: './mortgage-loan-detailed.component.html',
-  styleUrl: './mortgage-loan-detailed.component.scss',
+  selector: 'app-mortgage-loan-compare',
+  imports: [
+    CommonModule,
+    SideBarModule,
+    ToggleButtonComponent,
+    MortgageLoanCompareBodyComponent,
+  ],
+  templateUrl: './mortgage-loan-compare.component.html',
+  styleUrl: './mortgage-loan-compare.component.scss',
 })
-export class MortgageLoanDetailedComponent {
-  transactions: RepaymentSchedule[] = [];
-
+export class MortgageLoanCompareComponent {
+  repaymentSchedules$ = this.store.select(
+    fromMortgageLoan.getRepaymentSchedules
+  );
   constructor(private store: Store<fromAppStore.AppState>) {}
 
   onSelectionChange(module: string) {
