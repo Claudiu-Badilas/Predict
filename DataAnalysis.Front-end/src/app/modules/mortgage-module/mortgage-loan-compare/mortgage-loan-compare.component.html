@@ -1,20 +1,40 @@
 <app-side-bar>
-  <ng-container filters-full-size
-    ><div class="space">
+  <ng-container filters-full-size>
+    <div class="space">
       <app-toggle-button
         [options]="['Overview', 'Compare']"
         [selected]="'Compare'"
         (selectionChange)="onSelectionChange($event)"
       />
     </div>
+
+    <div class="space d-flex flex-column">
+      <div>Left</div>
+      <app-dropdown-select
+        [items]="repaymentSchedulesOptions$ | async"
+        [selectedItem]="selectedLeftValue$ | async"
+        placeholder="No Selection"
+        (selectionChange)="onLeftDropdownSelected($event)"
+      />
+    </div>
+
+    <div class="space d-flex flex-column">
+      <div>Right</div>
+      <app-dropdown-select
+        [items]="repaymentSchedulesOptions$ | async"
+        [selectedItem]="selectedRightValue$ | async"
+        placeholder="No Selection"
+        (selectionChange)="onRightDropdownSelected($event)"
+      />
+    </div>
   </ng-container>
 
-  <ng-container filters-partial-size> </ng-container>
+  <ng-container filters-partial-size></ng-container>
 
   <ng-container main-content>
     <mortgage-loan-compare-body
-      [left]="(repaymentSchedules$ | async)[0]"
-      [right]="(repaymentSchedules$ | async)[2]"
+      [left]="leftRepaymentSchedules$ | async"
+      [right]="rightRepaymentSchedules$ | async"
     >
     </mortgage-loan-compare-body>
   </ng-container>
