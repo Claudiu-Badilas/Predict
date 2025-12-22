@@ -11,20 +11,25 @@ export namespace ProductPriceTrendChartUtils {
   ): Highcharts.Options {
     const groupedByName = ObjectUtil.groupBy(receiptProducts, (p) => p.name);
 
-    const series: Highcharts.SeriesLineOptions[] = Object.keys(
-      groupedByName
-    ).map((productName) => ({
-      type: 'line',
-      name: productName,
-      data: groupedByName[productName]
-        .filter((p) => p.price !== null)
-        .sort((a, b) => a.purchasedDate.getTime() - b.purchasedDate.getTime())
-        .map((p) => ({
-          x: p.purchasedDate.getTime(),
-          y: Number(p.price!.toFixed(2)),
-          date: DateUtils.fromJsDateToString(p.purchasedDate),
-        })),
-    }));
+    const series: Highcharts.SeriesLineOptions[] = Object.keys(groupedByName)
+      .map((productName) => {
+        if (groupedByName[productName].length <= 1) return null;
+        return {
+          type: 'line',
+          name: productName,
+          data: groupedByName[productName]
+            .filter((p) => p.price !== null)
+            .sort(
+              (a, b) => a.purchasedDate.getTime() - b.purchasedDate.getTime()
+            )
+            .map((p) => ({
+              x: p.purchasedDate.getTime(),
+              y: Number(p.price!.toFixed(2)),
+              date: DateUtils.fromJsDateToString(p.purchasedDate),
+            })),
+        } satisfies Highcharts.SeriesLineOptions;
+      })
+      .filter(Boolean);
 
     return {
       title: {
