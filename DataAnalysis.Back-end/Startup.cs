@@ -9,9 +9,9 @@ using DataAnalysis.Repository.HealthRepo;
 using DataAnalysis.Repository.ReceiptRepo;
 using DataAnalysis.Repository.TransactionRepo;
 using DataAnalysis.Repository.UserRepo;
-using DataAnalysis.Service.TokenService;
-using DataAnalysis.Service.AccountService;
-using DataAnalysis.Service.AuthorizationService;
+using Predict.Service.TokenService;
+using Predict.Service.AccountService;
+using Predict.Service.AuthorizationService;
 
 namespace DataAnalysis {
     public class Startup {

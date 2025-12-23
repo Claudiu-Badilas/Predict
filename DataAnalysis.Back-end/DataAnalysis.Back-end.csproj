@@ -14,7 +14,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DataAnalysis.Repository\DataAnalysis.Repository.csproj" />
-		<ProjectReference Include="..\DataAnalysis.Service\DataAnalysis.Service.csproj" />
+		<ProjectReference Include="..\Predict.Service\Predict.Service.csproj" />
 		<ProjectReference Include="..\Predict.Readers\Predict.Readers.fsproj" />
 	</ItemGroup>
 
