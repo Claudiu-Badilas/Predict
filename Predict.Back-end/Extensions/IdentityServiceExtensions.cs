@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Predict.Common.Configuration;
 using System.Text;
 
-namespace DataAnalysis.Extensions {
+namespace Predict.Extensions {
     public static class IdentityServiceExtensions {
         public static IServiceCollection AddIdentityServices(
             this IServiceCollection services,

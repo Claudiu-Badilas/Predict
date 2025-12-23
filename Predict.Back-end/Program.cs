@@ -1,6 +1,6 @@
-using DataAnalysis.Extensions;
+using Predict.Extensions;
 
-namespace DataAnalysis {
+namespace Predict {
     public class Program {
         public static void Main(string[] args) {
             CreateHostBuilder(args)

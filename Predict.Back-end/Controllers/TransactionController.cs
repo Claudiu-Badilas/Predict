@@ -5,7 +5,7 @@ using Predict.Service.AuthorizationService;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAnalysis.Controllers {
+namespace Predict.Controllers {
     [Route("api/v1")]
     public class TransactionController : BaseController {
 

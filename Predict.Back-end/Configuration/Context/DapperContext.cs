@@ -2,7 +2,7 @@
 using Npgsql;
 using System.Data;
 
-namespace DataAnalysis.Configuration.Context {
+namespace Predict.Configuration.Context {
     public class DapperContext : IDapperContext {
         private string _npsqlConnectionString;
 

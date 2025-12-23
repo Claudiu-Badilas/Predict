@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace DataAnalysis.Configuration.Migrations {
+namespace Predict.Configuration.Migrations {
     [Migration(202304150002)]
     public class InitialTransactionTables_202304150002 : Migration {
         public override void Down() {

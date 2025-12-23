@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using DataAnalysis.Controllers.Models.Errors;
+using Predict.Controllers.Models.Errors;
 using System.Net;
 using System.Text.Json;
 
-namespace DataAnalysis.Middleware {
+namespace Predict.Middleware {
     public class ExceptionMiddleware {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;

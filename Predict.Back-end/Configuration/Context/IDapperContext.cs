@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace DataAnalysis.Configuration.Context {
+namespace Predict.Configuration.Context {
     public interface IDapperContext {
         IDbConnection CreateNpgsqlConnection();
     }

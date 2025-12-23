@@ -4,7 +4,7 @@ using Predict.Repository.UserRepo;
 using Predict.Service.TokenService;
 using Predict.Service.AccountService;
 
-namespace DataAnalysis.Controllers {
+namespace Predict.Controllers {
     [Route("api/v1/account")]
     public class AccountController : BaseController {
 

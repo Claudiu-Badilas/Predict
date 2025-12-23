@@ -1,9 +1,9 @@
-using DataAnalysis.Configuration.Context;
-using DataAnalysis.Configuration.Migrations;
-using DataAnalysis.Extensions;
-using DataAnalysis.Middleware;
 using FluentMigrator.Runner;
 using Predict.Common.Configuration;
+using Predict.Configuration.Context;
+using Predict.Configuration.Migrations;
+using Predict.Extensions;
+using Predict.Middleware;
 using Predict.Repository.HealthRepo;
 using Predict.Repository.ReceiptRepo;
 using Predict.Repository.TransactionRepo;
@@ -13,7 +13,7 @@ using Predict.Service.AuthorizationService;
 using Predict.Service.TokenService;
 using System.Reflection;
 
-namespace DataAnalysis {
+namespace Predict {
     public class Startup {
         private readonly IConfiguration _config;
 

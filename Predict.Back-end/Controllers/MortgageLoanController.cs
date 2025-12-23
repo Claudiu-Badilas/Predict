@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Predict.Reader.Mortgage;
 
-namespace DataAnalysis.Controllers;
+namespace Predict.Controllers;
 
 [Route("api/v1")]
 public class MorgageController : BaseController {

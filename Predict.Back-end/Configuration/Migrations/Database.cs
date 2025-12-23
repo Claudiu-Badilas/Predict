@@ -1,8 +1,7 @@
 ﻿using Dapper;
-using DataAnalysis.Configuration.Context;
-using DataAnalysis.Configuration.Migrations;
+using Predict.Configuration.Context;
 
-namespace DataAnalysis.Configuration.Migrations {
+namespace Predict.Configuration.Migrations {
     public class Database {
         private readonly IDapperContext _context;
 

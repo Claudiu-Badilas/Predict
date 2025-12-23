@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DataAnalysis.Controllers {
+namespace Predict.Controllers {
     [ApiController]
     public class BaseController : ControllerBase { }
 }
