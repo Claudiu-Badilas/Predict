@@ -3,7 +3,7 @@
 open System
 open Predict.Types.TransactionTypes
 open Predict.DatabaseAccess.StorerUtils
-open DataAnalysis.Common.Configuration
+open Predict.Common.Configuration
 open Predict.Repository.TransactionRepo.Models
 open Predict.Repository.TransactionRepo
 

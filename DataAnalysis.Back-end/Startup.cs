@@ -1,17 +1,17 @@
-using DataAnalysis.Extensions;
-using DataAnalysis.Middleware;
-using DataAnalysis.Common.Configuration;
 using DataAnalysis.Configuration.Context;
 using DataAnalysis.Configuration.Migrations;
+using DataAnalysis.Extensions;
+using DataAnalysis.Middleware;
 using FluentMigrator.Runner;
-using System.Reflection;
+using Predict.Common.Configuration;
 using Predict.Repository.HealthRepo;
 using Predict.Repository.ReceiptRepo;
 using Predict.Repository.TransactionRepo;
 using Predict.Repository.UserRepo;
-using Predict.Service.TokenService;
 using Predict.Service.AccountService;
 using Predict.Service.AuthorizationService;
+using Predict.Service.TokenService;
+using System.Reflection;
 
 namespace DataAnalysis {
     public class Startup {

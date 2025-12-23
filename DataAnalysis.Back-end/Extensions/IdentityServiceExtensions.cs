@@ -1,6 +1,6 @@
-﻿using DataAnalysis.Common.Configuration;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Predict.Common.Configuration;
 using System.Text;
 
 namespace DataAnalysis.Extensions {

@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DataAnalysis.Common\DataAnalysis.Common.csproj" />
+		<ProjectReference Include="..\Predict.Common\Predict.Common.csproj" />
 	</ItemGroup>
 
 </Project>

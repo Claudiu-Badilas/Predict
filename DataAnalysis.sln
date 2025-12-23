@@ -5,13 +5,13 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalysis.Back-end", "DataAnalysis.Back-end\DataAnalysis.Back-end.csproj", "{DBAE4715-15B6-4161-A40B-599D28A35B41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalysis.Common", "DataAnalysis.Common\DataAnalysis.Common.csproj", "{4CB84C33-5AE5-4A6E-84A7-0066CF067626}"
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Predict.Readers", "Predict.Readers\Predict.Readers.fsproj", "{9911A7B7-48D3-4931-8BA9-FF71F004CDB5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predict.Service", "Predict.Service\Predict.Service.csproj", "{FBE7CF07-0B39-425C-B3BC-C8F945862DA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predict.Repository", "Predict.Repository\Predict.Repository.csproj", "{EDB1AADD-4837-47C0-8B9C-F930E4F39CA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predict.Common", "Predict.Common\Predict.Common.csproj", "{F0731BC9-B2A7-44FA-BFE3-D53624EB2E76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{DBAE4715-15B6-4161-A40B-599D28A35B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBAE4715-15B6-4161-A40B-599D28A35B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBAE4715-15B6-4161-A40B-599D28A35B41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CB84C33-5AE5-4A6E-84A7-0066CF067626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CB84C33-5AE5-4A6E-84A7-0066CF067626}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CB84C33-5AE5-4A6E-84A7-0066CF067626}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CB84C33-5AE5-4A6E-84A7-0066CF067626}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9911A7B7-48D3-4931-8BA9-FF71F004CDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9911A7B7-48D3-4931-8BA9-FF71F004CDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9911A7B7-48D3-4931-8BA9-FF71F004CDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{EDB1AADD-4837-47C0-8B9C-F930E4F39CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDB1AADD-4837-47C0-8B9C-F930E4F39CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDB1AADD-4837-47C0-8B9C-F930E4F39CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0731BC9-B2A7-44FA-BFE3-D53624EB2E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0731BC9-B2A7-44FA-BFE3-D53624EB2E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0731BC9-B2A7-44FA-BFE3-D53624EB2E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0731BC9-B2A7-44FA-BFE3-D53624EB2E76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

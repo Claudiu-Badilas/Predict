@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using DataAnalysis.Common.Configuration;
+using Predict.Common.Configuration;
 using Npgsql;
 using Predict.Repository.TransactionRepo.Models;
 

@@ -1,4 +1,4 @@
-﻿using DataAnalysis.Common.Configuration;
+﻿using Predict.Common.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

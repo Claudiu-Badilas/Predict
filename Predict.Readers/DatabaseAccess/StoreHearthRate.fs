@@ -1,7 +1,7 @@
 ﻿namespace Predict.DatabaseAccess
 
 open Predict.Repository.HealthRepo
-open DataAnalysis.Common.Configuration
+open Predict.Common.Configuration
 open Predict.Types.HealthTypes
 open Predict.Repository.HealthRepo.Models
 open Predict.Repository.HealthRepo

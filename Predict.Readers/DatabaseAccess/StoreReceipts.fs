@@ -3,7 +3,7 @@
 open System
 open Predict.DatabaseAccess.StorerUtils
 open Predict.Types.ReceiptTypes
-open DataAnalysis.Common.Configuration
+open Predict.Common.Configuration
 open Predict.Repository.ReceiptRepo.Models
 open Predict.Repository.ReceiptRepo
 
