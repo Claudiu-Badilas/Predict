@@ -1,4 +1,4 @@
-﻿using DataAnalysis.Common.Configuration;
+﻿using Predict.Common.Configuration;
 using Npgsql;
 using System.Data;
 

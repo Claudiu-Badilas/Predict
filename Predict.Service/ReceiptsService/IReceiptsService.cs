@@ -1,0 +1,7 @@
+﻿using Predict.Repository.ReceiptRepo.Models.Response;
+
+namespace Predict.Service.AuthorizationService;
+
+public interface IReceiptsService {
+    Task<List<ReceiptResponse>> GetReceips(DateTime startDate, DateTime endDate);
+}

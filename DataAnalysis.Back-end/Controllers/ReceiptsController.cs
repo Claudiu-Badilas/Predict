@@ -1,4 +1,4 @@
-﻿using DataAnalysis.Service.AuthorizationService;
+﻿using Predict.Service.AuthorizationService;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
