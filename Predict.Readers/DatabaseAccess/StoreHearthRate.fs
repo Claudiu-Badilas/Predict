@@ -1,10 +1,10 @@
 ﻿namespace Predict.DatabaseAccess
 
-open DataAnalysis.Repository.HealthRepo
+open Predict.Repository.HealthRepo
 open DataAnalysis.Common.Configuration
 open Predict.Types.HealthTypes
-open DataAnalysis.Repository.HealthRepo.Models
-open DataAnalysis.Repository.HealthRepo
+open Predict.Repository.HealthRepo.Models
+open Predict.Repository.HealthRepo
 open Predict.DatabaseAccess.StorerUtils
 
 module StoreHearthRate =

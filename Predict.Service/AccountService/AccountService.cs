@@ -1,5 +1,5 @@
-﻿using DataAnalysis.Repository.UserRepo;
-using DataAnalysis.Repository.UserRepo.Models;
+﻿using Predict.Repository.UserRepo;
+using Predict.Repository.UserRepo.Models;
 using System.Security.Cryptography;
 using System.Text;
 

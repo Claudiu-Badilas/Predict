@@ -1,4 +1,4 @@
-﻿using DataAnalysis.Repository.UserRepo.Models;
+﻿using Predict.Repository.UserRepo.Models;
 
 namespace Predict.Service.AuthorizationService;
 

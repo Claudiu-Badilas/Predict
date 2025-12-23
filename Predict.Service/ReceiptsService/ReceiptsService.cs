@@ -1,5 +1,5 @@
-﻿using DataAnalysis.Repository.ReceiptRepo;
-using DataAnalysis.Repository.ReceiptRepo.Models.Response;
+﻿using Predict.Repository.ReceiptRepo;
+using Predict.Repository.ReceiptRepo.Models.Response;
 
 namespace Predict.Service.AuthorizationService;
 

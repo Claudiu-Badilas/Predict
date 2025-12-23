@@ -1,7 +1,8 @@
-﻿using DataAnalysis.Repository.ReceiptRepo.Models;
-using DataAnalysis.Repository.ReceiptRepo.Models.Response;
+﻿using Predict.Repository.ReceiptRepo.Models;
+using Predict.Repository.ReceiptRepo.Models.Response;
 
-namespace DataAnalysis.Repository.ReceiptRepo;
+namespace Predict.Repository.ReceiptRepo;
+
 public interface IReceiptRepo {
     // Controller
     Task<List<ReceiptResponse>> GetReceipts(DateTime startDate, DateTime endDate);

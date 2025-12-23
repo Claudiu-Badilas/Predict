@@ -4,8 +4,8 @@ open System
 open Predict.DatabaseAccess.StorerUtils
 open Predict.Types.ReceiptTypes
 open DataAnalysis.Common.Configuration
-open DataAnalysis.Repository.ReceiptRepo.Models
-open DataAnalysis.Repository.ReceiptRepo
+open Predict.Repository.ReceiptRepo.Models
+open Predict.Repository.ReceiptRepo
 
 module StoreReceipts =
     

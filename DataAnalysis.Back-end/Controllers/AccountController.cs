@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using DataAnalysis.Repository.UserRepo.Models;
-using DataAnalysis.Repository.UserRepo;
+using Predict.Repository.UserRepo.Models;
+using Predict.Repository.UserRepo;
 using Predict.Service.TokenService;
 using Predict.Service.AccountService;
 

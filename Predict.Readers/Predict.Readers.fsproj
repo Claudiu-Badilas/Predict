@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DataAnalysis.Repository\DataAnalysis.Repository.csproj" />
+		<ProjectReference Include="..\Predict.Repository\Predict.Repository.csproj" />
 	</ItemGroup>
 
 </Project>

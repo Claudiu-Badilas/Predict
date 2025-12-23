@@ -4,8 +4,8 @@ open System
 open Predict.Types.TransactionTypes
 open Predict.DatabaseAccess.StorerUtils
 open DataAnalysis.Common.Configuration
-open DataAnalysis.Repository.TransactionRepo.Models
-open DataAnalysis.Repository.TransactionRepo
+open Predict.Repository.TransactionRepo.Models
+open Predict.Repository.TransactionRepo
 
 module StoreTransactions =
     

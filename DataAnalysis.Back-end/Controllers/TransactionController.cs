@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using DataAnalysis.Repository.TransactionRepo;
+using Predict.Repository.TransactionRepo;
 using System.IdentityModel.Tokens.Jwt;
 using Predict.Service.AuthorizationService;
 using Microsoft.AspNetCore.Authorization;
