@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
   selector: 'app-top-bar',

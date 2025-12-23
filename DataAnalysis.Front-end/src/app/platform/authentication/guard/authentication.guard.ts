@@ -8,7 +8,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { AuthenticationUtils } from '../utils/authentication.utils';
 
 @Injectable({

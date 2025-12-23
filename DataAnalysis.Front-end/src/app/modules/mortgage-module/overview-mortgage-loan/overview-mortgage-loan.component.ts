@@ -10,7 +10,7 @@ import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-sele
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { Rata } from '../models/mortgage.model';
 import { OverviewMortgageLoanHeaderComponent } from './components/overview-mortgage-loan-header/overview-mortgage-loan-header.component';
 

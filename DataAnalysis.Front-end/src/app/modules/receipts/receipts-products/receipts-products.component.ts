@@ -10,7 +10,7 @@ import { SearchInputComponent } from 'src/app/shared/components/search-input/sea
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
   selector: 'app-receipts-products',

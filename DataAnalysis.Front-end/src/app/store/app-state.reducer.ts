@@ -6,8 +6,8 @@ import {
   createFeatureSelector,
   createSelector,
 } from '@ngrx/store';
-import * as fromLayout from 'src/app/platform/reducers/layout.reducer';
-import { RouterState } from './navigation-state/router-serializer';
+import * as fromLayout from 'src/app/store/reducers/layout.reducer';
+import { RouterState } from './services/router-serializer';
 
 export interface AppState {
   router: fromRouter.RouterReducerState<RouterState>;

@@ -12,13 +12,13 @@ import { select, Store } from '@ngrx/store';
 import * as AuthActions from '../actions/authentication.actions';
 import { combineLatest, debounceTime, filter, Subject, takeUntil } from 'rxjs';
 import * as fromState from 'src/app/store/app-state.reducer';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
-    selector: 'app-login-register',
-    templateUrl: './login-register.component.html',
-    styleUrls: ['./login-register.component.scss'],
-    standalone: false
+  selector: 'app-login-register',
+  templateUrl: './login-register.component.html',
+  styleUrls: ['./login-register.component.scss'],
+  standalone: false,
 })
 export class LoginRegisterComponent implements OnDestroy {
   private ngUnsubscribe$: Subject<void> = new Subject<void>();

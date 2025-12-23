@@ -7,7 +7,7 @@ import { RangeSelectorComponent } from 'src/app/shared/components/date-range-pic
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { ReceiptListComponent } from './components/receipts-list/receipts-list.component';
 import { DateRangePicker } from 'src/app/shared/components/date-range-picker/models/date-range-picker.model';
 

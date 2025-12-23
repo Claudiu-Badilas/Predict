@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as fromLayout from 'src/app/platform/reducers/layout.reducer';
+import * as fromLayout from 'src/app/store/reducers/layout.reducer';
 
 @Component({
   selector: 'app-spinner',

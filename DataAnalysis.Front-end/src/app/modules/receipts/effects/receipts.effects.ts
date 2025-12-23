@@ -5,7 +5,7 @@ import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.actions';
 import * as fromReceipts from 'src/app/modules/receipts/reducers/receipts.reducer';
-import * as LayoutActions from 'src/app/platform/actions/layout.actions';
+import * as LayoutActions from 'src/app/store/actions/layout.actions';
 import { ReceiptsService } from '../services/receipts.service';
 
 @Injectable()

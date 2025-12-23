@@ -3,7 +3,7 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
 import { Router } from '@angular/router';
-import * as NavigationActions from './navigation.actions';
+import * as NavigationActions from '../actions/navigation.actions';
 
 @Injectable()
 export class NavigationEffects {

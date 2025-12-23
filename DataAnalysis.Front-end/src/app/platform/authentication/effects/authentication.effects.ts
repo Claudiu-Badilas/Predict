@@ -11,7 +11,7 @@ import {
 import { select, Store } from '@ngrx/store';
 import { AuthenticationService } from '../../services/authentication.service';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
-import * as NavigationAction from 'src/app/store/navigation-state/navigation.actions';
+import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import * as AuthActions from '../actions/authentication.actions';
 import { AuthenticationUtils } from '../utils/authentication.utils';
 import * as fromState from 'src/app/store/app-state.reducer';

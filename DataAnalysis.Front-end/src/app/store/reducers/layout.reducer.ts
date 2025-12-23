@@ -5,7 +5,7 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
-import * as LayoutActions from 'src/app/platform/actions/layout.actions';
+import * as LayoutActions from 'src/app/store/actions/layout.actions';
 
 export interface State {
   loading: boolean;

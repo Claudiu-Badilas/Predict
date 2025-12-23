@@ -16,7 +16,7 @@ import { TransactionModule } from 'src/app/modules/transaction-module/transactio
 import { AuthenticationModule } from 'src/app/platform/authentication/authentication.module';
 import { AuthenticationEffects } from 'src/app/platform/authentication/effects/authentication.effects';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
-import { NavigationEffects } from 'src/app/store/navigation-state/navigation.effects';
+import { NavigationEffects } from 'src/app/store/effects/navigation.effects';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastNotificationEffects } from 'src/app/platform/toast-notifications/effects/toast-notification.effects';
