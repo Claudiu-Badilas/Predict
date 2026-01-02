@@ -24,4 +24,17 @@ module MortgageTypes =
             Name: string
             Rate: Rata list
             Date: DateTime
+            IsBasePayment: bool
+            IsNormalPayment: bool
+            IsExtraPayment: bool
+        }
+
+    let defaultGraficRambursare = 
+        {
+            Name = null
+            Rate = []
+            Date = DateTime.UtcNow
+            IsBasePayment = false
+            IsNormalPayment = false
+            IsExtraPayment = false
         }

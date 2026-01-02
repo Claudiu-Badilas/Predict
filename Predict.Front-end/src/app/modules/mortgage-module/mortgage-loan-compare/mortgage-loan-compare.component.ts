@@ -52,8 +52,10 @@ export class MortgageLoanCompareComponent {
         take(1)
       )
       .subscribe((rs) => {
-        this.selectedLeftValue$.next(rs[rs.length - 1].name);
-        this.selectedRightValue$.next(rs[0].name);
+        this.selectedLeftValue$.next(rs.find((r) => r.isBasePayment).name);
+        this.selectedRightValue$.next(
+          rs.filter((r) => !r.isBasePayment).at(0).name
+        );
       });
   }
 

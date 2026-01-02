@@ -14,4 +14,8 @@ export type Rata = {
 export type RepaymentSchedule = {
   name: string;
   rate: Rata[];
+  date: string;
+  isBasePayment: boolean;
+  isNormalPayment: boolean;
+  isExtraPayment: boolean;
 };

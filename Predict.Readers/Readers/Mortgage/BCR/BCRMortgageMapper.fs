@@ -46,7 +46,7 @@ module BCRMortgageMapper =
         | None -> None
 
 
-    let getMorgageDetails (pdf: PdfReader): Rata list =
+    let getMortgageDetails (pdf: PdfReader): Rata list =
         let text = PdfUtils.getTextFromPdf pdf
         let pages = 
             text.Split("Nr. Data plății Rată Credit Rată Comision de Costuri de Comision de Dobânda Total rată Sold (rest de")
@@ -77,15 +77,31 @@ module BCRMortgageMapper =
 
         rate
  
-
-    let getBcrMorgages () =
-        getLocalPdfs @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\Morgages\BCR"
+    let loadMortgages path =
+        getLocalPdfs path
         |> Array.Parallel.map (fun (fileName, pdf) ->
-            {
+            { defaultGraficRambursare with 
                 Name = fileName
-                Rate = getMorgageDetails pdf
+                Rate = getMortgageDetails pdf
                 Date = DateTime.ParseExact(fileName, "dd-MMM-yyyy", CultureInfo.InvariantCulture)
             }
         )
         |> Array.toList
-        |> List.sortByDescending (_.Date)
+
+    let getBcrMorgages () =
+        let basePath = @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\Morgages\BCR"
+
+        let basePayments = 
+            loadMortgages $"{basePath}\BasePayment"
+            |> List.map(fun file -> { file with IsBasePayment = true })
+        
+        let normalPayments = 
+            loadMortgages $"{basePath}\NormalPayment"
+            |> List.map(fun file -> { file with IsNormalPayment = true })
+        
+        let extraPayments = 
+            loadMortgages $"{basePath}\ExtraPayment"
+            |> List.map(fun file -> { file with IsExtraPayment = true })
+
+        basePayments @ normalPayments @ extraPayments
+        |> List.sortByDescending _.Date
