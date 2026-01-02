@@ -2,12 +2,12 @@ import { Component, Input } from '@angular/core';
 import { OverviewLoanRate } from '../../models/overview-mortgage-loan.model';
 
 @Component({
-  selector: 'app-overview-mortgage-loan-header',
+  selector: 'app-mortgage-loan-overview-header',
   imports: [],
-  templateUrl: './overview-mortgage-loan-header.component.html',
-  styleUrls: ['./overview-mortgage-loan-header.component.scss'],
+  templateUrl: './mortgage-loan-overview-header.component.html',
+  styleUrl: './mortgage-loan-overview-header.component.scss',
 })
-export class OverviewMortgageLoanHeaderComponent {
+export class MortgageLoanOverviewHeaderComponent {
   @Input({ required: true }) overviewLoanRates: OverviewLoanRate[];
 
   get rata() {

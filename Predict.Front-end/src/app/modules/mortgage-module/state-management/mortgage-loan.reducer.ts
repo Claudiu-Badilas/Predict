@@ -9,7 +9,7 @@ import * as MortgageLoanActions from 'src/app/modules/mortgage-module/state-mana
 import {
   mapBaseRepaymentScheduleToOverview,
   OverviewRepaymentSchedule,
-} from '../overview-mortgage-loan/models/overview-mortgage-loan.model';
+} from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
 import { RepaymentSchedule } from './../models/mortgage.model';
 
 interface OverviewMortgageLoanState {

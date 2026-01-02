@@ -9,26 +9,25 @@ import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
-import { DateUtils } from 'src/app/shared/utils/date.utils';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { Rata } from '../models/mortgage.model';
-import { OverviewMortgageLoanHeaderComponent } from './components/overview-mortgage-loan-header/overview-mortgage-loan-header.component';
+import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-overview-header/mortgage-loan-overview-header.component';
 
 @Component({
-  selector: 'app-overview-mortgage-loan',
+  selector: 'app-mortgage-loan-overview',
   imports: [
     CommonModule,
     SideBarModule,
     DatePickerComponent,
     ToggleButtonComponent,
     DropdownSelectComponent,
-    OverviewMortgageLoanHeaderComponent,
+    MortgageLoanOverviewHeaderComponent,
     CheckboxComponent,
   ],
-  templateUrl: './overview-mortgage-loan.component.html',
-  styleUrls: ['./overview-mortgage-loan.component.scss'],
+  templateUrl: './mortgage-loan-overview.component.html',
+  styleUrls: ['./mortgage-loan-overview.component.scss'],
 })
-export class OverviewMortgageLoanComponent {
+export class MortgageLoanOverviewComponent {
   selectedRepaymentSchedule$ = this.store.select(
     fromMortgageLoan.getSelectedRepaymentScheduleOverview
   );
