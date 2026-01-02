@@ -84,6 +84,8 @@ module BCRMortgageMapper =
             {
                 Name = fileName
                 Rate = getMorgageDetails pdf
+                Date = DateTime.ParseExact(fileName, "dd-MMM-yyyy", CultureInfo.InvariantCulture)
             }
         )
         |> Array.toList
+        |> List.sortByDescending (_.Date)

@@ -23,4 +23,5 @@ module MortgageTypes =
         {   
             Name: string
             Rate: Rata list
+            Date: DateTime
         }
