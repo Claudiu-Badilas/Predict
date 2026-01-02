@@ -46,7 +46,7 @@ export class MortgageLoanOverviewComponent {
     private readonly store: Store<fromMortgageLoan.MortgageLoanState>
   ) {}
 
-  minDate = new Date('2025-12-01');
+  minDate = new Date('2025-01-01');
   maxDate = new Date('2055-12-01');
 
   onSelectionChange(module: string) {

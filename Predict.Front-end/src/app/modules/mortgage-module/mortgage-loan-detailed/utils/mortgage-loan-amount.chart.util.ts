@@ -3,29 +3,30 @@ import { RepaymentSchedule } from '../../models/mortgage.model';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 
 export namespace MortgageLoanAmountChartUtils {
-  export function getChart(
-    base: RepaymentSchedule,
-    latest: RepaymentSchedule
-  ): Highcharts.Options {
-    if (!base || !latest) return null;
+  export function getChart(rates: any[]): Highcharts.Options {
+    if (!rates.length) return null;
+    const paidRates = rates.filter(
+      (r) => r.isNormalPayment || r.isExtraPayment
+    );
+    const paidLoan = CalculatorUtil.sum(paidRates.map((r) => r.rataCredit));
 
-    const firstBaseRate = base.rate.at(0);
-    const baseRemainingUnpaidAmount = CalculatorUtil.sum([
-      firstBaseRate.soldRestPlata,
-      firstBaseRate.rataCredit,
-    ]);
-
-    const firstLatestRate = latest.rate.at(0);
-    const latestRemainingUnpaidAmount = CalculatorUtil.sum([
-      firstLatestRate.soldRestPlata,
-      firstLatestRate.rataCredit,
-    ]);
-
-    const rataDobanda = CalculatorUtil.sum(
-      latest.rate.map((r) => r.rataDobanda)
+    const paidInterestRates = rates.filter((r) => r.isNormalPayment);
+    const paidInterest = CalculatorUtil.sum(
+      paidInterestRates.map((r) => r.rataDobanda)
     );
 
-    const paidAmount = baseRemainingUnpaidAmount - latestRemainingUnpaidAmount;
+    const savedInterestRates = rates.filter((r) => r.isExtraPayment);
+    const savedInterest = CalculatorUtil.sum(
+      savedInterestRates.map((r) => r.rataDobanda)
+    );
+
+    const unpaidRates = rates.filter(
+      (r) => !r.isNormalPayment && !r.isExtraPayment
+    );
+    const unpaidInterest = CalculatorUtil.sum(
+      unpaidRates.map((r) => r.rataDobanda)
+    );
+    const unpaidLoan = CalculatorUtil.sum(unpaidRates.map((r) => r.rataCredit));
 
     return {
       chart: { type: 'bar' },
@@ -56,11 +57,11 @@ export namespace MortgageLoanAmountChartUtils {
           name: 'Loan Status',
           showInLegend: false,
           data: [
-            { y: MathUtil.round(paidAmount) },
-            { y: MathUtil.round(paidAmount) },
-            { y: MathUtil.round(paidAmount) },
-            { y: MathUtil.round(rataDobanda) },
-            { y: MathUtil.round(latestRemainingUnpaidAmount) },
+            { y: MathUtil.round(paidLoan) },
+            { y: MathUtil.round(paidInterest) },
+            { y: MathUtil.round(savedInterest) },
+            { y: MathUtil.round(unpaidInterest) },
+            { y: MathUtil.round(unpaidLoan) },
           ],
         },
       ] as any[],

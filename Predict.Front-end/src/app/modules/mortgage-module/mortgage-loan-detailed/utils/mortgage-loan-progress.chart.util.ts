@@ -54,13 +54,13 @@ export namespace MortgageLoanProgressChartUtils {
           borderRadius: 5,
           data: [
             {
-              name: 'Paid',
+              name: 'Paid Loan',
               y: MathUtil.round(paidPercent),
               amount: MathUtil.round(paidAmount),
               color: 'green',
             },
             {
-              name: 'Unpaid',
+              name: 'Unpaid Loan',
               y: MathUtil.round(unpaidPercent),
               amount: MathUtil.round(latestRemainingUnpaidAmount),
               color: 'red',
