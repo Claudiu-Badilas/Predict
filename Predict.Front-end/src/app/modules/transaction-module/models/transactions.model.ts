@@ -33,11 +33,11 @@ export class TransactionDomain {
   constructor(res: TransactionResponse) {
     Object.assign(this, res);
 
-    this.registrationDate = DateUtils.fromStringToJsDate(
-      res.registrationDate.split('T')[0]
+    this.registrationDate = DateUtils.fromSplittedStringToJsDate(
+      res.registrationDate
     );
-    this.completionDate = DateUtils.fromStringToJsDate(
-      res.completionDate.split('T')[0]
+    this.completionDate = DateUtils.fromSplittedStringToJsDate(
+      res.completionDate
     );
 
     this.serviceProvider = res.description?.split('|')[0] ?? null;

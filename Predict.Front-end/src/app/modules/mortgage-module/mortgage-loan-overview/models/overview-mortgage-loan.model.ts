@@ -1,11 +1,10 @@
-import { DateUtils } from 'src/app/shared/utils/date.utils';
-import { RepaymentSchedule } from '../../models/mortgage.model';
-import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 import { Colors } from 'src/app/shared/styles/colors';
+import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
+import { RepaymentSchedule } from '../../models/mortgage.model';
 
 export type OverviewLoanRate = {
   nrCtr: number | null;
-  dataPlatii: string | null;
+  dataPlatii: Date | null;
   rataDobanda: number | null;
   rataCredit: number | null;
   comisionAdministrare: number | null;
@@ -35,10 +34,7 @@ export function mapBaseRepaymentScheduleToOverview(
   let availableNextRate = false;
 
   const overviewLoanRates: OverviewLoanRate[] = base.rate.map((r) => {
-    const disabled = JsDateUtils.isBefore(
-      DateUtils.fromStringToJsDate(r.dataPlatii.split('T')[0]),
-      startDate
-    );
+    const disabled = JsDateUtils.isBefore(r.dataPlatii, startDate);
     const nextRate = !availableNextRate && !disabled;
     if (nextRate) availableNextRate = true;
 

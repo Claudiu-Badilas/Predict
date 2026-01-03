@@ -13,7 +13,7 @@ export class ReceiptDomain {
   constructor(res: ReceiptDto) {
     Object.assign(this, res);
 
-    this.date = DateUtils.fromStringToJsDate(res.date.split('T')[0]);
+    this.date = DateUtils.fromSplittedStringToJsDate(res.date);
     this.products = res.products.map((p) => new PurchasedProductDomain(p));
   }
 }

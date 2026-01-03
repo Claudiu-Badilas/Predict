@@ -6,16 +6,15 @@ import {
   on,
 } from '@ngrx/store';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-module/state-management/mortgage-loan.actions';
-import { DateUtils } from 'src/app/shared/utils/date.utils';
+import { BaseMortgageLoan } from '../mortgage-loan-detailed/utils/base-mortgage-loan.utils';
+import { MortgageInterestProgressChartUtils } from '../mortgage-loan-detailed/utils/mortgage-interest-progress.chart.util';
+import { MortgageLoanAmountChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-amount.chart.util';
 import { MortgageLoanProgressChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-progress.chart.util';
 import {
   mapBaseRepaymentScheduleToOverview,
   OverviewRepaymentSchedule,
 } from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
 import { RepaymentSchedule } from './../models/mortgage.model';
-import { MortgageLoanAmountChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-amount.chart.util';
-import { BaseMortgageLoan } from '../mortgage-loan-detailed/utils/base-mortgage-loan.utils';
-import { MortgageInterestProgressChartUtils } from '../mortgage-loan-detailed/utils/mortgage-interest-progress.chart.util';
 
 interface OverviewMortgageLoanState {
   repaymentSchedules: OverviewRepaymentSchedule[];
@@ -115,11 +114,7 @@ export const getLatestRepaymentSchedule = createSelector(
     repaymentSchedules.length > 0
       ? repaymentSchedules
           .slice()
-          .sort(
-            (a, b) =>
-              DateUtils.fromStringToJsDate(b.date.split('T')[0]).valueOf() -
-              DateUtils.fromStringToJsDate(a.date.split('T')[0]).valueOf()
-          )
+          .sort((a, b) => b.date.valueOf() - a.date.valueOf())
           .at(0)
       : null
 );

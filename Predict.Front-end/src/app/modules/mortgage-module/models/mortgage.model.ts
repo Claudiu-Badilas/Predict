@@ -1,21 +1,58 @@
-export type Rata = {
-  nrCtr: number | null;
-  dataPlatii: string | null;
-  rataDobanda: number | null;
-  rataCredit: number | null;
-  comisionAdministrare: number | null;
-  costuruAsigurare: number | null;
-  comisionGestiune: number | null;
-  dobadaRecalculata: number | null;
-  totalRata: number | null;
-  soldRestPlata: number | null;
+import { DateUtils } from 'src/app/shared/utils/date.utils';
+
+export type RataDto = {
+  nrCtr: number;
+  dataPlatii: string;
+  rataDobanda: number;
+  rataCredit: number;
+  comisionAdministrare: number;
+  costuruAsigurare: number;
+  comisionGestiune: number;
+  dobadaRecalculata: number;
+  totalRata: number;
+  soldRestPlata: number;
 };
 
-export type RepaymentSchedule = {
+export type RepaymentScheduleDto = {
   name: string;
-  rate: Rata[];
+  rate: RataDto[];
   date: string;
   isBasePayment: boolean;
   isNormalPayment: boolean;
   isExtraPayment: boolean;
 };
+
+export class Rata {
+  nrCtr: number;
+  dataPlatii: Date;
+  rataDobanda: number;
+  rataCredit: number;
+  comisionAdministrare: number;
+  costuruAsigurare: number;
+  comisionGestiune: number;
+  dobadaRecalculata: number;
+  totalRata: number;
+  soldRestPlata: number;
+
+  constructor(res: RataDto) {
+    Object.assign(this, res);
+
+    this.dataPlatii = DateUtils.fromSplittedStringToJsDate(res.dataPlatii);
+  }
+}
+
+export class RepaymentSchedule {
+  name: string;
+  rate: Rata[];
+  date: Date;
+  isBasePayment: boolean;
+  isNormalPayment: boolean;
+  isExtraPayment: boolean;
+
+  constructor(res: RepaymentScheduleDto) {
+    Object.assign(this, res);
+
+    this.date = DateUtils.fromSplittedStringToJsDate(res.date);
+    this.rate = res.rate.map((r) => new Rata(r));
+  }
+}
