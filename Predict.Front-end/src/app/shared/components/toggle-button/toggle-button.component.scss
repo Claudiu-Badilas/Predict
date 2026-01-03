@@ -1,7 +1,7 @@
 .toggle-wrapper {
   position: relative;
   width: 100%;
-  background: #e5e5e5;
+  background: white;
   border-radius: 30px;
   padding: 2px;
   cursor: pointer;
@@ -11,11 +11,12 @@
   flex: 1;
   text-align: center;
   z-index: 2;
-  padding: 3px 0;
+  padding: 5px 0;
   border-radius: 30px;
   font-weight: 500;
   transition: color 0.25s;
   color: #292f36;
+  font-size: 14px;
 
   &.active {
     color: white;

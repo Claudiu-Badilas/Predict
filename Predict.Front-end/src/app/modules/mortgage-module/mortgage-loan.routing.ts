@@ -5,6 +5,7 @@ import { MortgageLoanDetailedComponent } from './mortgage-loan-detailed/mortgage
 import { MortgageLoanOverviewComponent } from './mortgage-loan-overview/mortgage-loan-overview.component';
 import { MortgageLoanComponent } from './mortgage-loan.component';
 import { MortgageLoanModule } from './mortgage-loan.module';
+import { MortgageLoanSimulatorComponent } from './mortgage-loan-simulator/mortgage-loan-simulator.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'detailed',
         component: MortgageLoanDetailedComponent,
+      },
+      {
+        path: 'simulator',
+        component: MortgageLoanSimulatorComponent,
       },
     ],
   },
