@@ -1,31 +1,32 @@
 import Highcharts from 'highcharts';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
-import { Rata } from '../../models/mortgage.model';
+import { RepaymentSchedule } from '../../models/mortgage.model';
+import { Colors } from 'src/app/shared/styles/colors';
 
-export namespace RatesTrendChartUtils {
-  export function getChart(rates: Rata[]): Highcharts.Options {
-    const series: any[] = [
-      {
-        type: 'spline',
-        name: 'Loan',
-        color: 'green',
-        data: rates.map((r) => ({
-          x: r.dataPlatii.getTime(),
-          y: Number(r.rataCredit!.toFixed(2)),
-          date: DateUtils.fromJsDateToString(r.dataPlatii),
-        })),
-      },
+export namespace CompareInterestTrendChartUtils {
+  export function getChart(
+    left: RepaymentSchedule,
+    right: RepaymentSchedule
+  ): Highcharts.Options {
+    if (!left || !right) return null;
+
+    const sources: Array<[RepaymentSchedule, string]> = [
+      [left, Colors.TEAL_400],
+      [right, Colors.BS_DANGER],
+    ];
+
+    const series: any[] = sources.flatMap(([repaymentSchedule, color]) => [
       {
         type: 'line',
-        name: 'Interests',
-        color: 'red',
-        data: rates.map((r) => ({
+        name: `Interests ${repaymentSchedule.name}`,
+        color,
+        data: repaymentSchedule.rate.map((r) => ({
           x: r.dataPlatii.getTime(),
-          y: Number(r.rataDobanda!.toFixed(2)),
+          y: Number(r.rataDobanda.toFixed(2)),
           date: DateUtils.fromJsDateToString(r.dataPlatii),
         })),
       },
-    ];
+    ]);
 
     return {
       title: { text: 'Loan Rates Trend', align: 'left' },
@@ -38,8 +39,8 @@ export namespace RatesTrendChartUtils {
         useHTML: true,
         formatter: function () {
           const points = (this as any).points;
-
           const date = points?.[0]?.point?.date;
+
           return `
             <b>Date: ${date}</b><br/>
             ${points
@@ -49,9 +50,10 @@ export namespace RatesTrendChartUtils {
                   ${p.series.name}: <b>${p.y}</b><br/>`
               )
               .join('')}
-          `;
+            `;
         },
       },
+
       series,
     };
   }

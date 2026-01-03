@@ -9,7 +9,10 @@ import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/t
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
 
+import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { MortgageLoanCompareBodyComponent } from './components/mortgage-loan-compare-body/mortgage-loan-compare-body.component';
+import { CompareInterestTrendChartUtils } from './utils/compare-interest-rates-trend.chart.util';
+import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.chart.util';
 
 @Component({
   selector: 'app-mortgage-loan-compare',
@@ -19,6 +22,7 @@ import { MortgageLoanCompareBodyComponent } from './components/mortgage-loan-com
     ToggleButtonComponent,
     MortgageLoanCompareBodyComponent,
     DropdownSelectComponent,
+    HighchartWrapperComponent,
   ],
   templateUrl: './mortgage-loan-compare.component.html',
   styleUrls: ['./mortgage-loan-compare.component.scss'],
@@ -44,6 +48,20 @@ export class MortgageLoanCompareComponent {
     this.repaymentSchedules$,
     this.selectedRightValue$,
   ]).pipe(map(([rs, selected]) => rs.find((r) => r.name === selected)));
+
+  compareRatesTrendChart$ = combineLatest([
+    this.leftRepaymentSchedules$,
+    this.rightRepaymentSchedules$,
+  ]).pipe(
+    map(([left, right]) => CompareRatesTrendChartUtils.getChart(left, right))
+  );
+
+  compareInterestTrendChart$ = combineLatest([
+    this.leftRepaymentSchedules$,
+    this.rightRepaymentSchedules$,
+  ]).pipe(
+    map(([left, right]) => CompareInterestTrendChartUtils.getChart(left, right))
+  );
 
   constructor(private store: Store<fromAppStore.AppState>) {
     this.repaymentSchedules$

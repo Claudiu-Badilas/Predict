@@ -1,31 +1,32 @@
 import Highcharts from 'highcharts';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
-import { Rata } from '../../models/mortgage.model';
+import { RepaymentSchedule } from '../../models/mortgage.model';
+import { Colors } from 'src/app/shared/styles/colors';
 
-export namespace RatesTrendChartUtils {
-  export function getChart(rates: Rata[]): Highcharts.Options {
-    const series: any[] = [
+export namespace CompareRatesTrendChartUtils {
+  export function getChart(
+    left: RepaymentSchedule,
+    right: RepaymentSchedule
+  ): Highcharts.Options {
+    if (!left || !right) return null;
+
+    const sources: Array<[RepaymentSchedule, string]> = [
+      [left, Colors.TEAL_400],
+      [right, Colors.BS_DANGER],
+    ];
+
+    const series: any[] = sources.flatMap(([repaymentSchedule, color]) => [
       {
         type: 'spline',
-        name: 'Loan',
-        color: 'green',
-        data: rates.map((r) => ({
+        color,
+        name: `Loan ${repaymentSchedule.name}`,
+        data: repaymentSchedule.rate.map((r) => ({
           x: r.dataPlatii.getTime(),
-          y: Number(r.rataCredit!.toFixed(2)),
+          y: Number(r.rataCredit.toFixed(2)),
           date: DateUtils.fromJsDateToString(r.dataPlatii),
         })),
       },
-      {
-        type: 'line',
-        name: 'Interests',
-        color: 'red',
-        data: rates.map((r) => ({
-          x: r.dataPlatii.getTime(),
-          y: Number(r.rataDobanda!.toFixed(2)),
-          date: DateUtils.fromJsDateToString(r.dataPlatii),
-        })),
-      },
-    ];
+    ]);
 
     return {
       title: { text: 'Loan Rates Trend', align: 'left' },
