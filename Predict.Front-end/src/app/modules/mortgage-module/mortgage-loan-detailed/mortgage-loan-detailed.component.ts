@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
+import * as fromMortgageLoan from 'src/app/modules/mortgage-module/state-management/mortgage-loan.reducer';
 import { SideBarModule } from 'src/app/shared/components/side-bar/side-bar.module';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
-import * as fromMortgageLoan from 'src/app/modules/mortgage-module/state-management/mortgage-loan.reducer';
+import { MortgageLoanDetailedHeaderComponent } from './components/mortgage-loan-detailed-header/mortgage-loan-detailed-header.component';
 
 @Component({
   selector: 'app-mortgage-loan-detailed',
@@ -13,22 +13,12 @@ import * as fromMortgageLoan from 'src/app/modules/mortgage-module/state-managem
     CommonModule,
     SideBarModule,
     ToggleButtonComponent,
-    HighchartWrapperComponent,
+    MortgageLoanDetailedHeaderComponent,
   ],
   templateUrl: './mortgage-loan-detailed.component.html',
   styleUrl: './mortgage-loan-detailed.component.scss',
 })
 export class MortgageLoanDetailedComponent {
-  mortgageLoanProgressChart$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanProgressChart
-  );
-  mortgageInterestProgressChart$ = this.store.select(
-    fromMortgageLoan.getMortgageInterestProgressChart
-  );
-  mortgageLoanAmountChartUtils$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanAmountChartUtils
-  );
-
   constructor(private store: Store<fromMortgageLoan.MortgageLoanState>) {}
 
   onSelectionChange(module: string) {
