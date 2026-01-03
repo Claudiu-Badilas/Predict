@@ -1,3 +1,4 @@
+import { Colors } from 'src/app/shared/styles/colors';
 import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 import { BaseLoanRate } from '../models/base-loan-rate.model';
@@ -41,11 +42,12 @@ export namespace MortgageLoanProgressChartUtils {
       title: { text: 'Loan Progress', align: 'left' },
       tooltip: {
         headerFormat: '',
-        pointFormat:
-          '<span style="color:{point.color}">\u25CF</span> <b> ' +
-          '{point.name}</b><br/>' +
-          '<b>{point.y}%</b><br/> ' +
-          'Amount: <b>{point.amount} RON</b><br/>',
+        pointFormat: `
+          <span style="color:{point.color}">\u25CF</span> <b>
+          {point.name}</b><br/>
+          <b>{point.y}%</b><br/>
+          Amount: <b>{point.amount} RON</b><br/>
+        `,
       },
       series: [
         {
@@ -59,13 +61,13 @@ export namespace MortgageLoanProgressChartUtils {
               name: 'Paid Loan',
               y: MathUtil.round(paidLoanPercent),
               amount: MathUtil.round(paidLoan),
-              color: 'green',
+              color: Colors.TEAL_400,
             },
             {
               name: 'Unpaid Loan',
               y: MathUtil.round(unpaidLoanPercent),
               amount: MathUtil.round(unpaidLoan),
-              color: 'red',
+              color: Colors.BS_DANGER,
             },
           ],
         },

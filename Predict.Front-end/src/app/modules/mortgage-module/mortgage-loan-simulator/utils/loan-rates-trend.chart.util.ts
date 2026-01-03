@@ -1,4 +1,5 @@
 import Highcharts from 'highcharts';
+import { Colors } from 'src/app/shared/styles/colors';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
 import { Rata } from '../../models/mortgage.model';
 
@@ -8,7 +9,7 @@ export namespace RatesTrendChartUtils {
       {
         type: 'spline',
         name: 'Loan',
-        color: 'green',
+        color: Colors.TEAL_400,
         data: rates.map((r) => ({
           x: r.dataPlatii.getTime(),
           y: Number(r.rataCredit!.toFixed(2)),
@@ -18,7 +19,7 @@ export namespace RatesTrendChartUtils {
       {
         type: 'line',
         name: 'Interests',
-        color: 'red',
+        color: Colors.BS_DANGER,
         data: rates.map((r) => ({
           x: r.dataPlatii.getTime(),
           y: Number(r.rataDobanda!.toFixed(2)),
