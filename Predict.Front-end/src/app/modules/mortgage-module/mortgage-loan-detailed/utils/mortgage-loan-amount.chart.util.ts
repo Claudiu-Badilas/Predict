@@ -1,6 +1,7 @@
 import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 import { BaseLoanRate } from '../models/base-loan-rate.model';
+import { Colors } from 'src/app/shared/styles/colors';
 
 export namespace MortgageLoanAmountChartUtils {
   export function getChart(rates: BaseLoanRate[]): Highcharts.Options {
@@ -58,11 +59,11 @@ export namespace MortgageLoanAmountChartUtils {
           name: 'Loan Status',
           showInLegend: false,
           data: [
-            { y: MathUtil.round(paidLoan) },
-            { y: MathUtil.round(paidInterest) },
-            { y: MathUtil.round(savedInterest) },
-            { y: MathUtil.round(unpaidInterest) },
-            { y: MathUtil.round(unpaidLoan) },
+            { y: MathUtil.round(paidLoan), color: Colors.TEAL_400 },
+            { y: MathUtil.round(paidInterest), color: Colors.BLUE_400 },
+            { y: MathUtil.round(savedInterest), color: Colors.GREEN_400 },
+            { y: MathUtil.round(unpaidInterest), color: Colors.BS_ORANGE },
+            { y: MathUtil.round(unpaidLoan), color: Colors.BS_DANGER },
           ],
         },
       ] as any[],

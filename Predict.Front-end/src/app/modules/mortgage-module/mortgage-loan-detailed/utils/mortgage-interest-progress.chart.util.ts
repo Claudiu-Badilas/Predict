@@ -1,6 +1,7 @@
 import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 import { BaseLoanRate } from '../models/base-loan-rate.model';
+import { Colors } from 'src/app/shared/styles/colors';
 
 export namespace MortgageInterestProgressChartUtils {
   export function getChart(rates: BaseLoanRate[]): Highcharts.Options {
@@ -67,17 +68,19 @@ export namespace MortgageInterestProgressChartUtils {
               name: 'Paid Interest',
               y: MathUtil.round(paidInterestPercent),
               amount: MathUtil.round(paidInterest),
+              color: Colors.BLUE_400,
             },
             {
               name: 'Saved Interest',
               y: MathUtil.round(savedInterestPercent),
               amount: MathUtil.round(savedInterest),
+              color: Colors.GREEN_400,
             },
             {
               name: 'Unpaid Interest',
               y: MathUtil.round(unpaidInterestPercent),
               amount: MathUtil.round(unpaidInterest),
-              color: 'orange',
+              color: Colors.BS_ORANGE,
             },
           ],
         },
