@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import * as TransactionsActions from 'src/app/modules/transaction-module/actions/transactions.actions';
-import * as fromTransactions from 'src/app/modules/transaction-module/reducers/transactions.reducer';
+import * as TransactionsActions from 'src/app/modules/transaction/actions/transactions.actions';
+import * as fromTransactions from 'src/app/modules/transaction/reducers/transactions.reducer';
 
 @Component({
   selector: 'app-transaction',

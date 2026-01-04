@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import * as fromTransactions from 'src/app/modules/transaction-module/reducers/transactions.reducer';
+import * as fromTransactions from 'src/app/modules/transaction/reducers/transactions.reducer';
 import { RangeSelectorComponent } from 'src/app/shared/components/date-range-picker/date-range-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';

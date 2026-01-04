@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromTransactions from 'src/app/modules/transaction-module/reducers/transactions.reducer';
+import * as fromTransactions from 'src/app/modules/transaction/reducers/transactions.reducer';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { BoldSearchPipe } from 'src/app/shared/pipes/bold-search-term.pipe';
 

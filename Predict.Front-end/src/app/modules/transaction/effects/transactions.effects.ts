@@ -3,8 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
-import * as TransactionsActions from 'src/app/modules/transaction-module/actions/transactions.actions';
-import * as fromTransactions from 'src/app/modules/transaction-module/reducers/transactions.reducer';
+import * as TransactionsActions from 'src/app/modules/transaction/actions/transactions.actions';
+import * as fromTransactions from 'src/app/modules/transaction/reducers/transactions.reducer';
 import * as LayoutActions from 'src/app/store/actions/layout.actions';
 import { TransactionService } from '../services/transaction.service';
 

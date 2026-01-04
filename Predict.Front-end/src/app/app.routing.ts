@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: 'transactions',
     loadChildren: () =>
-      import('./modules/transaction-module/transaction.module').then(
+      import('./modules/transaction/transaction.module').then(
         (m) => m.TransactionModule
       ),
   },
