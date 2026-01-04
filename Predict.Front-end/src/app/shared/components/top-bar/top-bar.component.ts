@@ -13,6 +13,7 @@ export class TopBarComponent {
   modules = [
     { name: 'Mortgage Loan', url: 'mortgage-loan/overview' },
     { name: 'Transactions', url: 'transactions' },
+    { name: 'Invoices', url: 'invoices' },
     { name: 'Receipts', url: 'receipts/summary' },
     { name: 'Health', url: 'health' },
     { name: 'Settings', url: 'settings' },

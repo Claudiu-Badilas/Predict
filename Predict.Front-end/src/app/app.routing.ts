@@ -22,6 +22,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'invoices',
+    loadChildren: () =>
+      import('./modules/invoices/invoices.module').then(
+        (m) => m.InvoicesModule
+      ),
+  },
+  {
     path: 'receipts',
     loadChildren: () =>
       import('./modules/receipts/receipts.module').then(
