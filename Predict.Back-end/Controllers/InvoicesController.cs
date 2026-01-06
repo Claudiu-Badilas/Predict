@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Predict.Reader.Mortgage;
 using System.ComponentModel.DataAnnotations;
 
 namespace Predict.Controllers
@@ -13,7 +14,7 @@ namespace Predict.Controllers
             [FromQuery, Required] string endDate
         )
         {
-            return Ok(null);
+            return Ok(InvoicesMapper.getInvoices());
         }
     }
 }

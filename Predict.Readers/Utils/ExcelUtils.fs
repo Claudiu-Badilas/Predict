@@ -13,7 +13,22 @@ module ExcelUtils =
             |> Seq.toArray
             |> Array.map(fun cell -> string cell) 
         )
-        
+
+
+    let getExcelSheetValues (excel: WorkBook) =
+        excel.WorkSheets
+        |> Seq.map (fun sheet ->
+            let data =
+                sheet.Rows
+                |> Seq.map (fun row ->
+                    row.Columns
+                    |> Seq.map (fun cell -> cell.StringValue)
+                    |> Seq.toArray
+                )
+                |> Seq.toArray
+            sheet.Name, data
+        ) |> Seq.toArray
+
 
     let getCsvValues (csv: StreamReader) = 
         let mutable rows = []
@@ -22,5 +37,3 @@ module ExcelUtils =
             rows <- values :: rows
         csv.Close()
         rows
-        
-

@@ -45,8 +45,8 @@ module ParserConsole =
 
         let path = @""
 
-        let raifExcels = getLocalExcels @$"{path}\AccountStatements\Raiffaisen"
-        let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
+        //let raifExcels = getLocalExcels @$"{path}\AccountStatements\Raiffaisen"
+        //let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
         
         //let raifExcels = getLocalExcels @$"{path}\"
         //let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
@@ -61,6 +61,8 @@ module ParserConsole =
         //let carrReceipts = CarrefourPdfReceipt.readPdfs dataOwnerId carrPdfs
         
         //let results = BCRMortgageMapper.getBcrMorgages()
+
+        let invoices = InvoicesMapper.getInvoices()
 
         printfn "Run succesfully"
         0
