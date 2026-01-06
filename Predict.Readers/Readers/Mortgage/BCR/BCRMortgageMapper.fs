@@ -89,7 +89,7 @@ module BCRMortgageMapper =
         |> Array.toList
 
     let getBcrMorgages () =
-        let basePath = @"C:\Users\Claudiu\IdeaProjects\Projects\DataAnalysisFiles\Morgages\BCR"
+        let basePath = @"D:\Projects\PredictFiles\Morgages\BCR"
 
         let basePayments = 
             loadMortgages $"{basePath}\BasePayment"
