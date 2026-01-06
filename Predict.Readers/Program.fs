@@ -3,7 +3,6 @@ open IronXL
 open iTextSharp.text.pdf
 open Predict.Readers.AccountStatement
 open Predict.Reader.ReceiptParser
-open Predict.Reader.HealthParser
 open Predict.Reader.Mortgage
 
 module ParserConsole =
@@ -59,9 +58,6 @@ module ParserConsole =
         let carrPdfs = getLocalPdfs @"r"
         let carrReceipts = CarrefourPdfReceipt.readPdfs dataOwnerId carrPdfs
         
-        let heartRatecsv = getLocalCsvs @""
-        let rates = ZeppLifeHeartRate.readCsvs dataOwnerId heartRatecsv
-
         let results = BCRMortgageMapper.getBcrMorgages()
 
         printfn "Run succesfully"

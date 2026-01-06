@@ -23,14 +23,12 @@
 		<Compile Include="DatabaseAccess\Utils\StorerUtils.fs" />
 		<Compile Include="DatabaseAccess\StoreTransactions.fs" />
 		<Compile Include="DatabaseAccess\StoreReceipts.fs" />
-		<Compile Include="DatabaseAccess\StoreHearthRate.fs" />
 		<Compile Include="Readers\Mortgage\BCR\BCRMortgageMapper.fs" />
 		<Compile Include="Readers\AccountStatement\OM\OrangeMoneyPdfAccountStatement.fs" />
 		<Compile Include="Readers\AccountStatement\OM\OrangeMoneyExcelAccountStatement.fs" />
 		<Compile Include="Readers\AccountStatement\RevolutExcelAccountStatement.fs" />
 		<Compile Include="Readers\AccountStatement\RaiffeisenExcelAccountStatement.fs" />
 		<Compile Include="Readers\Receipt\CarrefourPdfReceipt.fs" />
-		<Compile Include="Readers\Health\ZeppLifeHeartRate.fs" />
 		<Compile Include="Program.fs" />
 	</ItemGroup>
 

@@ -4,7 +4,6 @@ using Predict.Configuration.Context;
 using Predict.Configuration.Migrations;
 using Predict.Extensions;
 using Predict.Middleware;
-using Predict.Repository.HealthRepo;
 using Predict.Repository.ReceiptRepo;
 using Predict.Repository.TransactionRepo;
 using Predict.Repository.UserRepo;
@@ -39,7 +38,6 @@ namespace Predict {
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ITransactionRepo, TransactionRepo>();
             services.AddSingleton<IReceiptRepo, ReceiptRepo>();
-            services.AddSingleton<IHealthRepo, HealthRepo>();
 
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IAccountService, AccountService>();
