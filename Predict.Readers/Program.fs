@@ -43,22 +43,24 @@ module ParserConsole =
     let main _ =
         let dataOwnerId = 1
 
-        let raifExcels = getLocalExcels @""
+        let path = @""
+
+        let raifExcels = getLocalExcels @$"{path}\AccountStatements\Raiffaisen"
         let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
         
-        let raifExcels = getLocalExcels @""
-        let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
+        //let raifExcels = getLocalExcels @$"{path}\"
+        //let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
 
-        let revExcels = getLocalExcels @""
-        let revtransactions = RevolutExcelAccountStatement.readExcels dataOwnerId revExcels
+        //let revExcels = getLocalExcels @$"{path}\"
+        //let revtransactions = RevolutExcelAccountStatement.readExcels dataOwnerId revExcels
 
-        let omPdfs = getLocalPdfs @""
-        let omtransactions = OrangeMoneyPdfAccountStatement.readPdfs dataOwnerId omPdfs
+        //let omPdfs = getLocalPdfs @$"{path}\"
+        //let omtransactions = OrangeMoneyPdfAccountStatement.readPdfs dataOwnerId omPdfs
 
-        let carrPdfs = getLocalPdfs @"r"
-        let carrReceipts = CarrefourPdfReceipt.readPdfs dataOwnerId carrPdfs
+        //let carrPdfs = getLocalPdfs @$"{path}\"
+        //let carrReceipts = CarrefourPdfReceipt.readPdfs dataOwnerId carrPdfs
         
-        let results = BCRMortgageMapper.getBcrMorgages()
+        //let results = BCRMortgageMapper.getBcrMorgages()
 
         printfn "Run succesfully"
         0
