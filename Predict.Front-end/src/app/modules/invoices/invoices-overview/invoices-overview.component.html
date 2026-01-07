@@ -12,7 +12,7 @@
         [items]="invoiceLocations$ | async"
         [selectedItem]="selectedInvoiceLocation$ | async"
         placeholder="No Selection"
-        (selectionChange)="onDropdownSelected($event)"
+        (selectionChange)="onDropdownLocationSelected($event)"
       />
     </div>
   </ng-container>

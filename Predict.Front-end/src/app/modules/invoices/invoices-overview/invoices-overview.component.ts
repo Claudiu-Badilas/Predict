@@ -46,7 +46,7 @@ export class InvoicesOverviewComponent {
     );
   }
 
-  onDropdownSelected(event: string) {
+  onDropdownLocationSelected(event: string) {
     this.selectedInvoiceLocation$.next(event);
   }
 }
