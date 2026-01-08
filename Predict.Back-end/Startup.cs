@@ -49,6 +49,7 @@ namespace Predict {
             services.AddSingleton<IAccountService, AccountService>();
             services.AddSingleton<IAuthService, AuthService>();
             services.AddSingleton<IReceiptsService, ReceiptsService>();
+            services.AddSingleton<IMortgageLoanService, MortgageLoanService>();
 
             services.AddSingleton<IEnvironmentConfiguration, EnvironmentConfiguration>();
 

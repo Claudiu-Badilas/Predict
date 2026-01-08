@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Predict.Reader.Mortgage;
+using Predict.Service;
 
 namespace Predict.Controllers;
 
 [Route("api/v1")]
-public class MorgageController : BaseController {
+public class MorgageController(IMortgageLoanService mortgageLoanService) : BaseController
+{
 
     [HttpGet("mortgage-loan/bcr")]
-    public async Task<ActionResult> GetMortgageLoanDetails() => Ok(BCRMortgageMapper.getBcrMorgages());
-
+    public async Task<ActionResult> GetMortgageLoanDetails() 
+        => Ok(mortgageLoanService.GetBcrMortgageLoans());
 }

@@ -14,7 +14,7 @@ namespace Predict.Controllers
             [FromQuery, Required] string endDate
         )
         {
-            return Ok(InvoicesMapper.getInvoices());
+            return Ok(/*InvoicesMapper.getInvoices()*/);
         }
     }
 }

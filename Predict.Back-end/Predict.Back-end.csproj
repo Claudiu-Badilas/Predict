@@ -30,7 +30,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Predict.Service\Predict.Service.csproj" />
-		<ProjectReference Include="..\Predict.Readers\Predict.Readers.fsproj" />
 	</ItemGroup>
 
 </Project>
