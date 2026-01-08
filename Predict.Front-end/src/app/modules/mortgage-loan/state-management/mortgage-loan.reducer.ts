@@ -22,7 +22,6 @@ interface OverviewMortgageLoanState {
   selectedRepaymentScheduleName: string;
   selectedLoanRates: number[];
   startDate: Date;
-  selectAll: boolean;
 }
 
 export interface MortgageLoanState {
@@ -39,7 +38,6 @@ const initialState: MortgageLoanState = {
     selectedRepaymentScheduleName: null,
     selectedLoanRates: [],
     startDate: new Date(),
-    selectAll: undefined,
   },
 };
 
@@ -77,13 +75,6 @@ const mortgageReducer = createReducer(
         overview: { ...state.overview, selectedLoanRates: [...arr] },
       };
     }
-  ),
-  on(
-    MortgageLoanActions.selectAllOverviewLoanRateChanged,
-    (state, { selectAll }) => ({
-      ...state,
-      overview: { ...state.overview, selectAll },
-    })
   ),
   on(MortgageLoanActions.startDateChanged, (state, { date }) => ({
     ...state,
@@ -151,11 +142,6 @@ export const getOverviewStartDate = createSelector(
   (state) => state.startDate
 );
 
-export const getSelectAll = createSelector(
-  getOverviewMortgageLoanState,
-  (state) => state.selectAll
-);
-
 export const selectedLoanRates = createSelector(
   getOverviewMortgageLoanState,
   (state) => state.selectedLoanRates
@@ -164,12 +150,9 @@ export const selectedLoanRates = createSelector(
 export const getSelectedLoanRates = createSelector(
   getSelectedRepaymentSchedule,
   selectedLoanRates,
-  getSelectAll,
-  (selectedRepaymentSchedule, selectedLoanRates, selectAll) =>
-    selectAll === undefined
+  (selectedRepaymentSchedule, selectedLoanRates) =>
+    selectedLoanRates
       ? selectedLoanRates
-      : !selectAll
-      ? []
       : selectedRepaymentSchedule?.rate?.map((r) => r.nrCtr) ?? []
 );
 

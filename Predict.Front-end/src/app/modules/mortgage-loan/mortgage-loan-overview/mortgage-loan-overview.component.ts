@@ -72,18 +72,7 @@ export class MortgageLoanOverviewComponent {
     this.store.dispatch(MortgageLoanActions.startDateChanged({ date }));
   }
 
-  onSelectAllLoanRates(value: boolean) {
-    this.store.dispatch(
-      MortgageLoanActions.selectAllOverviewLoanRateChanged({ selectAll: value })
-    );
-  }
-
   onSelect(rata: Rata) {
-    this.store.dispatch(
-      MortgageLoanActions.selectAllOverviewLoanRateChanged({
-        selectAll: undefined,
-      })
-    );
     this.store.dispatch(
       MortgageLoanActions.selectedOverviewLoanRateChanged({
         selected: [rata.nrCtr],
