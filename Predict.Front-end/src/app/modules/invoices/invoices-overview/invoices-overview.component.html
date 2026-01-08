@@ -15,6 +15,14 @@
         (selectionChange)="onDropdownLocationSelected($event)"
       />
     </div>
+    <div class="space">
+      <app-dropdown-select
+        [items]="selectedInvoiceTypes$ | async"
+        [selectedItem]="selectedInvoiceType$ | async"
+        placeholder="No Selection"
+        (selectionChange)="onDropdownProviderSelected($event)"
+      />
+    </div>
   </ng-container>
 
   <ng-container main-content>

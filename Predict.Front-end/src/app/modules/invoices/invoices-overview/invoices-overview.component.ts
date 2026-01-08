@@ -24,18 +24,38 @@ export class InvoicesOverviewComponent {
   invoiceLocations$ = this.invoices$.pipe(
     map((invoices) => ['No Selection', ...invoices.map((inv) => inv.address)])
   );
+  selectedInvoiceTypes$ = this.invoices$.pipe(
+    map((invoices) => [
+      'No Selection',
+      ...new Set(
+        invoices.flatMap((inv) => inv.invoices.map((i) => i.invoiceType))
+      ),
+    ])
+  );
 
-  selectedInvoiceLocation$ = new BehaviorSubject<string>(null);
+  selectedInvoiceLocation$ = new BehaviorSubject<string>('No Selection');
+  selectedInvoiceType$ = new BehaviorSubject<string>('No Selection');
 
   selectedInvoices$ = combineLatest([
     this.invoices$,
     this.selectedInvoiceLocation$,
+    this.selectedInvoiceType$,
   ]).pipe(
-    map(([invoices, selectedInvoiceLocation]) =>
-      selectedInvoiceLocation === 'No Selection' || !selectedInvoiceLocation
-        ? invoices
-        : invoices.filter((inv) => inv.address === selectedInvoiceLocation)
-    )
+    map(([invoices, selectedInvoiceLocation, selectedInvoiceType]) => {
+      const inv =
+        selectedInvoiceLocation === 'No Selection' || !selectedInvoiceLocation
+          ? invoices
+          : invoices.filter((inv) => inv.address === selectedInvoiceLocation);
+
+      return inv.map((i) => ({
+        ...i,
+        invoices: i.invoices.filter((invoice) =>
+          selectedInvoiceType === 'No Selection'
+            ? i.invoices
+            : invoice.invoiceType === selectedInvoiceType
+        ),
+      }));
+    })
   );
 
   constructor(private store: Store<fromInvoices.State>) {}
@@ -50,5 +70,9 @@ export class InvoicesOverviewComponent {
 
   onDropdownLocationSelected(event: string) {
     this.selectedInvoiceLocation$.next(event);
+  }
+
+  onDropdownProviderSelected(event: string) {
+    this.selectedInvoiceType$.next(event);
   }
 }
