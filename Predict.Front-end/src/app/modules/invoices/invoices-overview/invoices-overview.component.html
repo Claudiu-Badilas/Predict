@@ -18,8 +18,8 @@
   </ng-container>
 
   <ng-container main-content>
-    @let invoice = selectedInvoice$ | async ; @if(!!invoice){
-
+    @let invoices = selectedInvoices$ | async ; @for( invoice of invoices; track
+    invoice.address) {@if(!!invoice ) {
     <h1>{{ invoice.address }}</h1>
     <table>
       <thead>
@@ -49,6 +49,6 @@
     </table>
     } @else {
     <p>Please select a location to view invoices.</p>
-    }
+    }}
   </ng-container>
 </app-side-bar>

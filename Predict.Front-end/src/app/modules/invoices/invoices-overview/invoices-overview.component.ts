@@ -27,12 +27,14 @@ export class InvoicesOverviewComponent {
 
   selectedInvoiceLocation$ = new BehaviorSubject<string>(null);
 
-  selectedInvoice$ = combineLatest([
+  selectedInvoices$ = combineLatest([
     this.invoices$,
     this.selectedInvoiceLocation$,
   ]).pipe(
     map(([invoices, selectedInvoiceLocation]) =>
-      invoices.find((inv) => inv.address === selectedInvoiceLocation)
+      selectedInvoiceLocation === 'No Selection' || !selectedInvoiceLocation
+        ? invoices
+        : invoices.filter((inv) => inv.address === selectedInvoiceLocation)
     )
   );
 
