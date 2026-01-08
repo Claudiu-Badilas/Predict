@@ -7,8 +7,11 @@ using Predict.Middleware;
 using Predict.Repository.ReceiptRepo;
 using Predict.Repository.TransactionRepo;
 using Predict.Repository.UserRepo;
+using Predict.Service;
 using Predict.Service.AccountService;
 using Predict.Service.AuthorizationService;
+using Predict.Service.CacheService;
+using Predict.Service.CacheServicel;
 using Predict.Service.TokenService;
 using System.Reflection;
 
@@ -34,6 +37,9 @@ namespace Predict {
 
             services.AddControllers();
             services.AddCors();
+
+            services.AddMemoryCache();
+            services.AddSingleton<ICacheService, MemoryCacheService>();
 
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ITransactionRepo, TransactionRepo>();
