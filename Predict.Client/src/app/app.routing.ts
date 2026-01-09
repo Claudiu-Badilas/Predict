@@ -10,38 +10,38 @@ const routes: Routes = [
   {
     path: 'mortgage-loan',
     loadChildren: () =>
-      import('./modules/mortgage-loan/mortgage-loan.module').then(
-        (m) => m.MortgageLoanModule
+      import('./modules/mortgage-loan/mortgage-loan.routing').then(
+        (m) => m.mortgageLoanRoutes
       ),
   },
   {
     path: 'transactions',
     loadChildren: () =>
-      import('./modules/transaction/transaction.module').then(
-        (m) => m.TransactionModule
+      import('./modules/transaction/transaction.routing').then(
+        (m) => m.transactionRoutes
       ),
   },
   {
     path: 'invoices',
     loadChildren: () =>
-      import('./modules/invoices/invoices.module').then(
-        (m) => m.InvoicesModule
+      import('./modules/invoices/invoices.routing').then(
+        (m) => m.invoicesRoutes
       ),
   },
   {
     path: 'receipts',
     loadChildren: () =>
-      import('./modules/receipts/receipts.module').then(
-        (m) => m.ReceiptsModule
+      import('./modules/receipts/receipts.routing').then(
+        (m) => m.receiptsRoutes
       ),
   },
-  // {
-  //   path: 'authentication',
-  //   loadChildren: () =>
-  //     import('./platform/authentication/authentication.module').then(
-  //       (m) => m.AuthenticationModule
-  //     ),
-  // },
+  {
+    path: 'authentication',
+    loadChildren: () =>
+      import('./platform/authentication/authentication.routing').then(
+        (m) => m.authenticationRoutes
+      ),
+  },
   {
     path: '**',
     redirectTo: '',

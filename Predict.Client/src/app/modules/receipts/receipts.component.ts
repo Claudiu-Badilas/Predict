@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.actions';
@@ -7,9 +9,9 @@ import { DateUtils } from 'src/app/shared/utils/date.utils';
 
 @Component({
   selector: 'app-receipts',
+  imports: [RouterModule, CommonModule],
   templateUrl: './receipts.component.html',
   styleUrls: ['./receipts.component.scss'],
-  standalone: false,
 })
 export class ReceiptsComponent {
   constructor(private readonly store: Store<fromReceipts.State>) {

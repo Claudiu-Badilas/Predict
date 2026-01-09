@@ -1,14 +1,33 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as TransactionsActions from 'src/app/modules/transaction/actions/transactions.actions';
 import * as fromTransactions from 'src/app/modules/transaction/reducers/transactions.reducer';
+import { RangeSelectorComponent } from 'src/app/shared/components/date-range-picker/date-range-picker.component';
+import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
+import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
+import { SearchInputComponent } from 'src/app/shared/components/search-input/search-input.component';
+import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
+import { TransactionHeaderComponent } from './components/transaction-header/transaction-header.component';
+import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';
 
 @Component({
   selector: 'app-transaction',
+  imports: [
+    CommonModule,
+    NgbModule,
+    SideBarComponent,
+    RangeSelectorComponent,
+    DropdownSelectComponent,
+    SearchInputComponent,
+    TransactionHeaderComponent,
+    HighchartWrapperComponent,
+    TransactionTableComponent,
+  ],
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss'],
-  standalone: false,
 })
 export class TransactionComponent {
   startDate$ = this.store.select(fromTransactions.getStartDate);

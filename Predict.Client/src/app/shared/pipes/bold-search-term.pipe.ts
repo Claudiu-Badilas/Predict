@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'boldSearch',
-  standalone: true,
+
   pure: true,
 })
 export class BoldSearchPipe implements PipeTransform {

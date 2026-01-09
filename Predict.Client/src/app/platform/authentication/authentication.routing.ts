@@ -1,9 +1,7 @@
-import { ModuleWithProviders } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthenticationModule } from './authentication.module';
+import { Routes } from '@angular/router';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 
-const routes: Routes = [
+export const authenticationRoutes: Routes = [
   {
     path: 'authentication',
     component: LoginRegisterComponent,
@@ -18,6 +16,3 @@ const routes: Routes = [
     ],
   },
 ];
-
-export const AuthenticationRoutingModule: ModuleWithProviders<AuthenticationModule> =
-  RouterModule.forChild(routes);

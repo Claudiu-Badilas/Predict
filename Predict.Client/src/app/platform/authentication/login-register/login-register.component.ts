@@ -1,9 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
+  ReactiveFormsModule,
+  FormsModule,
 } from '@angular/forms';
 import { AuthenticationValidators } from 'src/app/platform/authentication/login-register/validators/authentication-validator';
 import { AuthenticationAction } from './models/authentication-actions.enum';
@@ -16,9 +19,9 @@ import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
   selector: 'app-login-register',
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login-register.component.html',
   styleUrls: ['./login-register.component.scss'],
-  standalone: false,
 })
 export class LoginRegisterComponent implements OnDestroy {
   private ngUnsubscribe$: Subject<void> = new Subject<void>();
