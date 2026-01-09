@@ -33,7 +33,7 @@ export namespace LoanRatesSimulationTrendChartUtils {
     ];
 
     return {
-      title: { text: 'Loan Rates Trend', align: 'left' },
+      title: { text: 'Trendul Ratelor', align: 'left' },
       chart: { type: 'spline', zooming: { type: 'x' } },
       xAxis: { type: 'datetime', title: { text: 'Date' } },
       yAxis: { title: { text: 'Amount' } },

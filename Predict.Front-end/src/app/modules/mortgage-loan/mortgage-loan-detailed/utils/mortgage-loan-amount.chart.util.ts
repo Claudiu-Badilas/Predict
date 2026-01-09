@@ -40,10 +40,10 @@ export namespace MortgageLoanAmountChartUtils {
       xAxis: {
         categories: [
           'Principal Platiti',
+          'Principal Neplatit',
           'Dobanda Platita',
           'Dobanda Salvata',
           'Dobanda Neplatita',
-          'Principal Neplatit',
         ],
         gridLineWidth: 1,
         lineWidth: 0,
@@ -63,10 +63,10 @@ export namespace MortgageLoanAmountChartUtils {
           showInLegend: false,
           data: [
             { y: MathUtil.round(paidLoan), color: Colors.TEAL_400 },
+            { y: MathUtil.round(unpaidLoan), color: Colors.BS_DANGER },
             { y: MathUtil.round(paidInterest), color: Colors.BLUE_400 },
             { y: MathUtil.round(savedInterest), color: Colors.GREEN_400 },
             { y: MathUtil.round(unpaidInterest), color: Colors.BS_ORANGE },
-            { y: MathUtil.round(unpaidLoan), color: Colors.BS_DANGER },
           ],
         },
       ] as any[],
