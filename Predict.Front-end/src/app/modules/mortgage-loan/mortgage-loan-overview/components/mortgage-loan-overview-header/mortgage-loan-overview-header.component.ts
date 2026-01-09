@@ -14,28 +14,28 @@ export class MortgageLoanOverviewHeaderComponent {
     return this.overviewLoanRates.find((r) => r.nextInterest) || null;
   }
 
-  get anticipate() {
+  get advancePayment() {
     return this.overviewLoanRates.filter((r) => !r.nextInterest && r.selected);
   }
 
-  get lastAnticipat() {
-    return this.anticipate.at(-1);
+  get lastAdvancePayment() {
+    return this.advancePayment.at(-1);
   }
 
-  get totalAnticipate() {
-    return (this.anticipate ?? [])
+  get totalAdvancePayment() {
+    return (this.advancePayment ?? [])
       .map((a) => a.principalAmount)
       .reduce((sum, val) => sum + val, 0);
   }
 
-  get totalDobandaSalvata() {
-    return (this.anticipate ?? []).reduce(
+  get totalSavedInterest() {
+    return (this.advancePayment ?? []).reduce(
       (sum, val) => sum + (val.totalInstalment - val.principalAmount),
       0
     );
   }
 
   get total() {
-    return (this.instalment?.totalInstalment ?? 0) + this.totalAnticipate;
+    return (this.instalment?.totalInstalment ?? 0) + this.totalAdvancePayment;
   }
 }

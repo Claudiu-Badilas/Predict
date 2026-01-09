@@ -10,7 +10,7 @@
     <div class="section right">
       <p class="label">Total Plata Anticipata</p>
       <p class="value">
-        {{ totalAnticipate?.toFixed(2) || "0.00" }}
+        {{ totalAdvancePayment?.toFixed(2) || "0.00" }}
       </p>
     </div>
   </div>
@@ -19,7 +19,7 @@
     <div class="section">
       <p class="label">Dobândă Salvată</p>
       <p class="value increase">
-        {{ totalDobandaSalvata?.toFixed(2) || "0.00" }}
+        {{ totalSavedInterest?.toFixed(2) || "0.00" }}
       </p>
     </div>
     <div class="divider"></div>
@@ -42,7 +42,7 @@
     <div class="section right">
       <p class="label">Sold dupa Plata</p>
       <p class="value increase">
-        {{ lastAnticipat?.remainingBalance?.toFixed(2) || "0.00" }}
+        {{ lastAdvancePayment?.remainingBalance?.toFixed(2) || "0.00" }}
       </p>
     </div>
   </div>
