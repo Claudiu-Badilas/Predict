@@ -3,7 +3,7 @@
 namespace Predict.Configuration.Migrations;
 
 [Migration(202601060001)]
-public class InitialUserTables_202601060001 : Migration
+public class InitialMigration_202601060001 : Migration
 {
     public override void Up()
     {
