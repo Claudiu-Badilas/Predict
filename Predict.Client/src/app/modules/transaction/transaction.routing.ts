@@ -1,11 +1,13 @@
+import { Routes } from '@angular/router';
 import { TransactionComponent } from './transaction.component';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthenticationGuard } from 'src/app/platform/authentication/guard/authentication.guard';
 
 export const transactionRoutes: Routes = [
   {
-    path: 'transactions',
+    path: '',
     component: TransactionComponent,
-    canActivate: [AuthenticationGuard],
+    children: [
+      { path: 'transactions', component: TransactionComponent },
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+    ],
   },
 ];
