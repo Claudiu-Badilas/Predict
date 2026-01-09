@@ -9,35 +9,33 @@ module ParserConsole =
 
     let getLocalExcels path =
         Directory.EnumerateFiles(path, "*.xlsx")
-        |> Seq.append(Directory.EnumerateFiles(path, "*.xls"))
+        |> Seq.append (Directory.EnumerateFiles(path, "*.xls"))
         |> Seq.toList
-        |> List.map(fun f -> Path.Combine(path, f) |> WorkBook.Load)
+        |> List.map (fun f -> Path.Combine(path, f) |> WorkBook.Load)
 
 
     let getLocalPdfs path =
         Directory.EnumerateFiles(path, "*.pdf")
-        |> Seq.toList 
-        |> List.map(fun f -> new PdfReader(Path.Combine(path, f)))
-   
-   
+        |> Seq.toList
+        |> List.map (fun f -> new PdfReader(Path.Combine(path, f)))
+
+
     let getLocalCsvs path =
         Directory.EnumerateFiles(path, "*.csv")
-        |> Seq.toList 
-        |> List.map(fun f -> new StreamReader(f))
-        
+        |> Seq.toList
+        |> List.map (fun f -> new StreamReader(f))
+
     let getLocalJsons path =
         Directory.EnumerateFiles(path, "*.json")
-        |> Seq.toList 
-        |> List.map(fun f -> new StreamReader(f))
+        |> Seq.toList
+        |> List.map (fun f -> new StreamReader(f))
 
     type Data =
-        {
-            Calorie: double option
-            Distance: double option
-            Segment: double option
-            Speed: double option
-            Start_time: double option
-        }
+        { Calorie: double option
+          Distance: double option
+          Segment: double option
+          Speed: double option
+          Start_time: double option }
 
     [<EntryPoint>]
     let main _ =
@@ -47,7 +45,7 @@ module ParserConsole =
 
         //let raifExcels = getLocalExcels @$"{path}\AccountStatements\Raiffaisen"
         //let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
-        
+
         //let raifExcels = getLocalExcels @$"{path}\"
         //let raitransactions = RaiffeisenExcelAccountStatement.readExcels dataOwnerId raifExcels
 
@@ -59,10 +57,10 @@ module ParserConsole =
 
         //let carrPdfs = getLocalPdfs @$"{path}\"
         //let carrReceipts = CarrefourPdfReceipt.readPdfs dataOwnerId carrPdfs
-        
+
         //let results = BCRMortgageMapper.getBcrMorgages()
 
-        let invoices = InvoicesMapper.getInvoices()
+        let invoices = InvoicesMapper.getInvoices ()
 
         printfn "Run succesfully"
         0

@@ -5,14 +5,10 @@ open System.IO
 
 module ExcelUtils =
 
-    let getExcelValues (excel: WorkBook) = 
+    let getExcelValues (excel: WorkBook) =
         excel.DefaultWorkSheet.Rows
         |> Seq.toArray
-        |> Array.map(fun row ->
-            row.Columns
-            |> Seq.toArray
-            |> Array.map(fun cell -> string cell) 
-        )
+        |> Array.map (fun row -> row.Columns |> Seq.toArray |> Array.map (fun cell -> string cell))
 
 
     let getExcelSheetValues (excel: WorkBook) =
@@ -20,20 +16,19 @@ module ExcelUtils =
         |> Seq.map (fun sheet ->
             let data =
                 sheet.Rows
-                |> Seq.map (fun row ->
-                    row.Columns
-                    |> Seq.map (fun cell -> cell.StringValue)
-                    |> Seq.toArray
-                )
+                |> Seq.map (fun row -> row.Columns |> Seq.map (fun cell -> cell.StringValue) |> Seq.toArray)
                 |> Seq.toArray
-            sheet.Name, data
-        ) |> Seq.toArray
+
+            sheet.Name, data)
+        |> Seq.toArray
 
 
-    let getCsvValues (csv: StreamReader) = 
+    let getCsvValues (csv: StreamReader) =
         let mutable rows = []
+
         while not csv.EndOfStream do
             let values = csv.ReadLine().Split(',') |> Array.toList
             rows <- values :: rows
+
         csv.Close()
         rows

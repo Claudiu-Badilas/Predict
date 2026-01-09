@@ -14,8 +14,8 @@ module StorerUtils =
             | CurrencyType.USD -> Nullable(2)
             | CurrencyType.RON -> Nullable(3)
         | _ -> Nullable()
-       
-       
+
+
     let getProviderId provider =
         match provider with
         | Some provider ->
@@ -27,7 +27,7 @@ module StorerUtils =
             | Provider.KAUFLAND -> Nullable(5)
             | Provider.ZEPP_LIFE -> Nullable(6)
         | _ -> Nullable()
-        
+
 
     let getNullableIntFromOption (value: int option) =
         match value.IsSome with
@@ -45,9 +45,8 @@ module StorerUtils =
         match value.IsSome with
         | true -> Nullable value.Value
         | _ -> Nullable()
-        
+
     let getNullableBooleanFromOption (value: bool option) =
         match value.IsSome with
         | true -> Nullable true
         | _ -> Nullable false
-
