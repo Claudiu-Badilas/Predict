@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,7 @@ import * as fromAppStore from 'src/app/store/app-state.reducer';
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss'],
-  imports: [CommonModule, NgbDropdownModule],
+  imports: [NgbDropdownModule],
 })
 export class TopBarComponent {
   modules = [

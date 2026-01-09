@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-search-input',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
 })

@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -19,7 +19,7 @@ const datepickerService = new DatePickerService();
 
 @Component({
   selector: 'date-picker',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: `./date-picker.component.html`,
   styleUrls: ['./date-picker.component.scss'],
   providers: [DatePickerService],

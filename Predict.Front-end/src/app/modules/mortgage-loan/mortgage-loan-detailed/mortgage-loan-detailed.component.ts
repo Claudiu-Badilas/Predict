@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
@@ -11,12 +11,11 @@ import { MortgageLoanDetailedHeaderComponent } from './components/mortgage-loan-
 @Component({
   selector: 'app-mortgage-loan-detailed',
   imports: [
-    CommonModule,
     SideBarComponent,
     ToggleButtonComponent,
     MortgageLoanDetailedHeaderComponent,
-    MortgageLoanDetailedBodyComponent,
-  ],
+    MortgageLoanDetailedBodyComponent
+],
   templateUrl: './mortgage-loan-detailed.component.html',
   styleUrl: './mortgage-loan-detailed.component.scss',
 })
