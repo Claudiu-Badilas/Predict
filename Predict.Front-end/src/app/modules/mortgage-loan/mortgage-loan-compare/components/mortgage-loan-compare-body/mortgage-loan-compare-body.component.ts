@@ -27,13 +27,13 @@ export class MortgageLoanCompareBodyComponent {
   rightName = computed(() => this.rightSchedule()?.name ?? 'Schedule B');
 
   compareRows = computed<CompareRow[]>(() => {
-    const leftRates = this.leftSchedule()?.rate ?? [];
-    const rightRates = this.rightSchedule()?.rate ?? [];
+    const leftRates = this.leftSchedule()?.monthlyInstalments ?? [];
+    const rightRates = this.rightSchedule()?.monthlyInstalments ?? [];
 
     return Array.from({ length: 360 }, (_, i) => i + 1).map((id) => ({
       id,
-      left: leftRates.find((r) => id === r.nrCtr),
-      right: rightRates.find((r) => id === r.nrCtr),
+      left: leftRates.find((r) => id === r.instalmentId),
+      right: rightRates.find((r) => id === r.instalmentId),
     }));
   });
 }

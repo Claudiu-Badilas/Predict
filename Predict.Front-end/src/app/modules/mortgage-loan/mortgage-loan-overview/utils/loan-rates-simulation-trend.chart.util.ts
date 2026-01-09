@@ -14,20 +14,20 @@ export namespace LoanRatesSimulationTrendChartUtils {
         type: 'spline',
         name: 'Loan',
         color: Colors.TEAL_400,
-        data: repaymentSchedule.rate.map((r) => ({
-          x: r.dataPlatii.getTime(),
-          y: Number(r.rataCredit!.toFixed(2)),
-          date: DateUtils.fromJsDateToString(r.dataPlatii),
+        data: repaymentSchedule.monthlyInstalments.map((r) => ({
+          x: r.paymentDate.getTime(),
+          y: Number(r.principalAmount!.toFixed(2)),
+          date: DateUtils.fromJsDateToString(r.paymentDate),
         })),
       },
       {
         type: 'line',
         name: 'Interests',
         color: Colors.BS_DANGER,
-        data: repaymentSchedule.rate.map((r) => ({
-          x: r.dataPlatii.getTime(),
-          y: Number(r.rataDobanda!.toFixed(2)),
-          date: DateUtils.fromJsDateToString(r.dataPlatii),
+        data: repaymentSchedule.monthlyInstalments.map((r) => ({
+          x: r.paymentDate.getTime(),
+          y: Number(r.interestAmount!.toFixed(2)),
+          date: DateUtils.fromJsDateToString(r.paymentDate),
         })),
       },
     ];

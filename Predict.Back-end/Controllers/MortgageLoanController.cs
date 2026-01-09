@@ -4,7 +4,7 @@ using Predict.Service;
 namespace Predict.Controllers;
 
 [Route("api/v1")]
-public class MorgageController(IMortgageLoanService mortgageLoanService) : BaseController
+public class MortgageLoanController(IMortgageLoanService mortgageLoanService) : BaseController
 {
 
     [HttpGet("mortgage-loan/bcr")]

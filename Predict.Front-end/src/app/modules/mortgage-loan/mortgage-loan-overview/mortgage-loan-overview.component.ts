@@ -7,12 +7,12 @@ import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-managemen
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
+import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
-import { Rata } from '../models/mortgage.model';
 import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-overview-header/mortgage-loan-overview-header.component';
-import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
+import { OverviewLoanRate } from './models/overview-mortgage-loan.model';
 
 @Component({
   selector: 'app-mortgage-loan-overview',
@@ -72,10 +72,10 @@ export class MortgageLoanOverviewComponent {
     this.store.dispatch(MortgageLoanActions.startDateChanged({ date }));
   }
 
-  onSelect(rata: Rata) {
+  onSelect(rata: OverviewLoanRate) {
     this.store.dispatch(
       MortgageLoanActions.selectedOverviewLoanRateChanged({
-        selected: [rata.nrCtr],
+        selected: [rata.instalmentId],
       })
     );
   }

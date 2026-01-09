@@ -23,10 +23,10 @@ export namespace CompareRatesTrendChartUtils {
           type: 'spline',
           color,
           name,
-          data: repaymentSchedule.rate.map((r) => ({
-            x: r.dataPlatii.getTime(),
-            y: Number(r.rataCredit.toFixed(2)),
-            date: DateUtils.fromJsDateToString(r.dataPlatii),
+          data: repaymentSchedule.monthlyInstalments.map((r) => ({
+            x: r.paymentDate.getTime(),
+            y: Number(r.principalAmount.toFixed(2)),
+            date: DateUtils.fromJsDateToString(r.paymentDate),
           })),
         },
       ]

@@ -3,17 +3,17 @@ import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 import { RepaymentSchedule } from '../../models/mortgage.model';
 
 export type OverviewLoanRate = {
-  nrCtr: number | null;
-  dataPlatii: Date | null;
-  rataDobanda: number | null;
-  rataCredit: number | null;
-  comisionAdministrare: number | null;
-  costuruAsigurare: number | null;
-  comisionGestiune: number | null;
-  dobadaRecalculata: number | null;
-  totalRata: number | null;
-  soldRestPlata: number | null;
-  nextRate: boolean;
+  instalmentId: number | null;
+  paymentDate: Date | null;
+  interestAmount: number | null;
+  principalAmount: number | null;
+  administrationFee: number | null;
+  insuranceCost: number | null;
+  managementFee: number | null;
+  recalculatedInterest: number | null;
+  totalInstalment: number | null;
+  remainingBalance: number | null;
+  nextInterest: boolean;
   selected: boolean;
   disabled: boolean;
   color: string;
@@ -31,31 +31,33 @@ export function mapBaseRepaymentScheduleToOverview(
 ): OverviewRepaymentSchedule | null {
   if (!base) return null;
 
-  let availableNextRate = false;
+  let availableNextInterest = false;
 
-  const overviewLoanRates: OverviewLoanRate[] = base.rate.map((r) => {
-    const disabled = JsDateUtils.isBefore(r.dataPlatii, startDate);
-    const nextRate = !availableNextRate && !disabled;
-    if (nextRate) availableNextRate = true;
+  const overviewLoanRates: OverviewLoanRate[] = base.monthlyInstalments.map(
+    (r) => {
+      const disabled = JsDateUtils.isBefore(r.paymentDate, startDate);
+      const nextInterest = !availableNextInterest && !disabled;
+      if (nextInterest) availableNextInterest = true;
 
-    const selected = selectedLoanRates.some((s) => s === r.nrCtr);
-    return {
-      nrCtr: r.nrCtr,
-      dataPlatii: r.dataPlatii,
-      rataDobanda: r.rataDobanda,
-      rataCredit: r.rataCredit,
-      comisionAdministrare: r.comisionAdministrare,
-      costuruAsigurare: r.costuruAsigurare,
-      comisionGestiune: r.comisionGestiune,
-      dobadaRecalculata: r.dobadaRecalculata,
-      totalRata: r.totalRata,
-      soldRestPlata: r.soldRestPlata,
-      nextRate,
-      selected: (!disabled && selected) || nextRate,
-      disabled: disabled || nextRate,
-      color: getColor(disabled, nextRate, selected),
-    } as OverviewLoanRate;
-  });
+      const selected = selectedLoanRates.some((s) => s === r.instalmentId);
+      return {
+        instalmentId: r.instalmentId,
+        paymentDate: r.paymentDate,
+        interestAmount: r.interestAmount,
+        principalAmount: r.principalAmount,
+        administrationFee: r.administrationFee,
+        insuranceCost: r.insuranceCost,
+        managementFee: r.managementFee,
+        recalculatedInterest: r.recalculatedInterest,
+        totalInstalment: r.totalInstalment,
+        remainingBalance: r.remainingBalance,
+        nextInterest,
+        selected: (!disabled && selected) || nextInterest,
+        disabled: disabled || nextInterest,
+        color: getColor(disabled, nextInterest, selected),
+      } as OverviewLoanRate;
+    }
+  );
 
   return {
     name: base.name,
@@ -64,11 +66,11 @@ export function mapBaseRepaymentScheduleToOverview(
 }
 function getColor(
   disabled: boolean,
-  nextRate: boolean,
+  nextInterest: boolean,
   selected: boolean
 ): string {
   if (disabled) return Colors.GRAY_200;
-  if (nextRate) return Colors.BLUE_200;
+  if (nextInterest) return Colors.BLUE_200;
   if (selected) return Colors.GREEN_200;
   return 'white';
 }

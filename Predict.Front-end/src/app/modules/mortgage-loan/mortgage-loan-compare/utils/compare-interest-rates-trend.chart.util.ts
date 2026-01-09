@@ -23,10 +23,10 @@ export namespace CompareInterestTrendChartUtils {
           type: 'line',
           name,
           color,
-          data: repaymentSchedule.rate.map((r) => ({
-            x: r.dataPlatii.getTime(),
-            y: Number(r.rataDobanda.toFixed(2)),
-            date: DateUtils.fromJsDateToString(r.dataPlatii),
+          data: repaymentSchedule.monthlyInstalments.map((r) => ({
+            x: r.paymentDate.getTime(),
+            y: Number(r.interestAmount.toFixed(2)),
+            date: DateUtils.fromJsDateToString(r.paymentDate),
           })),
         },
       ]

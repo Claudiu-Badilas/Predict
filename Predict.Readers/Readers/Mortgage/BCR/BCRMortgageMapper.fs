@@ -46,7 +46,7 @@ module BCRMortgageMapper =
         | None -> None
 
 
-    let getMortgageDetails (pdf: PdfReader): Rata list =
+    let getMortgageDetails (pdf: PdfReader): Instalment list =
         let text = PdfUtils.getTextFromPdf pdf
         let pages = 
             text.Split("Nr. Data plății Rată Credit Rată Comision de Costuri de Comision de Dobânda Total rată Sold (rest de")
@@ -61,16 +61,16 @@ module BCRMortgageMapper =
             |> Array.map(fun row -> 
                 let cells = row.Split(" ")
                 {
-                    NrCtr = cells[0] |> Some |> tryGetInt
-                    DataPlatii = cells[1] |> Some |> tryGetDate
-                    RataCredit = cells[2] |> Some |> tryGetDouble
-                    RataDobanda = cells[3] |> Some |> tryGetDouble
-                    ComisionAdministrare = cells[4] |> Some |> tryGetDouble
-                    CosturuAsigurare = cells[5] |> Some |> tryGetDouble
-                    ComisionGestiune = cells[6] |> Some |> tryGetDouble
-                    DobadaRecalculata = cells[7] |> Some |> tryGetDouble
-                    TotalRata = cells[8] |> Some |> tryGetDouble
-                    SoldRestPlata = cells[9] |> Some |> tryGetDouble
+                    InstalmentId = cells[0] |> Some |> tryGetInt
+                    PaymentDate = cells[1] |> Some |> tryGetDate
+                    PrincipalAmount = cells[2] |> Some |> tryGetDouble
+                    InterestAmount = cells[3] |> Some |> tryGetDouble
+                    AdministrationFee = cells[4] |> Some |> tryGetDouble
+                    InsuranceCost = cells[5] |> Some |> tryGetDouble
+                    ManagementFee = cells[6] |> Some |> tryGetDouble
+                    RecalculatedInterest = cells[7] |> Some |> tryGetDouble
+                    TotalInstalment = cells[8] |> Some |> tryGetDouble
+                    RemainingBalance = cells[9] |> Some |> tryGetDouble
                 }
             )
             |> Array.toList
@@ -82,7 +82,7 @@ module BCRMortgageMapper =
         |> Array.Parallel.map (fun (fileName, pdf) ->
             { defaultGraficRambursare with 
                 Name = fileName
-                Rate = getMortgageDetails pdf
+                MonthlyInstalments = getMortgageDetails pdf
                 Date = DateTime.ParseExact(fileName, "dd-MMM-yyyy", CultureInfo.InvariantCulture)
             }
         )

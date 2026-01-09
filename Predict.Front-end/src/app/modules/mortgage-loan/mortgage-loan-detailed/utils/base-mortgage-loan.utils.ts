@@ -8,10 +8,13 @@ export namespace BaseMortgageLoan {
     base: RepaymentSchedule,
     repaymentSchedules: RepaymentSchedule[]
   ): BaseLoanRate[] {
-    if (!base?.rate?.length || !repaymentSchedules?.length) return [];
+    if (!base?.monthlyInstalments?.length || !repaymentSchedules?.length)
+      return [];
 
     const findRateByDate = (date: Date) =>
-      base.rate.find((r) => JsDateUtils.isSame(r.dataPlatii, date));
+      base.monthlyInstalments.find((r) =>
+        JsDateUtils.isSame(r.paymentDate, date)
+      );
 
     const sortedSchedules = repaymentSchedules
       .filter((rs) => !rs.isBasePayment)
@@ -26,11 +29,11 @@ export namespace BaseMortgageLoan {
         if (!rate) return;
 
         calculatedRates.push({
-          index: rate.nrCtr,
-          dataPlatii: rate.dataPlatii,
-          rataCredit: rate.rataCredit,
-          rataDobanda: rate.rataDobanda,
-          soldRestPlata: rate.soldRestPlata,
+          index: rate.instalmentId,
+          dataPlatii: rate.paymentDate,
+          rataCredit: rate.principalAmount,
+          rataDobanda: rate.interestAmount,
+          soldRestPlata: rate.remainingBalance,
           isNormalPayment: true,
           isExtraPayment: false,
         });
@@ -38,23 +41,26 @@ export namespace BaseMortgageLoan {
 
       if (schedule.isExtraPayment) {
         const previousSchedule = array[index - 1];
-        if (!previousSchedule?.rate?.length) return;
+        if (!previousSchedule?.monthlyInstalments?.length) return;
 
-        const firstPrevRateDate = previousSchedule.rate[0].dataPlatii;
+        const firstPrevRateDate =
+          previousSchedule.monthlyInstalments[0].paymentDate;
         const startRate = findRateByDate(firstPrevRateDate);
         if (!startRate) return;
 
-        const sliceStart = startRate.nrCtr - 1;
+        const sliceStart = startRate.instalmentId - 1;
         const sliceEnd =
-          previousSchedule.rate.length - schedule.rate.length + 1;
+          previousSchedule.monthlyInstalments.length -
+          schedule.monthlyInstalments.length +
+          1;
 
-        base.rate.slice(sliceStart, sliceEnd).forEach((rate) =>
+        base.monthlyInstalments.slice(sliceStart, sliceEnd).forEach((rate) =>
           calculatedRates.push({
-            index: rate.nrCtr,
-            dataPlatii: rate.dataPlatii,
-            rataCredit: rate.rataCredit,
-            rataDobanda: rate.rataDobanda,
-            soldRestPlata: rate.soldRestPlata,
+            index: rate.instalmentId,
+            dataPlatii: rate.paymentDate,
+            rataCredit: rate.principalAmount,
+            rataDobanda: rate.interestAmount,
+            soldRestPlata: rate.remainingBalance,
             isNormalPayment: false,
             isExtraPayment: true,
           })
@@ -67,20 +73,20 @@ export namespace BaseMortgageLoan {
     const lastCalculatedDate =
       calculatedRates[calculatedRates.length - 1].dataPlatii;
 
-    const lastPaidRate = base.rate.find((r) =>
-      JsDateUtils.isSame(r.dataPlatii, lastCalculatedDate)
+    const lastPaidRate = base.monthlyInstalments.find((r) =>
+      JsDateUtils.isSame(r.paymentDate, lastCalculatedDate)
     );
 
     if (!lastPaidRate) return calculatedRates;
 
-    const unpaidRates: BaseLoanRate[] = base.rate
-      .slice(lastPaidRate.nrCtr)
+    const unpaidRates: BaseLoanRate[] = base.monthlyInstalments
+      .slice(lastPaidRate.instalmentId)
       .map((rate) => ({
-        index: rate.nrCtr,
-        dataPlatii: rate.dataPlatii,
-        rataCredit: rate.rataCredit,
-        rataDobanda: rate.rataDobanda,
-        soldRestPlata: rate.soldRestPlata,
+        index: rate.instalmentId,
+        dataPlatii: rate.paymentDate,
+        rataCredit: rate.principalAmount,
+        rataDobanda: rate.interestAmount,
+        soldRestPlata: rate.remainingBalance,
         isNormalPayment: false,
         isExtraPayment: false,
       }));

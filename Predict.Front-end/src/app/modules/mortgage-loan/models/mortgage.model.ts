@@ -1,49 +1,49 @@
 import { DateUtils } from 'src/app/shared/utils/date.utils';
 
-export type RataDto = {
-  nrCtr: number;
-  dataPlatii: string;
-  rataDobanda: number;
-  rataCredit: number;
-  comisionAdministrare: number;
-  costuruAsigurare: number;
-  comisionGestiune: number;
-  dobadaRecalculata: number;
-  totalRata: number;
-  soldRestPlata: number;
+export type InstalmentDto = {
+  instalmentId: number;
+  paymentDate: string;
+  interestAmount: number;
+  principalAmount: number;
+  administrationFee: number;
+  insuranceCost: number;
+  managementFee: number;
+  recalculatedInterest: number;
+  totalInstalment: number;
+  remainingBalance: number;
 };
 
 export type RepaymentScheduleDto = {
   name: string;
-  rate: RataDto[];
+  monthlyInstalments: InstalmentDto[];
   date: string;
   isBasePayment: boolean;
   isNormalPayment: boolean;
   isExtraPayment: boolean;
 };
 
-export class Rata {
-  nrCtr: number;
-  dataPlatii: Date;
-  rataDobanda: number;
-  rataCredit: number;
-  comisionAdministrare: number;
-  costuruAsigurare: number;
-  comisionGestiune: number;
-  dobadaRecalculata: number;
-  totalRata: number;
-  soldRestPlata: number;
+export class Instalment {
+  instalmentId: number;
+  paymentDate: Date;
+  interestAmount: number;
+  principalAmount: number;
+  administrationFee: number;
+  insuranceCost: number;
+  managementFee: number;
+  recalculatedInterest: number;
+  totalInstalment: number;
+  remainingBalance: number;
 
-  constructor(res: RataDto) {
+  constructor(res: InstalmentDto) {
     Object.assign(this, res);
 
-    this.dataPlatii = DateUtils.fromSplittedStringToJsDate(res.dataPlatii);
+    this.paymentDate = DateUtils.fromSplittedStringToJsDate(res.paymentDate);
   }
 }
 
 export class RepaymentSchedule {
   name: string;
-  rate: Rata[];
+  monthlyInstalments: Instalment[];
   date: Date;
   isBasePayment: boolean;
   isNormalPayment: boolean;
@@ -53,6 +53,8 @@ export class RepaymentSchedule {
     Object.assign(this, res);
 
     this.date = DateUtils.fromSplittedStringToJsDate(res.date);
-    this.rate = res.rate.map((r) => new Rata(r));
+    this.monthlyInstalments = res.monthlyInstalments.map(
+      (r) => new Instalment(r)
+    );
   }
 }

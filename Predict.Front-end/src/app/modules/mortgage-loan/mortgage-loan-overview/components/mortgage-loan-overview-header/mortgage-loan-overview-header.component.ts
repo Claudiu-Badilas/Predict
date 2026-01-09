@@ -10,12 +10,12 @@ import { OverviewLoanRate } from '../../models/overview-mortgage-loan.model';
 export class MortgageLoanOverviewHeaderComponent {
   @Input({ required: true }) overviewLoanRates: OverviewLoanRate[];
 
-  get rata() {
-    return this.overviewLoanRates.find((r) => r.nextRate) || null;
+  get instalment() {
+    return this.overviewLoanRates.find((r) => r.nextInterest) || null;
   }
 
   get anticipate() {
-    return this.overviewLoanRates.filter((r) => !r.nextRate && r.selected);
+    return this.overviewLoanRates.filter((r) => !r.nextInterest && r.selected);
   }
 
   get lastAnticipat() {
@@ -24,18 +24,18 @@ export class MortgageLoanOverviewHeaderComponent {
 
   get totalAnticipate() {
     return (this.anticipate ?? [])
-      .map((a) => a.rataCredit)
+      .map((a) => a.principalAmount)
       .reduce((sum, val) => sum + val, 0);
   }
 
   get totalDobandaSalvata() {
     return (this.anticipate ?? []).reduce(
-      (sum, val) => sum + (val.totalRata - val.rataCredit),
+      (sum, val) => sum + (val.totalInstalment - val.principalAmount),
       0
     );
   }
 
   get total() {
-    return (this.rata?.totalRata ?? 0) + this.totalAnticipate;
+    return (this.instalment?.totalInstalment ?? 0) + this.totalAnticipate;
   }
 }

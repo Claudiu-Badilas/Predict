@@ -153,7 +153,9 @@ export const getSelectedLoanRates = createSelector(
   (selectedRepaymentSchedule, selectedLoanRates) =>
     selectedLoanRates
       ? selectedLoanRates
-      : selectedRepaymentSchedule?.rate?.map((r) => r.nrCtr) ?? []
+      : selectedRepaymentSchedule?.monthlyInstalments?.map(
+          (r) => r.instalmentId
+        ) ?? []
 );
 
 export const getSelectedRepaymentScheduleOverview = createSelector(
