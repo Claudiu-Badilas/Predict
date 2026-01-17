@@ -15,18 +15,17 @@
 		<Compile Include="Types\InvoiceTypes.fs" />
 		<Compile Include="Types\ReceiptTypes.fs" />
 		<Compile Include="Types\HealthTypes.fs" />
+		<Compile Include="Types\MortgageTypes.fs" />
 		<Compile Include="Types\TransactionTypes.fs" />
 		<Compile Include="Utils\PdfUtils.fs" />
 		<Compile Include="Utils\ExcelUtils.fs" />
 		<Compile Include="Utils\DateTimeUtils.fs" />
 		<Compile Include="Utils\ParserUtils.fs" />
-		<Compile Include="mortgageloan\repository\MortgageLoanRepository.fs" />
-		<Compile Include="MortgageLoan\Types\MortgageTypes.fs" />
 		<Compile Include="DatabaseAccess\Utils\StorerUtils.fs" />
 		<Compile Include="DatabaseAccess\StoreTransactions.fs" />
 		<Compile Include="DatabaseAccess\StoreReceipts.fs" />
 		<Compile Include="Readers\Invoices\InvoicesMapper.fs" />
-		<Compile Include="MortgageLoan\Readers\BCRMortgageMapper.fs" />
+		<Compile Include="Readers\Mortgage\BCR\BCRMortgageMapper.fs" />
 		<Compile Include="Readers\AccountStatement\OM\OrangeMoneyPdfAccountStatement.fs" />
 		<Compile Include="Readers\AccountStatement\OM\OrangeMoneyExcelAccountStatement.fs" />
 		<Compile Include="Readers\AccountStatement\RevolutExcelAccountStatement.fs" />
@@ -37,10 +36,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Predict.Repository\Predict.Repository.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="MortgageLoan\Repository\" />
 	</ItemGroup>
 
 </Project>
