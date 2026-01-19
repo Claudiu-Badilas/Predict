@@ -2,7 +2,7 @@ import { Colors } from 'src/app/shared/styles/colors';
 import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 import { RepaymentSchedule } from '../../models/mortgage.model';
 
-export type OverviewLoanRate = {
+export type OverviewLoanInstalment = {
   instalmentId: number | null;
   paymentDate: Date | null;
   interestAmount: number | null;
@@ -13,33 +13,29 @@ export type OverviewLoanRate = {
   recalculatedInterest: number | null;
   totalInstalment: number | null;
   remainingBalance: number | null;
-  nextInterest: boolean;
-  selected: boolean;
+  instalmentPayment: boolean;
+  earlyPayment: boolean;
   disabled: boolean;
   color: string;
 };
 
 export type OverviewRepaymentSchedule = {
   name: string;
-  overviewLoanRates: OverviewLoanRate[];
+  overviewLoanRates: OverviewLoanInstalment[];
 };
 
 export function mapBaseRepaymentScheduleToOverview(
   base: RepaymentSchedule,
   startDate: Date,
-  selectedLoanRates: number[]
+  selectedLoanRates: number[],
 ): OverviewRepaymentSchedule | null {
   if (!base) return null;
 
-  let availableNextInterest = false;
-
-  const overviewLoanRates: OverviewLoanRate[] = base.monthlyInstalments.map(
-    (r) => {
+  const overviewLoanRates: OverviewLoanInstalment[] =
+    base.monthlyInstalments.map((r) => {
       const disabled = JsDateUtils.isBefore(r.paymentDate, startDate);
-      const nextInterest = !availableNextInterest && !disabled;
-      if (nextInterest) availableNextInterest = true;
 
-      const selected = selectedLoanRates.some((s) => s === r.instalmentId);
+      const earlyPayment = selectedLoanRates.some((s) => s === r.instalmentId);
       return {
         instalmentId: r.instalmentId,
         paymentDate: r.paymentDate,
@@ -51,13 +47,12 @@ export function mapBaseRepaymentScheduleToOverview(
         recalculatedInterest: r.recalculatedInterest,
         totalInstalment: r.totalInstalment,
         remainingBalance: r.remainingBalance,
-        nextInterest,
-        selected: (!disabled && selected) || nextInterest,
-        disabled: disabled || nextInterest,
-        color: getColor(disabled, nextInterest, selected),
-      } as OverviewLoanRate;
-    }
-  );
+        instalmentPayment: false,
+        earlyPayment: !disabled && earlyPayment,
+        disabled: disabled,
+        color: getColor(disabled, false, earlyPayment),
+      } as OverviewLoanInstalment;
+    });
 
   return {
     name: base.name,
@@ -66,11 +61,11 @@ export function mapBaseRepaymentScheduleToOverview(
 }
 function getColor(
   disabled: boolean,
-  nextInterest: boolean,
-  selected: boolean
+  instalmentPayment: boolean,
+  earlyPayment: boolean,
 ): string {
   if (disabled) return Colors.GRAY_200;
-  if (nextInterest) return Colors.BLUE_200;
-  if (selected) return Colors.GREEN_200;
+  if (instalmentPayment) return Colors.BLUE_200;
+  if (earlyPayment) return Colors.GREEN_200;
   return 'white';
 }

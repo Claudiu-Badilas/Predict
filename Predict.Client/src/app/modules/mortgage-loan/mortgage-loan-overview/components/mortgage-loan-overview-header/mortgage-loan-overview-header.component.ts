@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OverviewLoanRate } from '../../models/overview-mortgage-loan.model';
+import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
 
 @Component({
   selector: 'app-mortgage-loan-overview-header',
@@ -8,14 +8,16 @@ import { OverviewLoanRate } from '../../models/overview-mortgage-loan.model';
   styleUrl: './mortgage-loan-overview-header.component.scss',
 })
 export class MortgageLoanOverviewHeaderComponent {
-  @Input({ required: true }) overviewLoanRates: OverviewLoanRate[];
+  @Input({ required: true }) overviewLoanRates: OverviewLoanInstalment[];
 
   get instalment() {
-    return this.overviewLoanRates.find((r) => r.nextInterest) || null;
+    return this.overviewLoanRates.find((r) => r.instalmentPayment) || null;
   }
 
   get advancePayment() {
-    return this.overviewLoanRates.filter((r) => !r.nextInterest && r.selected);
+    return this.overviewLoanRates.filter(
+      (r) => !r.instalmentPayment && r.earlyPayment,
+    );
   }
 
   get lastAdvancePayment() {
@@ -31,7 +33,7 @@ export class MortgageLoanOverviewHeaderComponent {
   get totalSavedInterest() {
     return (this.advancePayment ?? []).reduce(
       (sum, val) => sum + (val.totalInstalment - val.principalAmount),
-      0
+      0,
     );
   }
 

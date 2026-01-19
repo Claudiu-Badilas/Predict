@@ -12,7 +12,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.actions';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
-import { OverviewLoanRate } from '../../models/overview-mortgage-loan.model';
+import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
 import { TableColumn } from './model/table-body.model';
 
 @Component({
@@ -126,9 +126,9 @@ export class MortgageLoanOverviewBodyTableComponent
     return this.columns.find((c) => c.key === key)?.label ?? key;
   }
 
-  onSelectRata(rata: OverviewLoanRate) {}
+  onSelectRata(rata: OverviewLoanInstalment) {}
 
-  onSelectAnticipat(rata: OverviewLoanRate) {
+  onSelectAnticipat(rata: OverviewLoanInstalment) {
     this.store.dispatch(
       MortgageLoanActions.selectedOverviewLoanRateChanged({
         selected: [rata.instalmentId],

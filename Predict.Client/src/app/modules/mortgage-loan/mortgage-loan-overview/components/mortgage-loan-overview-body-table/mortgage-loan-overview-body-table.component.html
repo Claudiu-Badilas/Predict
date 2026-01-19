@@ -56,12 +56,12 @@
         ) {
           <tr
             [style.background-color]="rata.color"
-            [class.faded]="rata.disabled && !rata.nextInterest"
+            [class.faded]="rata.disabled && !rata.instalmentPayment"
           >
             <td>
               <app-checkbox
                 [id]="rata.instalmentId"
-                [checked]="rata.selected"
+                [checked]="rata.earlyPayment"
                 [disabled]="rata.disabled"
                 (valueChange)="onSelectRata(rata)"
               />
@@ -70,7 +70,7 @@
             <td>
               <app-checkbox
                 [id]="rata.instalmentId"
-                [checked]="rata.selected"
+                [checked]="rata.earlyPayment"
                 [disabled]="rata.disabled"
                 (valueChange)="onSelectAnticipat(rata)"
               />
