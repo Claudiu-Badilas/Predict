@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
+import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
 import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
 
 @Component({
@@ -8,36 +9,32 @@ import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.mode
   styleUrl: './mortgage-loan-overview-header.component.scss',
 })
 export class MortgageLoanOverviewHeaderComponent {
-  @Input({ required: true }) overviewLoanRates: OverviewLoanInstalment[];
+  overviewLoanRates = input.required<OverviewLoanInstalment[]>();
 
-  get instalment() {
-    return this.overviewLoanRates.find((r) => r.instalmentPayment) || null;
-  }
+  instalment = computed(() =>
+    this.overviewLoanRates().find((r) => r.instalmentPayment),
+  );
 
-  get advancePayment() {
-    return this.overviewLoanRates.filter(
-      (r) => !r.instalmentPayment && r.earlyPayment,
-    );
-  }
+  earlyPayments = computed(() =>
+    this.overviewLoanRates().filter((r) => r.earlyPayment),
+  );
 
-  get lastAdvancePayment() {
-    return this.advancePayment.at(-1);
-  }
+  lastEarlyPayment = computed(() => this.earlyPayments().at(-1));
 
-  get totalAdvancePayment() {
-    return (this.advancePayment ?? [])
-      .map((a) => a.principalAmount)
-      .reduce((sum, val) => sum + val, 0);
-  }
+  totalEarlyPayment = computed(() =>
+    CalculatorUtil.sum(this.earlyPayments().map((a) => a.principalAmount)),
+  );
 
-  get totalSavedInterest() {
-    return (this.advancePayment ?? []).reduce(
-      (sum, val) => sum + (val.totalInstalment - val.principalAmount),
-      0,
-    );
-  }
+  totalSavedInterest = computed(() =>
+    CalculatorUtil.sum(
+      this.earlyPayments().map((a) => a.totalInstalment - a.principalAmount),
+    ),
+  );
 
-  get total() {
-    return (this.instalment?.totalInstalment ?? 0) + this.totalAdvancePayment;
-  }
+  total = computed(() =>
+    CalculatorUtil.sum([
+      this.instalment()?.totalInstalment,
+      this.totalEarlyPayment(),
+    ]),
+  );
 }

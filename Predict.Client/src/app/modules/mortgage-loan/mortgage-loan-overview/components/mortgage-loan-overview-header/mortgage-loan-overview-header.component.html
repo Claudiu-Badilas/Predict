@@ -3,14 +3,14 @@
     <div class="section">
       <p class="label">Total Rata</p>
       <p class="value">
-        {{ instalment?.totalInstalment?.toFixed(2) || "0.00" }}
+        {{ instalment()?.totalInstalment?.toFixed(2) || "0.00" }}
       </p>
     </div>
     <div class="divider"></div>
     <div class="section right">
       <p class="label">Total Plata Anticipata</p>
       <p class="value">
-        {{ totalAdvancePayment?.toFixed(2) || "0.00" }}
+        {{ totalEarlyPayment()?.toFixed(2) || "0.00" }}
       </p>
     </div>
   </div>
@@ -19,15 +19,15 @@
     <div class="section">
       <p class="label">Dobândă Salvată</p>
       <p class="value increase">
-        {{ totalSavedInterest?.toFixed(2) || "0.00" }}
+        {{ totalSavedInterest()?.toFixed(2) || "0.00" }}
       </p>
     </div>
     <div class="divider"></div>
     <div class="section right">
       <p class="label">Total de Plata</p>
       <p class="value decrease">
-        {{ total?.toFixed(2) || "0.00" }}
-        ({{ (total / 2)?.toFixed(2) || "0.00" }})
+        {{ total()?.toFixed(2) || "0.00" }}
+        ({{ (total() / 2)?.toFixed(2) || "0.00" }})
       </p>
     </div>
   </div>
@@ -36,9 +36,9 @@
       <p class="label">Sold Inainte Plata</p>
       <p class="value decrease">
         {{
-          (instalment?.remainingBalance + instalment?.principalAmount)?.toFixed(
-            2
-          ) || "0.00"
+          (
+            instalment()?.remainingBalance + instalment()?.principalAmount
+          )?.toFixed(2) || "0.00"
         }}
       </p>
     </div>
@@ -46,7 +46,7 @@
     <div class="section right">
       <p class="label">Sold dupa Plata</p>
       <p class="value increase">
-        {{ lastAdvancePayment?.remainingBalance?.toFixed(2) || "0.00" }}
+        {{ lastEarlyPayment()?.remainingBalance?.toFixed(2) || "0.00" }}
       </p>
     </div>
   </div>
