@@ -126,12 +126,18 @@ export class MortgageLoanOverviewBodyTableComponent
     return this.columns.find((c) => c.key === key)?.label ?? key;
   }
 
-  onSelectRata(rata: OverviewLoanInstalment) {}
-
-  onSelectAnticipat(rata: OverviewLoanInstalment) {
+  onSelectInstalmentPayment(rata: OverviewLoanInstalment) {
     this.store.dispatch(
-      MortgageLoanActions.selectedOverviewLoanRateChanged({
-        selected: [rata.instalmentId],
+      MortgageLoanActions.selectedInstalmentPaymentChanged({
+        values: [rata.instalmentId],
+      }),
+    );
+  }
+
+  onSelectEarlyPayment(rata: OverviewLoanInstalment) {
+    this.store.dispatch(
+      MortgageLoanActions.selectedEarlyPaymentChanged({
+        values: [rata.instalmentId],
       }),
     );
   }

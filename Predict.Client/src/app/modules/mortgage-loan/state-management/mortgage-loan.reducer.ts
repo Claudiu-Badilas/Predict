@@ -20,7 +20,8 @@ import { RepaymentSchedule } from './../models/mortgage.model';
 interface OverviewMortgageLoanState {
   repaymentSchedules: OverviewRepaymentSchedule[];
   selectedRepaymentScheduleName: string;
-  selectedLoanRates: number[];
+  selectedInstalmentPayments: number[];
+  selectedEarlyPayments: number[];
   startDate: Date;
 }
 
@@ -36,7 +37,8 @@ const initialState: MortgageLoanState = {
   overview: {
     repaymentSchedules: [],
     selectedRepaymentScheduleName: null,
-    selectedLoanRates: [],
+    selectedInstalmentPayments: [],
+    selectedEarlyPayments: [],
     startDate: new Date(),
   },
 };
@@ -48,22 +50,21 @@ const mortgageReducer = createReducer(
     (state, { repaymentSchedules }) => ({
       ...state,
       repaymentSchedules,
-    })
+    }),
   ),
   on(
     MortgageLoanActions.selectedMortgageLoanChanged,
     (state, { selected }) => ({
       ...state,
       overview: { ...state.overview, selectedRepaymentScheduleName: selected },
-    })
+    }),
   ),
-
   on(
-    MortgageLoanActions.selectedOverviewLoanRateChanged,
-    (state, { selected }) => {
-      const arr = [...state.overview.selectedLoanRates];
+    MortgageLoanActions.selectedInstalmentPaymentChanged,
+    (state, { values }) => {
+      const arr = [...state.overview.selectedInstalmentPayments];
 
-      selected.forEach((val) => {
+      values.forEach((val) => {
         const index = arr.findIndex((r) => r === val);
 
         if (index !== -1) arr.splice(index, 1);
@@ -72,14 +73,29 @@ const mortgageReducer = createReducer(
 
       return {
         ...state,
-        overview: { ...state.overview, selectedLoanRates: [...arr] },
+        overview: { ...state.overview, selectedInstalmentPayments: [...arr] },
       };
-    }
+    },
   ),
+  on(MortgageLoanActions.selectedEarlyPaymentChanged, (state, { values }) => {
+    const arr = [...state.overview.selectedEarlyPayments];
+
+    values.forEach((val) => {
+      const index = arr.findIndex((r) => r === val);
+
+      if (index !== -1) arr.splice(index, 1);
+      else arr.push(val);
+    });
+
+    return {
+      ...state,
+      overview: { ...state.overview, selectedEarlyPayments: [...arr] },
+    };
+  }),
   on(MortgageLoanActions.startDateChanged, (state, { date }) => ({
     ...state,
     overview: { ...state.overview, startDate: date },
-  }))
+  })),
 );
 
 export function reducer(state: MortgageLoanState, action: Action) {
@@ -91,13 +107,13 @@ const getMortgageLoanState =
 
 export const getRepaymentSchedules = createSelector(
   getMortgageLoanState,
-  (state) => state.repaymentSchedules
+  (state) => state.repaymentSchedules,
 );
 
 export const getBaseRepaymentSchedule = createSelector(
   getRepaymentSchedules,
   (repaymentSchedules) =>
-    repaymentSchedules.find((r) => r.isBasePayment) ?? null
+    repaymentSchedules.find((r) => r.isBasePayment) ?? null,
 );
 
 export const getLatestRepaymentSchedule = createSelector(
@@ -108,7 +124,7 @@ export const getLatestRepaymentSchedule = createSelector(
           .slice()
           .sort((a, b) => b.date.valueOf() - a.date.valueOf())
           .at(0)
-      : null
+      : null,
 );
 
 //################
@@ -116,7 +132,7 @@ export const getLatestRepaymentSchedule = createSelector(
 //################
 export const getOverviewMortgageLoanState = createSelector(
   getMortgageLoanState,
-  (state) => state.overview
+  (state) => state.overview,
 );
 
 export const getSelectedRepaymentScheduleName = createSelector(
@@ -125,7 +141,7 @@ export const getSelectedRepaymentScheduleName = createSelector(
   (state, overview) =>
     overview.selectedRepaymentScheduleName ??
     state.repaymentSchedules[0]?.name ??
-    null
+    null,
 );
 
 export const getSelectedRepaymentSchedule = createSelector(
@@ -133,41 +149,36 @@ export const getSelectedRepaymentSchedule = createSelector(
   getSelectedRepaymentScheduleName,
   (repaymentSchedules, selectedRepaymentScheduleName) =>
     repaymentSchedules?.find(
-      (rs) => rs.name === selectedRepaymentScheduleName
-    ) ?? null
+      (rs) => rs.name === selectedRepaymentScheduleName,
+    ) ?? null,
 );
 
 export const getOverviewStartDate = createSelector(
   getOverviewMortgageLoanState,
-  (state) => state.startDate
+  (state) => state.startDate,
 );
 
-export const selectedLoanRates = createSelector(
+export const selectedInstalmentPayments = createSelector(
   getOverviewMortgageLoanState,
-  (state) => state.selectedLoanRates
+  (state) => state.selectedInstalmentPayments,
 );
 
-export const getSelectedLoanRates = createSelector(
-  getSelectedRepaymentSchedule,
-  selectedLoanRates,
-  (selectedRepaymentSchedule, selectedLoanRates) =>
-    selectedLoanRates
-      ? selectedLoanRates
-      : selectedRepaymentSchedule?.monthlyInstalments?.map(
-          (r) => r.instalmentId
-        ) ?? []
+export const selectedEarlyPayments = createSelector(
+  getOverviewMortgageLoanState,
+  (state) => state.selectedEarlyPayments,
 );
 
 export const getSelectedRepaymentScheduleOverview = createSelector(
   getSelectedRepaymentSchedule,
   getOverviewStartDate,
-  getSelectedLoanRates,
-  mapBaseRepaymentScheduleToOverview
+  selectedInstalmentPayments,
+  selectedEarlyPayments,
+  mapBaseRepaymentScheduleToOverview,
 );
 
 export const getLoanRatesSimulationTrendChart = createSelector(
   getSelectedRepaymentSchedule,
-  LoanRatesSimulationTrendChartUtils.getChart
+  LoanRatesSimulationTrendChartUtils.getChart,
 );
 
 //################
@@ -177,20 +188,20 @@ export const getUpdatedBaseRepaymentScheduleBasedOnLatestStates =
   createSelector(
     getBaseRepaymentSchedule,
     getRepaymentSchedules,
-    BaseMortgageLoan.getUpdatedBaseRepaymentScheduleBasedOnLatestStates
+    BaseMortgageLoan.getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
   );
 
 export const getMortgageLoanProgressChart = createSelector(
   getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
-  MortgageLoanProgressChartUtils.getChart
+  MortgageLoanProgressChartUtils.getChart,
 );
 
 export const getMortgageInterestProgressChart = createSelector(
   getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
-  MortgageInterestProgressChartUtils.getChart
+  MortgageInterestProgressChartUtils.getChart,
 );
 
 export const getMortgageLoanAmountChartUtils = createSelector(
   getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
-  MortgageLoanAmountChartUtils.getChart
+  MortgageLoanAmountChartUtils.getChart,
 );

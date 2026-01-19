@@ -9,14 +9,14 @@ import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.mode
   styleUrl: './mortgage-loan-overview-header.component.scss',
 })
 export class MortgageLoanOverviewHeaderComponent {
-  overviewLoanRates = input.required<OverviewLoanInstalment[]>();
+  overviewLoanInstalments = input.required<OverviewLoanInstalment[]>();
 
   instalment = computed(() =>
-    this.overviewLoanRates().find((r) => r.instalmentPayment),
+    this.overviewLoanInstalments().find((r) => r.instalmentPayment),
   );
 
   earlyPayments = computed(() =>
-    this.overviewLoanRates().filter((r) => r.earlyPayment),
+    this.overviewLoanInstalments().filter((r) => r.earlyPayment),
   );
 
   lastEarlyPayment = computed(() => this.earlyPayments().at(-1));

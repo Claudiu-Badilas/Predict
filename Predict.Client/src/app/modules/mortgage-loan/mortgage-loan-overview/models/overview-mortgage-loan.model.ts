@@ -21,13 +21,14 @@ export type OverviewLoanInstalment = {
 
 export type OverviewRepaymentSchedule = {
   name: string;
-  overviewLoanRates: OverviewLoanInstalment[];
+  overviewLoanInstalments: OverviewLoanInstalment[];
 };
 
 export function mapBaseRepaymentScheduleToOverview(
   base: RepaymentSchedule,
   startDate: Date,
-  selectedLoanRates: number[],
+  selectedInstalmentPayments: number[],
+  selectedEarlyPayments: number[],
 ): OverviewRepaymentSchedule | null {
   if (!base) return null;
 
@@ -35,7 +36,12 @@ export function mapBaseRepaymentScheduleToOverview(
     base.monthlyInstalments.map((r) => {
       const disabled = JsDateUtils.isBefore(r.paymentDate, startDate);
 
-      const earlyPayment = selectedLoanRates.some((s) => s === r.instalmentId);
+      const instalmentPayment = selectedInstalmentPayments.some(
+        (s) => s === r.instalmentId,
+      );
+      const earlyPayment = selectedEarlyPayments.some(
+        (s) => s === r.instalmentId,
+      );
       return {
         instalmentId: r.instalmentId,
         paymentDate: r.paymentDate,
@@ -47,16 +53,16 @@ export function mapBaseRepaymentScheduleToOverview(
         recalculatedInterest: r.recalculatedInterest,
         totalInstalment: r.totalInstalment,
         remainingBalance: r.remainingBalance,
-        instalmentPayment: false,
+        instalmentPayment: !disabled && instalmentPayment,
         earlyPayment: !disabled && earlyPayment,
         disabled: disabled,
-        color: getColor(disabled, false, earlyPayment),
+        color: getColor(disabled, instalmentPayment, earlyPayment),
       } as OverviewLoanInstalment;
     });
 
   return {
     name: base.name,
-    overviewLoanRates,
+    overviewLoanInstalments: overviewLoanRates,
   } as OverviewRepaymentSchedule;
 }
 function getColor(

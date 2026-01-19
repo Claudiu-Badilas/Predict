@@ -39,9 +39,6 @@ export class MortgageLoanOverviewComponent {
     .select(fromMortgageLoan.getRepaymentSchedules)
     .pipe(map((rs) => rs.map((r) => r.name)));
   overviewStartDate$ = this.store.select(fromMortgageLoan.getOverviewStartDate);
-  overviewLoanRates$ = this.selectedRepaymentSchedule$.pipe(
-    map((srs) => srs?.overviewLoanRates?.filter((r) => r.earlyPayment) ?? []),
-  );
   loanRatesSimulationTrendChart$ = this.store.select(
     fromMortgageLoan.getLoanRatesSimulationTrendChart,
   );

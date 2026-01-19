@@ -2,25 +2,30 @@ import { createAction, props } from '@ngrx/store';
 import { RepaymentSchedule } from '../models/mortgage.model';
 
 export const loadRepaymentSchedules = createAction(
-  '[Mortgage Loan] Load Repayment Schedule'
+  '[Mortgage Loan] Load Repayment Schedule',
 );
 
 export const setMortgagesSuccess = createAction(
   '[Mortgage Loan] Set Mortgages Success',
-  props<{ repaymentSchedules: RepaymentSchedule[] }>()
+  props<{ repaymentSchedules: RepaymentSchedule[] }>(),
 );
 
 export const selectedMortgageLoanChanged = createAction(
   '[Mortgage Loan] Selected Mortgages Loan Changed',
-  props<{ selected: string }>()
+  props<{ selected: string }>(),
 );
 
 export const startDateChanged = createAction(
   '[Mortgage Loan] Start Date Changed',
-  props<{ date: Date }>()
+  props<{ date: Date }>(),
 );
 
-export const selectedOverviewLoanRateChanged = createAction(
-  '[Overview Mortgage Loan] Selected selected Overview Loan Rate Changed',
-  props<{ selected: number[] }>()
+export const selectedInstalmentPaymentChanged = createAction(
+  '[Overview Mortgage Loan] Selected Instalment Payment Changed',
+  props<{ values: number[] }>(),
+);
+
+export const selectedEarlyPaymentChanged = createAction(
+  '[Overview Mortgage Loan] Selected Early Payment Changed',
+  props<{ values: number[] }>(),
 );

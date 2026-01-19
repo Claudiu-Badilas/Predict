@@ -30,8 +30,11 @@
 
   <ng-container main-content
     ><div>
+      @let selectedRepaymentSchedule = selectedRepaymentSchedule$ | async;
       <app-mortgage-loan-overview-header
-        [overviewLoanRates]="overviewLoanRates$ | async"
+        [overviewLoanInstalments]="
+          selectedRepaymentSchedule.overviewLoanInstalments
+        "
       />
       <app-mortgage-loan-overview-body-table />
       <div class="mt-3">

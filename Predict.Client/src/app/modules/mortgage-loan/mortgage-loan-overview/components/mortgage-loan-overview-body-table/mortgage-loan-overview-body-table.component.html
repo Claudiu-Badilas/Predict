@@ -51,60 +51,60 @@
     <tbody>
       @if (selectedRepaymentSchedule$ | async; as selectedRepaymentSchedule) {
         @for (
-          rata of selectedRepaymentSchedule.overviewLoanRates;
-          track rata.instalmentId
+          instalment of selectedRepaymentSchedule.overviewLoanInstalments;
+          track instalment.instalmentId
         ) {
           <tr
-            [style.background-color]="rata.color"
-            [class.faded]="rata.disabled && !rata.instalmentPayment"
+            [style.background-color]="instalment.color"
+            [class.faded]="instalment.disabled"
           >
             <td>
               <app-checkbox
-                [id]="rata.instalmentId"
-                [checked]="rata.earlyPayment"
-                [disabled]="rata.disabled"
-                (valueChange)="onSelectRata(rata)"
+                [id]="instalment.instalmentId"
+                [checked]="instalment.instalmentPayment"
+                [disabled]="instalment.disabled"
+                (valueChange)="onSelectInstalmentPayment(instalment)"
               />
             </td>
 
             <td>
               <app-checkbox
-                [id]="rata.instalmentId"
-                [checked]="rata.earlyPayment"
-                [disabled]="rata.disabled"
-                (valueChange)="onSelectAnticipat(rata)"
+                [id]="instalment.instalmentId"
+                [checked]="instalment.earlyPayment"
+                [disabled]="instalment.disabled"
+                (valueChange)="onSelectEarlyPayment(instalment)"
               />
             </td>
 
             <td>
-              {{ rata.instalmentId }}
+              {{ instalment.instalmentId }}
             </td>
             <td>
-              {{ rata.paymentDate | date: "yyyy-MM-dd" }}
+              {{ instalment.paymentDate | date: "yyyy-MM-dd" }}
             </td>
             <td>
-              {{ rata.principalAmount }}
+              {{ instalment.principalAmount }}
             </td>
             <td>
-              {{ rata.interestAmount }}
+              {{ instalment.interestAmount }}
             </td>
             @if (isVisible("administrationFee")) {
-              <td>{{ rata.administrationFee }}</td>
+              <td>{{ instalment.administrationFee }}</td>
             }
             @if (isVisible("insuranceCost")) {
-              <td>{{ rata.insuranceCost }}</td>
+              <td>{{ instalment.insuranceCost }}</td>
             }
             @if (isVisible("managementFee")) {
-              <td>{{ rata.managementFee }}</td>
+              <td>{{ instalment.managementFee }}</td>
             }
             @if (isVisible("recalculatedInterest")) {
-              <td>{{ rata.recalculatedInterest }}</td>
+              <td>{{ instalment.recalculatedInterest }}</td>
             }
             <td>
-              {{ rata.totalInstalment }}
+              {{ instalment.totalInstalment }}
             </td>
             @if (isVisible("remainingBalance")) {
-              <td>{{ rata.remainingBalance }}</td>
+              <td>{{ instalment.remainingBalance }}</td>
             }
             <td></td>
           </tr>
