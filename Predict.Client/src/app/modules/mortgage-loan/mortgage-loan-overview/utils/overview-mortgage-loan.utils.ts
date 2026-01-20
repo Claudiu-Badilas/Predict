@@ -34,58 +34,67 @@ export function mapBaseRepaymentScheduleToOverview(
 
 function mapOverviewLoanInstalments(
   overviewBaseLoanInstalments: OverviewLoanInstalment[],
-) {
-  const arr: OverviewLoanInstalment[] = [];
-  let temp: OverviewLoanInstalment[] = [];
+): OverviewLoanInstalment[] {
+  const result: OverviewLoanInstalment[] = [];
+  let earlyPaymentBatch: OverviewLoanInstalment[] = [];
 
-  overviewBaseLoanInstalments.forEach((r, i) => {
-    const next = overviewBaseLoanInstalments[i + 1];
-    arr.push(r);
-    if (r.instalmentPayment) {
-      temp = [];
-      temp.push(r);
-    } else if (r.earlyPayment) {
-      temp.push(r);
+  overviewBaseLoanInstalments.forEach((current, index) => {
+    const next = overviewBaseLoanInstalments[index + 1];
+    result.push(current);
 
-      if (next && !next.earlyPayment) {
-        arr.push({
-          instalmentId: null,
-          paymentDate: null,
-          interestAmount: temp[0].instalmentPayment
-            ? temp[0].interestAmount
-            : 0,
-          principalAmount: CalculatorUtil.sum(
-            temp.map((m) => m.principalAmount),
-          ),
-          administrationFee: CalculatorUtil.sum(
-            temp.map((m) => m.administrationFee),
-          ),
-          insuranceCost: CalculatorUtil.sum(temp.map((m) => m.insuranceCost)),
-          managementFee: CalculatorUtil.sum(temp.map((m) => m.managementFee)),
-          recalculatedInterest: CalculatorUtil.sum(
-            temp.map((m) => m.recalculatedInterest),
-          ),
-          totalInstalment: CalculatorUtil.sum(
-            temp.map((m) =>
-              m.instalmentPayment
-                ? m.totalInstalment
-                : m.earlyPayment
-                  ? m.principalAmount
-                  : 0,
-            ),
-          ),
-          remainingBalance: temp.at(-1).remainingBalance,
-          instalmentPayment: false,
-          earlyPayment: false,
-          disabled: true,
-          totalRow: true,
-          color: Colors.PINK_400,
-        } as OverviewLoanInstalment);
+    if (current.instalmentPayment) {
+      earlyPaymentBatch = [current];
+    } else if (current.earlyPayment) {
+      earlyPaymentBatch.push(current);
+
+      const shouldCreateSummary = next && !next.earlyPayment;
+      if (shouldCreateSummary) {
+        const summaryInstalment = createSummaryRow(earlyPaymentBatch);
+        result.push(summaryInstalment);
       }
     }
   });
 
-  return arr;
+  return result;
+}
+
+function createSummaryRow(
+  batch: OverviewLoanInstalment[],
+): OverviewLoanInstalment {
+  const firstInBatch = batch[0];
+  const lastInBatch = batch.at(-1)!;
+
+  return {
+    instalmentId: null,
+    paymentDate: null,
+    interestAmount: firstInBatch.instalmentPayment
+      ? firstInBatch.interestAmount
+      : 0,
+    principalAmount: CalculatorUtil.sum(batch.map((m) => m.principalAmount)),
+    administrationFee: CalculatorUtil.sum(
+      batch.map((m) => m.administrationFee),
+    ),
+    insuranceCost: CalculatorUtil.sum(batch.map((m) => m.insuranceCost)),
+    managementFee: CalculatorUtil.sum(batch.map((m) => m.managementFee)),
+    recalculatedInterest: CalculatorUtil.sum(
+      batch.map((m) => m.recalculatedInterest),
+    ),
+    totalInstalment: CalculatorUtil.sum(
+      batch.map((m) =>
+        m.instalmentPayment
+          ? m.totalInstalment
+          : m.earlyPayment
+            ? m.principalAmount
+            : 0,
+      ),
+    ),
+    remainingBalance: lastInBatch.remainingBalance,
+    instalmentPayment: false,
+    earlyPayment: false,
+    disabled: true,
+    totalRow: true,
+    color: Colors.PINK_400,
+  };
 }
 
 function mapOverviewBaseLoanInstalments(
