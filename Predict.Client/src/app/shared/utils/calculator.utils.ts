@@ -1,4 +1,4 @@
-export class CalculatorUtil {
+export class Calculator {
   static sum(numbers: number[]): number {
     return numbers
       .filter((n) => n !== null && n !== undefined)

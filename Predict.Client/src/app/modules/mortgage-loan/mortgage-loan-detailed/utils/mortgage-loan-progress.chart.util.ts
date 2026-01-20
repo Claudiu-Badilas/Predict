@@ -1,5 +1,5 @@
 import { Colors } from 'src/app/shared/styles/colors';
-import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 import { BaseLoanInstalment } from '../models/base-loan-rate.model';
 
@@ -7,33 +7,33 @@ export namespace MortgageLoanProgressChartUtils {
   export function getChart(rates: BaseLoanInstalment[]): Highcharts.Options {
     if (!rates.length) return null;
 
-    const baseRemainingUnpaidAmount = CalculatorUtil.sum([
+    const baseRemainingUnpaidAmount = Calculator.sum([
       rates.at(0).principalAmount,
       rates.at(0).remainingBalance,
     ]);
     const paidInstalments = rates.filter(
-      (r) => r.isNormalPayment || r.isExtraPayment
+      (r) => r.isNormalPayment || r.isExtraPayment,
     );
-    const paidPrincipalAmount = CalculatorUtil.sum(
-      paidInstalments.map((r) => r.principalAmount)
+    const paidPrincipalAmount = Calculator.sum(
+      paidInstalments.map((r) => r.principalAmount),
     );
 
     const unpaidInstalments = rates.filter(
-      (r) => !r.isNormalPayment && !r.isExtraPayment
+      (r) => !r.isNormalPayment && !r.isExtraPayment,
     );
 
-    const unpaidPrincipalAmountAmount = CalculatorUtil.sum(
-      unpaidInstalments.map((r) => r.principalAmount)
+    const unpaidPrincipalAmountAmount = Calculator.sum(
+      unpaidInstalments.map((r) => r.principalAmount),
     );
 
     const paidPrincipalAmountPercent = MathUtil.percent(
       paidPrincipalAmount,
-      baseRemainingUnpaidAmount
+      baseRemainingUnpaidAmount,
     );
 
     const unpaidPrincipalAmountPercent = MathUtil.percent(
       unpaidPrincipalAmountAmount,
-      baseRemainingUnpaidAmount
+      baseRemainingUnpaidAmount,
     );
 
     return {

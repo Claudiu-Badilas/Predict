@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
 
 @Component({
@@ -16,7 +16,7 @@ export class MortgageLoanOverviewHeaderComponent {
   );
 
   totalInstalmentPayments = computed(() =>
-    CalculatorUtil.sum(this.instalmentPayments().map((a) => a.totalInstalment)),
+    Calculator.sum(this.instalmentPayments().map((a) => a.totalInstalment)),
   );
 
   earlyPayments = computed(() =>
@@ -26,25 +26,22 @@ export class MortgageLoanOverviewHeaderComponent {
   lastEarlyPayment = computed(() => this.earlyPayments().at(-1));
 
   totalEarlyPayment = computed(() =>
-    CalculatorUtil.sum(this.earlyPayments().map((a) => a.principalAmount)),
+    Calculator.sum(this.earlyPayments().map((a) => a.principalAmount)),
   );
 
   totalSavedInterest = computed(() =>
-    CalculatorUtil.sum(
+    Calculator.sum(
       this.earlyPayments().map((a) => a.totalInstalment - a.principalAmount),
     ),
   );
 
   totalPayment = computed(() =>
-    CalculatorUtil.sum([
-      this.totalInstalmentPayments(),
-      this.totalEarlyPayment(),
-    ]),
+    Calculator.sum([this.totalInstalmentPayments(), this.totalEarlyPayment()]),
   );
 
   initialRemainingBalance = computed(() => {
     const firstInstalment = this.overviewLoanInstalments()[0];
-    return CalculatorUtil.sum([
+    return Calculator.sum([
       firstInstalment?.remainingBalance,
       firstInstalment?.principalAmount,
     ]);

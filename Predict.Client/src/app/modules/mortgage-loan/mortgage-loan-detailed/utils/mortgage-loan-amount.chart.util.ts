@@ -1,4 +1,4 @@
-import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 import { BaseLoanInstalment } from '../models/base-loan-rate.model';
 import { Colors } from 'src/app/shared/styles/colors';
@@ -8,30 +8,28 @@ export namespace MortgageLoanAmountChartUtils {
     if (!rates.length) return null;
 
     const paidRates = rates.filter(
-      (r) => r.isNormalPayment || r.isExtraPayment
+      (r) => r.isNormalPayment || r.isExtraPayment,
     );
-    const paidLoan = CalculatorUtil.sum(
-      paidRates.map((r) => r.principalAmount)
-    );
+    const paidLoan = Calculator.sum(paidRates.map((r) => r.principalAmount));
 
     const paidInterestRates = rates.filter((r) => r.isNormalPayment);
-    const paidInterest = CalculatorUtil.sum(
-      paidInterestRates.map((r) => r.interestAmount)
+    const paidInterest = Calculator.sum(
+      paidInterestRates.map((r) => r.interestAmount),
     );
 
     const savedInterestRates = rates.filter((r) => r.isExtraPayment);
-    const savedInterest = CalculatorUtil.sum(
-      savedInterestRates.map((r) => r.interestAmount)
+    const savedInterest = Calculator.sum(
+      savedInterestRates.map((r) => r.interestAmount),
     );
 
     const unpaidRates = rates.filter(
-      (r) => !r.isNormalPayment && !r.isExtraPayment
+      (r) => !r.isNormalPayment && !r.isExtraPayment,
     );
-    const unpaidInterest = CalculatorUtil.sum(
-      unpaidRates.map((r) => r.interestAmount)
+    const unpaidInterest = Calculator.sum(
+      unpaidRates.map((r) => r.interestAmount),
     );
-    const unpaidLoan = CalculatorUtil.sum(
-      unpaidRates.map((r) => r.principalAmount)
+    const unpaidLoan = Calculator.sum(
+      unpaidRates.map((r) => r.principalAmount),
     );
 
     return {

@@ -1,11 +1,11 @@
 import { Colors } from 'src/app/shared/styles/colors';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 import { RepaymentSchedule } from '../../models/mortgage.model';
 import {
   OverviewLoanInstalment,
   OverviewRepaymentSchedule,
 } from '../models/overview-mortgage-loan.model';
-import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
 
 export function mapBaseRepaymentScheduleToOverview(
   base: RepaymentSchedule,
@@ -70,16 +70,14 @@ function createSummaryRow(
     interestAmount: firstInBatch.instalmentPayment
       ? firstInBatch.interestAmount
       : 0,
-    principalAmount: CalculatorUtil.sum(batch.map((m) => m.principalAmount)),
-    administrationFee: CalculatorUtil.sum(
-      batch.map((m) => m.administrationFee),
-    ),
-    insuranceCost: CalculatorUtil.sum(batch.map((m) => m.insuranceCost)),
-    managementFee: CalculatorUtil.sum(batch.map((m) => m.managementFee)),
-    recalculatedInterest: CalculatorUtil.sum(
+    principalAmount: Calculator.sum(batch.map((m) => m.principalAmount)),
+    administrationFee: Calculator.sum(batch.map((m) => m.administrationFee)),
+    insuranceCost: Calculator.sum(batch.map((m) => m.insuranceCost)),
+    managementFee: Calculator.sum(batch.map((m) => m.managementFee)),
+    recalculatedInterest: Calculator.sum(
       batch.map((m) => m.recalculatedInterest),
     ),
-    totalInstalment: CalculatorUtil.sum(
+    totalInstalment: Calculator.sum(
       batch.map((m) =>
         m.instalmentPayment
           ? m.totalInstalment

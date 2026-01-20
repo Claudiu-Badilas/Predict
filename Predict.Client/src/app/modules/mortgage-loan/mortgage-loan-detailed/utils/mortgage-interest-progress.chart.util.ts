@@ -1,4 +1,4 @@
-import { CalculatorUtil } from 'src/app/shared/utils/calculator.utils';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 import { BaseLoanInstalment } from '../models/base-loan-rate.model';
 import { Colors } from 'src/app/shared/styles/colors';
@@ -8,36 +8,36 @@ export namespace MortgageInterestProgressChartUtils {
     if (!rates.length) return null;
 
     const paidInterestRates = rates.filter((r) => r.isNormalPayment);
-    const paidInterest = CalculatorUtil.sum(
-      paidInterestRates.map((r) => r.interestAmount)
+    const paidInterest = Calculator.sum(
+      paidInterestRates.map((r) => r.interestAmount),
     );
 
     const savedInterestRates = rates.filter((r) => r.isExtraPayment);
-    const savedInterest = CalculatorUtil.sum(
-      savedInterestRates.map((r) => r.interestAmount)
+    const savedInterest = Calculator.sum(
+      savedInterestRates.map((r) => r.interestAmount),
     );
 
     const unpaidRates = rates.filter(
-      (r) => !r.isNormalPayment && !r.isExtraPayment
+      (r) => !r.isNormalPayment && !r.isExtraPayment,
     );
-    const unpaidInterest = CalculatorUtil.sum(
-      unpaidRates.map((r) => r.interestAmount)
+    const unpaidInterest = Calculator.sum(
+      unpaidRates.map((r) => r.interestAmount),
     );
-    const totalUnpaidInterest = CalculatorUtil.sum(
-      rates.map((r) => r.interestAmount)
+    const totalUnpaidInterest = Calculator.sum(
+      rates.map((r) => r.interestAmount),
     );
 
     const paidInterestPercent = MathUtil.percent(
       paidInterest,
-      totalUnpaidInterest
+      totalUnpaidInterest,
     );
     const savedInterestPercent = MathUtil.percent(
       savedInterest,
-      totalUnpaidInterest
+      totalUnpaidInterest,
     );
     const unpaidInterestPercent = MathUtil.percent(
       unpaidInterest,
-      totalUnpaidInterest
+      totalUnpaidInterest,
     );
 
     return {
