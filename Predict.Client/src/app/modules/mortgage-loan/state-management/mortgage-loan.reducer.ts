@@ -10,11 +10,9 @@ import { BaseMortgageLoan } from '../mortgage-loan-detailed/utils/base-mortgage-
 import { MortgageInterestProgressChartUtils } from '../mortgage-loan-detailed/utils/mortgage-interest-progress.chart.util';
 import { MortgageLoanAmountChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-amount.chart.util';
 import { MortgageLoanProgressChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-progress.chart.util';
-import {
-  mapBaseRepaymentScheduleToOverview,
-  OverviewRepaymentSchedule,
-} from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
+import { OverviewRepaymentSchedule } from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
 import { LoanRatesSimulationTrendChartUtils } from '../mortgage-loan-overview/utils/loan-rates-simulation-trend.chart.util';
+import { mapBaseRepaymentScheduleToOverview } from '../mortgage-loan-overview/utils/overview-mortgage-loan.utils';
 import { RepaymentSchedule } from './../models/mortgage.model';
 
 interface OverviewMortgageLoanState {
