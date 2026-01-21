@@ -12,13 +12,16 @@ import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-
 })
 export class MortgageLoanDetailedHeaderComponent {
   mortgageLoanProgressChart$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanProgressChart
+    fromMortgageLoan.getMortgageLoanProgressChart,
   );
   mortgageInterestProgressChart$ = this.store.select(
-    fromMortgageLoan.getMortgageInterestProgressChart
+    fromMortgageLoan.getMortgageInterestProgressChart,
   );
-  mortgageLoanAmountChartUtils$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanAmountChartUtils
+  mortgageLoanAmountChart$ = this.store.select(
+    fromMortgageLoan.getMortgageLoanAmountChart,
+  );
+  mortgageLoanPaymentsChart$ = this.store.select(
+    fromMortgageLoan.getMortgageLoanPaymentsChart,
   );
 
   constructor(private store: Store<fromMortgageLoan.MortgageLoanState>) {}
