@@ -3,23 +3,23 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'numberFormat' })
 export class NumberFormatPipe implements PipeTransform {
   transform(value: number | string, digits: number = 2): string {
-    return numberFormat(value, digits);
-  }
-}
-
-export function numberFormat(value: number | string, digits: number = 2) {
-  if (value === null || value === undefined || value === '') {
-    return '';
+    return NumberFormatPipe.numberFormat(value, digits);
   }
 
-  const num = Number(value);
-  if (isNaN(num)) return '-';
+  static numberFormat(value: number | string, digits: number = 2) {
+    if (value === null || value === undefined || value === '') {
+      return '';
+    }
 
-  const fixed = num.toFixed(digits);
+    const num = Number(value);
+    if (isNaN(num)) return '-';
 
-  const [integerPart, decimalPart] = fixed.split('.');
+    const fixed = num.toFixed(digits);
 
-  const formattedInt = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const [integerPart, decimalPart] = fixed.split('.');
 
-  return decimalPart ? `${formattedInt}.${decimalPart}` : formattedInt;
+    const formattedInt = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+
+    return decimalPart ? `${formattedInt}.${decimalPart}` : formattedInt;
+  }
 }

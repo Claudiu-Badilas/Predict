@@ -20,21 +20,28 @@
     <div class="section">
       <p class="label">Prima plata</p>
       <p class="value increase">
-        {{ (firstInstalmentPaymentDate$ | async | date: "MMM-yyyy") ?? "-" }}
+        {{ (firstInstalmentPaymentDate() | date: "MMM-yyyy") ?? "-" }}
       </p>
     </div>
     <div class="divider"></div>
     <div class="section center">
       <p class="label">Ultima plata</p>
       <p class="value decrease">
-        {{ (lastInstalmentPaymentDate$ | async | date: "MMM-yyyy") ?? "-" }}
+        {{ (lastInstalmentPaymentDate() | date: "MMM-yyyy") ?? "-" }}
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="section center">
+      <p class="label">Perioad Ramasa</p>
+      <p class="value decrease">
+        {{ dateDiffYMD() }}
       </p>
     </div>
     <div class="divider"></div>
     <div class="section right">
-      <p class="label">Perioad</p>
-      <p class="value decrease">
-        {{ dateDiffYMD$ | async }}
+      <p class="label">Perioad Salvata</p>
+      <p class="value increase">
+        {{ savedDateDiffYMD() }}
       </p>
     </div>
   </div>

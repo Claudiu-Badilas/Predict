@@ -1,4 +1,4 @@
-import { numberFormat } from 'src/app/shared/pipes/number-format.pipe';
+import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 import { Colors } from 'src/app/shared/styles/colors';
 import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { ObjectUtil } from 'src/app/shared/utils/object.utils';
@@ -76,7 +76,7 @@ export namespace MortgageLoanPaymentsChartUtils {
             category = p.category;
             return `
                 <span style="color:${p.color}">●</span>
-                ${p.series.name}: <b>${numberFormat(p.y as number)}</b> RON
+                ${p.series.name}: <b>${NumberFormatPipe.numberFormat(p.y as number)}</b> RON
               `;
           });
 
@@ -84,7 +84,7 @@ export namespace MortgageLoanPaymentsChartUtils {
               <b>${category}</b><br/>
               ${lines.join('<br/>')}
               <hr style="margin:4px 0"/>
-              <b>Total: ${numberFormat(total)} RON</b>
+              <b>Total: ${NumberFormatPipe.numberFormat(total)} RON</b>
             `;
         },
       },

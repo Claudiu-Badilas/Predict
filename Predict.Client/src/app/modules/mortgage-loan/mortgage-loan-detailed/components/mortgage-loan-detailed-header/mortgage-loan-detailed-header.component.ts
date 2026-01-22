@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-import { combineLatest, map } from 'rxjs';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
 import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 
@@ -12,26 +12,44 @@ import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
   styleUrl: './mortgage-loan-detailed-header.component.scss',
 })
 export class MortgageLoanDetailedHeaderComponent {
-  updatedBaseRepaymentScheduleBasedOnLatestStates$ = this.store.select(
-    fromMortgageLoan.getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
-  );
-  baseRepaymentSchedule$ = this.store.select(
-    fromMortgageLoan.getBaseRepaymentSchedule,
-  );
+  private store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
-  firstInstalmentPaymentDate$ = this.baseRepaymentSchedule$.pipe(
-    map((p) => p?.monthlyInstalments?.at(0)?.paymentDate),
+  readonly updatedBaseRepaymentScheduleBasedOnLatestStates = toSignal(
+    this.store.select(
+      fromMortgageLoan.getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
+    ),
+    { initialValue: null },
   );
 
-  lastInstalmentPaymentDate$ =
-    this.updatedBaseRepaymentScheduleBasedOnLatestStates$.pipe(
-      map((p) => p?.at(-1)?.paymentDate),
-    );
+  readonly baseRepaymentSchedule = toSignal(
+    this.store.select(fromMortgageLoan.getBaseRepaymentSchedule),
+    { initialValue: null },
+  );
 
-  dateDiffYMD$ = combineLatest([
-    this.firstInstalmentPaymentDate$,
-    this.lastInstalmentPaymentDate$,
-  ]).pipe(map(([d1, d2]) => JsDateUtils.dateDiffYMD(d1, d2)));
+  readonly firstInstalmentPaymentDate = computed(() => {
+    const schedule = this.baseRepaymentSchedule();
+    return schedule?.monthlyInstalments?.at(0)?.paymentDate ?? null;
+  });
 
-  constructor(private store: Store<fromMortgageLoan.MortgageLoanState>) {}
+  readonly lastInstalmentPaymentDate = computed(() => {
+    const schedule = this.updatedBaseRepaymentScheduleBasedOnLatestStates();
+    return schedule?.at(-1)?.paymentDate ?? null;
+  });
+
+  readonly lastBaseInstalmentPaymentDate = computed(() => {
+    const schedule = this.baseRepaymentSchedule();
+    return schedule?.monthlyInstalments?.at(-1)?.paymentDate ?? null;
+  });
+
+  readonly dateDiffYMD = computed(() => {
+    const d1 = this.firstInstalmentPaymentDate();
+    const d2 = this.lastInstalmentPaymentDate();
+    return JsDateUtils.dateDiffYMD(d1, d2);
+  });
+
+  readonly savedDateDiffYMD = computed(() => {
+    const d1 = this.lastInstalmentPaymentDate();
+    const d2 = this.lastBaseInstalmentPaymentDate();
+    return JsDateUtils.dateDiffYMD(d1, d2);
+  });
 }
