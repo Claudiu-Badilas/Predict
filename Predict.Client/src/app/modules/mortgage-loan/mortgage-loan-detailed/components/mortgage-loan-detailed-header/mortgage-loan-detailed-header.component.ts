@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
-import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 
 @Component({
   selector: 'app-mortgage-loan-detailed-header',
-  imports: [CommonModule, HighchartWrapperComponent],
+  imports: [CommonModule],
   templateUrl: './mortgage-loan-detailed-header.component.html',
   styleUrl: './mortgage-loan-detailed-header.component.scss',
 })

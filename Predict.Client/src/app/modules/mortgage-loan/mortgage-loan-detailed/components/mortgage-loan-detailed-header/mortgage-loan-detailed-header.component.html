@@ -1,16 +1,49 @@
-<div class="d-flex gap mb-3">
-  <app-highcharts-wrapper
-    class="w-50"
-    [chartOptions]="mortgageLoanProgressChart$ | async"
-  />
-  <app-highcharts-wrapper
-    class="w-50"
-    [chartOptions]="mortgageInterestProgressChart$ | async"
-  />
-</div>
-<div class="mb-3">
-  <app-highcharts-wrapper [chartOptions]="mortgageLoanAmountChart$ | async" />
-</div>
-<div class="mb-3">
-  <app-highcharts-wrapper [chartOptions]="mortgageLoanPaymentsChart$ | async" />
+<div class="header-cards mb-3">
+  <div class="divided-card">
+    <div class="section">
+      <p class="label">Total Rata</p>
+      <p class="value">
+        {{ "0.00" }}
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="section right">
+      <p class="label">Total Plata Anticipata</p>
+      <p class="value">
+        {{ "0.00" }}
+      </p>
+    </div>
+  </div>
+
+  <div class="divided-card">
+    <div class="section">
+      <p class="label">Dobândă Salvată</p>
+      <p class="value increase">
+        {{ "0.00" }}
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="section right">
+      <p class="label">Total de Plata</p>
+      <p class="value decrease">
+        {{ "0.00" }}
+      </p>
+    </div>
+  </div>
+
+  <div class="divided-card">
+    <div class="section">
+      <p class="label">Dobândă Salvată</p>
+      <p class="value increase">
+        {{ "0.00" }}
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="section right">
+      <p class="label">Total de Plata</p>
+      <p class="value decrease">
+        {{ "0.00" }}
+      </p>
+    </div>
+  </div>
 </div>

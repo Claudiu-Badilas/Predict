@@ -1,3 +1,19 @@
+<div class="d-flex gap mb-3">
+  <app-highcharts-wrapper
+    class="w-50"
+    [chartOptions]="mortgageLoanProgressChart$ | async"
+  />
+  <app-highcharts-wrapper
+    class="w-50"
+    [chartOptions]="mortgageInterestProgressChart$ | async"
+  />
+</div>
+<div class="mb-3">
+  <app-highcharts-wrapper [chartOptions]="mortgageLoanAmountChart$ | async" />
+</div>
+<div class="mb-3">
+  <app-highcharts-wrapper [chartOptions]="mortgageLoanPaymentsChart$ | async" />
+</div>
 <div class="scrollable-container mt-3">
   <table class="table">
     <thead>
@@ -10,23 +26,26 @@
       </tr>
     </thead>
     <tbody>
-      @for (rata of (updatedBaseRepaymentScheduleBasedOnLatestStates$ | async )
-      ?? []; track rata.index) {
-      <tr
-        [ngStyle]="{
-          'background-color': rata.isNormalPayment
-            ? colors.BLUE_200
-            : rata.isExtraPayment
-            ? colors.GREEN_200
-            : colors.BS_WHITE
-        }"
-      >
-        <td>{{ rata.index }}</td>
-        <td>{{ rata.paymentDate | date : "yyyy-MM-dd" }}</td>
-        <td>{{ rata.principalAmount }}</td>
-        <td>{{ rata.interestAmount }}</td>
-        <td>{{ rata.remainingBalance }}</td>
-      </tr>
+      @for (
+        rata of (updatedBaseRepaymentScheduleBasedOnLatestStates$ | async) ??
+          [];
+        track rata.index
+      ) {
+        <tr
+          [ngStyle]="{
+            'background-color': rata.isNormalPayment
+              ? colors.BLUE_200
+              : rata.isExtraPayment
+                ? colors.GREEN_200
+                : colors.BS_WHITE,
+          }"
+        >
+          <td>{{ rata.index }}</td>
+          <td>{{ rata.paymentDate | date: "yyyy-MM-dd" }}</td>
+          <td>{{ rata.principalAmount }}</td>
+          <td>{{ rata.interestAmount }}</td>
+          <td>{{ rata.remainingBalance }}</td>
+        </tr>
       }
     </tbody>
   </table>
