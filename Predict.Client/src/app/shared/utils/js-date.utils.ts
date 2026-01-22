@@ -46,4 +46,31 @@ export namespace JsDateUtils {
     result.setDate(result.getDate() + days);
     return result;
   }
+
+  export function dateDiffYMD(start: Date, end: Date): string {
+    if (!isValidDate(start) || !isValidDate(end)) return null;
+
+    if (end < start) [start, end] = [end, start];
+
+    let years: number = end.getFullYear() - start.getFullYear();
+    let months: number = end.getMonth() - start.getMonth();
+    let days: number = end.getDate() - start.getDate();
+
+    if (days < 0) {
+      const prevMonth: Date = new Date(end.getFullYear(), end.getMonth(), 0);
+      days += prevMonth.getDate();
+      months--;
+    }
+
+    if (months < 0) {
+      months += 12;
+      years--;
+    }
+
+    if (months == 0) return `${years}y`;
+
+    if (days == 0) return `${years}y ${months}m`;
+
+    return `${years}y ${months}m ${days}d`;
+  }
 }

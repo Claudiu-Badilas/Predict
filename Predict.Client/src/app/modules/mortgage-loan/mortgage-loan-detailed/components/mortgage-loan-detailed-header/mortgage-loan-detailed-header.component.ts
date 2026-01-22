@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { combineLatest, map } from 'rxjs';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
+import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 
 @Component({
   selector: 'app-mortgage-loan-detailed-header',
@@ -10,18 +12,26 @@ import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-managemen
   styleUrl: './mortgage-loan-detailed-header.component.scss',
 })
 export class MortgageLoanDetailedHeaderComponent {
-  mortgageLoanProgressChart$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanProgressChart,
+  updatedBaseRepaymentScheduleBasedOnLatestStates$ = this.store.select(
+    fromMortgageLoan.getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
   );
-  mortgageInterestProgressChart$ = this.store.select(
-    fromMortgageLoan.getMortgageInterestProgressChart,
+  baseRepaymentSchedule$ = this.store.select(
+    fromMortgageLoan.getBaseRepaymentSchedule,
   );
-  mortgageLoanAmountChart$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanAmountChart,
+
+  firstInstalmentPaymentDate$ = this.baseRepaymentSchedule$.pipe(
+    map((p) => p?.monthlyInstalments?.at(0)?.paymentDate),
   );
-  mortgageLoanPaymentsChart$ = this.store.select(
-    fromMortgageLoan.getMortgageLoanPaymentsChart,
-  );
+
+  lastInstalmentPaymentDate$ =
+    this.updatedBaseRepaymentScheduleBasedOnLatestStates$.pipe(
+      map((p) => p?.at(-1)?.paymentDate),
+    );
+
+  dateDiffYMD$ = combineLatest([
+    this.firstInstalmentPaymentDate$,
+    this.lastInstalmentPaymentDate$,
+  ]).pipe(map(([d1, d2]) => JsDateUtils.dateDiffYMD(d1, d2)));
 
   constructor(private store: Store<fromMortgageLoan.MortgageLoanState>) {}
 }
