@@ -4,15 +4,14 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.actions';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
+import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
-import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { MortgageLoanOverviewBodyTableComponent } from './components/mortgage-loan-overview-body-table/mortgage-loan-overview-body-table.component';
 import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-overview-header/mortgage-loan-overview-header.component';
-import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 
 @Component({
   selector: 'app-mortgage-loan-overview',
@@ -23,7 +22,6 @@ import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.c
     ToggleButtonComponent,
     DropdownSelectComponent,
     MortgageLoanOverviewHeaderComponent,
-    HighchartWrapperComponent,
     MortgageLoanOverviewBodyTableComponent,
     CheckboxComponent,
   ],
@@ -41,9 +39,6 @@ export class MortgageLoanOverviewComponent {
     .select(fromMortgageLoan.getRepaymentSchedules)
     .pipe(map((rs) => rs.map((r) => r.name)));
   overviewStartDate$ = this.store.select(fromMortgageLoan.getOverviewStartDate);
-  loanRatesSimulationTrendChart$ = this.store.select(
-    fromMortgageLoan.getLoanRatesSimulationTrendChart,
-  );
 
   showTotalRow = signal(false);
 

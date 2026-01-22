@@ -45,11 +45,6 @@
         "
       />
       <app-mortgage-loan-overview-body-table [showTotalRow]="showTotalRow()" />
-      <div class="mt-3">
-        <app-highcharts-wrapper
-          [chartOptions]="loanRatesSimulationTrendChart$ | async"
-        />
-      </div>
     </div>
   </ng-container>
 </app-side-bar>

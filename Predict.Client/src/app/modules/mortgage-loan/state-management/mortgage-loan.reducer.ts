@@ -14,7 +14,6 @@ import { MortgageLoanAmountChartUtils } from '../mortgage-loan-detailed/utils/mo
 import { MortgageLoanPaymentsChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-payments.chart.util';
 import { MortgageLoanProgressChartUtils } from '../mortgage-loan-detailed/utils/mortgage-loan-progress.chart.util';
 import { OverviewRepaymentSchedule } from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
-import { LoanRatesSimulationTrendChartUtils } from '../mortgage-loan-overview/utils/loan-rates-simulation-trend.chart.util';
 import { mapBaseRepaymentScheduleToOverview } from '../mortgage-loan-overview/utils/overview-mortgage-loan.utils';
 import { RepaymentSchedule } from './../models/mortgage.model';
 
@@ -194,11 +193,6 @@ export const getSelectedRepaymentScheduleOverview = createSelector(
   selectedInstalmentPayments,
   selectedEarlyPayments,
   mapBaseRepaymentScheduleToOverview,
-);
-
-export const getLoanRatesSimulationTrendChart = createSelector(
-  getSelectedRepaymentSchedule,
-  LoanRatesSimulationTrendChartUtils.getChart,
 );
 
 //################
