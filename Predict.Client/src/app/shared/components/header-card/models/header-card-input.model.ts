@@ -4,7 +4,8 @@ export type HeaderCardInput = {
 
 export type CardSection = {
   label: string;
-  value: string | number | null;
+  value: string | number | Date | null;
+  pattern?: string | null;
   default: string | number | null;
   color: 'red' | 'green' | null;
 };

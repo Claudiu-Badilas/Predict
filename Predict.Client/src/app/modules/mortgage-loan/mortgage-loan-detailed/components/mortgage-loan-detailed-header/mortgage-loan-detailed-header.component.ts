@@ -1,18 +1,22 @@
-import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
+import { HeaderCardComponent } from 'src/app/shared/components/header-card/header-card.component';
+import {
+  CardSection,
+  HeaderCardInput,
+} from 'src/app/shared/components/header-card/models/header-card-input.model';
 import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 
 @Component({
   selector: 'app-mortgage-loan-detailed-header',
-  imports: [CommonModule],
+  imports: [HeaderCardComponent],
   templateUrl: './mortgage-loan-detailed-header.component.html',
   styleUrl: './mortgage-loan-detailed-header.component.scss',
 })
 export class MortgageLoanDetailedHeaderComponent {
-  private store = inject(Store<fromMortgageLoan.MortgageLoanState>);
+  private readonly store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
   readonly updatedBaseRepaymentScheduleBasedOnLatestStates = toSignal(
     this.store.select(
@@ -51,5 +55,40 @@ export class MortgageLoanDetailedHeaderComponent {
     const d1 = this.lastInstalmentPaymentDate();
     const d2 = this.lastBaseInstalmentPaymentDate();
     return JsDateUtils.dateDiffYMD(d1, d2);
+  });
+
+  headerCardInputs: Signal<HeaderCardInput[]> = computed(() => {
+    return [
+      {
+        sections: [
+          {
+            label: 'Prima plata',
+            value: this.firstInstalmentPaymentDate(),
+            pattern: 'MMM-yyyy',
+            default: '-',
+            color: 'green',
+          } as CardSection,
+          {
+            label: 'Ultima plata',
+            value: this.lastInstalmentPaymentDate(),
+            pattern: 'MMM-yyyy',
+            default: '-',
+            color: 'red',
+          } as CardSection,
+          {
+            label: 'Perioad Ramasa',
+            value: this.dateDiffYMD(),
+            default: '-',
+            color: 'red',
+          } as CardSection,
+          {
+            label: 'Perioad Ramasa',
+            value: this.savedDateDiffYMD(),
+            default: '-',
+            color: 'green',
+          } as CardSection,
+        ],
+      } as HeaderCardInput,
+    ];
   });
 }

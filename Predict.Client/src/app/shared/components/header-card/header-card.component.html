@@ -20,7 +20,15 @@
           }"
         >
           <p class="label">{{ section.label }}</p>
-          @if (isNumber(section.value)) {
+          @if (isDate(section.value)) {
+            <p class="value" [ngClass]="section.color">
+              {{
+                (section.value | date: section.pattern) ??
+                  section.default ??
+                  "-"
+              }}
+            </p>
+          } @else if (isNumber(section.value)) {
             <p class="value" [ngClass]="section.color">
               {{ section.value ?? section.default ?? "-" | numberFormat }}
             </p>
