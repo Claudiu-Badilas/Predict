@@ -25,7 +25,7 @@
             @if (isDate(section.value)) {
               <p class="value" [ngClass]="section.color">
                 {{
-                  (section.value | date: section.pattern) ??
+                  (section.value | date: section.pattern ?? "yyyy-MM-dd") ??
                     section.default ??
                     "-"
                 }}
@@ -42,7 +42,7 @@
           </div>
 
           @if (!last) {
-            <div class="divider"></div>
+            <div class="vertical-divider"></div>
           }
         }
       </div>
