@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, tap } from 'rxjs/operators';
 
-import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.actions';
+import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
 import * as LayoutActions from 'src/app/store/actions/layout.actions';
 import { MortgageLoanService } from '../services/overview-mortgage.service';
 
@@ -10,7 +10,7 @@ import { MortgageLoanService } from '../services/overview-mortgage.service';
 export class MortgageLoanEffects {
   constructor(
     private readonly actions$: Actions,
-    private readonly _mortgageService: MortgageLoanService
+    private readonly _mortgageService: MortgageLoanService,
   ) {}
 
   loadRepaymentSchedules$ = createEffect(() =>
@@ -21,7 +21,7 @@ export class MortgageLoanEffects {
       switchMap((repaymentSchedules) => [
         MortgageLoanActions.setMortgagesSuccess({ repaymentSchedules }),
         LayoutActions.spinnerOff(),
-      ])
-    )
+      ]),
+    ),
   );
 }

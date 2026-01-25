@@ -24,8 +24,8 @@ import * as fromReceipts from 'src/app/modules/receipts/reducers/receipts.reduce
 import { ReceiptsEffects } from 'src/app/modules/receipts/effects/receipts.effects';
 import * as fromTransactions from 'src/app/modules/transaction/reducers/transactions.reducer';
 import { TransactionsEffects } from 'src/app/modules/transaction/effects/transactions.effects';
-import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.reducer';
-import { MortgageLoanEffects } from 'src/app/modules/mortgage-loan/state-management/mortgage-loan.effects';
+import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
+import { MortgageLoanEffects } from 'src/app/modules/mortgage-loan/effects/mortgage-loan.effects';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from 'src/app/platform/authentication/interceptor/authentication.interceptor';
 
@@ -43,28 +43,28 @@ bootstrapApplication(AppComponent, {
         NavigationEffects,
         AuthenticationEffects,
         ToastNotificationEffects,
-      ])
+      ]),
     ),
     importProvidersFrom(StoreRouterConnectingModule.forRoot()),
 
     // Feature stores
     importProvidersFrom(
-      StoreModule.forFeature('InvoicesState', fromInvoices.reducer)
+      StoreModule.forFeature('InvoicesState', fromInvoices.reducer),
     ),
     importProvidersFrom(EffectsModule.forFeature([InvoicesEffects])),
 
     importProvidersFrom(
-      StoreModule.forFeature('ReceiptsState', fromReceipts.reducer)
+      StoreModule.forFeature('ReceiptsState', fromReceipts.reducer),
     ),
     importProvidersFrom(EffectsModule.forFeature([ReceiptsEffects])),
 
     importProvidersFrom(
-      StoreModule.forFeature('TransactionsState', fromTransactions.reducer)
+      StoreModule.forFeature('TransactionsState', fromTransactions.reducer),
     ),
     importProvidersFrom(EffectsModule.forFeature([TransactionsEffects])),
 
     importProvidersFrom(
-      StoreModule.forFeature('MortgageLoanState', fromMortgageLoan.reducer)
+      StoreModule.forFeature('MortgageLoanState', fromMortgageLoan.reducer),
     ),
     importProvidersFrom(EffectsModule.forFeature([MortgageLoanEffects])),
 

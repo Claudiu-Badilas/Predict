@@ -7,7 +7,6 @@ import {
   OverviewRepaymentSchedule,
 } from '../models/overview-mortgage-loan.model';
 
-// Constants for better maintainability
 const PAYMENT_TYPES = {
   DISABLED: 'disabled',
   INSTALMENT: 'instalment',
@@ -40,7 +39,6 @@ export function mapBaseRepaymentScheduleToOverview(
   };
 }
 
-// Main transformation pipeline
 function createOverviewLoanInstalments(
   overviewBaseLoanInstalments: OverviewLoanInstalment[],
 ): OverviewLoanInstalment[] {
@@ -53,10 +51,8 @@ function createOverviewLoanInstalments(
     result.push(current);
 
     if (current.instalmentPayment) {
-      // Start new batch
       earlyPaymentBatch = [current];
     } else if (current.earlyPayment) {
-      // Add to current batch
       earlyPaymentBatch.push(current);
 
       const isBatchComplete = next && !next.earlyPayment;
@@ -70,7 +66,6 @@ function createOverviewLoanInstalments(
   return result;
 }
 
-// Create summary for a batch of early payments
 function createBatchSummary(
   batch: OverviewLoanInstalment[],
 ): OverviewLoanInstalment {
@@ -102,7 +97,6 @@ function createBatchSummary(
   };
 }
 
-// Helper functions for batch calculations
 function calculateBatchTotal<T extends keyof OverviewLoanInstalment>(
   batch: OverviewLoanInstalment[],
   property: T,
@@ -124,7 +118,6 @@ function countEarlyPayments(batch: OverviewLoanInstalment[]): number {
   return batch.filter((item) => item.earlyPayment).length;
 }
 
-// Date state management using a class for better encapsulation
 class DateStateManager {
   private newPaymentDate: Date | null = null;
   private isInstalmentDateUpdate = false;
@@ -201,7 +194,6 @@ class DateStateManager {
   }
 }
 
-// Main mapping function
 function createOverviewBaseLoanInstalments(
   base: RepaymentSchedule,
   startDate: Date,
@@ -269,7 +261,6 @@ function createOverviewBaseLoanInstalments(
   });
 }
 
-// Payment type determination
 function determinePaymentType(
   isDisabled: boolean,
   hasInstalmentPayment: boolean,
@@ -281,7 +272,6 @@ function determinePaymentType(
   return 'NONE';
 }
 
-// Color mapping with pattern
 function getRowColor(paymentType: keyof typeof PAYMENT_TYPES): string {
   const colorMap: Record<keyof typeof PAYMENT_TYPES, string> = {
     DISABLED: Colors.GRAY_200,
@@ -292,12 +282,3 @@ function getRowColor(paymentType: keyof typeof PAYMENT_TYPES): string {
 
   return colorMap[paymentType] || 'white';
 }
-
-// // Export for testing if needed
-// export const internalFunctions = {
-//   calculateBatchTotal,
-//   calculateTotalInstalment,
-//   countEarlyPayments,
-//   determinePaymentType,
-//   getRowColor,
-// };
