@@ -24,7 +24,7 @@ export namespace InstalmentSimulationTrendChartUtils {
           x: JsDateUtils.isValidDate(r.newPaymentDate)
             ? r.newPaymentDate.getTime()
             : r.paymentDate.getTime(),
-          y: r.interestAmount + r.principalAmount,
+          y: +(r.interestAmount + r.principalAmount)?.toFixed(2),
           date: DateUtils.fromJsDateToString(r.paymentDate),
         })),
       },
