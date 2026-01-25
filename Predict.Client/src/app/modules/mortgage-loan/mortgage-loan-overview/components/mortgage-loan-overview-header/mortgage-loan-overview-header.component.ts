@@ -90,7 +90,7 @@ export class MortgageLoanOverviewHeaderComponent {
           } as CardSection,
           {
             label: 'Sold Restant',
-            value: this.lastEarlyPayment()?.remainingBalance,
+            value: this.overviewLoanInstalments()?.at(-1)?.remainingBalance,
             default: '0.00',
             color: 'green',
           } as CardSection,
