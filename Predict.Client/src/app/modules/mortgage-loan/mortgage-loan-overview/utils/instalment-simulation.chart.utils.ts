@@ -1,33 +1,45 @@
-import { RepaymentSchedule } from '../../models/mortgage.model';
+import Highcharts from 'highcharts';
+import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
+import { DateUtils } from 'src/app/shared/utils/date.utils';
+import { OverviewRepaymentSchedule } from '../models/overview-mortgage-loan.model';
+import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 
-export function mapInstalementSimulation(
-  base: RepaymentSchedule | null,
-  maxAmount: number = 4_000,
-): [number[], number[]] | null {
-  if (!base || maxAmount === null || maxAmount <= 0) return [[], []];
+export namespace InstalmentSimulationTrendChartUtils {
+  export function getChart(
+    overviewRepaymentSchedule: OverviewRepaymentSchedule,
+  ): Highcharts.Options {
+    if (!overviewRepaymentSchedule) return null;
 
-  const selectedInstalmentPayments: number[] = [];
-  const selectedEarlyPayments: number[] = [];
+    const totalRows = overviewRepaymentSchedule.overviewLoanInstalments.filter(
+      (r) => r.totalRow,
+    );
 
-  let accAmount = 0;
+    if (totalRows.length === 0) return null;
 
-  base.monthlyInstalments.forEach((instalment, i) => {
-    const tempAccAmount = accAmount + instalment.principalAmount;
+    const series: Highcharts.SeriesOptionsType[] = [
+      {
+        type: 'spline',
+        name: `Rata lunara`,
+        data: totalRows.map((r) => ({
+          x: JsDateUtils.isValidDate(r.newPaymentDate)
+            ? r.newPaymentDate.getTime()
+            : r.paymentDate.getTime(),
+          y: r.interestAmount + r.principalAmount,
+          date: DateUtils.fromJsDateToString(r.paymentDate),
+        })),
+      },
+    ];
 
-    const maxAmountTrashhold = maxAmount + maxAmount * 0.05;
-
-    if (
-      i === 0 ||
-      tempAccAmount > maxAmountTrashhold ||
-      accAmount > maxAmount
-    ) {
-      selectedInstalmentPayments.push(instalment.instalmentId);
-      accAmount = instalment.totalInstalment;
-    } else if (accAmount <= maxAmount) {
-      selectedEarlyPayments.push(instalment.instalmentId);
-      accAmount += instalment.principalAmount;
-    }
-  });
-
-  return [selectedInstalmentPayments, selectedEarlyPayments];
+    return {
+      title: {
+        text: 'Simulare rambursare anticipata',
+        align: 'left',
+      },
+      chart: { zooming: { type: 'x' } },
+      xAxis: { type: 'datetime', title: { text: 'Date' } },
+      yAxis: { title: { text: 'Amount' } },
+      plotOptions: { series: { marker: { enabled: false } } },
+      series,
+    };
+  }
 }

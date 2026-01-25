@@ -7,12 +7,13 @@ import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortga
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
+import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
+import { NumericInputComponent } from 'src/app/shared/components/numeric-input/numeric-input.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { MortgageLoanOverviewBodyTableComponent } from './components/mortgage-loan-overview-body-table/mortgage-loan-overview-body-table.component';
 import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-overview-header/mortgage-loan-overview-header.component';
-import { NumericInputComponent } from 'src/app/shared/components/numeric-input/numeric-input.component';
 import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
 
 @Component({
@@ -27,6 +28,7 @@ import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
     MortgageLoanOverviewBodyTableComponent,
     CheckboxComponent,
     NumericInputComponent,
+    HighchartWrapperComponent,
   ],
   templateUrl: './mortgage-loan-overview.component.html',
   styleUrls: ['./mortgage-loan-overview.component.scss'],
@@ -42,6 +44,9 @@ export class MortgageLoanOverviewComponent {
     .select(fromMortgageLoan.getRepaymentSchedules)
     .pipe(map((rs) => rs.map((r) => r.name)));
   overviewStartDate$ = this.store.select(fromMortgageLoan.getOverviewStartDate);
+  instalmentSimulationTrendChart$ = this.store.select(
+    fromMortgageLoan.getInstalmentSimulationTrendChart,
+  );
 
   showTotalRow = signal(true);
   showOnlyTotalRow = signal(false);

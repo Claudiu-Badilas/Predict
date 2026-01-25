@@ -16,6 +16,7 @@ import { MortgageLoanProgressChartUtils } from '../mortgage-loan-detailed/utils/
 import { OverviewRepaymentSchedule } from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
 import { mapBaseRepaymentScheduleToOverview } from '../mortgage-loan-overview/utils/overview-mortgage-loan.utils';
 import { RepaymentSchedule } from './../models/mortgage.model';
+import { InstalmentSimulationTrendChartUtils } from '../mortgage-loan-overview/utils/instalment-simulation.chart.utils';
 
 interface OverviewMortgageLoanState {
   repaymentSchedules: OverviewRepaymentSchedule[];
@@ -204,6 +205,11 @@ export const getSelectedRepaymentScheduleOverview = createSelector(
   selectedInstalmentPayments,
   selectedEarlyPayments,
   mapBaseRepaymentScheduleToOverview,
+);
+
+export const getInstalmentSimulationTrendChart = createSelector(
+  getSelectedRepaymentScheduleOverview,
+  InstalmentSimulationTrendChartUtils.getChart,
 );
 
 //################
