@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
-import { first, map } from 'rxjs';
+import { map } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
@@ -48,12 +49,31 @@ export class MortgageLoanOverviewComponent {
     fromMortgageLoan.getInstalmentSimulationTrendChart,
   );
 
+  selectedRepaymentScheduleBase = toSignal(
+    this.store.select(fromMortgageLoan.getSelectedRepaymentSchedule),
+  );
+
   showTotalRow = signal(true);
   showOnlyTotalRow = signal(false);
+  monthlyAmount = signal<number>(3750);
+  payments = signal<number>(1);
 
   constructor(
     private readonly store: Store<fromMortgageLoan.MortgageLoanState>,
-  ) {}
+  ) {
+    effect(() => {
+      const [instalmentPayments, earlyPayments] = mapInstalementSimulation(
+        this.selectedRepaymentScheduleBase(),
+        { monthlyAmount: this.monthlyAmount(), payments: this.payments() },
+      );
+      this.store.dispatch(
+        MortgageLoanActions.simulateInstalmentPaymentsChanged({
+          selectedInstalmentPayments: instalmentPayments,
+          selectedEarlyPayments: earlyPayments,
+        }),
+      );
+    });
+  }
 
   minDate = new Date('2025-01-01');
   maxDate = new Date('2055-12-01');
@@ -84,46 +104,11 @@ export class MortgageLoanOverviewComponent {
     this.showOnlyTotalRow.set(checked);
   }
 
-  monthlyAmount = signal<number>(null);
-  payments = signal<number>(null);
-
   onMonthlyAmountChange(monthlyAmount: number) {
     this.monthlyAmount.set(monthlyAmount);
-
-    this.store
-      .select(fromMortgageLoan.getSelectedRepaymentSchedule)
-      .pipe(first())
-      .subscribe((schedule) => {
-        const [instalmentPayments, earlyPayments] = mapInstalementSimulation(
-          schedule,
-          { monthlyAmount: this.monthlyAmount(), payments: this.payments() },
-        );
-        this.store.dispatch(
-          MortgageLoanActions.simulateInstalmentPaymentsChanged({
-            selectedInstalmentPayments: instalmentPayments,
-            selectedEarlyPayments: earlyPayments,
-          }),
-        );
-      });
   }
 
   onPaymentsChange(payments: number) {
     this.payments.set(payments);
-
-    this.store
-      .select(fromMortgageLoan.getSelectedRepaymentSchedule)
-      .pipe(first())
-      .subscribe((schedule) => {
-        const [instalmentPayments, earlyPayments] = mapInstalementSimulation(
-          schedule,
-          { monthlyAmount: this.monthlyAmount(), payments: this.payments() },
-        );
-        this.store.dispatch(
-          MortgageLoanActions.simulateInstalmentPaymentsChanged({
-            selectedInstalmentPayments: instalmentPayments,
-            selectedEarlyPayments: earlyPayments,
-          }),
-        );
-      });
   }
 }

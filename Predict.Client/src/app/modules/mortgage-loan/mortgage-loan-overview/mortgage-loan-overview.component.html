@@ -46,7 +46,7 @@
       <app-numeric-input
         id="targetAmount"
         [label]="'Monthly Amount'"
-        [value]="null"
+        [value]="monthlyAmount()"
         (valueChange)="onMonthlyAmountChange($event)"
       />
     </div>
@@ -54,7 +54,7 @@
       <app-numeric-input
         id="targetAmount"
         [label]="'Months'"
-        [value]="null"
+        [value]="payments()"
         (valueChange)="onPaymentsChange($event)"
       />
     </div>
