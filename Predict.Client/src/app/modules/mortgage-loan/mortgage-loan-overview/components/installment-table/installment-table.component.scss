@@ -10,8 +10,7 @@
   border: 1px solid #e2e6ee;
   border-radius: 7.5px;
   background: white;
-
-  height: 480px; /* body scroll height */
+  height: calc(100vh - 225px);
   overflow-y: auto;
   overflow-x: auto;
   position: relative;
@@ -136,12 +135,10 @@ thead {
   position: absolute;
   top: 100%;
   right: 0;
-
   background: #ffffff;
   border: 1px solid #dee2e6;
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-
   z-index: 9999;
   min-width: 180px;
   border-radius: 4px;
@@ -198,11 +195,12 @@ thead {
 }
 
 .group-title-cell .count {
-  color: #666;
+  color: #357b38;
   font-size: 0.85rem;
-  background: #e8ecf5;
-  padding: 3px 10px;
-  border-radius: 12px;
+  background: #d4ecd5;
+  padding: 2px 10px;
+  border-radius: 30px;
+  border: 1px solid #357b38;
 }
 
 /* ============================= */
@@ -239,11 +237,14 @@ tbody tr:not(.group-header-subtotal-row):hover {
 }
 
 /* ============================= */
-/* Row Colors */
+/* Row Colors with Left Vertical Bar */
 /* ============================= */
 .blue {
   background-color: #f0f7ff;
-  border-left: 3px solid #538bfc;
+
+  td:first-child {
+    border-left: 5px solid #538bfc;
+  }
 }
 
 .blue:hover {
@@ -252,7 +253,10 @@ tbody tr:not(.group-header-subtotal-row):hover {
 
 .green {
   background-color: #f0fdf4;
-  border-left: 3px solid #7fcf9a;
+
+  td:first-child {
+    border-left: 5px solid #7fcf9a;
+  }
 }
 
 .green:hover {
@@ -261,7 +265,10 @@ tbody tr:not(.group-header-subtotal-row):hover {
 
 .pink {
   background-color: #fef2f6;
-  border-left: 3px solid #f2a0b6;
+
+  td:first-child {
+    border-left: 5px solid #f2a0b6;
+  }
 }
 
 .pink:hover {

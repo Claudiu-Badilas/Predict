@@ -49,7 +49,7 @@ export class InstallmentTableComponent {
 
   columns: ColumnConfig[] = [
     { key: 'adminFee', label: 'Comision Administrare', visible: false },
-    { key: 'insuranceCost', label: 'Costuri Asigurare', visible: true },
+    { key: 'insuranceCost', label: 'Costuri Asigurare', visible: false },
     { key: 'managementFee', label: 'Comision Management', visible: false },
     {
       key: 'recalculatedInterest',
