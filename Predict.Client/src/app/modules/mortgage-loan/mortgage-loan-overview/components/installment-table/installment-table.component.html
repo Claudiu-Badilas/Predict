@@ -68,16 +68,16 @@
           [class.expanded-group]="group.expanded"
           (click)="toggleGroup(group)"
         >
-          <td colspan="3" class="group-title-cell">
+          <td colspan="3" class="group-title-cell bold">
             <div class="d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
                 <span class="chevron">{{ group.expanded ? "▼" : "▶" }}</span>
-                <strong>{{ group.title }}</strong>
+                17 {{ group.title }}
               </div>
               <span class="count">{{ group.rows.length }} rate</span>
             </div>
           </td>
-          <td class="text-center">2026-02-17</td>
+          <td></td>
           <td class="bold subtotal-credit">
             {{ getSubtotal(group).credit | numberFormat }}
           </td>
