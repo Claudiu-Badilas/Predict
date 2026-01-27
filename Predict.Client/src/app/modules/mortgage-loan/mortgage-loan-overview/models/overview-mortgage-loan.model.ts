@@ -21,3 +21,16 @@ export type OverviewRepaymentSchedule = {
   name: string;
   overviewLoanInstalments: OverviewLoanInstalment[];
 };
+
+export class MonthlyInstalmentManager {
+  public compleated: boolean = false;
+  public expanded: boolean = true;
+
+  constructor(
+    public instalments: OverviewLoanInstalment[],
+    { compleated = false, expanded = true } = {},
+  ) {
+    this.compleated = compleated;
+    this.expanded = expanded;
+  }
+}
