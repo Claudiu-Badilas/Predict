@@ -11,12 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { fromEvent, Subscription } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
+import * as fromMortgageLoanOverview from 'src/app/modules/mortgage-loan/mortgage-loan-overview/selectors/mortgage-loan-overview.selectors';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
+import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
 import { TableColumn } from './model/table-body.model';
-import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 
 @Component({
   selector: 'app-mortgage-loan-overview-body-table',
@@ -31,7 +32,7 @@ export class MortgageLoanOverviewBodyTableComponent
   showOnlyTotalRow = input.required<boolean>();
 
   selectedRepaymentSchedule$ = this.store.select(
-    fromMortgageLoan.getSelectedRepaymentScheduleOverview,
+    fromMortgageLoanOverview.getSelectedRepaymentScheduleOverview,
   );
 
   jsDateUtils = JsDateUtils;

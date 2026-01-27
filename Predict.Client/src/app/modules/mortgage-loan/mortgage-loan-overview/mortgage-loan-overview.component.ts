@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
+import * as fromMortgageLoanOverview from 'src/app/modules/mortgage-loan/mortgage-loan-overview/selectors/mortgage-loan-overview.selectors';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DatePickerComponent } from 'src/app/shared/components/date-picker/date-picker.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
@@ -36,21 +37,23 @@ import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
 })
 export class MortgageLoanOverviewComponent {
   selectedRepaymentSchedule$ = this.store.select(
-    fromMortgageLoan.getSelectedRepaymentScheduleOverview,
+    fromMortgageLoanOverview.getSelectedRepaymentScheduleOverview,
   );
   selectedRepaymentScheduleName$ = this.store.select(
-    fromMortgageLoan.getSelectedRepaymentScheduleName,
+    fromMortgageLoanOverview.getSelectedRepaymentScheduleName,
   );
   dropDownSelectOptions$ = this.store
     .select(fromMortgageLoan.getRepaymentSchedules)
     .pipe(map((rs) => rs.map((r) => r.name)));
-  overviewStartDate$ = this.store.select(fromMortgageLoan.getOverviewStartDate);
+  overviewStartDate$ = this.store.select(
+    fromMortgageLoanOverview.getOverviewStartDate,
+  );
   instalmentSimulationTrendChart$ = this.store.select(
-    fromMortgageLoan.getInstalmentSimulationTrendChart,
+    fromMortgageLoanOverview.getInstalmentSimulationTrendChart,
   );
 
   selectedRepaymentScheduleBase = toSignal(
-    this.store.select(fromMortgageLoan.getSelectedRepaymentSchedule),
+    this.store.select(fromMortgageLoanOverview.getSelectedRepaymentSchedule),
   );
 
   showTotalRow = signal(true);
