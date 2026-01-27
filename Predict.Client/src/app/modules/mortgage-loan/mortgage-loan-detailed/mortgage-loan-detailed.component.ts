@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as MortgageLoanDetailedActions from 'src/app/modules/mortgage-loan/mortgage-loan-detailed/actions/mortgage-loan-detailed.actions';
+import * as fromMortgageLoanDetailed from 'src/app/modules/mortgage-loan/mortgage-loan-detailed/selectors/mortgage-loan-detailed.selectors';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
@@ -26,7 +27,7 @@ import { MortgageLoanDetailedHeaderComponent } from './components/mortgage-loan-
 })
 export class MortgageLoanDetailedComponent {
   selectedRepaymentScheduleName$ = this.store.select(
-    fromMortgageLoan.getSelectedRepaymentScheduleName,
+    fromMortgageLoanDetailed.getDetailedSelectedRepaymentScheduleName,
   );
   dropDownSelectOptions$ = this.store
     .select(fromMortgageLoan.getRepaymentSchedules)

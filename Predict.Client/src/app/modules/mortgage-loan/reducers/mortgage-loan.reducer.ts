@@ -8,8 +8,6 @@ import {
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
 import * as MortgageLoanDetailedActions from 'src/app/modules/mortgage-loan/mortgage-loan-detailed/actions/mortgage-loan-detailed.actions';
 import { OverviewRepaymentSchedule } from '../mortgage-loan-overview/models/overview-mortgage-loan.model';
-import { InstalmentSimulationTrendChartUtils } from '../mortgage-loan-overview/utils/instalment-simulation.chart.utils';
-import { mapBaseRepaymentScheduleToOverview } from '../mortgage-loan-overview/utils/overview-mortgage-loan.utils';
 import { RepaymentSchedule } from './../models/mortgage.model';
 
 interface OverviewMortgageLoanState {
@@ -150,58 +148,4 @@ export const getLatestRepaymentSchedule = createSelector(
           .sort((a, b) => b.date.valueOf() - a.date.valueOf())
           .at(0)
       : null,
-);
-
-//################
-// OVERVIEW
-//################
-export const getOverviewMortgageLoanState = createSelector(
-  getMortgageLoanState,
-  (state) => state.overview,
-);
-
-export const getSelectedRepaymentScheduleName = createSelector(
-  getMortgageLoanState,
-  getOverviewMortgageLoanState,
-  (state, overview) =>
-    overview.selectedRepaymentScheduleName ??
-    state.repaymentSchedules[0]?.name ??
-    null,
-);
-
-export const getSelectedRepaymentSchedule = createSelector(
-  getRepaymentSchedules,
-  getSelectedRepaymentScheduleName,
-  (repaymentSchedules, selectedRepaymentScheduleName) =>
-    repaymentSchedules?.find(
-      (rs) => rs.name === selectedRepaymentScheduleName,
-    ) ?? null,
-);
-
-export const getOverviewStartDate = createSelector(
-  getOverviewMortgageLoanState,
-  (state) => state.startDate,
-);
-
-export const selectedInstalmentPayments = createSelector(
-  getOverviewMortgageLoanState,
-  (state) => state.selectedInstalmentPayments,
-);
-
-export const selectedEarlyPayments = createSelector(
-  getOverviewMortgageLoanState,
-  (state) => state.selectedEarlyPayments,
-);
-
-export const getSelectedRepaymentScheduleOverview = createSelector(
-  getSelectedRepaymentSchedule,
-  getOverviewStartDate,
-  selectedInstalmentPayments,
-  selectedEarlyPayments,
-  mapBaseRepaymentScheduleToOverview,
-);
-
-export const getInstalmentSimulationTrendChart = createSelector(
-  getSelectedRepaymentScheduleOverview,
-  InstalmentSimulationTrendChartUtils.getChart,
 );
