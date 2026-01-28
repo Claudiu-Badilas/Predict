@@ -204,57 +204,75 @@ export function createOverviewBaseLoanInstalments(
   const selectedInstalmentSet = new Set(selectedInstalmentPayments);
   const selectedEarlyPaymentSet = new Set(selectedEarlyPayments);
 
-  return base.monthlyInstalments.map((instalment, index, arr) => {
-    const previousInstalment = arr[index - 1];
+  return base.monthlyInstalments
+    .map((instalment, index, arr) => {
+      const previousInstalment = arr[index - 1];
 
-    const isDisabled = JsDateUtils.isSameOrBefore(
-      instalment.paymentDate,
-      startDate,
-    );
-    const hasInstalmentPayment = selectedInstalmentSet.has(
-      instalment.instalmentId,
-    );
-    const hasEarlyPayment = selectedEarlyPaymentSet.has(
-      instalment.instalmentId,
-    );
-    const previousHadInstalment = previousInstalment
-      ? selectedInstalmentSet.has(previousInstalment?.instalmentId)
-      : false;
+      const isDisabled = JsDateUtils.isSameOrBefore(
+        instalment.paymentDate,
+        startDate,
+      );
+      const hasInstalmentPayment = selectedInstalmentSet.has(
+        instalment.instalmentId,
+      );
+      const hasEarlyPayment = selectedEarlyPaymentSet.has(
+        instalment.instalmentId,
+      );
+      const previousHadInstalment = previousInstalment
+        ? selectedInstalmentSet.has(previousInstalment?.instalmentId)
+        : false;
 
-    dateManager.updateForInstalment(hasInstalmentPayment);
-    dateManager.updateForEarlyPayment(previousHadInstalment, hasEarlyPayment);
+      dateManager.updateForInstalment(hasInstalmentPayment);
+      dateManager.updateForEarlyPayment(previousHadInstalment, hasEarlyPayment);
 
-    const newPaymentDate = dateManager.calculateNewPaymentDate(
-      instalment.paymentDate,
-      hasInstalmentPayment,
-      hasEarlyPayment,
-    );
+      const newPaymentDate = dateManager.calculateNewPaymentDate(
+        instalment.paymentDate,
+        hasInstalmentPayment,
+        hasEarlyPayment,
+      );
 
-    const paymentType = determinePaymentType(
-      isDisabled,
-      hasInstalmentPayment,
-      hasEarlyPayment,
-    );
+      const paymentType = determinePaymentType(
+        isDisabled,
+        hasInstalmentPayment,
+        hasEarlyPayment,
+      );
 
-    return {
-      instalmentId: instalment.instalmentId,
-      paymentDate: instalment.paymentDate,
-      newPaymentDate,
-      interestAmount: instalment.interestAmount,
-      principalAmount: instalment.principalAmount,
-      administrationFee: instalment.administrationFee,
-      insuranceCost: instalment.insuranceCost,
-      managementFee: instalment.managementFee,
-      recalculatedInterest: instalment.recalculatedInterest,
-      totalInstalment: instalment.totalInstalment,
-      remainingBalance: instalment.remainingBalance,
-      instalmentPayment: !isDisabled && hasInstalmentPayment,
-      earlyPayment: !isDisabled && hasEarlyPayment,
-      disabled: isDisabled,
-      color: getRowColor(paymentType),
-      totalRow: false,
-    };
-  });
+      return {
+        instalmentId: instalment.instalmentId,
+        paymentDate: instalment.paymentDate,
+        newPaymentDate,
+        interestAmount: instalment.interestAmount,
+        principalAmount: instalment.principalAmount,
+        administrationFee: instalment.administrationFee,
+        insuranceCost: instalment.insuranceCost,
+        managementFee: instalment.managementFee,
+        recalculatedInterest: instalment.recalculatedInterest,
+        totalInstalment: instalment.totalInstalment,
+        remainingBalance: instalment.remainingBalance,
+        instalmentPayment: !isDisabled && hasInstalmentPayment,
+        earlyPayment: !isDisabled && hasEarlyPayment,
+        disabled: isDisabled,
+        color: getRowColor(paymentType),
+        totalRow: false,
+      };
+    })
+    .map((instalment, i, arr) => {
+      const prev = arr[i - 1];
+      const next = arr[i + 1];
+
+      let enable = true;
+
+      if (prev && next) {
+        enable =
+          (!instalment.instalmentPayment &&
+            !instalment.earlyPayment &&
+            (prev.instalmentPayment || prev.earlyPayment)) ||
+          (!next.instalmentPayment &&
+            !next.earlyPayment &&
+            (instalment.instalmentPayment || instalment.earlyPayment));
+      }
+      return { ...instalment, disabled: !enable };
+    });
 }
 
 function determinePaymentType(
