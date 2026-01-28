@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  inject,
   input,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,7 @@ import {
   ColumnConfig,
   DEFAULT_COLUMN_CONFIGS,
 } from './models/column-config.model';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
 
 @Component({
   selector: 'app-installment-table',
@@ -30,11 +32,10 @@ import {
 export class InstallmentTableComponent {
   showOnlyTotalRow = input.required<boolean>();
   groups = input<MonthlyInstalmentManager[]>([]);
+
   @ViewChild('menuContainer') menuContainer!: ElementRef;
 
-  constructor(
-    private readonly store: Store<fromMortgageLoan.MortgageLoanState>,
-  ) {}
+  store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
   isMenuOpen = false;
   columns: ColumnConfig[] = DEFAULT_COLUMN_CONFIGS;
@@ -68,46 +69,38 @@ export class InstallmentTableComponent {
     return column ? column.visible : true;
   }
 
-  getSelectedRows(group: MonthlyInstalmentManager): OverviewLoanInstalment[] {
-    return group.instalments.filter((r) => r.instalmentPayment);
-  }
-
   getSubtotal(group: MonthlyInstalmentManager) {
-    const selected = this.getSelectedRows(group);
-
-    const sum = (v: number | null) => v ?? 0;
+    const instalments = group.instalments;
+    const installment = instalments.find((s) => s.instalmentPayment);
+    const early = instalments.filter((s) => s.earlyPayment);
 
     return {
-      principal: selected.reduce((s, r) => s + sum(r.principalAmount), 0),
-      interest: selected.reduce((s, r) => s + sum(r.interestAmount), 0),
-      administrationFee: selected.reduce(
-        (s, r) => s + sum(r.administrationFee),
-        0,
+      principal: Calculator.sum(instalments.map((e) => e.principalAmount)),
+      interest: installment.interestAmount,
+      administrationFee: installment.administrationFee,
+      insurance: installment.insuranceCost,
+      managementFee: installment.managementFee,
+      recalculatedInterest: installment.recalculatedInterest,
+      total: Calculator.sum(
+        early.map((e) => e.principalAmount).concat(installment.totalInstalment),
       ),
-      insurance: selected.reduce((s, r) => s + sum(r.insuranceCost), 0),
-      managementFee: selected.reduce((s, r) => s + sum(r.managementFee), 0),
-      recalculatedInterest: selected.reduce(
-        (s, r) => s + sum(r.recalculatedInterest),
-        0,
-      ),
-      total: selected.reduce((s, r) => s + sum(r.totalInstalment), 0),
-      restant: selected.reduce((s, r) => s + sum(r.remainingBalance), 0),
-      count: selected.length,
+      restant: early?.at(-1)?.remainingBalance,
+      count: instalments.length,
     };
   }
 
-  onSelectInstalmentPayment(rata: OverviewLoanInstalment) {
+  onSelectInstalmentPayment(instalment: OverviewLoanInstalment) {
     this.store.dispatch(
       MortgageLoanActions.selectedInstalmentPaymentChanged({
-        values: [rata.instalmentId],
+        values: [instalment.instalmentId],
       }),
     );
   }
 
-  onSelectEarlyPayment(rata: OverviewLoanInstalment) {
+  onSelectEarlyPayment(instalment: OverviewLoanInstalment) {
     this.store.dispatch(
       MortgageLoanActions.selectedEarlyPaymentChanged({
-        values: [rata.instalmentId],
+        values: [instalment.instalmentId],
       }),
     );
   }
