@@ -33,7 +33,6 @@
   padding: 0.75rem;
 }
 
-/* ROW LAYOUT */
 .summary-row {
   display: flex;
   align-items: stretch;
@@ -55,17 +54,14 @@
   border-radius: 0.25rem;
 }
 
-/* Divider */
 .vertical-divider {
   width: 1px;
   background: linear-gradient(to bottom, transparent, #e5e7eb, transparent);
   margin: 0 0.5rem;
 }
 
-/* Keep your stat-item system */
 .stat-item {
   border-left: 3px solid transparent;
-  //   border-bottom: 1.5px solid transparent;
 
   &--blue {
     background: #eff6ff;
@@ -127,52 +123,52 @@
 
 // 2 cards
 
-// .summary-grid {
-//   display: grid;
-//   grid-template-columns: 1fr;
-//   gap: 0.75rem;
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
 
-//   @media (min-width: 1024px) {
-//     grid-template-columns: repeat(2, 1fr);
-//   }
-// }
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-// .summary-row {
-//   display: flex;
-//   align-items: stretch;
-//   width: 100%;
-// }
+.summary-row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
 
-// .summary-row--border {
-//   margin-top: 0.75rem;
-//   padding-top: 0.75rem;
-//   border-top: 1px solid #f3f4f6;
-// }
+.summary-row--border {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f3f4f6;
+}
 
-// .summary-section {
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   padding: 0.5rem 0.75rem;
-//   border-radius: 0.25rem;
-// }
+.summary-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+}
 
-// .vertical-divider {
-//   width: 1px;
-//   background: linear-gradient(to bottom, transparent, #e5e7eb, transparent);
-//   margin: 0 0.5rem;
-// }
+.vertical-divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, #e5e7eb, transparent);
+  margin: 0 0.5rem;
+}
 
-// /* Mobile stacking */
-// @media (max-width: 768px) {
-//   .summary-row {
-//     flex-direction: column;
-//   }
+/* Mobile stacking */
+@media (max-width: 1200px) {
+  .summary-row {
+    flex-direction: column;
+  }
 
-//   .vertical-divider {
-//     width: 100%;
-//     height: 1px;
-//     margin: 0.5rem 0;
-//   }
-// }
+  .vertical-divider {
+    width: 100%;
+    height: 1px;
+    margin: 0.5rem 0;
+  }
+}

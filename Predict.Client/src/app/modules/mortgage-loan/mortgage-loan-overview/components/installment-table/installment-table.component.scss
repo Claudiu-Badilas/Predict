@@ -10,7 +10,7 @@
   border: 1px solid #e2e6ee;
   border-radius: 7.5px;
   background: white;
-  height: calc(100vh - 290px);
+  height: calc(100vh - 200px);
   overflow: auto;
 }
 
@@ -150,6 +150,9 @@ thead th {
   td:first-child {
     border-left: 7px solid #4a7df0;
   }
+  td:last-child {
+    border-right: 7px solid #4a7df0;
+  }
   td {
     border-bottom: 1px solid #4a7df0;
   }
@@ -160,6 +163,9 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #7fcf9a;
+  }
+  td:last-child {
+    border-right: 7px solid #7fcf9a;
   }
 
   .last-bottom-border {
@@ -172,6 +178,9 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #f2a0b6;
+  }
+  td:last-child {
+    border-right: 7px solid #f2a0b6;
   }
 
   td {

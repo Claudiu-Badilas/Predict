@@ -65,7 +65,7 @@ export class MortgageLoanOverviewComponent {
 
   showTotalRow = signal(true);
   showOnlyTotalRow = signal(false);
-  oldVersion = signal(true);
+  oldVersion = signal(false);
   monthlyAmount = signal<number>(3750);
   payments = signal<number>(1);
 
