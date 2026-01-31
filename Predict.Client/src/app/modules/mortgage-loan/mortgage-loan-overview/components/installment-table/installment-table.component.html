@@ -148,7 +148,7 @@
         }
 
         <!-- Rows -->
-        @if (showOnlyTotalRow() ? false : group.expanded) {
+        @if (showOnlyTotalRow() ? !group.completed : group.expanded) {
           @for (
             row of group.instalments;
             let last = $last;
