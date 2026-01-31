@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
-import { InstalmentSimulationTrendChartUtils } from '../utils/instalment-simulation.chart.utils';
 import { mapBaseRepaymentScheduleToOverview } from '../utils/overview-mortgage-loan.utils';
 import { generateMonthlyInstalmentBatches } from '../utils/monthly-instalment-batches.utils';
 
@@ -56,9 +55,4 @@ export const getMonthlyInstalmentBatches = createSelector(
   selectedInstalmentPayments,
   selectedEarlyPayments,
   generateMonthlyInstalmentBatches,
-);
-
-export const getInstalmentSimulationTrendChart = createSelector(
-  getSelectedRepaymentScheduleOverview,
-  InstalmentSimulationTrendChartUtils.getChart,
 );

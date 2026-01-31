@@ -32,7 +32,6 @@ import { HeaderComponent } from './components/header/header.component';
     MortgageLoanOverviewBodyTableComponent,
     CheckboxComponent,
     NumericInputComponent,
-    HighchartWrapperComponent,
     InstallmentTableComponent,
     HeaderComponent,
   ],
@@ -54,9 +53,6 @@ export class MortgageLoanOverviewComponent {
     .pipe(map((rs) => rs.map((r) => r.name)));
   overviewStartDate$ = this.store.select(
     fromMortgageLoanOverview.getOverviewStartDate,
-  );
-  instalmentSimulationTrendChart$ = this.store.select(
-    fromMortgageLoanOverview.getInstalmentSimulationTrendChart,
   );
 
   selectedRepaymentScheduleBase = toSignal(
