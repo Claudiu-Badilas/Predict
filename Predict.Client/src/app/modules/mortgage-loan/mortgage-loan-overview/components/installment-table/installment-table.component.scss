@@ -144,6 +144,20 @@ thead th {
 /* ============================= */
 /* Row Colors */
 /* ============================= */
+.orange {
+  background: #fff7ed;
+
+  td:first-child {
+    border-left: 7px solid #f97316;
+  }
+  td:last-child {
+    border-right: 7px solid #f97316;
+  }
+  td {
+    border-bottom: 1px solid #f97316;
+  }
+}
+
 .blue {
   background: #e6f1ff;
 
@@ -159,17 +173,17 @@ thead th {
 }
 
 .green {
-  background: #f0fdf4;
+  background: #ecfdf5;
 
   td:first-child {
-    border-left: 7px solid #7fcf9a;
+    border-left: 7px solid #10b981;
   }
   td:last-child {
-    border-right: 7px solid #7fcf9a;
+    border-right: 7px solid #10b981;
   }
 
   .last-bottom-border {
-    border-bottom: 1px solid #7fcf9a;
+    border-bottom: 1px solid #10b981;
   }
 }
 

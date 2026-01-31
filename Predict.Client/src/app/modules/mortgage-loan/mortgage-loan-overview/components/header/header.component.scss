@@ -87,6 +87,35 @@
     border-left-color: #14b8a6;
     border-bottom-color: #14b8a6;
   }
+  &--violet {
+    background: #f5f3ff;
+    border-left-color: #8b5cf6;
+    border-bottom-color: #8b5cf6;
+  }
+
+  &--cyan {
+    background: #ecfeff;
+    border-left-color: #06b6d4;
+    border-bottom-color: #06b6d4;
+  }
+
+  &--lime {
+    background: #f7fee7;
+    border-left-color: #84cc16;
+    border-bottom-color: #84cc16;
+  }
+
+  &--orange {
+    background: #fff7ed;
+    border-left-color: #f97316;
+    border-bottom-color: #f97316;
+  }
+
+  &--slate {
+    background: #f8fafc;
+    border-left-color: #475569;
+    border-bottom-color: #475569;
+  }
 
   &__label {
     font-size: 13px;
