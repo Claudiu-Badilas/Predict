@@ -7,7 +7,6 @@ import { createOverviewBaseLoanInstalments } from './overview-mortgage-loan.util
 
 export function generateMonthlyInstalmentBatches(
   base: RepaymentSchedule | null,
-  startDate: Date,
   selectedInstalmentPayments: number[],
   selectedEarlyPayments: number[],
 ): MonthlyInstalmentBatch[] {
@@ -15,7 +14,6 @@ export function generateMonthlyInstalmentBatches(
 
   const overviewBaseLoanInstalments = createOverviewBaseLoanInstalments(
     base,
-    startDate,
     selectedInstalmentPayments,
     selectedEarlyPayments,
   );

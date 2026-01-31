@@ -15,7 +15,6 @@ interface OverviewMortgageLoanState {
   selectedRepaymentScheduleName: string;
   selectedInstalmentPayments: number[];
   selectedEarlyPayments: number[];
-  startDate: Date;
 }
 
 interface DetailedMortgageLoanState {
@@ -38,7 +37,6 @@ const initialState: MortgageLoanState = {
     selectedRepaymentScheduleName: null,
     selectedInstalmentPayments: [],
     selectedEarlyPayments: [],
-    startDate: new Date('2025-12-16'),
   },
 
   detiled: {
@@ -95,10 +93,6 @@ const mortgageReducer = createReducer(
       overview: { ...state.overview, selectedEarlyPayments: [...arr] },
     };
   }),
-  on(MortgageLoanActions.startDateChanged, (state, { date }) => ({
-    ...state,
-    overview: { ...state.overview, startDate: date },
-  })),
   on(
     MortgageLoanActions.simulateInstalmentPaymentsChanged,
     (state, { selectedInstalmentPayments, selectedEarlyPayments }) => ({

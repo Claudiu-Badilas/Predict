@@ -16,7 +16,6 @@ const PAYMENT_TYPES = {
 
 export function mapBaseRepaymentScheduleToOverview(
   base: RepaymentSchedule | null,
-  startDate: Date,
   selectedInstalmentPayments: number[],
   selectedEarlyPayments: number[],
 ): OverviewRepaymentSchedule | null {
@@ -24,7 +23,6 @@ export function mapBaseRepaymentScheduleToOverview(
 
   const overviewBaseLoanInstalments = createOverviewBaseLoanInstalments(
     base,
-    startDate,
     selectedInstalmentPayments,
     selectedEarlyPayments,
   );
@@ -196,7 +194,6 @@ class DateStateManager {
 
 export function createOverviewBaseLoanInstalments(
   base: RepaymentSchedule,
-  startDate: Date,
   selectedInstalmentPayments: number[],
   selectedEarlyPayments: number[],
 ): OverviewLoanInstalment[] {
@@ -208,10 +205,6 @@ export function createOverviewBaseLoanInstalments(
     .map((instalment, index, arr) => {
       const previousInstalment = arr[index - 1];
 
-      const isDisabled = JsDateUtils.isSameOrBefore(
-        instalment.paymentDate,
-        startDate,
-      );
       const hasInstalmentPayment = selectedInstalmentSet.has(
         instalment.instalmentId,
       );
@@ -232,7 +225,6 @@ export function createOverviewBaseLoanInstalments(
       );
 
       const paymentType = determinePaymentType(
-        isDisabled,
         hasInstalmentPayment,
         hasEarlyPayment,
       );
@@ -249,9 +241,9 @@ export function createOverviewBaseLoanInstalments(
         recalculatedInterest: instalment.recalculatedInterest,
         totalInstalment: instalment.totalInstalment,
         remainingBalance: instalment.remainingBalance,
-        instalmentPayment: !isDisabled && hasInstalmentPayment,
-        earlyPayment: !isDisabled && hasEarlyPayment,
-        disabled: isDisabled,
+        instalmentPayment: hasInstalmentPayment,
+        earlyPayment: hasEarlyPayment,
+        disabled: false,
         color: getRowColor(paymentType),
         totalRow: false,
       };
@@ -276,11 +268,9 @@ export function createOverviewBaseLoanInstalments(
 }
 
 function determinePaymentType(
-  isDisabled: boolean,
   hasInstalmentPayment: boolean,
   hasEarlyPayment: boolean,
 ): keyof typeof PAYMENT_TYPES {
-  if (isDisabled) return 'DISABLED';
   if (hasInstalmentPayment) return 'INSTALMENT';
   if (hasEarlyPayment) return 'EARLY';
   return 'NONE';

@@ -26,11 +26,6 @@ export const getSelectedRepaymentSchedule = createSelector(
     ) ?? null,
 );
 
-export const getOverviewStartDate = createSelector(
-  getOverviewMortgageLoanState,
-  (state) => state.startDate,
-);
-
 export const selectedInstalmentPayments = createSelector(
   getOverviewMortgageLoanState,
   (state) => state.selectedInstalmentPayments,
@@ -43,7 +38,6 @@ export const selectedEarlyPayments = createSelector(
 
 export const getSelectedRepaymentScheduleOverview = createSelector(
   getSelectedRepaymentSchedule,
-  getOverviewStartDate,
   selectedInstalmentPayments,
   selectedEarlyPayments,
   mapBaseRepaymentScheduleToOverview,
@@ -51,7 +45,6 @@ export const getSelectedRepaymentScheduleOverview = createSelector(
 
 export const getMonthlyInstalmentBatches = createSelector(
   getSelectedRepaymentSchedule,
-  getOverviewStartDate,
   selectedInstalmentPayments,
   selectedEarlyPayments,
   generateMonthlyInstalmentBatches,
