@@ -32,9 +32,6 @@ import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
   styleUrls: ['./mortgage-loan-overview.component.scss'],
 })
 export class MortgageLoanOverviewComponent {
-  selectedRepaymentSchedule$ = this.store.select(
-    fromMortgageLoanOverview.getSelectedRepaymentScheduleOverview,
-  );
   monthlyInstalmentBatches = toSignal(
     this.store.select(fromMortgageLoanOverview.getMonthlyInstalmentBatches),
   );

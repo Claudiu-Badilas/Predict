@@ -13,8 +13,6 @@ export type OverviewLoanInstalment = {
   instalmentPayment: boolean;
   earlyPayment: boolean;
   disabled: boolean;
-  color: string;
-  totalRow: boolean;
 };
 
 export type OverviewRepaymentSchedule = {

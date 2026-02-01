@@ -43,8 +43,6 @@
 
   <ng-container main-content
     ><div>
-      @let selectedRepaymentSchedule = selectedRepaymentSchedule$ | async;
-
       <app-mortgage-loan-overview-header
         [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
       ></app-mortgage-loan-overview-header>

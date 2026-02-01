@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
-import { mapBaseRepaymentScheduleToOverview } from '../utils/overview-mortgage-loan.utils';
 import { generateMonthlyInstalmentBatches } from '../utils/monthly-instalment-batches.utils';
 
 export const getOverviewMortgageLoanState = createSelector(
@@ -34,13 +33,6 @@ export const selectedInstalmentPayments = createSelector(
 export const selectedEarlyPayments = createSelector(
   getOverviewMortgageLoanState,
   (state) => state.selectedEarlyPayments,
-);
-
-export const getSelectedRepaymentScheduleOverview = createSelector(
-  getSelectedRepaymentSchedule,
-  selectedInstalmentPayments,
-  selectedEarlyPayments,
-  mapBaseRepaymentScheduleToOverview,
 );
 
 export const getMonthlyInstalmentBatches = createSelector(
