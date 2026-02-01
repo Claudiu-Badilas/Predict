@@ -49,7 +49,6 @@ export class MortgageLoanOverviewComponent {
     this.store.select(fromMortgageLoanOverview.getSelectedRepaymentSchedule),
   );
 
-  showTotalRow = signal(true);
   showOnlyTotalRow = signal(false);
   monthlyAmount = signal<number>(3750);
   payments = signal<number>(1);
@@ -83,10 +82,6 @@ export class MortgageLoanOverviewComponent {
     this.store.dispatch(
       MortgageLoanActions.selectedMortgageLoanChanged({ selected: value }),
     );
-  }
-
-  onShowTotalRow(checked: boolean) {
-    this.showTotalRow.set(checked);
   }
 
   onOnlyShowTotalRow(checked: boolean) {
