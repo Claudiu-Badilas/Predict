@@ -1,22 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input, Signal } from '@angular/core';
-import { HeaderCardComponent } from 'src/app/shared/components/header-card/header-card.component';
-import {
-  CardSection,
-  HeaderCardInput,
-} from 'src/app/shared/components/header-card/models/header-card-input.model';
+import { Component, computed, input } from '@angular/core';
 import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 import { Calculator } from 'src/app/shared/utils/calculator.utils';
-import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
+import { MonthlyInstalmentManager } from '../../models/overview-mortgage-loan.model';
 
 @Component({
   selector: 'app-mortgage-loan-overview-header',
-  imports: [HeaderCardComponent, CommonModule],
+  imports: [CommonModule, NumberFormatPipe],
   templateUrl: './mortgage-loan-overview-header.component.html',
   styleUrl: './mortgage-loan-overview-header.component.scss',
 })
 export class MortgageLoanOverviewHeaderComponent {
-  overviewLoanInstalments = input.required<OverviewLoanInstalment[]>();
+  monthlyInstalmentGroups = input.required<MonthlyInstalmentManager[]>();
+
+  overviewLoanInstalments = computed(() =>
+    this.monthlyInstalmentGroups()
+      .flatMap((r) => r.instalments)
+      .filter((r) => r.instalmentPayment || r.earlyPayment),
+  );
 
   payments = computed(() =>
     this.overviewLoanInstalments().filter(
@@ -48,6 +49,14 @@ export class MortgageLoanOverviewHeaderComponent {
     ),
   );
 
+  completedMontlyInstalments = computed(
+    () => this.monthlyInstalmentGroups().filter((r) => r.completed)?.length,
+  );
+
+  incompletedMontlyInstalments = computed(
+    () => this.monthlyInstalmentGroups().filter((r) => !r.completed)?.length,
+  );
+
   totalPayment = computed(() =>
     Calculator.sum([this.totalInstalmentPayments(), this.totalEarlyPayment()]),
   );
@@ -58,57 +67,5 @@ export class MortgageLoanOverviewHeaderComponent {
       firstInstalment?.remainingBalance,
       firstInstalment?.principalAmount,
     ]);
-  });
-
-  headerCardInputs: Signal<HeaderCardInput[]> = computed(() => {
-    return [
-      {
-        sections: [
-          {
-            label: 'Rata',
-            value: this.totalInstalmentPayments(),
-            default: '0.00',
-            color: null,
-          } as CardSection,
-          {
-            label: 'Plata Anticipata',
-            value: this.totalEarlyPayment(),
-            default: '0.00',
-            color: null,
-          } as CardSection,
-          {
-            label: 'Total Plata',
-            value: [
-              NumberFormatPipe.numberFormat(this.totalPayment()) || '0.00',
-              NumberFormatPipe.numberFormat(this.totalPayment() / 2) || '0.00',
-            ].join(' - '),
-            default: '0.00',
-            color: 'red',
-          } as CardSection,
-        ],
-      } as HeaderCardInput,
-      {
-        sections: [
-          {
-            label: 'Sold Initial',
-            value: this.initialRemainingBalance(),
-            default: '0.00',
-            color: 'red',
-          } as CardSection,
-          {
-            label: 'Sold Restant',
-            value: this.payments()?.at(-1)?.remainingBalance,
-            default: '0.00',
-            color: 'green',
-          } as CardSection,
-          {
-            label: 'Costuri Economisite',
-            value: this.totalSavedInterest(),
-            default: '0.00',
-            color: 'green',
-          } as CardSection,
-        ],
-      } as HeaderCardInput,
-    ];
   });
 }

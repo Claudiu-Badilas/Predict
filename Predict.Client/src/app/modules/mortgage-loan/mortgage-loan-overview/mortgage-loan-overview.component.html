@@ -53,19 +53,14 @@
     ><div>
       @let selectedRepaymentSchedule = selectedRepaymentSchedule$ | async;
       @if (oldVersion()) {
-        <app-mortgage-loan-overview-header
-          [overviewLoanInstalments]="
-            selectedRepaymentSchedule?.overviewLoanInstalments ?? []
-          "
-        />
         <app-mortgage-loan-overview-body-table
           [showTotalRow]="showTotalRow()"
           [showOnlyTotalRow]="showOnlyTotalRow()"
         />
       } @else {
-        <app-header
+        <app-mortgage-loan-overview-header
           [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
-        ></app-header>
+        ></app-mortgage-loan-overview-header>
         <app-installment-table
           class="mt-3"
           [showOnlyTotalRow]="showOnlyTotalRow()"
