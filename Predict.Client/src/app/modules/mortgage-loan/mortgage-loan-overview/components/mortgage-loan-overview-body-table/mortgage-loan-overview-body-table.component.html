@@ -190,6 +190,7 @@
                 class="text-center"
                 [ngClass]="{
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
               >
                 {{ row.instalmentId }}
@@ -199,6 +200,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment || row.instalmentPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
               >
                 {{ row.paymentDate | date: "yyyy-MM-dd" }}
@@ -208,6 +210,7 @@
                 [ngClass]="{
                   bold: row.earlyPayment || row.instalmentPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
               >
                 {{ row.principalAmount | numberFormat: "0.00" }}
@@ -217,6 +220,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
               >
                 {{ row.interestAmount | numberFormat: "0.00" }}
@@ -227,6 +231,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
                 [class.hidden]="!isColumnVisible('administrationFee')"
               >
@@ -238,6 +243,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
                 [class.hidden]="!isColumnVisible('insuranceCost')"
               >
@@ -249,6 +255,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
                 [class.hidden]="!isColumnVisible('managementFee')"
               >
@@ -260,6 +267,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
                 [class.hidden]="!isColumnVisible('recalculatedInterest')"
               >
@@ -271,6 +279,7 @@
                 [ngClass]="{
                   strike: row.earlyPayment,
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
               >
                 {{ row.totalInstalment | numberFormat: "0.00" }}
@@ -282,6 +291,7 @@
                   strike: !last && (row.earlyPayment || row.instalmentPayment),
                   bold: last && (row.earlyPayment || row.instalmentPayment),
                   'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
                 }"
                 [class.hidden]="!isColumnVisible('remainingBalance')"
               >
