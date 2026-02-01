@@ -10,22 +10,22 @@ export namespace MortgageLoanAmountChartUtils {
     if (!rates.length) return null;
 
     const paidRates = rates.filter(
-      (r) => r.isNormalPayment || r.isExtraPayment,
+      (r) => r.instalmentPayment || r.earlyPayment,
     );
     const paidLoan = Calculator.sum(paidRates.map((r) => r.principalAmount));
 
-    const paidInterestRates = rates.filter((r) => r.isNormalPayment);
+    const paidInterestRates = rates.filter((r) => r.instalmentPayment);
     const paidInterest = Calculator.sum(
       paidInterestRates.map((r) => r.interestAmount),
     );
 
-    const savedInterestRates = rates.filter((r) => r.isExtraPayment);
+    const savedInterestRates = rates.filter((r) => r.earlyPayment);
     const savedInterest = Calculator.sum(
       savedInterestRates.map((r) => r.interestAmount),
     );
 
     const unpaidRates = rates.filter(
-      (r) => !r.isNormalPayment && !r.isExtraPayment,
+      (r) => !r.instalmentPayment && !r.earlyPayment,
     );
     const unpaidInterest = Calculator.sum(
       unpaidRates.map((r) => r.interestAmount),

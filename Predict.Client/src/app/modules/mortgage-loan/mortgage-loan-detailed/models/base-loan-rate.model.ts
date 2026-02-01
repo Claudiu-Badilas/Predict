@@ -4,6 +4,6 @@ export type HistocialInstalmentPayment = {
   principalAmount: number;
   interestAmount: number;
   remainingBalance: number;
-  isNormalPayment: boolean;
-  isExtraPayment: boolean;
+  instalmentPayment: boolean;
+  earlyPayment: boolean;
 };

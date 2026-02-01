@@ -10,10 +10,10 @@ export namespace MortgageLoanPaymentsChartUtils {
   ): Highcharts.Options {
     if (!instalments.length) return null;
 
-    const scheduledPayments = instalments.filter((r) => r.isNormalPayment);
-    const earlyPayments = instalments.filter((r) => r.isExtraPayment);
+    const scheduledPayments = instalments.filter((r) => r.instalmentPayment);
+    const earlyPayments = instalments.filter((r) => r.earlyPayment);
     const unpaid = instalments.filter(
-      (r) => !r.isExtraPayment && !r.isNormalPayment,
+      (r) => !r.earlyPayment && !r.instalmentPayment,
     );
 
     const groupInstalmentsByDate = (

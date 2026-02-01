@@ -27,8 +27,8 @@ export namespace HistocialInstalmentPaymentsUtils {
         principalAmount: instalment.principalAmount,
         interestAmount: instalment.interestAmount,
         remainingBalance: instalment.remainingBalance,
-        isNormalPayment,
-        isExtraPayment,
+        instalmentPayment: isNormalPayment,
+        earlyPayment: isExtraPayment,
       }) satisfies HistocialInstalmentPayment;
 
     const calculatedBaseLoanInstalments = schedules.flatMap((schedule) => {

@@ -37,9 +37,9 @@
       ) {
         <tr
           [ngStyle]="{
-            'background-color': rata.isNormalPayment
+            'background-color': rata.instalmentPayment
               ? colors.BLUE_200
-              : rata.isExtraPayment
+              : rata.earlyPayment
                 ? colors.GREEN_200
                 : colors.BS_WHITE,
           }"

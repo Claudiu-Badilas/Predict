@@ -14,14 +14,14 @@ export namespace MortgageLoanProgressChartUtils {
       rates.at(0).remainingBalance,
     ]);
     const paidInstalments = rates.filter(
-      (r) => r.isNormalPayment || r.isExtraPayment,
+      (r) => r.instalmentPayment || r.earlyPayment,
     );
     const paidPrincipalAmount = Calculator.sum(
       paidInstalments.map((r) => r.principalAmount),
     );
 
     const unpaidInstalments = rates.filter(
-      (r) => !r.isNormalPayment && !r.isExtraPayment,
+      (r) => !r.instalmentPayment && !r.earlyPayment,
     );
 
     const unpaidPrincipalAmountAmount = Calculator.sum(
