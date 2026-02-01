@@ -1,34 +1,57 @@
-<div class="scrollable-container mt-3">
-  <table class="table">
+<div class="table-wrapper">
+  <table>
     <thead>
       <tr>
-        <th>Rata</th>
-        <th>Anticipat</th>
-        <th>#</th>
-        <th>Data Plății</th>
-        <th>Rată Credit</th>
-        <th>Rată Dobândă</th>
-        @if (isVisible("administrationFee")) {
-          <th>{{ getColumnLabel("administrationFee") }}</th>
-        }
-        @if (isVisible("insuranceCost")) {
-          <th>{{ getColumnLabel("insuranceCost") }}</th>
-        }
-        @if (isVisible("managementFee")) {
-          <th>{{ getColumnLabel("managementFee") }}</th>
-        }
-        @if (isVisible("recalculatedInterest")) {
-          <th>{{ getColumnLabel("recalculatedInterest") }}</th>
-        }
-        <th>Total Rată</th>
-        @if (isVisible("remainingBalance")) {
-          <th>{{ getColumnLabel("remainingBalance") }}</th>
-        }
-        <th class="text-right">
+        <th class="text-center col-rata">Rata</th>
+        <th class="text-center col-anticipat">Anticipat</th>
+        <th class="text-center col-number">#</th>
+        <th class="text-center col-date">Data Plății</th>
+        <th class="text-center col-credit">Rată Credit</th>
+        <th class="text-center col-interest">Rată Dobândă</th>
+
+        <th
+          class="text-center col-admin-fee"
+          [class.hidden]="!isColumnVisible('administrationFee')"
+        >
+          Comision Administrare
+        </th>
+
+        <th
+          class="text-center col-insurance"
+          [class.hidden]="!isColumnVisible('insuranceCost')"
+        >
+          Costuri Asigurare
+        </th>
+
+        <th
+          class="text-center col-management-fee"
+          [class.hidden]="!isColumnVisible('managementFee')"
+        >
+          Comision Administrare
+        </th>
+
+        <th
+          class="text-center col-recalculated"
+          [class.hidden]="!isColumnVisible('recalculatedInterest')"
+        >
+          Dobândă Recalculată
+        </th>
+
+        <th class="text-center col-total">Total Rată</th>
+
+        <th
+          class="text-center col-restant"
+          [class.hidden]="!isColumnVisible('remainingBalance')"
+        >
+          Sold restant
+        </th>
+
+        <th class="text-right col-actions">
           <div class="menu-cell" #menuContainer>
-            <button class="burger-btn" (click)="toggleMenu($event)">⋮</button>
+            <button class="burger-btn" (click)="toggleMenu($event)">☰</button>
+
             @if (isMenuOpen) {
-              <div class="column-menu" #menuDropdown>
+              <div class="column-menu">
                 @for (col of columns; track col.key) {
                   <div>
                     <label (click)="$event.stopPropagation()">
@@ -49,125 +72,227 @@
     </thead>
 
     <tbody>
-      @if (selectedRepaymentSchedule$ | async; as repaymentSchedule) {
-        @let instalments = repaymentSchedule?.overviewLoanInstalments ?? [];
-        @for (instalment of instalments; let index = $index; track index) {
-          @if (
-            (showOnlyTotalRow() && instalment.totalRow) ||
-            (showOnlyTotalRow() &&
-              !instalment.instalmentPayment &&
-              !instalment.earlyPayment) ||
-            (!showOnlyTotalRow() && showTotalRow()) ||
-            (!showOnlyTotalRow() && !showTotalRow() && !instalment.totalRow)
+      @for (group of monthlyInstalmentGroups(); track group.id) {
+        <!-- Group Header -->
+        @if (group.completed) {
+          <tr
+            class="group-header-subtotal-row blue"
+            [class.expanded-group]="group.expanded"
+            (click)="toggleGroup(group)"
+          >
+            <td colspan="3" class="group-title-cell bold">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <span class="chevron">
+                    {{ group.expanded ? "▼" : "▶" }}
+                  </span>
+                  {{ group.title | date: "dd MMM yyyy" }}
+                </div>
+                <span class="count"> {{ group.instalments.length }} rate </span>
+              </div>
+            </td>
+
+            <td></td>
+
+            <td class="bold text-center">
+              {{ getSubtotal(group).principal | numberFormat: "0.00" }}
+            </td>
+
+            <td class="bold text-center">
+              {{ getSubtotal(group).interest | numberFormat: "0.00" }}
+            </td>
+
+            <td
+              class="bold text-center"
+              [class.hidden]="!isColumnVisible('administrationFee')"
+            >
+              {{ getSubtotal(group).administrationFee | numberFormat: "0.00" }}
+            </td>
+
+            <td
+              class="bold text-center"
+              [class.hidden]="!isColumnVisible('insuranceCost')"
+            >
+              {{ getSubtotal(group).insurance | numberFormat: "0.00" }}
+            </td>
+
+            <td
+              class="bold text-center"
+              [class.hidden]="!isColumnVisible('managementFee')"
+            >
+              {{ getSubtotal(group).managementFee | numberFormat: "0.00" }}
+            </td>
+
+            <td
+              class="bold text-center"
+              [class.hidden]="!isColumnVisible('recalculatedInterest')"
+            >
+              {{
+                getSubtotal(group).recalculatedInterest | numberFormat: "0.00"
+              }}
+            </td>
+
+            <td class="bold text-center subtotal-total">
+              {{ getSubtotal(group).total | numberFormat: "0.00" }}
+            </td>
+
+            <td
+              class="bold text-center"
+              [class.hidden]="!isColumnVisible('remainingBalance')"
+            >
+              {{ getSubtotal(group).restant | numberFormat: "0.00" }}
+            </td>
+
+            <td></td>
+          </tr>
+        }
+
+        <!-- Rows -->
+        @if (showOnlyTotalRow() ? !group.completed : group.expanded) {
+          @for (
+            row of group.instalments;
+            let last = $last;
+            track row.instalmentId
           ) {
             <tr
-              [style.background-color]="instalment.color"
-              [class.faded]="instalment.disabled"
+              [class.orange]="row.instalmentPayment"
+              [class.green]="row.earlyPayment"
             >
-              <td>
-                @if (!instalment.totalRow) {
-                  <app-checkbox
-                    [id]="instalment.instalmentId"
-                    [checked]="instalment.instalmentPayment"
-                    [disabled]="instalment.disabled || instalment.earlyPayment"
-                    (valueChange)="onSelectInstalmentPayment(instalment)"
-                  />
-                }
+              <td
+                class="text-center"
+                [ngClass]="{
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                <app-checkbox
+                  [id]="row.instalmentId"
+                  [checked]="row.instalmentPayment"
+                  [disabled]="row.disabled || row.earlyPayment"
+                  (valueChange)="onSelectInstalmentPayment(row)"
+                />
               </td>
 
-              <td>
-                @if (!instalment.totalRow) {
-                  <app-checkbox
-                    [id]="instalment.instalmentId"
-                    [checked]="instalment.earlyPayment"
-                    [disabled]="
-                      instalment.disabled || instalment.instalmentPayment
-                    "
-                    (valueChange)="onSelectEarlyPayment(instalment)"
-                  />
-                }
+              <td
+                class="text-center"
+                [ngClass]="{
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                <app-checkbox
+                  [id]="row.instalmentId"
+                  [checked]="row.earlyPayment"
+                  [disabled]="row.disabled || row.instalmentPayment"
+                  (valueChange)="onSelectEarlyPayment(row)"
+                />
               </td>
 
-              <td>
-                {{ instalment.instalmentId }}
+              <td
+                class="text-center"
+                [ngClass]="{
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                {{ row.instalmentId }}
               </td>
-              @if (
-                jsDateUtils.isValidDate(instalment.newPaymentDate) &&
-                !jsDateUtils.isSame(
-                  instalment.paymentDate,
-                  instalment.newPaymentDate
-                )
-              ) {
-                <td>
-                  <span class="strike">
-                    {{ instalment.paymentDate | date: "yyyy-MM-dd" }}
-                  </span>
-                  <span>
-                    <b>
-                      {{ instalment.newPaymentDate | date: "yyyy-MM-dd" }}
-                    </b>
-                  </span>
-                </td>
-              } @else {
-                <td>
-                  {{ instalment.paymentDate | date: "yyyy-MM-dd" }}
-                </td>
-              }
-              <td>
-                {{ instalment.principalAmount | numberFormat }}
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment || row.instalmentPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                {{ row.paymentDate | date: "yyyy-MM-dd" }}
               </td>
-              <td [ngClass]="{ strike: instalment.earlyPayment }">
-                {{ instalment.interestAmount | numberFormat }}
+              <td
+                class="text-center"
+                [ngClass]="{
+                  bold: row.earlyPayment || row.instalmentPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                {{ row.principalAmount | numberFormat: "0.00" }}
               </td>
-              @if (isVisible("administrationFee")) {
-                <td [ngClass]="{ strike: instalment.earlyPayment }">
-                  {{ instalment.administrationFee | numberFormat }}
-                </td>
-              }
-              @if (isVisible("insuranceCost")) {
-                <td
-                  [ngClass]="{
-                    strike: instalment.earlyPayment || instalment.totalRow,
-                  }"
-                >
-                  {{ instalment.insuranceCost | numberFormat }}
-                </td>
-              }
-              @if (isVisible("managementFee")) {
-                <td [ngClass]="{ strike: instalment.earlyPayment }">
-                  {{ instalment.managementFee | numberFormat }}
-                </td>
-              }
-              @if (isVisible("recalculatedInterest")) {
-                <td [ngClass]="{ strike: instalment.earlyPayment }">
-                  {{ instalment.recalculatedInterest | numberFormat }}
-                </td>
-              }
-              @if (instalment.earlyPayment) {
-                <td>
-                  <span class="strike">{{
-                    instalment.totalInstalment | numberFormat
-                  }}</span>
-                  <span class="ml-2">
-                    <b>{{ instalment.principalAmount | numberFormat }}</b></span
-                  >
-                </td>
-              } @else if (instalment.totalRow) {
-                <td>
-                  {{
-                    instalment.interestAmount + instalment.principalAmount
-                      | numberFormat
-                  }}
-                </td>
-              } @else {
-                <td>
-                  {{ instalment.totalInstalment | numberFormat }}
-                </td>
-              }
-              @if (isVisible("remainingBalance")) {
-                <td>{{ instalment.remainingBalance | numberFormat }}</td>
-              }
-              <td></td>
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                {{ row.interestAmount | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+                [class.hidden]="!isColumnVisible('administrationFee')"
+              >
+                {{ row.administrationFee | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+                [class.hidden]="!isColumnVisible('insuranceCost')"
+              >
+                {{ row.insuranceCost | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+                [class.hidden]="!isColumnVisible('managementFee')"
+              >
+                {{ row.managementFee | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+                [class.hidden]="!isColumnVisible('recalculatedInterest')"
+              >
+                {{ row.recalculatedInterest | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: row.earlyPayment,
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              >
+                {{ row.totalInstalment | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                class="text-center"
+                [ngClass]="{
+                  strike: !last && (row.earlyPayment || row.instalmentPayment),
+                  bold: last && (row.earlyPayment || row.instalmentPayment),
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+                [class.hidden]="!isColumnVisible('remainingBalance')"
+              >
+                {{ row.remainingBalance | numberFormat: "0.00" }}
+              </td>
+
+              <td
+                [ngClass]="{
+                  'last-bottom-border': last && row.earlyPayment,
+                }"
+              ></td>
             </tr>
           }
         }

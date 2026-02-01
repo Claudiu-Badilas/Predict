@@ -12,7 +12,6 @@ import { NumericInputComponent } from 'src/app/shared/components/numeric-input/n
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
-import { InstallmentTableComponent } from './components/installment-table/installment-table.component';
 import { MortgageLoanOverviewBodyTableComponent } from './components/mortgage-loan-overview-body-table/mortgage-loan-overview-body-table.component';
 import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-overview-header/mortgage-loan-overview-header.component';
 import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
@@ -28,7 +27,6 @@ import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
     MortgageLoanOverviewBodyTableComponent,
     CheckboxComponent,
     NumericInputComponent,
-    InstallmentTableComponent,
   ],
   templateUrl: './mortgage-loan-overview.component.html',
   styleUrls: ['./mortgage-loan-overview.component.scss'],

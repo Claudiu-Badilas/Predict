@@ -2,151 +2,105 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  HostListener,
+  inject,
   input,
-  OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { fromEvent, Subscription } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
-import * as fromMortgageLoanOverview from 'src/app/modules/mortgage-loan/mortgage-loan-overview/selectors/mortgage-loan-overview.selectors';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
 import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
-import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
-import { OverviewLoanInstalment } from '../../models/overview-mortgage-loan.model';
-import { TableColumn } from './model/table-body.model';
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
+import {
+  MonthlyInstalmentManager,
+  OverviewLoanInstalment,
+} from '../../models/overview-mortgage-loan.model';
+import {
+  ColumnConfig,
+  DEFAULT_COLUMN_CONFIGS,
+} from './model/column-config.model';
 
 @Component({
   selector: 'app-mortgage-loan-overview-body-table',
-  imports: [CommonModule, FormsModule, CheckboxComponent, NumberFormatPipe],
+  imports: [CommonModule, FormsModule, NumberFormatPipe, CheckboxComponent],
   templateUrl: './mortgage-loan-overview-body-table.component.html',
   styleUrl: './mortgage-loan-overview-body-table.component.scss',
 })
-export class MortgageLoanOverviewBodyTableComponent
-  implements OnInit, OnDestroy
-{
-  showTotalRow = input.required<boolean>();
+export class MortgageLoanOverviewBodyTableComponent {
   showOnlyTotalRow = input.required<boolean>();
+  monthlyInstalmentGroups = input<MonthlyInstalmentManager[]>([]);
 
-  selectedRepaymentSchedule$ = this.store.select(
-    fromMortgageLoanOverview.getSelectedRepaymentScheduleOverview,
-  );
+  @ViewChild('menuContainer') menuContainer!: ElementRef;
 
-  jsDateUtils = JsDateUtils;
-
-  @ViewChild('menuContainer', { static: false }) menuContainer!: ElementRef;
-  @ViewChild('menuDropdown', { static: false }) menuDropdown!: ElementRef;
+  store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
   isMenuOpen = false;
+  columns: ColumnConfig[] = DEFAULT_COLUMN_CONFIGS;
 
-  columns: TableColumn[] = [
-    {
-      key: 'administrationFee',
-      label: 'Comision Administrare',
-      visible: false,
-    },
-    { key: 'insuranceCost', label: 'Costuri Asigurare', visible: false },
-    { key: 'managementFee', label: 'Comision Gestiune', visible: false },
-    {
-      key: 'recalculatedInterest',
-      label: 'Dobândă Recalculată',
-      visible: false,
-    },
-    { key: 'remainingBalance', label: 'Sold Rest Plată', visible: false },
-  ];
-
-  private clickSubscription!: Subscription;
-
-  constructor(
-    private readonly store: Store<fromMortgageLoan.MortgageLoanState>,
-    private elRef: ElementRef,
-  ) {}
-
-  ngOnInit() {
-    this.setupClickOutsideListener();
+  toggleGroup(group: MonthlyInstalmentManager) {
+    group.expanded = !group.expanded;
   }
 
-  ngOnDestroy() {
-    // Clean up subscription
-    if (this.clickSubscription) {
-      this.clickSubscription.unsubscribe();
-    }
-  }
-
-  setupClickOutsideListener() {
-    this.clickSubscription = fromEvent(document, 'click').subscribe(
-      (event: Event) => {
-        const target = event.target as HTMLElement;
-
-        if (this.isMenuOpen) {
-          const menuContainer = this.menuContainer?.nativeElement;
-          const menuDropdown = this.menuDropdown?.nativeElement;
-
-          const isClickInsideMenu = menuContainer?.contains(target);
-          const isClickInsideDropdown = menuDropdown?.contains(target);
-
-          if (!isClickInsideMenu && !isClickInsideDropdown) {
-            this.closeMenu();
-          }
-        }
-      },
-    );
+  toggleRow(row: OverviewLoanInstalment) {
+    row.instalmentPayment = !row.instalmentPayment;
   }
 
   toggleMenu(event: Event) {
     event.stopPropagation();
     this.isMenuOpen = !this.isMenuOpen;
+  }
 
-    if (this.isMenuOpen && this.menuDropdown) {
-      setTimeout(() => {
-        this.positionMenuDropdown();
-      }, 0);
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    if (
+      this.isMenuOpen &&
+      this.menuContainer &&
+      !this.menuContainer.nativeElement.contains(event.target)
+    ) {
+      this.isMenuOpen = false;
     }
   }
 
-  closeMenu() {
-    this.isMenuOpen = false;
+  isColumnVisible(key: ColumnConfig['key']): boolean {
+    const column = this.columns.find((col) => col.key === key);
+    return column ? column.visible : true;
   }
 
-  positionMenuDropdown() {
-    if (!this.menuDropdown) return;
+  getSubtotal(group: MonthlyInstalmentManager) {
+    const instalments = group.instalments;
+    const installment = instalments.find((s) => s.instalmentPayment);
+    const early = instalments.filter((s) => s.earlyPayment);
 
-    const dropdown = this.menuDropdown.nativeElement;
-    const viewportHeight = window.innerHeight;
-    const dropdownRect = dropdown.getBoundingClientRect();
-
-    if (dropdownRect.bottom > viewportHeight) {
-      dropdown.style.top = 'auto';
-      dropdown.style.bottom = '100%';
-    } else {
-      dropdown.style.top = '100%';
-      dropdown.style.bottom = 'auto';
-    }
+    return {
+      principal: Calculator.sum(instalments.map((e) => e.principalAmount)),
+      interest: installment.interestAmount,
+      administrationFee: installment.administrationFee,
+      insurance: installment.insuranceCost,
+      managementFee: installment.managementFee,
+      recalculatedInterest: installment.recalculatedInterest,
+      total: Calculator.sum(
+        early.map((e) => e.principalAmount).concat(installment.totalInstalment),
+      ),
+      restant: early?.at(-1)?.remainingBalance,
+      count: instalments.length,
+    };
   }
 
-  isVisible(key: string): boolean {
-    return this.columns.find((c) => c.key === key)?.visible ?? false;
-  }
-
-  getColumnLabel(key: string): string {
-    return this.columns.find((c) => c.key === key)?.label ?? key;
-  }
-
-  onSelectInstalmentPayment(rata: OverviewLoanInstalment) {
+  onSelectInstalmentPayment(instalment: OverviewLoanInstalment) {
     this.store.dispatch(
       MortgageLoanActions.selectedInstalmentPaymentChanged({
-        values: [rata.instalmentId],
+        values: [instalment.instalmentId],
       }),
     );
   }
 
-  onSelectEarlyPayment(rata: OverviewLoanInstalment) {
+  onSelectEarlyPayment(instalment: OverviewLoanInstalment) {
     this.store.dispatch(
       MortgageLoanActions.selectedEarlyPaymentChanged({
-        values: [rata.instalmentId],
+        values: [instalment.instalmentId],
       }),
     );
   }
