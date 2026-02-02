@@ -201,6 +201,17 @@ thead th {
   }
 }
 
+.grey {
+  background: #f8fafc;
+
+  td:first-child {
+    border-left: 7px solid #676c72;
+  }
+  td:last-child {
+    border-right: 7px solid #676c72;
+  }
+}
+
 /* ============================= */
 /* Totals */
 /* ============================= */

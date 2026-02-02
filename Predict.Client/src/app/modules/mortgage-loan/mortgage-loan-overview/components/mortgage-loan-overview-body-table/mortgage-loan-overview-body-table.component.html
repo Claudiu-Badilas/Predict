@@ -157,6 +157,7 @@
             <tr
               [class.orange]="row.instalmentPayment"
               [class.green]="row.earlyPayment"
+              [class.grey]="!row.instalmentPayment && !row.earlyPayment"
             >
               <td
                 class="text-center"
@@ -203,7 +204,7 @@
                   disabled: !group.completed && row.disabled,
                 }"
               >
-                {{ row.paymentDate | date: "yyyy-MM-dd" }}
+                {{ row.paymentDate | date: "dd MMM yyyy" }}
               </td>
               <td
                 class="text-center"
