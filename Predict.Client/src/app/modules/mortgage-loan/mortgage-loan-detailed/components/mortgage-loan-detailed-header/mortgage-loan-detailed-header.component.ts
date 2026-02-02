@@ -20,9 +20,7 @@ export class MortgageLoanDetailedHeaderComponent {
   private readonly store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
   readonly updatedBaseRepaymentScheduleBasedOnLatestStates = toSignal(
-    this.store.select(
-      fromMortgageLoanDetailed.getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
-    ),
+    this.store.select(fromMortgageLoanDetailed.getHistocialInstalmentPayments),
     { initialValue: null },
   );
 

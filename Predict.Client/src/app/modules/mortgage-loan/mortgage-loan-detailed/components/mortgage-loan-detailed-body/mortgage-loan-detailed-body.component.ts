@@ -6,10 +6,19 @@ import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortga
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 import { Colors } from 'src/app/shared/styles/colors';
+import { TableComponent } from '../table/table.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-mortgage-loan-detailed-body',
-  imports: [CommonModule, HighchartWrapperComponent, NumberFormatPipe],
+  imports: [
+    CommonModule,
+    HighchartWrapperComponent,
+    NumberFormatPipe,
+    TableComponent,
+    HeaderComponent,
+  ],
   templateUrl: './mortgage-loan-detailed-body.component.html',
   styleUrl: './mortgage-loan-detailed-body.component.scss',
 })
@@ -27,7 +36,12 @@ export class MortgageLoanDetailedBodyComponent {
     fromMortgageLoanDetailed.getMortgageLoanPaymentsChart,
   );
   updatedBaseRepaymentScheduleBasedOnLatestStates$ = this.store.select(
-    fromMortgageLoanDetailed.getUpdatedBaseRepaymentScheduleBasedOnLatestStates,
+    fromMortgageLoanDetailed.getHistocialInstalmentPayments,
+  );
+  histocialInstalmentPaymentBatches = toSignal(
+    this.store.select(
+      fromMortgageLoanDetailed.getHistocialInstalmentPaymentBatches,
+    ),
   );
 
   constructor(private store: Store<fromMortgageLoan.MortgageLoanState>) {}

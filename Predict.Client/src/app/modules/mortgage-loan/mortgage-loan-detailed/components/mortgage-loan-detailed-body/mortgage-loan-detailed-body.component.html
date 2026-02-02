@@ -1,3 +1,7 @@
+<div class="mb-3">
+  <app-header />
+</div>
+
 <div class="d-flex w-100 gap mb-3">
   <div class="d-flex gap w-100">
     <app-highcharts-wrapper
@@ -18,39 +22,48 @@
 <div class="mb-3">
   <app-highcharts-wrapper [chartOptions]="mortgageLoanPaymentsChart$ | async" />
 </div>
-<div class="scrollable-container mt-3">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Data Plății</th>
-        <th scope="col">Rată Credit</th>
-        <th scope="col">Rată Dobândă</th>
-        <th scope="col">Sold Rest Plată</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (
-        rata of (updatedBaseRepaymentScheduleBasedOnLatestStates$ | async) ??
-          [];
-        track rata.index
-      ) {
-        <tr
-          [ngStyle]="{
-            'background-color': rata.instalmentPayment
-              ? colors.BLUE_200
-              : rata.earlyPayment
-                ? colors.GREEN_200
-                : colors.BS_WHITE,
-          }"
-        >
-          <td>{{ rata.index }}</td>
-          <td>{{ rata.paymentDate | date: "yyyy-MM-dd" }}</td>
-          <td>{{ rata.principalAmount | numberFormat }}</td>
-          <td>{{ rata.interestAmount | numberFormat }}</td>
-          <td>{{ rata.remainingBalance | numberFormat }}</td>
+
+<div class="d-flex">
+  <div class="w-100">
+    <app-table
+      [showOnlyTotalRow]="true"
+      [monthlyInstalmentGroups]="histocialInstalmentPaymentBatches()"
+    ></app-table>
+  </div>
+  <!-- <div class="scrollable-container ml-3 w-50">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Data Plății</th>
+          <th scope="col">Rată Credit</th>
+          <th scope="col">Rată Dobândă</th>
+          <th scope="col">Sold Rest Plată</th>
         </tr>
-      }
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @for (
+          rata of (updatedBaseRepaymentScheduleBasedOnLatestStates$ | async) ??
+            [];
+          track rata.index
+        ) {
+          <tr
+            [ngStyle]="{
+              'background-color': rata.instalmentPayment
+                ? colors.BLUE_200
+                : rata.earlyPayment
+                  ? colors.GREEN_200
+                  : colors.BS_WHITE,
+            }"
+          >
+            <td>{{ rata.index }}</td>
+            <td>{{ rata.paymentDate | date: "yyyy-MM-dd" }}</td>
+            <td>{{ rata.principalAmount | numberFormat }}</td>
+            <td>{{ rata.interestAmount | numberFormat }}</td>
+            <td>{{ rata.remainingBalance | numberFormat }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div> -->
 </div>
