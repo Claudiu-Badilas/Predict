@@ -80,7 +80,12 @@
     background: #fff1f2;
     border-left-color: #f43f5e;
     border-bottom-color: #f43f5e;
+
+    .danger {
+      color: #e11d48;
+    }
   }
+
   &--teal {
     background: #f0fdfa;
     border-left-color: #14b8a6;

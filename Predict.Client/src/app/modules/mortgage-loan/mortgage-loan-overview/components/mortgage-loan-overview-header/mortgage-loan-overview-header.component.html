@@ -2,7 +2,7 @@
   <div class="summary-card">
     <div class="card-body">
       <div class="summary-row">
-        <div class="summary-section stat-item stat-item--orange">
+        <div class="summary-section stat-item stat-item--amber">
           <span class="stat-item__label">Total Rata</span>
           <span class="stat-item__value">
             {{ totalInstalmentPayments() | numberFormat: "0.00" }}
@@ -20,17 +20,17 @@
 
         <div class="vertical-divider"></div>
 
-        <div class="summary-section stat-item stat-item--blue">
+        <div class="summary-section stat-item stat-item--rose">
           <div class="d-flex justify-content-between align-items-center">
             <span class="stat-item__label"> Total </span>
             <span class="stat-item__label"> 1/2 </span>
           </div>
 
           <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__value">
+            <span class="stat-item__value danger">
               {{ this.totalPayment() | numberFormat: "0.00" }}
             </span>
-            <span class="stat-item__value">
+            <span class="stat-item__value danger">
               {{ this.totalPayment() / 2 | numberFormat: "0.00" }}
             </span>
           </div>

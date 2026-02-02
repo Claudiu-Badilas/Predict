@@ -130,12 +130,12 @@ thead th {
     }
 
     .count {
-      color: #3b82f6;
+      color: #f43f5e;
       font-size: 15px;
-      background: #eff6ff;
+      background: transparent;
       padding: 0 10px;
       border-radius: 30px;
-      border: 1px solid #3b82f6;
+      border: 1px solid #f43f5e;
     }
   }
 }
@@ -143,17 +143,16 @@ thead th {
 /* ============================= */
 /* Row Colors */
 /* ============================= */
-.orange {
-  background: #fff7ed;
-
+.yellow {
+  background: #fffbeb;
   td:first-child {
-    border-left: 7px solid #f97316;
+    border-left: 7px solid #f59e0b;
   }
   td:last-child {
-    border-right: 7px solid #f97316;
+    border-right: 7px solid #f59e0b;
   }
   td {
-    border-bottom: 1px solid #f97316;
+    border-bottom: 1px solid #f59e0b;
   }
 }
 
@@ -168,6 +167,20 @@ thead th {
   }
   td {
     border-bottom: 1px solid #3b82f6;
+  }
+}
+
+.rose {
+  background: #fff1f2;
+
+  td:first-child {
+    border-left: 7px solid #f43f5e;
+  }
+  td:last-child {
+    border-right: 7px solid #f43f5e;
+  }
+  td {
+    border-bottom: 1px solid #f43f5e;
   }
 }
 
@@ -201,7 +214,7 @@ thead th {
   }
 }
 
-.grey {
+.gray {
   background: #f8fafc;
 
   td:first-child {

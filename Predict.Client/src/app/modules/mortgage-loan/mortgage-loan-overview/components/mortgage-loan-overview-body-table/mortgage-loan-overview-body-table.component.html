@@ -76,7 +76,7 @@
         <!-- Group Header -->
         @if (group.completed) {
           <tr
-            class="group-header-subtotal-row blue"
+            class="group-header-subtotal-row rose"
             [class.expanded-group]="group.expanded"
             (click)="toggleGroup(group)"
           >
@@ -88,7 +88,7 @@
                   </span>
                   {{ group.title | date: "dd MMM yyyy" }}
                 </div>
-                <span class="count"> {{ group.instalments.length }} rate </span>
+                <span class="count"> {{ group.instalments.length }} RATE </span>
               </div>
             </td>
 
@@ -155,9 +155,9 @@
             track row.instalmentId
           ) {
             <tr
-              [class.orange]="row.instalmentPayment"
+              [class.yellow]="row.instalmentPayment"
               [class.green]="row.earlyPayment"
-              [class.grey]="!row.instalmentPayment && !row.earlyPayment"
+              [class.gray]="!row.instalmentPayment && !row.earlyPayment"
             >
               <td
                 class="text-center"
