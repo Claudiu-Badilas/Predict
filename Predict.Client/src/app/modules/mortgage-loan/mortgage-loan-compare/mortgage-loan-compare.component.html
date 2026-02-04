@@ -39,7 +39,13 @@
 
   <ng-container main-content>
     <div class="mb-3">
+      <app-mortgage-loan-compare-header></app-mortgage-loan-compare-header>
+    </div>
+    <div class="mb-3">
       <app-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
+    </div>
+    <div class="mb-3">
+      <app-mortgage-loan-compare-body></app-mortgage-loan-compare-body>
     </div>
   </ng-container>
 </app-side-bar>
