@@ -6,7 +6,8 @@ export namespace HistoricalInstalmentPaymentsUtils {
     base: RepaymentSchedule,
     repaymentSchedules: RepaymentSchedule[],
   ): HistocialInstalmentPayment[] {
-    if (!base?.monthlyInstalments?.length) return [];
+    if (!base?.monthlyInstalments?.length || !repaymentSchedules?.length)
+      return [];
 
     const baseInstalments = [...base.monthlyInstalments];
 
