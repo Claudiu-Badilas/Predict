@@ -1,3 +1,8 @@
+import { Calculator } from 'src/app/shared/utils/calculator.utils';
+import { RepaymentSchedule } from '../../models/mortgage.model';
+import { HistoricalInstalmentPaymentBatchesUtils } from '../utils/historical-instalment-payment-batches.utils';
+import { HistoricalInstalmentPaymentsUtils } from '../utils/historical-instalment-payments.utils';
+
 export type HistocialInstalmentPayment = {
   index: number;
   paymentDate: Date;
@@ -22,5 +27,72 @@ export class HistocialInstalmentPaymentBatch {
     this.expanded = !this.completed;
     this.id = instalments[0]?.index ?? 0;
     this.title = instalments[0].paymentDate ?? null;
+  }
+}
+
+export class HistoricalInstalmentPaymentBatchesManager {
+  public histocialInstalmentPaymentBatch: HistocialInstalmentPaymentBatch[];
+
+  constructor(
+    base: RepaymentSchedule,
+    public selected: RepaymentSchedule,
+    public repaymentSchedules: RepaymentSchedule[],
+  ) {
+    this.histocialInstalmentPaymentBatch =
+      HistoricalInstalmentPaymentBatchesUtils.getHistocialInstalmentPaymentBatches(
+        HistoricalInstalmentPaymentsUtils.getHistocialInstalmentPayments(
+          base,
+          repaymentSchedules,
+        ),
+      );
+  }
+
+  getBaseName() {
+    return this.selected?.name ?? null;
+  }
+
+  getPaidAmmount() {
+    return Calculator.sum(
+      this.histocialInstalmentPaymentBatch
+        .flatMap((b) =>
+          b.instalments.filter((i) => i.instalmentPayment || i.earlyPayment),
+        )
+        .map((i) =>
+          i.instalmentPayment
+            ? Calculator.sum([
+                i.interestAmount,
+                i.principalAmount,
+                i.insuranceCost,
+              ])
+            : i.principalAmount,
+        ),
+    );
+  }
+
+  getUnpaidAmmount() {
+    return Calculator.sum(
+      this.histocialInstalmentPaymentBatch
+        .flatMap((b) =>
+          b.instalments.filter((i) => !i.instalmentPayment && !i.earlyPayment),
+        )
+        .map((i) =>
+          Calculator.sum([
+            i.interestAmount,
+            i.principalAmount,
+            i.insuranceCost,
+          ]),
+        ),
+    );
+  }
+
+  getLastPaidMonth() {
+    return (
+      this.histocialInstalmentPaymentBatch.filter((b) => b.completed)?.at(-1)
+        ?.title ?? null
+    );
+  }
+
+  getLastUnaidMonth() {
+    return this.histocialInstalmentPaymentBatch?.at(-1)?.title ?? null;
   }
 }
