@@ -17,7 +17,15 @@
   border-left: 4px solid transparent;
 
   &.base {
+    border-left-color: #888;
+  }
+
+  &.left {
     border-left-color: #4caf50;
+  }
+
+  &.right {
+    border-left-color: #c62828;
   }
 
   .card-header {
