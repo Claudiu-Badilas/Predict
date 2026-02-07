@@ -2,11 +2,11 @@ import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 import { Colors } from 'src/app/shared/styles/colors';
 import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { ObjectUtil } from 'src/app/shared/utils/object.utils';
-import { HistocialInstalmentPayment } from '../../models/base-loan-rate.model';
+import { HistoricalInstalmentPayment } from '../../models/base-loan-rate.model';
 
 export namespace MortgageLoanPaymentsChartUtils {
   export function getChart(
-    instalments: HistocialInstalmentPayment[],
+    instalments: HistoricalInstalmentPayment[],
   ): Highcharts.Options {
     if (!instalments.length) return null;
 
@@ -17,7 +17,7 @@ export namespace MortgageLoanPaymentsChartUtils {
     );
 
     const groupInstalmentsByDate = (
-      instalments: HistocialInstalmentPayment[],
+      instalments: HistoricalInstalmentPayment[],
     ) =>
       ObjectUtil.groupBy(instalments, (t) =>
         t.paymentDate.toLocaleString('en-US', {

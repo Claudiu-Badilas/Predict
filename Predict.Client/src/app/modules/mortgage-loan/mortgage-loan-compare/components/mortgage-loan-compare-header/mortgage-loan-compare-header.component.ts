@@ -15,19 +15,19 @@ import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 export class MortgageLoanCompareHeaderComponent {
   private readonly store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
-  baseHistocialInstalmentPaymentBatchesManager = toSignal(
+  baseHistoricalInstalmentPaymentBatchesManager = toSignal(
     this.store.select(
-      fromMortgageLoanCompare.getBaseHistocialInstalmentPaymentBatchesManager,
+      fromMortgageLoanCompare.getBaseHistoricalInstalmentPaymentBatchesManager,
     ),
   );
-  leftHistocialInstalmentPaymentBatchesManager = toSignal(
+  leftHistoricalInstalmentPaymentBatchesManager = toSignal(
     this.store.select(
-      fromMortgageLoanCompare.getLeftHistocialInstalmentPaymentBatchesManager,
+      fromMortgageLoanCompare.getLeftHistoricalInstalmentPaymentBatchesManager,
     ),
   );
-  rightHistocialInstalmentPaymentBatchesManager = toSignal(
+  rightHistoricalInstalmentPaymentBatchesManager = toSignal(
     this.store.select(
-      fromMortgageLoanCompare.getRightHistocialInstalmentPaymentBatchesManager,
+      fromMortgageLoanCompare.getRightHistoricalInstalmentPaymentBatchesManager,
     ),
   );
 }

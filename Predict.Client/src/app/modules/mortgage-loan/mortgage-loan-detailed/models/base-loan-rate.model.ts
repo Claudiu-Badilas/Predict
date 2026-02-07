@@ -3,7 +3,7 @@ import { RepaymentSchedule } from '../../models/mortgage.model';
 import { HistoricalInstalmentPaymentBatchesUtils } from '../utils/historical-instalment-payment-batches.utils';
 import { HistoricalInstalmentPaymentsUtils } from '../utils/historical-instalment-payments.utils';
 
-export type HistocialInstalmentPayment = {
+export type HistoricalInstalmentPayment = {
   index: number;
   paymentDate: Date;
   principalAmount: number;
@@ -14,13 +14,13 @@ export type HistocialInstalmentPayment = {
   earlyPayment: boolean;
 };
 
-export class HistocialInstalmentPaymentBatch {
+export class HistoricalInstalmentPaymentBatch {
   public completed: boolean = false;
   public expanded: boolean = true;
   public id: number;
   public title: Date;
 
-  constructor(public instalments: HistocialInstalmentPayment[]) {
+  constructor(public instalments: HistoricalInstalmentPayment[]) {
     if (!instalments.length) return;
 
     this.completed = instalments.some((i) => i.instalmentPayment);
@@ -31,16 +31,16 @@ export class HistocialInstalmentPaymentBatch {
 }
 
 export class HistoricalInstalmentPaymentBatchesManager {
-  public histocialInstalmentPaymentBatch: HistocialInstalmentPaymentBatch[];
+  public historicalInstalmentPaymentBatch: HistoricalInstalmentPaymentBatch[];
 
   constructor(
     base: RepaymentSchedule,
     public selected: RepaymentSchedule,
     public repaymentSchedules: RepaymentSchedule[],
   ) {
-    this.histocialInstalmentPaymentBatch =
-      HistoricalInstalmentPaymentBatchesUtils.getHistocialInstalmentPaymentBatches(
-        HistoricalInstalmentPaymentsUtils.getHistocialInstalmentPayments(
+    this.historicalInstalmentPaymentBatch =
+      HistoricalInstalmentPaymentBatchesUtils.getHistoricalInstalmentPaymentBatches(
+        HistoricalInstalmentPaymentsUtils.getHistoricalInstalmentPayments(
           base,
           repaymentSchedules,
         ),
@@ -53,7 +53,7 @@ export class HistoricalInstalmentPaymentBatchesManager {
 
   getPaidAmmount() {
     return Calculator.sum(
-      this.histocialInstalmentPaymentBatch
+      this.historicalInstalmentPaymentBatch
         .flatMap((b) =>
           b.instalments.filter((i) => i.instalmentPayment || i.earlyPayment),
         )
@@ -71,7 +71,7 @@ export class HistoricalInstalmentPaymentBatchesManager {
 
   getUnpaidAmmount() {
     return Calculator.sum(
-      this.histocialInstalmentPaymentBatch
+      this.historicalInstalmentPaymentBatch
         .flatMap((b) =>
           b.instalments.filter((i) => !i.instalmentPayment && !i.earlyPayment),
         )
@@ -87,12 +87,12 @@ export class HistoricalInstalmentPaymentBatchesManager {
 
   getLastPaidMonth() {
     return (
-      this.histocialInstalmentPaymentBatch.filter((b) => b.completed)?.at(-1)
+      this.historicalInstalmentPaymentBatch.filter((b) => b.completed)?.at(-1)
         ?.title ?? null
     );
   }
 
   getLastUnaidMonth() {
-    return this.histocialInstalmentPaymentBatch?.at(-1)?.title ?? null;
+    return this.historicalInstalmentPaymentBatch?.at(-1)?.title ?? null;
   }
 }

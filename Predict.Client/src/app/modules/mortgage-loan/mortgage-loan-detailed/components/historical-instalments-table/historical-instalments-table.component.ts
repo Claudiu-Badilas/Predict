@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 import { Calculator } from 'src/app/shared/utils/calculator.utils';
-import { HistocialInstalmentPaymentBatch } from '../../models/base-loan-rate.model';
+import { HistoricalInstalmentPaymentBatch } from '../../models/base-loan-rate.model';
 
 @Component({
   selector: 'app-historical-instalments-table',
@@ -12,15 +12,15 @@ import { HistocialInstalmentPaymentBatch } from '../../models/base-loan-rate.mod
 })
 export class HistoricalInstalmentsTableComponent {
   showOnlyTotalRow = input.required<boolean>();
-  monthlyInstalmentGroups = input<HistocialInstalmentPaymentBatch[]>([]);
+  monthlyInstalmentGroups = input<HistoricalInstalmentPaymentBatch[]>([]);
 
   isMenuOpen = false;
 
-  toggleGroup(group: HistocialInstalmentPaymentBatch) {
+  toggleGroup(group: HistoricalInstalmentPaymentBatch) {
     group.expanded = !group.expanded;
   }
 
-  getSubtotal(group: HistocialInstalmentPaymentBatch) {
+  getSubtotal(group: HistoricalInstalmentPaymentBatch) {
     const instalments = group.instalments;
     const installment = instalments.find((s) => s.instalmentPayment);
     const early = instalments.filter((s) => s.earlyPayment);

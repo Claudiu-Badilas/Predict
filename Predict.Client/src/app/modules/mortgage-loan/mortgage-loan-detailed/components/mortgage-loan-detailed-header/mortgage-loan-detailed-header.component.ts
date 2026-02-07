@@ -19,16 +19,16 @@ export class MortgageLoanDetailedHeaderComponent {
   private readonly store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
   readonly updatedBaseRepaymentScheduleBasedOnLatestStates = toSignal(
-    this.store.select(fromMortgageLoanDetailed.getHistocialInstalmentPayments),
+    this.store.select(fromMortgageLoanDetailed.getHistoricalInstalmentPayments),
     { initialValue: null },
   );
   readonly baseRepaymentSchedule = toSignal(
     this.store.select(fromMortgageLoan.getBaseRepaymentSchedule),
     { initialValue: null },
   );
-  readonly histocialInstalmentPaymentBatches = toSignal(
+  readonly historicalInstalmentPaymentBatches = toSignal(
     this.store.select(
-      fromMortgageLoanDetailed.getHistocialInstalmentPaymentBatches,
+      fromMortgageLoanDetailed.getHistoricalInstalmentPaymentBatches,
     ),
     { initialValue: [] },
   );
@@ -85,7 +85,7 @@ export class MortgageLoanDetailedHeaderComponent {
 
   readonly paidInstalments = computed(() =>
     Calculator.sum(
-      this.histocialInstalmentPaymentBatches()
+      this.historicalInstalmentPaymentBatches()
         .filter((s) => s.completed)
         .map((s) => s.instalments.length),
     ),
@@ -93,7 +93,9 @@ export class MortgageLoanDetailedHeaderComponent {
 
   readonly unpaidInstalments = computed(() =>
     Calculator.sum(
-      this.histocialInstalmentPaymentBatches().map((s) => s.instalments.length),
+      this.historicalInstalmentPaymentBatches().map(
+        (s) => s.instalments.length,
+      ),
     ),
   );
 

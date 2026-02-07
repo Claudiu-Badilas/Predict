@@ -19,7 +19,7 @@ export const getRightSelectedRepaymentScheduleName = createSelector(
   (state) => state.rightSelectedRepaymentScheduleName,
 );
 
-export const getBaseHistocialInstalmentPaymentBatchesManager = createSelector(
+export const getBaseHistoricalInstalmentPaymentBatchesManager = createSelector(
   fromMortgageLoan.getBaseRepaymentSchedule,
   fromMortgageLoan.getRepaymentSchedules,
   (base, repaymentSchedules) => {
@@ -32,7 +32,7 @@ export const getBaseHistocialInstalmentPaymentBatchesManager = createSelector(
   },
 );
 
-export const getLeftHistocialInstalmentPaymentBatchesManager = createSelector(
+export const getLeftHistoricalInstalmentPaymentBatchesManager = createSelector(
   getLeftSelectedRepaymentScheduleName,
   fromMortgageLoan.getBaseRepaymentSchedule,
   fromMortgageLoan.getRepaymentSchedules,
@@ -54,7 +54,7 @@ export const getLeftHistocialInstalmentPaymentBatchesManager = createSelector(
   },
 );
 
-export const getRightHistocialInstalmentPaymentBatchesManager = createSelector(
+export const getRightHistoricalInstalmentPaymentBatchesManager = createSelector(
   getRightSelectedRepaymentScheduleName,
   fromMortgageLoan.getBaseRepaymentSchedule,
   fromMortgageLoan.getRepaymentSchedules,

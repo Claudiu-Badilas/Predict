@@ -1,11 +1,11 @@
 import { Instalment, RepaymentSchedule } from '../../models/mortgage.model';
-import { HistocialInstalmentPayment } from '../models/base-loan-rate.model';
+import { HistoricalInstalmentPayment } from '../models/base-loan-rate.model';
 
 export namespace HistoricalInstalmentPaymentsUtils {
-  export function getHistocialInstalmentPayments(
+  export function getHistoricalInstalmentPayments(
     base: RepaymentSchedule,
     repaymentSchedules: RepaymentSchedule[],
-  ): HistocialInstalmentPayment[] {
+  ): HistoricalInstalmentPayment[] {
     if (!base?.monthlyInstalments?.length || !repaymentSchedules?.length)
       return [];
 
@@ -21,7 +21,7 @@ export namespace HistoricalInstalmentPaymentsUtils {
       instalment: Instalment,
       isNormalPayment: boolean,
       isExtraPayment: boolean,
-    ): HistocialInstalmentPayment =>
+    ): HistoricalInstalmentPayment =>
       ({
         index: instalment.instalmentId + additionalId,
         paymentDate: paymentDate || instalment.paymentDate,
@@ -31,7 +31,7 @@ export namespace HistoricalInstalmentPaymentsUtils {
         remainingBalance: instalment.remainingBalance,
         instalmentPayment: isNormalPayment,
         earlyPayment: isExtraPayment,
-      }) as HistocialInstalmentPayment;
+      }) as HistoricalInstalmentPayment;
 
     const calculatedBaseLoanInstalments = schedules.flatMap((schedule) => {
       const index = baseInstalments.length - schedule.monthlyInstalments.length;

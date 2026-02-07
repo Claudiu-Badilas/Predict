@@ -1,11 +1,11 @@
 import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
-import { HistocialInstalmentPayment } from '../../models/base-loan-rate.model';
+import { HistoricalInstalmentPayment } from '../../models/base-loan-rate.model';
 import { Colors } from 'src/app/shared/styles/colors';
 
 export namespace MortgageInterestProgressChartUtils {
   export function getChart(
-    rates: HistocialInstalmentPayment[],
+    rates: HistoricalInstalmentPayment[],
   ): Highcharts.Options {
     if (!rates.length) return null;
 

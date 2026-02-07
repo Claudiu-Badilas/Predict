@@ -1,16 +1,16 @@
 import {
-  HistocialInstalmentPayment,
-  HistocialInstalmentPaymentBatch,
+  HistoricalInstalmentPayment,
+  HistoricalInstalmentPaymentBatch,
 } from '../models/base-loan-rate.model';
 
 export namespace HistoricalInstalmentPaymentBatchesUtils {
-  export function getHistocialInstalmentPaymentBatches(
-    overviewBaseLoanInstalments: HistocialInstalmentPayment[],
-  ): HistocialInstalmentPaymentBatch[] {
+  export function getHistoricalInstalmentPaymentBatches(
+    overviewBaseLoanInstalments: HistoricalInstalmentPayment[],
+  ): HistoricalInstalmentPaymentBatch[] {
     if (!overviewBaseLoanInstalments?.length) return [];
 
-    const batches: HistocialInstalmentPaymentBatch[] = [];
-    let tempBatch: HistocialInstalmentPayment[] = [];
+    const batches: HistoricalInstalmentPaymentBatch[] = [];
+    let tempBatch: HistoricalInstalmentPayment[] = [];
 
     overviewBaseLoanInstalments.forEach((current, index, array) => {
       const next = array[index + 1];
@@ -19,12 +19,12 @@ export namespace HistoricalInstalmentPaymentBatchesUtils {
 
       if (current.instalmentPayment || current.earlyPayment) {
         if (next && !next.earlyPayment) {
-          batches.push(new HistocialInstalmentPaymentBatch(tempBatch));
+          batches.push(new HistoricalInstalmentPaymentBatch(tempBatch));
           tempBatch = [];
         }
       }
       if ((!current.instalmentPayment && !current.earlyPayment) || !next) {
-        batches.push(new HistocialInstalmentPaymentBatch(tempBatch));
+        batches.push(new HistoricalInstalmentPaymentBatch(tempBatch));
         tempBatch = [];
       }
     });

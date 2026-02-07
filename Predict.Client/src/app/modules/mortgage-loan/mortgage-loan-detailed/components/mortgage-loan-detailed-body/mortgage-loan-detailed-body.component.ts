@@ -32,11 +32,11 @@ export class MortgageLoanDetailedBodyComponent {
     fromMortgageLoanDetailed.getMortgageLoanPaymentsChart,
   );
   updatedBaseRepaymentScheduleBasedOnLatestStates$ = this.store.select(
-    fromMortgageLoanDetailed.getHistocialInstalmentPayments,
+    fromMortgageLoanDetailed.getHistoricalInstalmentPayments,
   );
-  histocialInstalmentPaymentBatches = toSignal(
+  historicalInstalmentPaymentBatches = toSignal(
     this.store.select(
-      fromMortgageLoanDetailed.getHistocialInstalmentPaymentBatches,
+      fromMortgageLoanDetailed.getHistoricalInstalmentPaymentBatches,
     ),
   );
 

@@ -36,33 +36,33 @@ export const getDetailedRepaymentSchedules = createSelector(
     ),
 );
 
-export const getHistocialInstalmentPayments = createSelector(
+export const getHistoricalInstalmentPayments = createSelector(
   fromMortgageLoan.getBaseRepaymentSchedule,
   getDetailedRepaymentSchedules,
-  HistoricalInstalmentPaymentsUtils.getHistocialInstalmentPayments,
+  HistoricalInstalmentPaymentsUtils.getHistoricalInstalmentPayments,
 );
 
-export const getHistocialInstalmentPaymentBatches = createSelector(
-  getHistocialInstalmentPayments,
-  HistoricalInstalmentPaymentBatchesUtils.getHistocialInstalmentPaymentBatches,
+export const getHistoricalInstalmentPaymentBatches = createSelector(
+  getHistoricalInstalmentPayments,
+  HistoricalInstalmentPaymentBatchesUtils.getHistoricalInstalmentPaymentBatches,
 );
 
 export const getMortgageLoanProgressChart = createSelector(
-  getHistocialInstalmentPayments,
+  getHistoricalInstalmentPayments,
   MortgageLoanProgressChartUtils.getChart,
 );
 
 export const getMortgageInterestProgressChart = createSelector(
-  getHistocialInstalmentPayments,
+  getHistoricalInstalmentPayments,
   MortgageInterestProgressChartUtils.getChart,
 );
 
 export const getMortgageLoanAmountChart = createSelector(
-  getHistocialInstalmentPayments,
+  getHistoricalInstalmentPayments,
   MortgageLoanAmountChartUtils.getChart,
 );
 
 export const getMortgageLoanPaymentsChart = createSelector(
-  getHistocialInstalmentPayments,
+  getHistoricalInstalmentPayments,
   MortgageLoanPaymentsChartUtils.getChart,
 );
