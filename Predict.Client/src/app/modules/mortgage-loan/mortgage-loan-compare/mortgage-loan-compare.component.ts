@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 
@@ -9,7 +9,6 @@ import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortga
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
 
-import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
@@ -27,7 +26,6 @@ import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.ch
     ToggleButtonComponent,
     DropdownSelectComponent,
     HighchartWrapperComponent,
-    CheckboxComponent,
     MortgageLoanCompareHeaderComponent,
     MortgageLoanCompareBodyComponent,
   ],
@@ -44,7 +42,6 @@ export class MortgageLoanCompareComponent {
     this.store.select(fromMortgageLoan.getBaseRepaymentSchedule),
   );
 
-  includeBase = signal<boolean>(true);
   selectedLeftValue = toSignal(
     this.store.select(
       fromMortgageLoanCompare.getLeftSelectedRepaymentScheduleName,
@@ -70,13 +67,8 @@ export class MortgageLoanCompareComponent {
     this.repaymentSchedules().find((r) => r.name === this.selectedRightValue()),
   );
 
-  includeBaseRepaymentSchedule = computed(() =>
-    this.includeBase() ? this.baseRepaymentSchedule() : null,
-  );
-
   compareRatesTrendChart = computed(() =>
     CompareRatesTrendChartUtils.getChart(
-      this.includeBaseRepaymentSchedule(),
       this.leftRepaymentSchedule(),
       this.rightRepaymentSchedule(),
     ),
@@ -85,15 +77,27 @@ export class MortgageLoanCompareComponent {
   constructor(private store: Store<fromAppStore.AppState>) {
     effect(() => {
       const rs = this.repaymentSchedules();
-      if (rs.length > 0 && !this.selectedLeftValue()) {
-        const firstNonBase = rs.find((r) => !r.isBasePayment);
-        if (firstNonBase) {
-          this.store.dispatch(
-            MortgageLoanCompareActions.selectedLeftMortgageLoanChanged({
-              selected: firstNonBase.name,
-            }),
-          );
-        }
+      if (!rs.length) return;
+      const [first, second] = rs.filter((r) => !r.isBasePayment);
+
+      if (!this.selectedLeftValue()) {
+        if (!second) return;
+
+        this.store.dispatch(
+          MortgageLoanCompareActions.selectedLeftMortgageLoanChanged({
+            selected: second.name,
+          }),
+        );
+      }
+
+      if (!this.selectedRightValue()) {
+        if (!first) return;
+
+        this.store.dispatch(
+          MortgageLoanCompareActions.selectedRightMortgageLoanChanged({
+            selected: first.name,
+          }),
+        );
       }
     });
   }
@@ -104,10 +108,6 @@ export class MortgageLoanCompareComponent {
         route: `/mortgage-loan/${module.toLowerCase()}`,
       }),
     );
-  }
-
-  onIncludeBase(checked: boolean) {
-    this.includeBase.set(checked);
   }
 
   onLeftDropdownSelected(value: string) {

@@ -5,14 +5,12 @@ import { RepaymentSchedule } from '../../models/mortgage.model';
 
 export namespace CompareRatesTrendChartUtils {
   export function getChart(
-    base: RepaymentSchedule,
     left: RepaymentSchedule,
     right: RepaymentSchedule,
   ): Highcharts.Options {
     const sources: Array<[RepaymentSchedule, string, string]> = [
-      base ? [base, 'Base', Colors.BS_SECONDARY] : null,
       left ? [left, left.name, Colors.BS_TEAL] : null,
-      right ? [right, right.name, Colors.BS_DANGER] : null,
+      right ? [right, right.name, Colors.PINK_500] : null,
     ];
 
     const series: Highcharts.SeriesOptionsType[] = sources

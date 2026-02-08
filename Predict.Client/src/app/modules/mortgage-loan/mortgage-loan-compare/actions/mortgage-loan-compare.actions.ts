@@ -9,8 +9,3 @@ export const selectedRightMortgageLoanChanged = createAction(
   '[Mortgage Loan Compare] Selected Right Mortgages Loan Changed',
   props<{ selected: string }>(),
 );
-
-export const baseMortgageLoanChanged = createAction(
-  '[Mortgage Loan Compare] Base Mortgage Loan Changed',
-  props<{ selected: boolean }>(),
-);

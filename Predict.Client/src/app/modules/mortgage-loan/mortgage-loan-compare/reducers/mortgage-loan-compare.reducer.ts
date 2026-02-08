@@ -1,17 +1,14 @@
 import { Action, createFeatureSelector, createReducer, on } from '@ngrx/store';
-import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
 import * as MortgageLoanCompareActions from 'src/app/modules/mortgage-loan/mortgage-loan-compare/actions/mortgage-loan-compare.actions';
 
 export interface MortgageLoanStateCompare {
   leftSelectedRepaymentScheduleName: string;
   rightSelectedRepaymentScheduleName: string;
-  isBaseSelected: boolean;
 }
 
 const initialState: MortgageLoanStateCompare = {
   leftSelectedRepaymentScheduleName: null,
-  rightSelectedRepaymentScheduleName: 'No Selection',
-  isBaseSelected: true,
+  rightSelectedRepaymentScheduleName: null,
 };
 
 const mortgageReducer = createReducer(
@@ -29,10 +26,6 @@ const mortgageReducer = createReducer(
       ...state,
       rightSelectedRepaymentScheduleName: selected,
     }),
-  ),
-  on(
-    MortgageLoanCompareActions.baseMortgageLoanChanged,
-    (state, { selected }) => ({ ...state, isBaseSelected: selected }),
   ),
 );
 
