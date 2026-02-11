@@ -294,14 +294,19 @@
                   disabled: !group.completed && row.disabled,
                 }"
               >
-                <span
-                  [class.hidden]="row.instalmentPayment"
-                  [ngClass]="{ strike: row.earlyPayment }"
-                >
-                  {{ row.totalInstalment | numberFormat: "0.00" }}
-                </span>
-
-                <span>{{ row.batchTotalInstalment | numberFormat: "-" }} </span>
+                @if (!row.earlyPayment && !row.instalmentPayment) {
+                  <span [ngClass]="{ strike: row.earlyPayment }">
+                    {{ row.totalInstalment | numberFormat: "0.00" }}
+                  </span>
+                } @else {
+                  <span
+                    [ngClass]="{
+                      'subtotal-total':
+                        row.instalmentPayment || row.earlyPayment,
+                    }"
+                    >{{ row.batchTotalInstalment | numberFormat: "-" }}
+                  </span>
+                }
               </td>
               <td
                 [class.hidden]="!isColumnVisible('halfTotal')"
