@@ -38,6 +38,12 @@
         </th>
 
         <th class="text-center col-total">Total Rată</th>
+        <th
+          class="text-center col-restant"
+          [class.hidden]="!isColumnVisible('halfTotal')"
+        >
+          1/2
+        </th>
 
         <th
           class="text-center col-restant"
@@ -136,6 +142,12 @@
               {{ getSubtotal(group).total | numberFormat: "0.00" }}
             </td>
 
+            <td
+              class="bold text-center"
+              [class.hidden]="!isColumnVisible('halfTotal')"
+            >
+              {{ getSubtotal(group).total / 2 | numberFormat: "0.00" }}
+            </td>
             <td
               class="bold text-center"
               [class.hidden]="!isColumnVisible('remainingBalance')"
@@ -282,21 +294,24 @@
                   disabled: !group.completed && row.disabled,
                 }"
               >
-                @if (!row.earlyPayment) {
-                  <span
-                    [ngClass]="{
-                      strike: row.earlyPayment,
-                    }"
-                  >
-                    {{ row.totalInstalment | numberFormat: "0.00" }}
-                  </span>
-                } @else {
-                  <span
-                    >{{ row.batchTotalInstalment | numberFormat: "-" }} ({{
-                      row.batchTotalInstalment / 2 | numberFormat: "-"
-                    }})
-                  </span>
-                }
+                <span
+                  [class.hidden]="row.instalmentPayment"
+                  [ngClass]="{ strike: row.earlyPayment }"
+                >
+                  {{ row.totalInstalment | numberFormat: "0.00" }}
+                </span>
+
+                <span>{{ row.batchTotalInstalment | numberFormat: "-" }} </span>
+              </td>
+              <td
+                [class.hidden]="!isColumnVisible('halfTotal')"
+                class="text-center"
+                [ngClass]="{
+                  'last-bottom-border': last && row.earlyPayment,
+                  disabled: !group.completed && row.disabled,
+                }"
+              >
+                {{ row.batchTotalInstalment / 2 | numberFormat: "-" }}
               </td>
 
               <td

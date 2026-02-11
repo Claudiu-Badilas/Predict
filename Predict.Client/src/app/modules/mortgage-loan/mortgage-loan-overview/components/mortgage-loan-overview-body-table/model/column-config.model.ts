@@ -4,6 +4,7 @@ export interface ColumnConfig {
     | 'insuranceCost'
     | 'managementFee'
     | 'recalculatedInterest'
+    | 'halfTotal'
     | 'remainingBalance';
   label: string;
   visible: boolean;
@@ -22,5 +23,6 @@ export const DEFAULT_COLUMN_CONFIGS: ColumnConfig[] = [
     label: 'Rată Dobândă Recalculată',
     visible: false,
   },
+  { key: 'halfTotal', label: '1/2', visible: false },
   { key: 'remainingBalance', label: 'Sold restant', visible: true },
 ];
