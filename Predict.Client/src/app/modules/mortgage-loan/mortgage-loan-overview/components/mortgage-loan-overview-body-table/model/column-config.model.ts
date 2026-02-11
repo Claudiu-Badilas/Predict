@@ -13,16 +13,16 @@ export interface ColumnConfig {
 export const DEFAULT_COLUMN_CONFIGS: ColumnConfig[] = [
   {
     key: 'administrationFee',
-    label: 'Comision Administrare',
+    label: 'Administrare',
     visible: false,
   },
-  { key: 'insuranceCost', label: 'Costuri Asigurare', visible: false },
-  { key: 'managementFee', label: 'Comision Management', visible: false },
+  { key: 'insuranceCost', label: 'PAD', visible: false },
+  { key: 'managementFee', label: 'Management', visible: false },
   {
     key: 'recalculatedInterest',
-    label: 'Rată Dobândă Recalculată',
+    label: 'Dobândă Recalculată',
     visible: false,
   },
   { key: 'halfTotal', label: '1/2', visible: false },
-  { key: 'remainingBalance', label: 'Sold restant', visible: true },
+  { key: 'remainingBalance', label: 'Sold Ramas', visible: true },
 ];
