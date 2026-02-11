@@ -22,12 +22,6 @@
   }
 }
 
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1f2937;
-}
-
 .card-body {
   padding: 0.75rem;
 }
@@ -122,7 +116,7 @@
   }
 
   &__label {
-    font-size: 13px;
+    font-size: 12px;
     color: #6b7280;
     text-transform: uppercase;
     white-space: nowrap;
@@ -131,7 +125,7 @@
   }
 
   &__value {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #1f2937;
     white-space: nowrap;
