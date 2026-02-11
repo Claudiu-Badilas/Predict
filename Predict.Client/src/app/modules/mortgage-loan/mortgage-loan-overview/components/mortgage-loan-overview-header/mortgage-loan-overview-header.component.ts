@@ -32,6 +32,16 @@ export class MortgageLoanOverviewHeaderComponent {
   totalInstalmentPayments = computed(() =>
     Calculator.sum(this.instalmentPayments().map((a) => a.totalInstalment)),
   );
+  totalInterestPayment = computed(() =>
+    Calculator.sum(
+      this.instalmentPayments().map((a) =>
+        Calculator.sum([a.interestAmount, a.insuranceCost]),
+      ),
+    ),
+  );
+  totalPrincipalPayment = computed(() =>
+    Calculator.sum(this.payments().map((a) => a.principalAmount)),
+  );
 
   earlyPayments = computed(() =>
     this.overviewLoanInstalments().filter((r) => r.earlyPayment),

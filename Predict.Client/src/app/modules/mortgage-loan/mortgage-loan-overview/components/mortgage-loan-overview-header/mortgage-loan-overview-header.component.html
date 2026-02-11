@@ -2,20 +2,36 @@
   <div class="summary-card">
     <div class="card-body">
       <div class="summary-row">
-        <div class="summary-section stat-item stat-item--amber">
-          <span class="stat-item__label">Total Rata</span>
-          <span class="stat-item__value">
-            {{ totalInstalmentPayments() | numberFormat: "0.00" }}
-          </span>
+        <div class="summary-section stat-item stat-item--orange">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="stat-item__label"> Rata </span>
+            <span class="stat-item__label"> Anticipat </span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="stat-item__value danger">
+              {{ totalInstalmentPayments() | numberFormat: "0.00" }}
+            </span>
+            <span class="stat-item__value danger">
+              {{ totalEarlyPayment() | numberFormat: "0.00" }}
+            </span>
+          </div>
         </div>
 
         <div class="vertical-divider"></div>
 
-        <div class="summary-section stat-item stat-item--emerald">
-          <span class="stat-item__label">Plata Anticipata</span>
-          <span class="stat-item__value">
-            {{ totalEarlyPayment() | numberFormat: "0.00" }}
-          </span>
+        <div class="summary-section stat-item stat-item--amber">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="stat-item__label"> Dobanda + PAD </span>
+            <span class="stat-item__label"> Principal </span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="stat-item__value danger">
+              {{ totalInterestPayment() | numberFormat: "0.00" }}
+            </span>
+            <span class="stat-item__value danger">
+              {{ totalPrincipalPayment() | numberFormat: "0.00" }}
+            </span>
+          </div>
         </div>
 
         <div class="vertical-divider"></div>
