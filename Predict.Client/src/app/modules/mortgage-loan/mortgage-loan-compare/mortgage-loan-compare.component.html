@@ -27,6 +27,18 @@
         (selectionChange)="onRightDropdownSelected($event)"
       />
     </div>
+    <div class="space">
+      <app-radio-group
+        [options]="[
+          { label: 'Rata', value: 'rata' },
+          { label: 'Dobanda', value: 'dobanda' },
+          { label: 'Principal', value: 'principal' },
+        ]"
+        [selected]="chartView()"
+        (selectionChange)="onChartViewChange($event)"
+      >
+      </app-radio-group>
+    </div>
   </ng-container>
 
   <ng-container main-content>

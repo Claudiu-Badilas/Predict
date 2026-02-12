@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 
@@ -14,6 +14,7 @@ import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 
+import { RadioGroupComponent } from 'src/app/shared/components/radio-group/radio-group.component';
 import { MortgageLoanCompareBodyComponent } from './components/mortgage-loan-compare-body/mortgage-loan-compare-body.component';
 import { MortgageLoanCompareHeaderComponent } from './components/mortgage-loan-compare-header/mortgage-loan-compare-header.component';
 import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.chart.util';
@@ -28,6 +29,7 @@ import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.ch
     HighchartWrapperComponent,
     MortgageLoanCompareHeaderComponent,
     MortgageLoanCompareBodyComponent,
+    RadioGroupComponent,
   ],
   templateUrl: './mortgage-loan-compare.component.html',
   styleUrls: ['./mortgage-loan-compare.component.scss'],
@@ -67,10 +69,13 @@ export class MortgageLoanCompareComponent {
     this.repaymentSchedules().find((r) => r.name === this.selectedRightValue()),
   );
 
+  chartView = signal<'rata' | 'dobanda' | 'principal'>('rata');
+
   compareRatesTrendChart = computed(() =>
     CompareRatesTrendChartUtils.getChart(
       this.leftRepaymentSchedule(),
       this.rightRepaymentSchedule(),
+      this.chartView(),
     ),
   );
 
@@ -124,5 +129,9 @@ export class MortgageLoanCompareComponent {
         selected: value,
       }),
     );
+  }
+
+  onChartViewChange(view: string) {
+    this.chartView.set(view as 'rata' | 'dobanda' | 'principal');
   }
 }
