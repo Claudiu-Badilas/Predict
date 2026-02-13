@@ -1,14 +1,14 @@
-<app-side-bar>
+<p-side-bar>
   <ng-container filters-full-size
     ><div class="space">
-      <app-toggle-button
+      <p-toggle-button
         [options]="['Summary', 'Products']"
         [selected]="'Products'"
         (selectionChange)="onSelectionChange($event)"
       />
     </div>
     <div class="space">
-      <app-date-range-picker
+      <p-date-range-picker
         [startDate]="startDate$ | async"
         [endDate]="endDate$ | async"
         [minDate]="minDate"
@@ -17,20 +17,20 @@
       />
     </div>
     <div class="space">
-      <app-search-input (search)="onSearch($event)" />
+      <p-search-input (search)="onSearch($event)" />
     </div>
   </ng-container>
 
   <ng-container main-content>
     <div>
-      <app-highcharts-wrapper
+      <p-highcharts-wrapper
         [chartOptions]="dailyPurchasedProductChart$ | async"
       />
     </div>
     <div class="mt-3">
-      <app-highcharts-wrapper
+      <p-highcharts-wrapper
         [chartOptions]="productPriceTrendChartUtils$ | async"
       />
     </div>
   </ng-container>
-</app-side-bar>
+</p-side-bar>

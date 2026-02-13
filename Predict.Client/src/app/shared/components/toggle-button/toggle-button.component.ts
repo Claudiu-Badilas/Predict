@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-toggle-button',
+  selector: 'p-toggle-button',
   imports: [NgClass],
   templateUrl: './toggle-button.component.html',
   styleUrl: './toggle-button.component.scss',

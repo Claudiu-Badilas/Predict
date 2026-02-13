@@ -10,7 +10,7 @@ import {
 import * as Highcharts from 'highcharts';
 
 @Component({
-  selector: 'app-highcharts-wrapper',
+  selector: 'p-highcharts-wrapper',
   templateUrl: `highcharts-wrapper.component.html`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

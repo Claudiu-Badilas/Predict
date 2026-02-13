@@ -5,7 +5,7 @@ import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { MonthlyInstalmentManager } from '../../models/overview-mortgage-loan.model';
 
 @Component({
-  selector: 'app-mortgage-loan-overview-header',
+  selector: 'p-mortgage-loan-overview-header',
   imports: [CommonModule, NumberFormatPipe],
   templateUrl: './mortgage-loan-overview-header.component.html',
   styleUrl: './mortgage-loan-overview-header.component.scss',

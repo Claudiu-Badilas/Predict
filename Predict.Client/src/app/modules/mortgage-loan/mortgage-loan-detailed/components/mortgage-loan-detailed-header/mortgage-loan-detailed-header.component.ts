@@ -10,7 +10,7 @@ import { JsDateUtils } from 'src/app/shared/utils/js-date.utils';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 
 @Component({
-  selector: 'app-mortgage-loan-detailed-header',
+  selector: 'p-mortgage-loan-detailed-header',
   imports: [CommonModule, NumberFormatPipe],
   templateUrl: './mortgage-loan-detailed-header.component.html',
   styleUrl: './mortgage-loan-detailed-header.component.scss',

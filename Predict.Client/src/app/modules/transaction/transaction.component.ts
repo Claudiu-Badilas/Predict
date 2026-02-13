@@ -14,7 +14,7 @@ import { TransactionHeaderComponent } from './components/transaction-header/tran
 import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';
 
 @Component({
-  selector: 'app-transaction',
+  selector: 'p-transaction',
   imports: [
     CommonModule,
     NgbModule,
@@ -42,16 +42,16 @@ export class TransactionComponent {
   dropDownSelectOptions$ = this.store
     .select(fromTransactions.getTransactions)
     .pipe(
-      map((t) => ['No Selection', ...new Set(t.map((x) => x.serviceProvider))])
+      map((t) => ['No Selection', ...new Set(t.map((x) => x.serviceProvider))]),
     );
   selectedServiceProvider$ = this.store.select(
-    fromTransactions.getSelectedServiceProvider
+    fromTransactions.getSelectedServiceProvider,
   );
   monthlyTransactionsChart$ = this.store.select(
-    fromTransactions.getMonthlyTransactionsChart
+    fromTransactions.getMonthlyTransactionsChart,
   );
   dailyTransactionsChart$ = this.store.select(
-    fromTransactions.getDailyTransactionsChart
+    fromTransactions.getDailyTransactionsChart,
   );
 
   constructor(private readonly store: Store<fromTransactions.State>) {
@@ -66,14 +66,14 @@ export class TransactionComponent {
       TransactionsActions.dateRangeChanged({
         startDate: value.startDate,
         endDate: value.endDate,
-      })
+      }),
     );
     this.store.dispatch(TransactionsActions.loadTransactions());
   }
 
   onProviderDropdownSelected(value: string) {
     this.store.dispatch(
-      TransactionsActions.selectedProviderChanged({ provider: value })
+      TransactionsActions.selectedProviderChanged({ provider: value }),
     );
   }
 
@@ -81,13 +81,13 @@ export class TransactionComponent {
     this.store.dispatch(
       TransactionsActions.selectedServiceProviderChanged({
         serviceProvider: value,
-      })
+      }),
     );
   }
 
   onSearch(value: string) {
     this.store.dispatch(
-      TransactionsActions.searchTermChanged({ searchTerm: value })
+      TransactionsActions.searchTermChanged({ searchTerm: value }),
     );
   }
 }

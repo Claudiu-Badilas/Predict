@@ -5,7 +5,7 @@ import { TopBarComponent } from './shared/components/top-bar/top-bar.component';
 import { ToastNotificationComponent } from './platform/toast-notifications/toast-notification.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'p-root',
   imports: [
     RouterModule,
     SpinnerComponent,
@@ -13,9 +13,9 @@ import { ToastNotificationComponent } from './platform/toast-notifications/toast
     ToastNotificationComponent,
   ],
   template: `
-    <app-spinner />
-    <app-top-bar />
-    <app-toast />
+    <p-spinner />
+    <p-top-bar />
+    <p-toast />
     <router-outlet />
   `,
   styles: [],

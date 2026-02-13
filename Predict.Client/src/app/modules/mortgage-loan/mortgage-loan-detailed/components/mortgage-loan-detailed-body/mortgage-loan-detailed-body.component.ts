@@ -9,7 +9,7 @@ import { Colors } from 'src/app/shared/styles/colors';
 import { HistoricalInstalmentsTableComponent } from '../historical-instalments-table/historical-instalments-table.component';
 
 @Component({
-  selector: 'app-mortgage-loan-detailed-body',
+  selector: 'p-mortgage-loan-detailed-body',
   imports: [
     CommonModule,
     HighchartWrapperComponent,

@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { TripleClickDirective } from '../../directives/triple-click.directive';
 
 @Component({
-    selector: 'app-side-bar',
-    templateUrl: './side-bar.component.html',
-    styleUrls: ['./side-bar.component.scss'],
+  selector: 'p-side-bar',
+  templateUrl: './side-bar.component.html',
+  styleUrls: ['./side-bar.component.scss'],
   imports: [CommonModule, TripleClickDirective],
 })
 export class SideBarComponent {

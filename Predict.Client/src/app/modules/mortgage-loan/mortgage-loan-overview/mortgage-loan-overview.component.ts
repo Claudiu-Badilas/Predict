@@ -17,7 +17,7 @@ import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-
 import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
 
 @Component({
-  selector: 'app-mortgage-loan-overview',
+  selector: 'p-mortgage-loan-overview',
   imports: [
     CommonModule,
     SideBarComponent,

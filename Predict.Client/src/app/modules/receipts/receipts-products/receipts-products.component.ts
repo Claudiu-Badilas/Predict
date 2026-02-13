@@ -13,7 +13,7 @@ import { DateUtils } from 'src/app/shared/utils/date.utils';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
-  selector: 'app-receipts-products',
+  selector: 'p-receipts-products',
   imports: [
     CommonModule,
     SideBarComponent,
@@ -29,10 +29,10 @@ export class ReceiptsProductsComponent {
   startDate$ = this.store.select(fromReceipts.getStartDate);
   endDate$ = this.store.select(fromReceipts.getEndDate);
   dailyPurchasedProductChart$ = this.store.select(
-    fromReceipts.getDailyPurchasedProductChart
+    fromReceipts.getDailyPurchasedProductChart,
   );
   productPriceTrendChartUtils$ = this.store.select(
-    fromReceipts.getProductPriceTrendChartUtils
+    fromReceipts.getProductPriceTrendChartUtils,
   );
 
   minDate = new Date('2021-01-01');
@@ -44,7 +44,7 @@ export class ReceiptsProductsComponent {
     this.store.dispatch(
       NavigationAction.navigateTo({
         route: `/receipts/${module.toLowerCase()}`,
-      })
+      }),
     );
   }
 
@@ -53,14 +53,14 @@ export class ReceiptsProductsComponent {
       ReceiptsActions.dateRangeChanged({
         startDate: value.startDate,
         endDate: value.endDate,
-      })
+      }),
     );
     this.store.dispatch(ReceiptsActions.loadReceipts());
   }
 
   onSearch(value: string) {
     this.store.dispatch(
-      ReceiptsActions.searchTermChanged({ searchTerm: value })
+      ReceiptsActions.searchTermChanged({ searchTerm: value }),
     );
   }
 }

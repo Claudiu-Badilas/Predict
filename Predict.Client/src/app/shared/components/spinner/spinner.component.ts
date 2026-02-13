@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromLayout from 'src/app/store/reducers/layout.reducer';
 
 @Component({
-  selector: 'app-spinner',
+  selector: 'p-spinner',
   imports: [CommonModule],
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.scss'],

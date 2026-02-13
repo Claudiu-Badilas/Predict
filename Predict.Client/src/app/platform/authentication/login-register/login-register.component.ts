@@ -18,7 +18,7 @@ import * as fromState from 'src/app/store/app-state.reducer';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
-  selector: 'app-login-register',
+  selector: 'p-login-register',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login-register.component.html',
   styleUrls: ['./login-register.component.scss'],
@@ -48,12 +48,12 @@ export class LoginRegisterComponent implements OnDestroy {
         AuthenticationValidators.minLength(4),
       ]),
     },
-    { validators: AuthenticationValidators.identityRevealedValidator }
+    { validators: AuthenticationValidators.identityRevealedValidator },
   );
 
   constructor(
     private store: Store<fromAppStore.AppState>,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     combineLatest([
       this.store.pipe(select(fromState.getRouterUrl)),
@@ -62,9 +62,9 @@ export class LoginRegisterComponent implements OnDestroy {
       .pipe(
         debounceTime(500),
         filter(
-          ([url, params]) => url?.startsWith(`/authentication`) && !!params
+          ([url, params]) => url?.startsWith(`/authentication`) && !!params,
         ),
-        takeUntil(this.ngUnsubscribe$.asObservable())
+        takeUntil(this.ngUnsubscribe$.asObservable()),
       )
       .subscribe(([, params]) => {
         const authAction: AuthenticationAction = params['auth-type'];
@@ -123,7 +123,7 @@ export class LoginRegisterComponent implements OnDestroy {
             ? AuthenticationAction.Register
             : AuthenticationAction.Login
         }`,
-      })
+      }),
     );
   }
 

@@ -24,7 +24,7 @@ import {
 } from './model/column-config.model';
 
 @Component({
-  selector: 'app-mortgage-loan-overview-body-table',
+  selector: 'p-mortgage-loan-overview-body-table',
   imports: [CommonModule, FormsModule, NumberFormatPipe, CheckboxComponent],
   templateUrl: './mortgage-loan-overview-body-table.component.html',
   styleUrl: './mortgage-loan-overview-body-table.component.scss',

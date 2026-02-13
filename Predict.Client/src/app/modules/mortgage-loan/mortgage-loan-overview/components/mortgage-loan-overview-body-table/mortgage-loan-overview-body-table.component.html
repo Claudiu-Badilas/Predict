@@ -177,7 +177,7 @@
                   'last-bottom-border': last && row.earlyPayment,
                 }"
               >
-                <app-checkbox
+                <p-checkbox
                   [id]="row.instalmentId"
                   [checked]="row.instalmentPayment"
                   [disabled]="row.disabled || row.earlyPayment"
@@ -191,7 +191,7 @@
                   'last-bottom-border': last && row.earlyPayment,
                 }"
               >
-                <app-checkbox
+                <p-checkbox
                   [id]="row.instalmentId"
                   [checked]="row.earlyPayment"
                   [disabled]="row.disabled || row.instalmentPayment"

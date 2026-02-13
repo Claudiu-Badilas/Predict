@@ -12,7 +12,7 @@ import { ReceiptListComponent } from './components/receipts-list/receipts-list.c
 import { DateRangePicker } from 'src/app/shared/components/date-range-picker/models/date-range-picker.model';
 
 @Component({
-  selector: 'app-receipts-summary',
+  selector: 'p-receipts-summary',
   imports: [
     CommonModule,
     SideBarComponent,
@@ -37,7 +37,7 @@ export class ReceiptsSummaryComponent {
     this.store.dispatch(
       NavigationAction.navigateTo({
         route: `/receipts/${module.toLowerCase()}`,
-      })
+      }),
     );
   }
 
@@ -46,7 +46,7 @@ export class ReceiptsSummaryComponent {
       ReceiptsActions.dateRangeChanged({
         startDate: value.startDate,
         endDate: value.endDate,
-      })
+      }),
     );
     this.store.dispatch(ReceiptsActions.loadReceipts());
   }

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ReceiptDomain } from '../../../models/receipts-domain.model';
 
 @Component({
-  selector: 'app-receipts-list',
+  selector: 'p-receipts-list',
   imports: [CommonModule],
   templateUrl: './receipts-list.component.html',
   styleUrls: ['./receipts-list.component.scss'],

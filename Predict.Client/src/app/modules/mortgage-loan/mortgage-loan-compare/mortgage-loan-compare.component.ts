@@ -20,7 +20,7 @@ import { MortgageLoanCompareHeaderComponent } from './components/mortgage-loan-c
 import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.chart.util';
 
 @Component({
-  selector: 'app-mortgage-loan-compare',
+  selector: 'p-mortgage-loan-compare',
   imports: [
     CommonModule,
     SideBarComponent,

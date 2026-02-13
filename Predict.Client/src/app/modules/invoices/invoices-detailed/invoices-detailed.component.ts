@@ -6,7 +6,7 @@ import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/t
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
-  selector: 'app-invoices-detailed',
+  selector: 'p-invoices-detailed',
   imports: [SideBarComponent, ToggleButtonComponent],
   templateUrl: './invoices-detailed.component.html',
   styleUrl: './invoices-detailed.component.scss',
@@ -18,7 +18,7 @@ export class InvoicesDetailedComponent {
     this.store.dispatch(
       NavigationAction.navigateTo({
         route: `/invoices/${module.toLowerCase()}`,
-      })
+      }),
     );
   }
 }

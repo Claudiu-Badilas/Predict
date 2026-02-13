@@ -1,13 +1,13 @@
-<app-side-bar>
+<p-side-bar>
   <ng-container filters-full-size>
     <div class="space">
-      <app-toggle-button
+      <p-toggle-button
         [options]="['Overview', 'Detailed', 'Compare']"
         [selected]="'Overview'"
         (selectionChange)="onSelectionChange($event)"
       />
     </div>
-    <app-dropdown-select
+    <p-dropdown-select
       class="space"
       [items]="dropDownSelectOptions$ | async"
       [selectedItem]="selectedRepaymentScheduleName$ | async"
@@ -16,7 +16,7 @@
     />
 
     <div class="space">
-      <app-numeric-input
+      <p-numeric-input
         id="targetAmount"
         [label]="'Monthly amount'"
         [value]="monthlyAmount()"
@@ -24,7 +24,7 @@
       />
     </div>
     <div class="space">
-      <app-numeric-input
+      <p-numeric-input
         id="targetAmount"
         [label]="'Months'"
         [value]="payments()"
@@ -32,7 +32,7 @@
       />
     </div>
     <div class="space">
-      <app-checkbox
+      <p-checkbox
         [label]="'Select summary rows'"
         [id]="'total row'"
         [checked]="showOnlyTotalRow()"
@@ -43,14 +43,14 @@
 
   <ng-container main-content
     ><div>
-      <app-mortgage-loan-overview-header
+      <p-mortgage-loan-overview-header
         [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
-      ></app-mortgage-loan-overview-header>
-      <app-mortgage-loan-overview-body-table
+      ></p-mortgage-loan-overview-header>
+      <p-mortgage-loan-overview-body-table
         class="mt-3"
         [showOnlyTotalRow]="showOnlyTotalRow()"
         [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
       />
     </div>
   </ng-container>
-</app-side-bar>
+</p-side-bar>

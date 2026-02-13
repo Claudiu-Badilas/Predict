@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-dropdown-select',
+  selector: 'p-dropdown-select',
   templateUrl: './dropdown-select.component.html',
   styleUrls: ['./dropdown-select.component.scss'],
   imports: [NgbDropdownModule, FormsModule],
@@ -25,7 +25,7 @@ export class DropdownSelectComponent {
   filteredItems() {
     if (!this.searchTerm || this.searchTerm === '') return this.items;
     return this.items.filter((item) =>
-      item.toLowerCase().includes(this.searchTerm.toLowerCase())
+      item.toLowerCase().includes(this.searchTerm.toLowerCase()),
     );
   }
 }

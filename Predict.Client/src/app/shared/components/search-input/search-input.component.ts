@@ -1,8 +1,7 @@
-
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-search-input',
+  selector: 'p-search-input',
   imports: [],
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],

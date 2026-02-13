@@ -8,7 +8,7 @@ import * as fromReceipts from 'src/app/modules/receipts/reducers/receipts.reduce
 import { DateUtils } from 'src/app/shared/utils/date.utils';
 
 @Component({
-  selector: 'app-receipts',
+  selector: 'p-receipts',
   imports: [RouterModule, CommonModule],
   templateUrl: './receipts.component.html',
   styleUrls: ['./receipts.component.scss'],

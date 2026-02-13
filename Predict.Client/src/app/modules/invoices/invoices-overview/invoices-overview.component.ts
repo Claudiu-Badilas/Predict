@@ -11,7 +11,7 @@ import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { InvoiceIndexTrentChartUtils } from './utils/invoice-index-trent.chart.utils';
 
 @Component({
-  selector: 'app-invoices-overview',
+  selector: 'p-invoices-overview',
   imports: [
     CommonModule,
     SideBarComponent,
@@ -25,15 +25,15 @@ import { InvoiceIndexTrentChartUtils } from './utils/invoice-index-trent.chart.u
 export class InvoicesOverviewComponent {
   invoices$ = this.store.select(fromInvoices.getInvoices);
   invoiceLocations$ = this.invoices$.pipe(
-    map((invoices) => ['No Selection', ...invoices.map((inv) => inv.address)])
+    map((invoices) => ['No Selection', ...invoices.map((inv) => inv.address)]),
   );
   selectedInvoiceTypes$ = this.invoices$.pipe(
     map((invoices) => [
       'No Selection',
       ...new Set(
-        invoices.flatMap((inv) => inv.invoices.map((i) => i.invoiceType))
+        invoices.flatMap((inv) => inv.invoices.map((i) => i.invoiceType)),
       ),
-    ])
+    ]),
   );
 
   selectedInvoiceLocation$ = new BehaviorSubject<string>('No Selection');
@@ -55,13 +55,13 @@ export class InvoicesOverviewComponent {
         invoices: i.invoices.filter((invoice) =>
           selectedInvoiceType === 'No Selection'
             ? i.invoices
-            : invoice.invoiceType === selectedInvoiceType
+            : invoice.invoiceType === selectedInvoiceType,
         ),
       }));
-    })
+    }),
   );
   invoiceIndexTrentCharts$ = this.selectedInvoices$.pipe(
-    map((inv) => inv.map((i) => InvoiceIndexTrentChartUtils.getChart(i)))
+    map((inv) => inv.map((i) => InvoiceIndexTrentChartUtils.getChart(i))),
   );
 
   constructor(private store: Store<fromInvoices.State>) {}
@@ -70,7 +70,7 @@ export class InvoicesOverviewComponent {
     this.store.dispatch(
       NavigationAction.navigateTo({
         route: `/invoices/${module.toLowerCase()}`,
-      })
+      }),
     );
   }
 

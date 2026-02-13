@@ -6,7 +6,7 @@ import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mort
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
 
 @Component({
-  selector: 'app-mortgage-loan',
+  selector: 'p-mortgage-loan',
   imports: [CommonModule, RouterModule],
   templateUrl: './mortgage-loan.component.html',
   styleUrls: ['./mortgage-loan.component.scss'],

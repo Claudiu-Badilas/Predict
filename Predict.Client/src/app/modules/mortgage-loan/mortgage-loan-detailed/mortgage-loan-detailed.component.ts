@@ -13,7 +13,7 @@ import { MortgageLoanDetailedBodyComponent } from './components/mortgage-loan-de
 import { MortgageLoanDetailedHeaderComponent } from './components/mortgage-loan-detailed-header/mortgage-loan-detailed-header.component';
 
 @Component({
-  selector: 'app-mortgage-loan-detailed',
+  selector: 'p-mortgage-loan-detailed',
   imports: [
     CommonModule,
     SideBarComponent,

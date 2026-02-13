@@ -8,7 +8,7 @@ import { TransactionDomain } from '../../models/transactions.model';
 import { Calculator } from 'src/app/shared/utils/calculator.utils';
 
 @Component({
-  selector: 'app-transaction-header',
+  selector: 'p-transaction-header',
   imports: [HeaderCardComponent],
   templateUrl: './transaction-header.component.html',
   styleUrls: ['./transaction-header.component.scss'],

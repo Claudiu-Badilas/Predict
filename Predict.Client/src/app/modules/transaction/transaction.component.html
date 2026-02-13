@@ -1,7 +1,7 @@
-<app-side-bar>
+<p-side-bar>
   <ng-container filters-full-size>
     <div class="space">
-      <app-date-range-picker
+      <p-date-range-picker
         [startDate]="startDate$ | async"
         [endDate]="endDate$ | async"
         [minDate]="minDate"
@@ -10,7 +10,7 @@
       />
     </div>
     <div class="space">
-      <app-dropdown-select
+      <p-dropdown-select
         [items]="providerDropDownSelectOptions$ | async"
         [selectedItem]="selectedProvider$ | async"
         placeholder="No Selection"
@@ -18,7 +18,7 @@
       />
     </div>
     <div class="space">
-      <app-dropdown-select
+      <p-dropdown-select
         [items]="dropDownSelectOptions$ | async"
         [selectedItem]="selectedServiceProvider$ | async"
         placeholder="No Selection"
@@ -26,24 +26,22 @@
       />
     </div>
     <div class="space">
-      <app-search-input (search)="onSearch($event)" />
+      <p-search-input (search)="onSearch($event)" />
     </div>
   </ng-container>
 
   <ng-container main-content>
-    <app-transaction-header [transactions]="transactions$ | async" />
+    <p-transaction-header [transactions]="transactions$ | async" />
     <div class="mt-3">
-      <app-highcharts-wrapper
+      <p-highcharts-wrapper
         [chartOptions]="monthlyTransactionsChart$ | async"
       />
     </div>
     <div class="mt-3">
-      <app-highcharts-wrapper
-        [chartOptions]="dailyTransactionsChart$ | async"
-      />
+      <p-highcharts-wrapper [chartOptions]="dailyTransactionsChart$ | async" />
     </div>
     <div class="mt-3">
-      <app-transaction-table />
+      <p-transaction-table />
     </div>
   </ng-container>
-</app-side-bar>
+</p-side-bar>

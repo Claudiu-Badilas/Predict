@@ -1,7 +1,7 @@
-<app-side-bar>
+<p-side-bar>
   <ng-container filters-full-size>
     <div class="space">
-      <app-toggle-button
+      <p-toggle-button
         [options]="['Overview', 'Detailed', 'Compare']"
         [selected]="'Compare'"
         (selectionChange)="onSelectionChange($event)"
@@ -9,7 +9,7 @@
     </div>
 
     <div class="space">
-      <app-dropdown-select
+      <p-dropdown-select
         [items]="repaymentSchedulesOptions()"
         [selectedItem]="selectedLeftValue()"
         placeholder="No Selection"
@@ -18,7 +18,7 @@
     </div>
 
     <div class="space">
-      <app-dropdown-select
+      <p-dropdown-select
         [items]="repaymentSchedulesOptions()"
         [selectedItem]="selectedRightValue()"
         placeholder="No Selection"
@@ -26,7 +26,7 @@
       />
     </div>
     <div class="space">
-      <app-radio-group
+      <p-radio-group
         [options]="[
           { label: 'Rata', value: 'rata' },
           { label: 'Dobanda', value: 'dobanda' },
@@ -35,19 +35,19 @@
         [selected]="chartView()"
         (selectionChange)="onChartViewChange($event)"
       >
-      </app-radio-group>
+      </p-radio-group>
     </div>
   </ng-container>
 
   <ng-container main-content>
     <div class="mb-3">
-      <app-mortgage-loan-compare-header></app-mortgage-loan-compare-header>
+      <p-mortgage-loan-compare-header></p-mortgage-loan-compare-header>
     </div>
     <div class="mb-3">
-      <app-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
+      <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
     </div>
     <div>
-      <app-mortgage-loan-compare-body></app-mortgage-loan-compare-body>
+      <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>
     </div>
   </ng-container>
-</app-side-bar>
+</p-side-bar>

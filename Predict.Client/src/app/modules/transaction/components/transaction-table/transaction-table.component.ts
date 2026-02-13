@@ -6,7 +6,7 @@ import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.c
 import { BoldSearchPipe } from 'src/app/shared/pipes/bold-search-term.pipe';
 
 @Component({
-  selector: 'app-transaction-table',
+  selector: 'p-transaction-table',
   imports: [CommonModule, CheckboxComponent, BoldSearchPipe],
   templateUrl: './transaction-table.component.html',
   styleUrls: ['./transaction-table.component.scss'],

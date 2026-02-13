@@ -5,7 +5,7 @@ import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { HistoricalInstalmentPaymentBatch } from '../../models/base-loan-rate.model';
 
 @Component({
-  selector: 'app-historical-instalments-table',
+  selector: 'p-historical-instalments-table',
   imports: [CommonModule, NumberFormatPipe],
   templateUrl: './historical-instalments-table.component.html',
   styleUrl: './historical-instalments-table.component.scss',

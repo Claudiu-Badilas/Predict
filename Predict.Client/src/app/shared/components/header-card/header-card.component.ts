@@ -5,7 +5,7 @@ import { HeaderCardInput } from './models/header-card-input.model';
 import { JsDateUtils } from '../../utils/js-date.utils';
 
 @Component({
-  selector: 'app-header-card',
+  selector: 'p-header-card',
   imports: [CommonModule, NgClass, NumberFormatPipe],
   templateUrl: './header-card.component.html',
   styleUrl: './header-card.component.scss',

@@ -10,7 +10,7 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-radio-group',
+  selector: 'p-radio-group',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.scss',

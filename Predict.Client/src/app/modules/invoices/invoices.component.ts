@@ -6,7 +6,7 @@ import * as InvoicesActions from 'src/app/modules/invoices/actions/invoices.acti
 import * as fromInvoices from 'src/app/modules/invoices/reducers/invoices.reducer';
 
 @Component({
-  selector: 'app-invoices',
+  selector: 'p-invoices',
   imports: [RouterModule, CommonModule],
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.scss',

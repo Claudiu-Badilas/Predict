@@ -1,14 +1,14 @@
-<app-side-bar>
+<p-side-bar>
   <ng-container filters-full-size>
     <div class="space">
-      <app-toggle-button
+      <p-toggle-button
         [options]="['Overview', 'Detailed', 'Compare']"
         [selected]="'Detailed'"
         (selectionChange)="onSelectionChange($event)"
       />
     </div>
 
-    <app-dropdown-select
+    <p-dropdown-select
       class="space"
       [items]="dropDownSelectOptions$ | async"
       [selectedItem]="selectedRepaymentScheduleName$ | async"
@@ -19,8 +19,8 @@
 
   <ng-container main-content>
     <div class="mb-3">
-      <app-mortgage-loan-detailed-header />
+      <p-mortgage-loan-detailed-header />
     </div>
-    <app-mortgage-loan-detailed-body />
+    <p-mortgage-loan-detailed-body />
   </ng-container>
-</app-side-bar>
+</p-side-bar>

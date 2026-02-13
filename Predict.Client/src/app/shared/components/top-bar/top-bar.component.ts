@@ -6,7 +6,7 @@ import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
 
 @Component({
-  selector: 'app-top-bar',
+  selector: 'p-top-bar',
 
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss'],
@@ -28,7 +28,7 @@ export class TopBarComponent {
     this.store.dispatch(
       NavigationAction.navigateTo({
         route: url,
-      })
+      }),
     );
   }
 }

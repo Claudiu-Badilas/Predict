@@ -8,7 +8,7 @@ import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 import { MathUtil } from 'src/app/shared/utils/math.utils';
 
 @Component({
-  selector: 'app-mortgage-loan-compare-header',
+  selector: 'p-mortgage-loan-compare-header',
   imports: [CommonModule, NumberFormatPipe],
   templateUrl: './mortgage-loan-compare-header.component.html',
   styleUrl: './mortgage-loan-compare-header.component.scss',
