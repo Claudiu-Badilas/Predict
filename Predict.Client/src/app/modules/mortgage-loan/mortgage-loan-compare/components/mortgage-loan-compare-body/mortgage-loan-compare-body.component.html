@@ -65,9 +65,27 @@
         </tr>
         <tr>
           <td class="row-label">Duration</td>
-          <td class="text-primary">{{ baseManager.getDuration() ?? "-" }}</td>
-          <td class="text-primary">{{ leftManager.getDuration() ?? "-" }}</td>
-          <td class="text-primary">{{ rightManager.getDuration() ?? "-" }}</td>
+          <td class="text-primary">
+            {{
+              baseManager.selected.monthlyInstalments.at(-1)?.paymentDate
+                | date: "MMM yyy"
+            }}
+            ({{ baseManager.getDuration() ?? "-" }})
+          </td>
+          <td class="text-primary">
+            {{
+              leftManager.selected.monthlyInstalments.at(-1)?.paymentDate
+                | date: "MMM yyy"
+            }}
+            ({{ leftManager.getDuration() ?? "-" }})
+          </td>
+          <td class="text-primary">
+            {{
+              rightManager.selected.monthlyInstalments.at(-1)?.paymentDate
+                | date: "MMM yyy"
+            }}
+            ({{ rightManager.getDuration() ?? "-" }})
+          </td>
         </tr>
       </tbody>
     </table>
@@ -75,7 +93,7 @@
 
   <div class="comparison-card">
     <div class="card-header">
-      <h2 class="m-0">Interest Paid - Yearly Breakdown</h2>
+      <h2 class="m-0">Yearly Breakdown</h2>
     </div>
     <table class="data-table">
       <thead>

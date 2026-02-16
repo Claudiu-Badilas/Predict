@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
@@ -7,7 +8,7 @@ import { NumberFormatPipe } from 'src/app/shared/pipes/number-format.pipe';
 
 @Component({
   selector: 'p-mortgage-loan-compare-body',
-  imports: [NumberFormatPipe],
+  imports: [CommonModule, NumberFormatPipe],
   templateUrl: './mortgage-loan-compare-body.component.html',
   styleUrl: './mortgage-loan-compare-body.component.scss',
 })
