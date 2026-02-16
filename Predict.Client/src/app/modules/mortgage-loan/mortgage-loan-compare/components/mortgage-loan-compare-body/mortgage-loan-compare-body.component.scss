@@ -1,14 +1,10 @@
 $bg: #f5f7fa;
 $card-bg: #ffffff;
-$text: #2d3748;
 $text-muted: #718096;
 $border: #e2e8f0;
 $primary: #3182ce;
-$success: #38a169;
-$success-light: #f0fff4;
-$danger: #e53e3e;
 
-.tables-container {
+.comparison {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
@@ -17,120 +13,78 @@ $danger: #e53e3e;
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
-}
 
-.comparison-card {
-  background: $card-bg;
-  border: 1px solid $border;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
+  &__card {
+    background: $card-bg;
+    border: 1px solid $border;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid $border;
+  &__header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $border;
+    padding: 0 16px;
+  }
 
-  h2 {
+  &__title {
     font-size: 16px;
+    padding: 15px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+
+    th {
+      text-align: left;
+      padding: 15px 3px;
+      font-weight: 400;
+      color: $text-muted;
+      border-bottom: 1px solid $border;
+      font-size: 13px;
+
+      &:first-child {
+        padding-left: 24px;
+      }
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid $border;
+
+      &:first-child {
+        padding-left: 24px;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background: rgba($bg, 0.5);
+    }
+  }
+
+  &__label {
+    color: $text-muted;
+  }
+
+  &__year {
     font-weight: 600;
   }
 
-  .header-label {
-    font-size: 13px;
-    color: $text-muted;
-  }
-}
-
-.icon-btn {
-  background: none;
-  border: none;
-  padding: 6px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: $text-muted;
-  font-size: 16px;
-  line-height: 1;
-
-  &:hover {
-    background: $bg;
-  }
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-
-  th {
-    text-align: left;
-    padding: 15px 3px;
-    font-weight: 400;
-    color: $text-muted;
-    border-bottom: 1px solid $border;
-    font-size: 13px;
-
-    &:first-child {
-      padding-left: 24px;
-    }
+  &__row--bold td {
+    font-weight: 600;
   }
 
-  td {
-    padding: 14px 16px;
-    border-bottom: 1px solid $border;
-
-    &:first-child {
-      padding-left: 24px;
-    }
+  &__text--primary {
+    color: $primary;
   }
-
-  tr:last-child td {
-    border-bottom: none;
-  }
-
-  tr:hover {
-    background: rgba($bg, 0.5);
-  }
-}
-
-.row-label {
-  color: $text-muted;
-}
-
-.row-year {
-  font-weight: 600;
-}
-
-.row--bold td {
-  font-weight: 600;
-}
-
-.text-primary {
-  color: $primary;
-}
-
-.diff {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  .triangle {
-    flex-shrink: 0;
-  }
-
-  &--down {
-    color: $success;
-  }
-
-  &--up {
-    color: $danger;
-  }
-}
-
-.vs-label {
-  font-size: 12px;
-  color: $text-muted;
-  margin-left: 4px;
 }

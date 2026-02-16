@@ -2,12 +2,14 @@
 @let leftManager = leftHistoricalInstalmentPaymentBatchesManager();
 @let rightManager = rightHistoricalInstalmentPaymentBatchesManager();
 
-<div class="tables-container">
-  <div class="comparison-card">
-    <div class="card-header">
-      <h2 class="m-0">Totals Comparison</h2>
+<div class="comparison">
+  <!-- Totals -->
+  <div class="comparison__card">
+    <div class="comparison__header">
+      <h2 class="comparison__title">Totals Comparison</h2>
     </div>
-    <table class="data-table">
+
+    <table class="comparison__table">
       <thead>
         <tr>
           <th></th>
@@ -16,9 +18,10 @@
           <th>{{ rightManager.getBaseName() }}</th>
         </tr>
       </thead>
+
       <tbody>
         <tr>
-          <td class="row-label">Principal</td>
+          <td class="comparison__label">Principal</td>
           <td>
             {{ baseManager.getUnpaidPrincipalAmmount() | numberFormat: "0.00" }}
           </td>
@@ -31,8 +34,9 @@
             }}
           </td>
         </tr>
+
         <tr>
-          <td class="row-label">Dobanda</td>
+          <td class="comparison__label">Dobanda</td>
           <td>
             {{ baseManager.getUnpaidAmmountInterest() | numberFormat: "0.00" }}
           </td>
@@ -43,8 +47,9 @@
             {{ rightManager.getUnpaidAmmountInterest() | numberFormat: "0.00" }}
           </td>
         </tr>
+
         <tr>
-          <td class="row-label">PAD</td>
+          <td class="comparison__label">PAD</td>
           <td>
             {{ baseManager.getUnpaidInsuranceAmmount() | numberFormat: "0.00" }}
           </td>
@@ -57,29 +62,34 @@
             }}
           </td>
         </tr>
-        <tr class="row--bold">
-          <td class="row-label">Paid</td>
+
+        <tr class="comparison__row comparison__row--bold">
+          <td class="comparison__label">Paid</td>
           <td>{{ baseManager.getPaidAmmount() | numberFormat: "0.00" }}</td>
           <td>{{ leftManager.getPaidAmmount() | numberFormat: "0.00" }}</td>
           <td>{{ rightManager.getPaidAmmount() | numberFormat: "0.00" }}</td>
         </tr>
+
         <tr>
-          <td class="row-label">Duration</td>
-          <td class="text-primary">
+          <td class="comparison__label">Duration</td>
+
+          <td class="comparison__text comparison__text--primary">
             {{
               baseManager.selected.monthlyInstalments.at(-1)?.paymentDate
                 | date: "MMM yyy"
             }}
             ({{ baseManager.getDuration() ?? "-" }})
           </td>
-          <td class="text-primary">
+
+          <td class="comparison__text comparison__text--primary">
             {{
               leftManager.selected.monthlyInstalments.at(-1)?.paymentDate
                 | date: "MMM yyy"
             }}
             ({{ leftManager.getDuration() ?? "-" }})
           </td>
-          <td class="text-primary">
+
+          <td class="comparison__text comparison__text--primary">
             {{
               rightManager.selected.monthlyInstalments.at(-1)?.paymentDate
                 | date: "MMM yyy"
@@ -91,11 +101,13 @@
     </table>
   </div>
 
-  <div class="comparison-card">
-    <div class="card-header">
-      <h2 class="m-0">Yearly Breakdown</h2>
+  <!-- Yearly -->
+  <div class="comparison__card">
+    <div class="comparison__header">
+      <h2 class="comparison__title">Yearly Breakdown</h2>
     </div>
-    <table class="data-table">
+
+    <table class="comparison__table">
       <thead>
         <tr>
           <th></th>
@@ -104,10 +116,11 @@
           <th>{{ rightManager.getBaseName() }}</th>
         </tr>
       </thead>
+
       <tbody>
         @for (year of years(); track $index) {
           <tr>
-            <td class="row-year">{{ year }}</td>
+            <td class="comparison__year">{{ year }}</td>
             <td>
               {{ getPrincipalAmount(year, baseManager) | numberFormat: "0.00" }}
             </td>
