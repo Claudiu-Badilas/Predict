@@ -30,19 +30,12 @@ $color-card-bg: hsl(0, 0%, 100%);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
-  &--initial {
-    border-left-color: $color-initial;
-    .payment-card__badge {
-      background: rgba($color-initial, 0.12);
-      color: $color-initial;
-    }
-  }
-
   &--rata {
     border-left-color: $color-rata;
     .payment-card__badge {
       background: rgba($color-rata, 0.12);
       color: $color-rata;
+      border: 1px solid $color-rata;
     }
     .payment-card__value {
       color: $color-rata;
@@ -54,6 +47,7 @@ $color-card-bg: hsl(0, 0%, 100%);
     .payment-card__badge {
       background: rgba($color-anticipat, 0.12);
       color: $color-anticipat;
+      border: 1px solid $color-anticipat;
     }
     .payment-card__value {
       color: $color-anticipat;
