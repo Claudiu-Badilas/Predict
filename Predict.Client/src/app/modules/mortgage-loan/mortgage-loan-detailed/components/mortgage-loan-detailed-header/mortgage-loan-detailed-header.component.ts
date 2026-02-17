@@ -57,15 +57,6 @@ export class MortgageLoanDetailedHeaderComponent {
         .map((s) => s.interestAmount),
     ),
   );
-  readonly paidIntrestPercent = computed(() => {
-    const total = Calculator.sum(
-      this.updatedBaseRepaymentScheduleBasedOnLatestStates().map(
-        (s) => s.interestAmount,
-      ),
-    );
-
-    return MathUtil.percent(this.paidIntrest(), total);
-  });
 
   readonly paidInsurance = computed(() =>
     Calculator.sum(
