@@ -59,12 +59,18 @@ export class MortgageLoanOverviewHeaderComponent {
     ),
   );
 
-  completedMontlyInstalments = computed(
-    () => this.monthlyInstalmentGroups().filter((r) => r.completed)?.length,
+  paidMonthlyInstalments = computed(() =>
+    Calculator.sum(
+      this.monthlyInstalmentGroups()
+        .filter((r) => r.completed)
+        .map((r) => r.instalments.length),
+    ),
   );
 
-  incompletedMontlyInstalments = computed(
-    () => this.monthlyInstalmentGroups().filter((r) => !r.completed)?.length,
+  monthlyInstalments = computed(() =>
+    Calculator.sum(
+      this.monthlyInstalmentGroups().map((r) => r.instalments.length),
+    ),
   );
 
   totalPayment = computed(() =>
