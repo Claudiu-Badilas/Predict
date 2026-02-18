@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11312.210 d18.3
+VisualStudioVersion = 18.3.11312.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Predict.Readers", "Predict.Readers\Predict.Readers.fsproj", "{9911A7B7-48D3-4931-8BA9-FF71F004CDB5}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Predict.Common", "Predict.Common\Predict.Common.csproj", "{F0731BC9-B2A7-44FA-BFE3-D53624EB2E76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predict.API", "Predict.API\Predict.API.csproj", "{256AAB95-FA8F-441A-83D6-627501FB993B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predict.Database", "Predict.Database\Predict.Database.csproj", "{19D87324-EC61-46A3-98A8-FF3095287FBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{256AAB95-FA8F-441A-83D6-627501FB993B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{256AAB95-FA8F-441A-83D6-627501FB993B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{256AAB95-FA8F-441A-83D6-627501FB993B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D87324-EC61-46A3-98A8-FF3095287FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D87324-EC61-46A3-98A8-FF3095287FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D87324-EC61-46A3-98A8-FF3095287FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D87324-EC61-46A3-98A8-FF3095287FBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
