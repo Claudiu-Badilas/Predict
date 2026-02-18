@@ -89,6 +89,7 @@
             [class.expanded-group]="group.expanded"
             (click)="toggleGroup(group)"
           >
+            @let subtotal = getSubtotal(group);
             <td colspan="3" class="group-title-cell bold">
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
@@ -97,12 +98,14 @@
                   </span>
                   {{ group.title | date: "dd MMM yyyy" }}
                 </div>
-                <span class="count"> {{ group.instalments.length }} RATE </span>
+                <span class="count"
+                  >{{ subtotal.instalmentsCount }} +
+                  {{ subtotal.earlyCount }} RATE
+                </span>
               </div>
             </td>
 
             <td></td>
-            @let subtotal = getSubtotal(group);
             <td class="bold text-center">
               {{ subtotal.principal | numberFormat: "0.00" }}
             </td>
