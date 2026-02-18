@@ -26,6 +26,8 @@ export class HistoricalInstalmentsTableComponent {
     const early = instalments.filter((s) => s.earlyPayment);
 
     return {
+      instalmentsCount: !!installment ? 1 : 0,
+      earlyCount: early.length,
       principal: Calculator.sum(instalments.map((e) => e.principalAmount)),
       interest: installment.interestAmount,
       insuranceCost: installment.insuranceCost,

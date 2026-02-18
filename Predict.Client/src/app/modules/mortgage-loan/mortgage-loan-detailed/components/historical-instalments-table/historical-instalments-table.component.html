@@ -25,34 +25,35 @@
             [class.expanded-group]="group.expanded"
             (click)="toggleGroup(group)"
           >
+            @let subtotal = getSubtotal(group);
             <td class="group-title-cell bold">
               <span class="chevron">
                 {{ group.expanded ? "▼" : "▶" }}
               </span>
-              <span>
-                {{ getSubtotal(group).total | numberFormat: "0.00" }}</span
-              >
+              <span> {{ subtotal.total | numberFormat: "0.00" }}</span>
             </td>
             <td class="group-title-cell bold text-center">
-              <span class="count"> {{ group.instalments.length }} rate </span>
+              <span class="count">
+                {{ subtotal.instalmentsCount }} + {{ subtotal.earlyCount }} RATE
+              </span>
             </td>
 
             <td class="bold text-center">
               {{ group.title | date: "dd MMM yyyy" }}
             </td>
             <td class="bold text-center">
-              {{ getSubtotal(group).principal | numberFormat: "0.00" }}
+              {{ subtotal.principal | numberFormat: "0.00" }}
             </td>
 
             <td class="bold text-center">
-              {{ getSubtotal(group).interest | numberFormat: "0.00" }}
+              {{ subtotal.interest | numberFormat: "0.00" }}
             </td>
 
             <td class="bold text-center">
-              {{ getSubtotal(group).insuranceCost | numberFormat: "0.00" }}
+              {{ subtotal.insuranceCost | numberFormat: "0.00" }}
             </td>
             <td class="bold text-center">
-              {{ getSubtotal(group).remainingBalance | numberFormat: "0.00" }}
+              {{ subtotal.remainingBalance | numberFormat: "0.00" }}
             </td>
           </tr>
         }
