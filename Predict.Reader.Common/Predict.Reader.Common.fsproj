@@ -1,11 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <OutputType>Library</OutputType>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Library.fs" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<OutputType>Library</OutputType>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Include="Utils\DateTimeUtils.fs" />
+	  <Compile Include="Utils\ExcelUtils.fs" />
+	  <Compile Include="Utils\PdfUtils.fs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IronXL.Excel" Version="2025.11.2" />
+		<PackageReference Include="iTextSharp" Version="5.5.13.4" />
+	</ItemGroup>
 </Project>
