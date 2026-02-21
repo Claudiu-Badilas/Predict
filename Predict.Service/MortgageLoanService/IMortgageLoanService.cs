@@ -1,5 +1,4 @@
-﻿using Predict.Repository.UserRepo.Models;
-using static Predict.Types.MortgageTypes;
+﻿using static Predict.Reader.MortgageLoan.BCR.Types.BCRMortgageLoanTypes;
 
 namespace Predict.Service;
 

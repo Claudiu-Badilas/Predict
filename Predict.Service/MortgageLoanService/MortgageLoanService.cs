@@ -1,16 +1,16 @@
-﻿using Predict.Reader.Mortgage;
+﻿using Predict.Reader.MortgageLoan.BCR;
 using Predict.Service.CacheServicel;
-using Predict.Types;
+using static Predict.Reader.MortgageLoan.BCR.Types.BCRMortgageLoanTypes;
 
 namespace Predict.Service;
 
 public class MortgageLoanService(ICacheService cache) : IMortgageLoanService
 {
-    public List<MortgageTypes.GraficRambursare> GetBcrMortgageLoans()
+    public List<GraficRambursare> GetBcrMortgageLoans()
     {
         var mortgageLoans = cache.GetOrSet(
             "getBcrMorgages",
-            BCRMortgageMapper.getBcrMorgages,
+            BCRMortgageLoanReader.getBcrMorgages,
             TimeSpan.FromMinutes(15));
 
         return [.. mortgageLoans];
