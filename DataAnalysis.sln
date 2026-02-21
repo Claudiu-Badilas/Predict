@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predict.Database", "Predict
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Predict.Reader.MortgageLoan", "Predict.Reader.MortgageLoan\Predict.Reader.MortgageLoan.fsproj", "{0680FFB6-3286-1378-3BFB-8C90C4FA5286}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Predict.Reader.Common", "Predict.Reader.Common\Predict.Reader.Common.fsproj", "{CF5A9699-3681-DF1A-B1A9-62B73D7A3FAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{0680FFB6-3286-1378-3BFB-8C90C4FA5286}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0680FFB6-3286-1378-3BFB-8C90C4FA5286}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0680FFB6-3286-1378-3BFB-8C90C4FA5286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF5A9699-3681-DF1A-B1A9-62B73D7A3FAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF5A9699-3681-DF1A-B1A9-62B73D7A3FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF5A9699-3681-DF1A-B1A9-62B73D7A3FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF5A9699-3681-DF1A-B1A9-62B73D7A3FAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
