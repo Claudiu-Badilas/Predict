@@ -1,14 +1,13 @@
-﻿namespace Predict.Reader.Mortgage
+﻿namespace Predict.Reader.MortgageLoan.BCR
 
 open System
-open Predict.Utils
+open Predict.Reader.Common.Utils
 open iTextSharp.text.pdf
 open System.IO
-open System
 open System.Globalization
-open Predict.Types.MortgageTypes
+open Predict.Reader.MortgageLoan.BCR.Types.BCRMortgageLoanTypes
 
-module BCRMortgageMapper =
+module BCRMortgageLoanReader =
 
     let getLocalPdfs path =
         Directory.EnumerateFiles(path, "*.pdf")

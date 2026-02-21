@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BCR\Types\MortgageTypes.fs" />
-    <Compile Include="BCR\BCRMortgageLoadnReader.fs" />
+    <Compile Include="BCR\Types\BCRMortgageTypes.fs" />
+    <Compile Include="BCR\BCRMortgageLoanReader.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Predict.Reader.Common\Predict.Reader.Common.fsproj" />
