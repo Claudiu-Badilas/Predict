@@ -1,6 +1,6 @@
-﻿using Predict.Reader.Mortgage;
+﻿using Predict.Reader.Invoice;
+using Predict.Reader.Invoice.Types;
 using Predict.Service.CacheServicel;
-using Predict.Types;
 
 namespace Predict.Service;
 
@@ -10,7 +10,7 @@ public class InvoiceService(ICacheService cache) : IInvoiceService
     {
         var invoices = cache.GetOrSet(
             "getInvoices",
-            InvoicesMapper.getInvoices,
+            InvoicesReader.getInvoices,
             TimeSpan.FromMinutes(15));
 
         return [.. invoices];

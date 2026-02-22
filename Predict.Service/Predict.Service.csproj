@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Predict.Reader.Invoice\Predict.Reader.Invoice.fsproj" />
 		<ProjectReference Include="..\Predict.Reader.MortgageLoan\Predict.Reader.MortgageLoan.fsproj" />
 		<ProjectReference Include="..\Predict.Readers\Predict.Readers.fsproj" />
 		<ProjectReference Include="..\Predict.Repository\Predict.Repository.csproj" />

@@ -1,4 +1,4 @@
-﻿using Predict.Types;
+﻿using Predict.Reader.Invoice.Types;
 
 namespace Predict.Service;
 
