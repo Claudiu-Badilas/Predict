@@ -3,7 +3,7 @@
 open System
 open System.IO
 open System.Globalization
-open ExcelReader 
+open ExcelReader
 open Predict.Reader.Invoice.Types.InvoiceTypes
 
 
@@ -27,7 +27,7 @@ module InvoicesReader =
         |> Option.bind (fun v ->
             match Double.TryParse(v, NumberStyles.Number, CultureInfo.InvariantCulture) with
             | true, dv -> Some dv
-            | _        -> None)
+            | _ -> None)
 
 
     let tryGetDate (value: string option) (format: string) =
@@ -36,13 +36,13 @@ module InvoicesReader =
             match DateTime.TryParseExact(v, format, CultureInfo.InvariantCulture, DateTimeStyles.None) with
             | true, dt -> Some dt
 
-            | _        -> None)
+            | _ -> None)
 
     let tryGetDateFallback (value: string option) =
         match tryGetDate value "dd/MM/yyyy", tryGetDate value "d/M/yyyy" with
-        | Some dt, _    -> Some dt
+        | Some dt, _ -> Some dt
         | None, Some dt -> Some dt
-        | _             -> None
+        | _ -> None
 
 
     let getInvoiceDetails (fileName: string, excelData: ExcelData) : LocationInvoice =
@@ -51,11 +51,12 @@ module InvoicesReader =
             |> Seq.collect (fun sheetName ->
                 let sheet = excelData.Sheets.[sheetName]
 
-                sheet.Rows                  
+                sheet.Rows
                 |> Seq.map (fun row ->
                     let col (i: int) =
                         if i < sheet.Headers.Count then
                             let header = sheet.Headers.[i]
+
                             match row.TryGetValue(header) with
                             | true, v when not (String.IsNullOrWhiteSpace(v)) -> Some v
                             | _ -> None
@@ -63,15 +64,15 @@ module InvoicesReader =
                             None
 
                     { InvoiceType = Some sheetName
-                      Provider    = col 0
-                      Date        = tryGetDateFallback (col 1)
-                      Index       = tryGetDouble (col 2)
-                      Amount      = tryGetDouble (col 3)
-                      Type        = col 4
-                      Action      = col 5 }))
+                      Provider = col 0
+                      Date = tryGetDateFallback (col 1)
+                      Index = tryGetDouble (col 2)
+                      Amount = tryGetDouble (col 3)
+                      Type = col 4
+                      Action = col 5 }))
             |> Seq.toList
 
-        { Address  = Some fileName
+        { Address = Some fileName
           Invoices = invoices }
 
 
