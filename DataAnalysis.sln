@@ -21,6 +21,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Predict.Reader.Common", "Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predict.ExcelReader", "Predict.ExcelReader\Predict.ExcelReader.csproj", "{96A2082B-6B29-49A1-9E5B-1EDCE1945557}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Predict.Reader.Invoice", "Predict.Reader.Invoice\Predict.Reader.Invoice.fsproj", "{40454EDA-8816-423C-92CF-AF2696E0F128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{96A2082B-6B29-49A1-9E5B-1EDCE1945557}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96A2082B-6B29-49A1-9E5B-1EDCE1945557}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96A2082B-6B29-49A1-9E5B-1EDCE1945557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40454EDA-8816-423C-92CF-AF2696E0F128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40454EDA-8816-423C-92CF-AF2696E0F128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40454EDA-8816-423C-92CF-AF2696E0F128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40454EDA-8816-423C-92CF-AF2696E0F128}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
