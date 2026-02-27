@@ -99,8 +99,11 @@
                   {{ group.title | date: "dd MMM yyyy" }}
                 </div>
                 <span class="count"
-                  >{{ subtotal.instalmentsCount }} +
-                  {{ subtotal.earlyCount }} RATE
+                  >{{ subtotal.instalmentsCount }}
+                  @if (subtotal.earlyCount > 0) {
+                    + {{ subtotal.earlyCount }}
+                  }
+                  RATE
                 </span>
               </div>
             </td>
