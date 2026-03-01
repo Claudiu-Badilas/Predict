@@ -5,6 +5,7 @@ import {
   HostListener,
   inject,
   input,
+  signal,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -30,13 +31,13 @@ import {
   styleUrl: './mortgage-loan-overview-body-table.component.scss',
 })
 export class MortgageLoanOverviewBodyTableComponent {
-  showOnlyTotalRow = input.required<boolean>();
   monthlyInstalmentGroups = input<MonthlyInstalmentManager[]>([]);
 
   @ViewChild('menuContainer') menuContainer!: ElementRef;
 
   store = inject(Store<fromMortgageLoan.MortgageLoanState>);
 
+  collapseAll = signal<boolean>(false);
   isMenuOpen = false;
   columns: ColumnConfig[] = DEFAULT_COLUMN_CONFIGS;
 
@@ -106,5 +107,13 @@ export class MortgageLoanOverviewBodyTableComponent {
         values: [instalment.instalmentId],
       }),
     );
+  }
+
+  onExpandAll() {
+    this.collapseAll.set(false);
+  }
+
+  onCollapseAll() {
+    this.collapseAll.set(true);
   }
 }
