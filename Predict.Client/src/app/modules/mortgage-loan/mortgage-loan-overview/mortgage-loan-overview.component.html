@@ -31,14 +31,6 @@
         (valueChange)="onPaymentsChange($event)"
       />
     </div>
-    <div class="space">
-      <p-checkbox
-        [label]="'Select summary rows'"
-        [id]="'total row'"
-        [checked]="showOnlyTotalRow()"
-        (valueChange)="onOnlyShowTotalRow($event)"
-      />
-    </div>
     <div class="space w-100 text-center">
       <span class="p-2 note"> ASSIGURARE PAD 01-Dec-2026 </span>
     </div>
@@ -51,7 +43,6 @@
       ></p-mortgage-loan-overview-header>
       <p-mortgage-loan-overview-body-table
         class="mt-3"
-        [showOnlyTotalRow]="showOnlyTotalRow()"
         [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
       />
     </div>

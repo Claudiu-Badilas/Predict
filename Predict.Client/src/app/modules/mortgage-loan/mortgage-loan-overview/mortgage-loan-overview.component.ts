@@ -6,7 +6,6 @@ import { map } from 'rxjs';
 import * as MortgageLoanActions from 'src/app/modules/mortgage-loan/actions/mortgage-loan.actions';
 import * as fromMortgageLoanOverview from 'src/app/modules/mortgage-loan/mortgage-loan-overview/selectors/mortgage-loan-overview.selectors';
 import * as fromMortgageLoan from 'src/app/modules/mortgage-loan/reducers/mortgage-loan.reducer';
-import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component';
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { NumericInputComponent } from 'src/app/shared/components/numeric-input/numeric-input.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
@@ -25,7 +24,6 @@ import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
     DropdownSelectComponent,
     MortgageLoanOverviewHeaderComponent,
     MortgageLoanOverviewBodyTableComponent,
-    CheckboxComponent,
     NumericInputComponent,
   ],
   templateUrl: './mortgage-loan-overview.component.html',
@@ -46,7 +44,6 @@ export class MortgageLoanOverviewComponent {
     this.store.select(fromMortgageLoanOverview.getSelectedRepaymentSchedule),
   );
 
-  showOnlyTotalRow = signal(false);
   monthlyAmount = signal<number>(3750);
   payments = signal<number>(1);
 
@@ -79,10 +76,6 @@ export class MortgageLoanOverviewComponent {
     this.store.dispatch(
       MortgageLoanActions.selectedMortgageLoanChanged({ selected: value }),
     );
-  }
-
-  onOnlyShowTotalRow(checked: boolean) {
-    this.showOnlyTotalRow.set(checked);
   }
 
   onMonthlyAmountChange(monthlyAmount: number) {
