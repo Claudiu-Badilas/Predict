@@ -28,7 +28,11 @@
             @let subtotal = getSubtotal(group);
             <td class="group-title-cell bold">
               <span class="chevron">
-                {{ group.expanded ? "▼" : "▶" }}
+                @if (group.expanded) {
+                  <img src="assets/icons/collapse.svg" alt="no-image" />
+                } @else {
+                  <img src="assets/icons/expand.svg" alt="no-image" />
+                }
               </span>
               <span> {{ subtotal.total | numberFormat: "0.00" }}</span>
             </td>
