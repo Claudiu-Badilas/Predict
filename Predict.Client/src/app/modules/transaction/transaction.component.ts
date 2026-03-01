@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import * as TransactionsActions from 'src/app/modules/transaction/actions/transactions.actions';
@@ -17,7 +16,6 @@ import { TransactionTableComponent } from './components/transaction-table/transa
   selector: 'p-transaction',
   imports: [
     CommonModule,
-    NgbModule,
     SideBarComponent,
     RangeSelectorComponent,
     DropdownSelectComponent,
