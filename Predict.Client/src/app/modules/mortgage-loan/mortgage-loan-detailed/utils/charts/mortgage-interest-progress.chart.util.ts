@@ -74,12 +74,12 @@ export namespace MortgageInterestProgressChartUtils {
       },
       plotOptions: {
         pie: {
-          innerSize: '65%',
+          innerSize: '60%',
           borderRadius: 5,
           dataLabels: {
             enabled: true,
             format:
-              '<b>{point.nameShort}</b>: {point.amountCompact} ({point.y}%)',
+              '<b>{point.nameShort}</b> {point.amountCompact} ({point.y}%)',
             style: {
               fontSize: '11px',
               textOutline: 'none',
@@ -98,7 +98,7 @@ export namespace MortgageInterestProgressChartUtils {
           data: [
             {
               name: 'Principal Platit',
-              nameShort: 'Pr. Platit', // Shortened name
+              nameShort: 'PP', // Shortened name
               y: percent(paidPrincipal),
               amount: MathUtil.round(paidPrincipal),
               amountCompact: NumberFormatPipe.numberFormat(paidPrincipal),
@@ -106,7 +106,7 @@ export namespace MortgageInterestProgressChartUtils {
             },
             {
               name: 'Principal Neplatit',
-              nameShort: 'Pr. Neplatit',
+              nameShort: 'PN',
               y: percent(unpaidPrincipal),
               amount: MathUtil.round(unpaidPrincipal),
               amountCompact: NumberFormatPipe.numberFormat(unpaidPrincipal),
@@ -114,7 +114,7 @@ export namespace MortgageInterestProgressChartUtils {
             },
             {
               name: 'Dobanda Platita',
-              nameShort: 'Dob. Platita',
+              nameShort: 'DP',
               y: percent(paidInterest),
               amount: MathUtil.round(paidInterest),
               amountCompact: NumberFormatPipe.numberFormat(paidInterest),
@@ -130,7 +130,7 @@ export namespace MortgageInterestProgressChartUtils {
             },
             {
               name: 'Dobanda Salvata',
-              nameShort: 'Dob. Salvata',
+              nameShort: 'DS',
               y: percent(savedInterest),
               amount: MathUtil.round(savedInterest),
               amountCompact: NumberFormatPipe.numberFormat(savedInterest),
@@ -138,7 +138,7 @@ export namespace MortgageInterestProgressChartUtils {
             },
             {
               name: 'Dobanda Neplatita',
-              nameShort: 'Dob. Neplatită',
+              nameShort: 'DN',
               y: percent(unpaidInterest),
               amount: MathUtil.round(unpaidInterest),
               amountCompact: NumberFormatPipe.numberFormat(unpaidInterest),

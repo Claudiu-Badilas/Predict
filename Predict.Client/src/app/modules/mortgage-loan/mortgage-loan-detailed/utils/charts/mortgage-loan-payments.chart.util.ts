@@ -64,11 +64,29 @@ export namespace MortgageLoanPaymentsChartUtils {
       Calculator.sum(groupedUnpaidByMonth[cat]?.map((i) => i.insuranceCost)),
     );
 
+    // Calculate maximum bar value (total of all series for each category)
+    const maxBarValue = categories.reduce((max, _, index) => {
+      const totalAtCategory =
+        (scheduledPaymentsPrincipalData[index] || 0) +
+        (earlyPaymentsData[index] || 0) +
+        (scheduledPaymentsinsuranceCostData[index] || 0) +
+        (scheduledPaymentsIntrestsData[index] || 0) +
+        (unpaidPrincipalData[index] || 0) +
+        (unpaidInsurenceData[index] || 0) +
+        (unpaidInterestData[index] || 0);
+
+      return Math.max(max, totalAtCategory);
+    }, 0);
+
     return {
       chart: { zooming: { type: 'x' } },
       title: { text: 'Plati Lunare', align: 'left' },
       xAxis: { categories, labels: { enabled: false } },
-      yAxis: { title: { text: 'Amount (RON)' } },
+      yAxis: {
+        title: { text: 'Amount (RON)' },
+        max: maxBarValue, // Set max to the maximum bar value
+        endOnTick: false, // Prevents extending the axis beyond the max value
+      },
       plotOptions: {
         column: {
           stacking: 'normal',
