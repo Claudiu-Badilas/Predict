@@ -14,7 +14,7 @@ export class TripleClickDirective {
     this.clicks++;
     clearTimeout(this.timer);
 
-    this.timer = setTimeout(() => (this.clicks = 0), 400);
+    this.timer = setTimeout(() => (this.clicks = 0), 200);
 
     if (this.clicks === 3) {
       this.tripleClick.emit();

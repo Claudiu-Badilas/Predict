@@ -1,9 +1,21 @@
 @if (isFullSize) {
-<div class="sidebar-visible" tripleClick (tripleClick)="toggleSidebar()">
-  <ng-content select="[filters-full-size]"></ng-content>
-</div>
+  <div
+    class="sidebar-visible"
+    tripleClick
+    (tripleClick)="toggleSidebar()"
+    holdTrigger
+    (holdTrigger)="toggleSidebar()"
+  >
+    <ng-content select="[filters-full-size]"></ng-content>
+  </div>
 } @else {
-<div class="sidebar-hidden" tripleClick (tripleClick)="toggleSidebar()"></div>
+  <div
+    class="sidebar-hidden"
+    tripleClick
+    (tripleClick)="toggleSidebar()"
+    holdTrigger
+    (holdTrigger)="toggleSidebar()"
+  ></div>
 }
 
 <div [ngClass]="{ content: isFullSize, 'content-full': !isFullSize }">
