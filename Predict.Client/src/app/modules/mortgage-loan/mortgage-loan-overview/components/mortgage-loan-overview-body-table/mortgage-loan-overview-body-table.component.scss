@@ -6,11 +6,13 @@
 /* Wrapper */
 /* ============================= */
 .table-wrapper {
-  border: 1px solid #e2e6ee;
-  border-radius: 7.5px;
+  // border: 1px solid #e2e6ee;
+  border-radius: 4px;
+  margin: 10px 0;
   background: white;
   height: calc(100vh - 185px);
   overflow: auto;
+  box-shadow: 0 1px 3px rgba(#000000, 0.15);
 }
 
 /* ============================= */
@@ -21,15 +23,13 @@ table {
   table-layout: auto;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 13px;
+  font-size: 11px; // 13px;
 }
 
 th,
 td {
-  padding: 5px;
   border-bottom: 1px solid #eeeeee;
   vertical-align: middle;
-  white-space: nowrap;
   min-width: 80px;
 }
 
@@ -37,7 +37,7 @@ th {
   background: white;
   font-weight: 600;
   border-bottom: 2px solid #e2e6ee;
-  font-size: 15px;
+  font-size: 11px; // 15px;
 }
 
 /* ============================= */
@@ -104,7 +104,7 @@ thead th {
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 11px; // 0.85rem;
       padding: 4px 0;
     }
   }
@@ -115,14 +115,13 @@ thead th {
 /* ============================= */
 .group-header-subtotal-row {
   cursor: pointer;
-  font-size: 17px;
+  // font-size: 13px;// 17px;
 
   .group-title-cell {
-    font-size: 19px;
+    font-size: 11px; // 19px;
     padding: 7px;
 
     .chevron {
-      margin-right: 8px;
       width: 20px;
       text-align: center;
       color: #666;
@@ -131,9 +130,9 @@ thead th {
 }
 .count {
   color: #f43f5e;
-  font-size: 14px;
+  font-size: 11px; // 14px;
   background: transparent;
-  padding: 0 10px;
+  padding: 0 15px;
   border-radius: 30px;
   border: 1px solid #f43f5e;
 }

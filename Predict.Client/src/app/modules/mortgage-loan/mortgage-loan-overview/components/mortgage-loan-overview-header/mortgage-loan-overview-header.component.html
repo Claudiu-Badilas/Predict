@@ -1,88 +1,92 @@
 <div class="summary-grid">
   <div class="summary-card">
-    <div class="card-body">
+    <div>
       <div class="summary-row">
+        <!-- Rata -->
         <div class="summary-section stat-item stat-item--orange">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__label"> Rata </span>
-            <span class="stat-item__label"> Anticipat </span>
+          <div class="stat-row">
+            <span class="stat-item__label">Rata</span>
+            <span class="stat-item__label">Anticipat</span>
           </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__value danger">
+
+          <div class="stat-row">
+            <span class="stat-item__value">
               {{ totalInstalmentPayments() | numberFormat: "0.00" }}
             </span>
-            <span class="stat-item__value danger">
+            <span class="stat-item__value">
               {{ totalEarlyPayment() | numberFormat: "0.00" }}
             </span>
           </div>
         </div>
 
-        <div class="vertical-divider"></div>
-
+        <!-- Dobanda -->
         <div class="summary-section stat-item stat-item--amber">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__label"> Dobanda + PAD </span>
-            <span class="stat-item__label"> Principal </span>
+          <div class="stat-row">
+            <span class="stat-item__label">Dobanda</span>
+            <span class="stat-item__label">Principal</span>
           </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__value danger">
+
+          <div class="stat-row">
+            <span class="stat-item__value">
               {{ totalInterestPayment() | numberFormat: "0.00" }}
             </span>
-            <span class="stat-item__value danger">
+            <span class="stat-item__value">
               {{ totalPrincipalPayment() | numberFormat: "0.00" }}
             </span>
           </div>
         </div>
 
-        <div class="vertical-divider"></div>
-
+        <!-- Total -->
         <div class="summary-section stat-item stat-item--rose">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__label"> Total </span>
-            <span class="stat-item__label"> 1/2 </span>
+          <div class="stat-row">
+            <span class="stat-item__label">Total</span>
+            <span class="stat-item__label">1 / 2</span>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__value danger">
-              {{ this.totalPayment() | numberFormat: "0.00" }}
+          <div class="stat-row">
+            <span class="stat-item__value">
+              {{ totalPayment() | numberFormat: "0.00" }}
             </span>
-            <span class="stat-item__value danger">
-              {{ this.totalPayment() / 2 | numberFormat: "0.00" }}
+            <span class="stat-item__value">
+              {{ totalPayment() / 2 | numberFormat: "0.00" }}
             </span>
           </div>
         </div>
-        <div class="vertical-divider"></div>
 
+        <!-- Economii -->
         <div class="summary-section stat-item stat-item--teal">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__label">Costuri Economisite </span>
-            <span class="stat-item__label">Rate </span>
+          <div class="stat-row">
+            <span class="stat-item__label">Economii</span>
+            <span class="stat-item__label">Rate</span>
           </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__value"
-              >{{ totalSavedInterest() | numberFormat: "0.00" }}
-            </span>
+
+          <div class="stat-row">
             <span class="stat-item__value">
-              {{ paidMonthlyInstalments() | numberFormat: "0" : 0 }} /
+              {{ totalSavedInterest() | numberFormat: "0.00" }}
+            </span>
+
+            <span class="stat-item__value">
+              {{ paidMonthlyInstalments() | numberFormat: "0" : 0 }}
+              /
               {{ monthlyInstalments() | numberFormat: "0" : 0 }}
             </span>
           </div>
         </div>
 
-        <div class="vertical-divider"></div>
+        <!-- Sold -->
         <div class="summary-section stat-item stat-item--violet">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="stat-item__label">Sold Initial </span>
-            <span class="stat-item__label">Sold Ramas </span>
+          <div class="stat-row">
+            <span class="stat-item__label">Sold Initial</span>
+            <span class="stat-item__label">Sold Ramas</span>
           </div>
-          <div class="d-flex justify-content-between align-items-center">
+
+          <div class="stat-row">
             <span class="stat-item__value">
               {{ initialRemainingBalance() | numberFormat: "0.00" }}
             </span>
+
             <span class="stat-item__value">
-              {{
-                this.payments()?.at(-1)?.remainingBalance | numberFormat: "0.00"
-              }}
+              {{ payments()?.at(-1)?.remainingBalance | numberFormat: "0.00" }}
             </span>
           </div>
         </div>
