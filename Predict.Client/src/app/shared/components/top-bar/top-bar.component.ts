@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
@@ -13,6 +13,8 @@ import * as fromAppStore from 'src/app/store/app-state.reducer';
   imports: [CommonModule, NgbDropdownModule],
 })
 export class TopBarComponent {
+  isMenuOpen = false;
+
   modules = [
     { name: 'Mortgage', url: 'mortgage-loan/overview' },
     { name: 'Transactions', url: 'transactions' },
@@ -24,11 +26,12 @@ export class TopBarComponent {
 
   constructor(private store: Store<fromAppStore.AppState>) {}
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   onNavigateTo(url: string) {
-    this.store.dispatch(
-      NavigationAction.navigateTo({
-        route: url,
-      }),
-    );
+    this.isMenuOpen = false;
+    this.store.dispatch(NavigationAction.navigateTo({ route: url }));
   }
 }
