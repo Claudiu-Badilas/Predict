@@ -2,60 +2,8 @@
   <table>
     <thead>
       <tr>
-        <th class="text-center">Rata/Anticipat</th>
-        <th class="text-center">#</th>
-        <th class="text-center">Data Plății</th>
-        <th class="text-center">Credit</th>
-        <th class="text-center">Dobândă</th>
-
-        <th
-          class="text-center"
-          [class.hidden]="!isColumnVisible('administrationFee')"
-        >
-          Administrare
-        </th>
-
-        <th
-          class="text-center"
-          [class.hidden]="!isColumnVisible('insuranceCost')"
-        >
-          PAD
-        </th>
-
-        <th
-          class="text-center"
-          [class.hidden]="!isColumnVisible('managementFee')"
-        >
-          Management
-        </th>
-
-        <th
-          class="text-center"
-          [class.hidden]="!isColumnVisible('recalculatedInterest')"
-        >
-          Dobândă Recalculată
-        </th>
-
-        <th class="text-center">Total Rată</th>
-        <th class="text-center" [class.hidden]="!isColumnVisible('halfTotal')">
-          1/2
-        </th>
-        <th
-          class="text-center"
-          [class.hidden]="!isColumnVisible('earlyPayment')"
-        >
-          Anticipat
-        </th>
-
-        <th
-          class="text-center"
-          [class.hidden]="!isColumnVisible('remainingBalance')"
-        >
-          Sold Ramas
-        </th>
-
-        <th>
-          <div class="d-flex align-items-center justify-content-end">
+        <th class="">
+          <div class="d-flex align-items-center justify-content-center">
             <img
               width="20"
               height="20"
@@ -96,6 +44,55 @@
             </div>
           </div>
         </th>
+        <th class="text-center">Data</th>
+        <th class="text-center">Credit</th>
+        <th class="text-center">Dobândă</th>
+
+        <th
+          class="text-center"
+          [class.hidden]="!isColumnVisible('administrationFee')"
+        >
+          Administrare
+        </th>
+
+        <th
+          class="text-center"
+          [class.hidden]="!isColumnVisible('insuranceCost')"
+        >
+          PAD
+        </th>
+
+        <th
+          class="text-center"
+          [class.hidden]="!isColumnVisible('managementFee')"
+        >
+          Management
+        </th>
+
+        <th
+          class="text-center"
+          [class.hidden]="!isColumnVisible('recalculatedInterest')"
+        >
+          Dobândă Recalculată
+        </th>
+
+        <th class="text-center">Total</th>
+        <th class="text-center" [class.hidden]="!isColumnVisible('halfTotal')">
+          1/2
+        </th>
+        <th
+          class="text-center"
+          [class.hidden]="!isColumnVisible('earlyPayment')"
+        >
+          Anticipat
+        </th>
+
+        <th
+          class="text-center"
+          [class.hidden]="!isColumnVisible('remainingBalance')"
+        >
+          Sold
+        </th>
       </tr>
     </thead>
 
@@ -109,22 +106,6 @@
             (click)="toggleGroup(group)"
           >
             @let subtotal = getSubtotal(group);
-            <td colspan="2" class="group-title-cell bold">
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="ml-2 chevron">
-                    @if (group.expanded) {
-                      <img src="assets/icons/collapse.svg" alt="no-image" />
-                    } @else {
-                      <img src="assets/icons/expand.svg" alt="no-image" />
-                    }
-                  </span>
-                  <span class="ml-2">
-                    {{ group.title | date: "dd MMM yyyy" }}
-                  </span>
-                </div>
-              </div>
-            </td>
 
             <td class="text-center">
               <span class="count bold"
@@ -132,9 +113,13 @@
                 @if (subtotal.earlyCount > 0) {
                   + {{ subtotal.earlyCount }}
                 }
-                RATE
               </span>
             </td>
+
+            <td class="bold text-center">
+              {{ group.title | date: "MMM yyyy" }}
+            </td>
+
             <td class="bold text-center">
               {{ subtotal.principal | numberFormat: "0.00" }}
             </td>
@@ -193,8 +178,6 @@
             >
               {{ subtotal.restant | numberFormat: "0.00" }}
             </td>
-
-            <td></td>
           </tr>
         }
 
@@ -211,35 +194,30 @@
               [class.gray]="!row.instalmentPayment && !row.earlyPayment"
             >
               <td
-                class="text-center"
+                class="text-center gap"
                 [ngClass]="{
                   'last-bottom-border': last && row.earlyPayment,
                 }"
               >
-                <p-checkbox
-                  class="mr-3"
-                  [id]="row.instalmentId"
-                  [checked]="row.instalmentPayment"
-                  [disabled]="row.disabled || row.earlyPayment"
-                  (valueChange)="onSelectInstalmentPayment(row)"
-                /><p-checkbox
-                  class="ml-1"
-                  [id]="row.instalmentId"
-                  [checked]="row.earlyPayment"
-                  [disabled]="row.disabled || row.instalmentPayment"
-                  (valueChange)="onSelectEarlyPayment(row)"
-                />
+                <div class="d-flex align-items-center justify-content-center">
+                  <span>
+                    {{ row.instalmentId }}
+                  </span>
+                  <p-checkbox
+                    class="mx-2"
+                    [id]="row.instalmentId"
+                    [checked]="row.instalmentPayment"
+                    [disabled]="row.disabled || row.earlyPayment"
+                    (valueChange)="onSelectInstalmentPayment(row)"
+                  /><p-checkbox
+                    [id]="row.instalmentId"
+                    [checked]="row.earlyPayment"
+                    [disabled]="row.disabled || row.instalmentPayment"
+                    (valueChange)="onSelectEarlyPayment(row)"
+                  />
+                </div>
               </td>
 
-              <td
-                class="text-center"
-                [ngClass]="{
-                  'last-bottom-border': last && row.earlyPayment,
-                  disabled: !group.completed && row.disabled,
-                }"
-              >
-                {{ row.instalmentId }}
-              </td>
               <td
                 class="text-center"
                 [ngClass]="{
@@ -248,7 +226,7 @@
                   disabled: !group.completed && row.disabled,
                 }"
               >
-                {{ row.paymentDate | date: "dd MMM yyyy" }}
+                {{ row.paymentDate | date: "MMM yyyy" }}
               </td>
               <td
                 class="text-center"
@@ -373,12 +351,6 @@
               >
                 {{ row.remainingBalance | numberFormat: "0.00" }}
               </td>
-
-              <td
-                [ngClass]="{
-                  'last-bottom-border': last && row.earlyPayment,
-                }"
-              ></td>
             </tr>
           }
         }

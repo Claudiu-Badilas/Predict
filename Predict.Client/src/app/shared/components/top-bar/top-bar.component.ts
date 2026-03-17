@@ -14,7 +14,7 @@ import * as fromAppStore from 'src/app/store/app-state.reducer';
 })
 export class TopBarComponent {
   modules = [
-    { name: 'Mortgage Loan', url: 'mortgage-loan/overview' },
+    { name: 'Mortgage', url: 'mortgage-loan/overview' },
     { name: 'Transactions', url: 'transactions' },
     { name: 'Invoices', url: 'invoices' },
     { name: 'Receipts', url: 'receipts/summary' },
