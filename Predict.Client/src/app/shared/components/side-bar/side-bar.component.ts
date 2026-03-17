@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { TripleClickDirective } from '../../directives/triple-click.directive';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HoldTriggerDirective } from '../../directives/hold-trigger.directive';
+import { TripleClickDirective } from '../../directives/triple-click.directive';
 
 @Component({
   selector: 'p-side-bar',
@@ -9,8 +9,23 @@ import { HoldTriggerDirective } from '../../directives/hold-trigger.directive';
   styleUrls: ['./side-bar.component.scss'],
   imports: [CommonModule, TripleClickDirective, HoldTriggerDirective],
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
   isFullSize = true;
+
+  ngOnInit() {
+    // Close sidebar by default on mobile (screen width <= 768px)
+    if (window.innerWidth <= 768) {
+      this.isFullSize = false;
+    }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    // Optional: auto-close sidebar when resizing to mobile
+    if (window.innerWidth <= 768) {
+      this.isFullSize = false;
+    }
+  }
 
   toggleSidebar() {
     this.isFullSize = !this.isFullSize;

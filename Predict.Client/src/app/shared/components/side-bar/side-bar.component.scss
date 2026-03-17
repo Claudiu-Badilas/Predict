@@ -5,32 +5,24 @@
     position: fixed;
     left: 0;
     top: 0;
-
     width: 300px;
     color: white;
     margin-top: 50px;
   }
-
   &-hidden {
     background-color: #801136;
     height: 100%;
     position: fixed;
     left: 0;
     top: 0;
-
     width: 25px;
     color: white;
     margin-top: 50px;
   }
 }
-
-/* ----- CONTENT POSITIONING ----- */
 .content {
   margin-left: 300px;
-  // padding: 15px;
 }
-
 .content-full {
   margin-left: 25px;
-  // padding: 15px;
 }
