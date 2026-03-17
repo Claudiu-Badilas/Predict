@@ -1,12 +1,13 @@
-<div class="d-flex gap mb-3">
+<div class="charts-container mb-3">
   <p-highcharts-wrapper
-    class="w-50"
+    class="chart-wrapper"
     [chartOptions]="mortgageInterestProgressChart$ | async"
-  />
+  ></p-highcharts-wrapper>
+
   <p-highcharts-wrapper
-    class="w-50"
+    class="chart-wrapper"
     [chartOptions]="mortgageLoanPaymentsChart$ | async"
-  />
+  ></p-highcharts-wrapper>
 </div>
 
 <p-historical-instalments-table

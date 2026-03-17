@@ -83,9 +83,9 @@ export namespace MortgageLoanPaymentsChartUtils {
       title: { text: 'Plati Lunare', align: 'left' },
       xAxis: { categories, labels: { enabled: false } },
       yAxis: {
-        title: { text: 'Amount (RON)' },
-        max: maxBarValue, // Set max to the maximum bar value
-        endOnTick: false, // Prevents extending the axis beyond the max value
+        title: { text: null },
+        max: maxBarValue,
+        endOnTick: false,
       },
       plotOptions: {
         column: {
@@ -103,17 +103,17 @@ export namespace MortgageLoanPaymentsChartUtils {
             total += p.y as number;
             category = p.category;
             return `
-                <span style="color:${p.color}">●</span>
-                ${p.series.name}: <b>${NumberFormatPipe.numberFormat(p.y as number)}</b> RON
-              `;
+          <span style="color:${p.color}">●</span>
+          ${p.series.name}: <b>${NumberFormatPipe.numberFormat(p.y as number)}</b> RON
+        `;
           });
 
           return `
-              <b>${category}</b><br/>
-              ${lines.join('<br/>')}
-              <hr style="margin:4px 0"/>
-              <b>Total: ${NumberFormatPipe.numberFormat(total)} RON</b>
-            `;
+        <b>${category}</b><br/>
+        ${lines.join('<br/>')}
+        <hr style="margin:4px 0"/>
+        <b>Total: ${NumberFormatPipe.numberFormat(total)} RON</b>
+      `;
         },
       },
       series: [

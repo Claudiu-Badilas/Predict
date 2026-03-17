@@ -19,14 +19,6 @@ export class SideBarComponent implements OnInit {
     }
   }
 
-  @HostListener('window:resize')
-  onResize() {
-    // Optional: auto-close sidebar when resizing to mobile
-    if (window.innerWidth <= 768) {
-      this.isFullSize = false;
-    }
-  }
-
   toggleSidebar() {
     this.isFullSize = !this.isFullSize;
   }

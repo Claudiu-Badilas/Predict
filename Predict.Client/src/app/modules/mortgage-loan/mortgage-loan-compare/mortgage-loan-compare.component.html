@@ -40,14 +40,16 @@
   </ng-container>
 
   <ng-container main-content>
-    <div class="mb-3">
-      <p-mortgage-loan-compare-header></p-mortgage-loan-compare-header>
-    </div>
-    <div class="mb-3">
-      <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
-    </div>
-    <div>
-      <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>
+    <div class="m-2">
+      <div class="mb-3">
+        <p-mortgage-loan-compare-header></p-mortgage-loan-compare-header>
+      </div>
+      <div class="mb-3">
+        <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
+      </div>
+      <div>
+        <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>
+      </div>
     </div>
   </ng-container>
 </p-side-bar>
