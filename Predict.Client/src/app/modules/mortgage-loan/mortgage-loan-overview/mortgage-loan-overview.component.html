@@ -1,6 +1,6 @@
 <p-top-bar>
   <ng-container module-navigation>
-    <div class="space">
+    <div>
       <p-toggle-button
         [options]="['Overview', 'Detailed', 'Compare']"
         [selected]="'Overview'"
@@ -10,13 +10,14 @@
   </ng-container>
 </p-top-bar>
 
-<p-dropdown-select
-  class="mt-2 mx-2"
-  [items]="dropDownSelectOptions$ | async"
-  [selectedItem]="selectedRepaymentScheduleName$ | async"
-  placeholder="No Selection"
-  (selectionChange)="onDropdownSelected($event)"
-/>
+<div class="mt-2 mx-2">
+  <p-dropdown-select
+    [items]="dropDownSelectOptions$ | async"
+    [selectedItem]="selectedRepaymentScheduleName$ | async"
+    placeholder="No Selection"
+    (selectionChange)="onDropdownSelected($event)"
+  />
+</div>
 
 <div class="d-flex align-items-center justify-content-between mt-2 mx-2">
   <p-numeric-input
@@ -36,11 +37,9 @@
 
 <div class="m-2">
   <p-mortgage-loan-overview-header
-    class="m-2"
     [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
   ></p-mortgage-loan-overview-header>
   <p-mortgage-loan-overview-body-table
-    class="m-2"
     [monthlyInstalmentGroups]="monthlyInstalmentBatches()"
   />
 </div>
