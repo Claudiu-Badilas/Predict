@@ -5,6 +5,10 @@
     <span class="logo-name">PREDICT</span>
   </div>
 
+  <div>
+    <ng-content select="[module-navigation]"></ng-content>
+  </div>
+
   <!-- Desktop menu -->
   <div class="menu desktop">
     @for (option of modules; track option) {

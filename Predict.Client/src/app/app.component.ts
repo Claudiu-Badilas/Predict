@@ -14,7 +14,7 @@ import { ToastNotificationComponent } from './platform/toast-notifications/toast
   ],
   template: `
     <p-spinner />
-    <p-top-bar />
+    <!-- <p-top-bar /> -->
     <p-toast />
     <router-outlet />
   `,

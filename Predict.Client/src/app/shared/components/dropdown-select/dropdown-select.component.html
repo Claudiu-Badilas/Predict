@@ -18,9 +18,10 @@
 
     <div class="options-scrollable-container">
       @for (item of filteredItems(); track item) {
-      <button class="dropdown-item" (click)="selectItem(item)">
-        {{ item }}</button
-      >}
+        <button class="dropdown-item" (click)="selectItem(item)">
+          {{ item }}
+        </button>
+      }
     </div>
   </div>
 </div>

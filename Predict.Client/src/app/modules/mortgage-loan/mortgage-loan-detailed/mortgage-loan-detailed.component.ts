@@ -11,6 +11,7 @@ import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/t
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { MortgageLoanDetailedBodyComponent } from './components/mortgage-loan-detailed-body/mortgage-loan-detailed-body.component';
 import { MortgageLoanDetailedHeaderComponent } from './components/mortgage-loan-detailed-header/mortgage-loan-detailed-header.component';
+import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 
 @Component({
   selector: 'p-mortgage-loan-detailed',
@@ -21,6 +22,7 @@ import { MortgageLoanDetailedHeaderComponent } from './components/mortgage-loan-
     MortgageLoanDetailedHeaderComponent,
     MortgageLoanDetailedBodyComponent,
     DropdownSelectComponent,
+    TopBarComponent,
   ],
   templateUrl: './mortgage-loan-detailed.component.html',
   styleUrl: './mortgage-loan-detailed.component.scss',

@@ -18,6 +18,7 @@ import { RadioGroupComponent } from 'src/app/shared/components/radio-group/radio
 import { MortgageLoanCompareBodyComponent } from './components/mortgage-loan-compare-body/mortgage-loan-compare-body.component';
 import { MortgageLoanCompareHeaderComponent } from './components/mortgage-loan-compare-header/mortgage-loan-compare-header.component';
 import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.chart.util';
+import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 
 @Component({
   selector: 'p-mortgage-loan-compare',
@@ -30,6 +31,7 @@ import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.ch
     MortgageLoanCompareHeaderComponent,
     MortgageLoanCompareBodyComponent,
     RadioGroupComponent,
+    TopBarComponent,
   ],
   templateUrl: './mortgage-loan-compare.component.html',
   styleUrls: ['./mortgage-loan-compare.component.scss'],

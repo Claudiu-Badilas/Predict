@@ -1,55 +1,50 @@
-<p-side-bar>
-  <ng-container filters-full-size>
-    <div class="space">
-      <p-toggle-button
-        [options]="['Overview', 'Detailed', 'Compare']"
-        [selected]="'Compare'"
-        (selectionChange)="onSelectionChange($event)"
-      />
-    </div>
-
-    <div class="space">
-      <p-dropdown-select
-        [items]="repaymentSchedulesOptions()"
-        [selectedItem]="selectedLeftValue()"
-        placeholder="No Selection"
-        (selectionChange)="onLeftDropdownSelected($event)"
-      />
-    </div>
-
-    <div class="space">
-      <p-dropdown-select
-        [items]="repaymentSchedulesOptions()"
-        [selectedItem]="selectedRightValue()"
-        placeholder="No Selection"
-        (selectionChange)="onRightDropdownSelected($event)"
-      />
-    </div>
-    <div class="space">
-      <p-radio-group
-        [options]="[
-          { label: 'Rata', value: 'rata' },
-          { label: 'Dobanda', value: 'dobanda' },
-          { label: 'Principal', value: 'principal' },
-        ]"
-        [selected]="chartView()"
-        (selectionChange)="onChartViewChange($event)"
-      >
-      </p-radio-group>
-    </div>
+<p-top-bar>
+  <ng-container module-navigation>
+    <p-toggle-button
+      [options]="['Overview', 'Detailed', 'Compare']"
+      [selected]="'Compare'"
+      (selectionChange)="onSelectionChange($event)"
+    />
   </ng-container>
+</p-top-bar>
 
-  <ng-container main-content>
-    <div class="m-2">
-      <div class="mb-3">
-        <p-mortgage-loan-compare-header></p-mortgage-loan-compare-header>
-      </div>
-      <div class="mb-3">
-        <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
-      </div>
-      <div>
-        <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>
-      </div>
+<div class="mt-2 mx-2">
+  <div class="d-flex align-items-center justify-content-start gap-3">
+    <p-dropdown-select
+      [items]="repaymentSchedulesOptions()"
+      [selectedItem]="selectedLeftValue()"
+      placeholder="No Selection"
+      (selectionChange)="onLeftDropdownSelected($event)"
+    />
+
+    <p-dropdown-select
+      [items]="repaymentSchedulesOptions()"
+      [selectedItem]="selectedRightValue()"
+      placeholder="No Selection"
+      (selectionChange)="onRightDropdownSelected($event)"
+    />
+  </div>
+  <div class="mt-2 mx-2">
+    <p-radio-group
+      [options]="[
+        { label: 'Rata', value: 'rata' },
+        { label: 'Dobanda', value: 'dobanda' },
+        { label: 'Principal', value: 'principal' },
+      ]"
+      [selected]="chartView()"
+      (selectionChange)="onChartViewChange($event)"
+    >
+    </p-radio-group>
+  </div>
+  <div class="m-2">
+    <div class="mb-3">
+      <p-mortgage-loan-compare-header></p-mortgage-loan-compare-header>
     </div>
-  </ng-container>
-</p-side-bar>
+    <div class="mb-3">
+      <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
+    </div>
+    <div>
+      <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>
+    </div>
+  </div>
+</div>

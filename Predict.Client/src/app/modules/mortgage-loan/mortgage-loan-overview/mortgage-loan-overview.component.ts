@@ -14,6 +14,7 @@ import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { MortgageLoanOverviewBodyTableComponent } from './components/mortgage-loan-overview-body-table/mortgage-loan-overview-body-table.component';
 import { MortgageLoanOverviewHeaderComponent } from './components/mortgage-loan-overview-header/mortgage-loan-overview-header.component';
 import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
+import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 
 @Component({
   selector: 'p-mortgage-loan-overview',
@@ -25,6 +26,7 @@ import { mapInstalementSimulation } from './utils/instalment-simulation.utils';
     MortgageLoanOverviewHeaderComponent,
     MortgageLoanOverviewBodyTableComponent,
     NumericInputComponent,
+    TopBarComponent,
   ],
   templateUrl: './mortgage-loan-overview.component.html',
   styleUrls: ['./mortgage-loan-overview.component.scss'],
