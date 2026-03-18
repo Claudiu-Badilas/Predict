@@ -7,6 +7,7 @@ import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-sele
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
+import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import { InvoiceIndexTrentChartUtils } from './utils/invoice-index-trent.chart.utils';
 
@@ -18,6 +19,7 @@ import { InvoiceIndexTrentChartUtils } from './utils/invoice-index-trent.chart.u
     ToggleButtonComponent,
     DropdownSelectComponent,
     HighchartWrapperComponent,
+    TopBarComponent,
   ],
   templateUrl: './invoices-overview.component.html',
   styleUrl: './invoices-overview.component.scss',

@@ -9,6 +9,7 @@ import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-sele
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
 import { SearchInputComponent } from 'src/app/shared/components/search-input/search-input.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
+import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 import { TransactionHeaderComponent } from './components/transaction-header/transaction-header.component';
 import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';
 
@@ -23,6 +24,7 @@ import { TransactionTableComponent } from './components/transaction-table/transa
     TransactionHeaderComponent,
     HighchartWrapperComponent,
     TransactionTableComponent,
+    TopBarComponent,
   ],
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss'],

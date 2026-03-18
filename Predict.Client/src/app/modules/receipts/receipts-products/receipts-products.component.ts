@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
 import * as ReceiptsActions from 'src/app/modules/receipts/actions/receipts.actions';
 import * as fromReceipts from 'src/app/modules/receipts/reducers/receipts.reducer';
 import { RangeSelectorComponent } from 'src/app/shared/components/date-range-picker/date-range-picker.component';
@@ -9,7 +8,7 @@ import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-
 import { SearchInputComponent } from 'src/app/shared/components/search-input/search-input.component';
 import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
-import { DateUtils } from 'src/app/shared/utils/date.utils';
+import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 
 @Component({
@@ -21,6 +20,7 @@ import * as NavigationAction from 'src/app/store/actions/navigation.actions';
     ToggleButtonComponent,
     SearchInputComponent,
     HighchartWrapperComponent,
+    TopBarComponent,
   ],
   templateUrl: './receipts-products.component.html',
   styleUrl: './receipts-products.component.scss',
