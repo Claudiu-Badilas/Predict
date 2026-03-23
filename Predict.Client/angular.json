@@ -18,7 +18,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/predict.client/browser"
+              "base": "dist/predict.client"
             },
             "baseHref": "/Predict/",
             "index": "src/index.html",
