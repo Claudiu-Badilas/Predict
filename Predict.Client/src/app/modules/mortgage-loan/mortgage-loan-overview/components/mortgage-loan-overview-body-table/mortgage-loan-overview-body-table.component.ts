@@ -5,7 +5,6 @@ import {
   HostListener,
   inject,
   input,
-  signal,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
