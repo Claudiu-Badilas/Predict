@@ -21,7 +21,9 @@ export class MortgageLoanService {
     if (cachedDtos) return of(this.convertToModels(cachedDtos));
 
     return this.httpClient
-      .get<RepaymentScheduleDto[]>('/server/api/v1/mortgage-loan/bcr')
+      .get<
+        RepaymentScheduleDto[]
+      >('https://localhost:8080/api/v1/mortgage-loan/bcr')
       .pipe(
         tap((dtos) => this.saveDtosToLocalStorage(dtos)),
         map((dtos) => this.convertToModels(dtos)),
