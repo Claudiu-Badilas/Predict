@@ -51,6 +51,6 @@ const routes: Routes = [
 
 export const AppRouting: ModuleWithProviders<RouterModule> =
   RouterModule.forRoot(routes, {
-    useHash: false,
+    useHash: true,
     onSameUrlNavigation: 'ignore',
   });
