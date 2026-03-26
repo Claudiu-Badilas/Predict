@@ -11,35 +11,42 @@ const routes: Routes = [
     path: 'mortgage-loan',
     loadChildren: () =>
       import('./modules/mortgage-loan/mortgage-loan.routing').then(
-        (m) => m.mortgageLoanRoutes
+        (m) => m.mortgageLoanRoutes,
       ),
   },
   {
     path: 'transactions',
     loadChildren: () =>
       import('./modules/transaction/transaction.routing').then(
-        (m) => m.transactionRoutes
+        (m) => m.transactionRoutes,
       ),
   },
   {
     path: 'invoices',
     loadChildren: () =>
       import('./modules/invoices/invoices.routing').then(
-        (m) => m.invoicesRoutes
+        (m) => m.invoicesRoutes,
       ),
   },
   {
     path: 'receipts',
     loadChildren: () =>
       import('./modules/receipts/receipts.routing').then(
-        (m) => m.receiptsRoutes
+        (m) => m.receiptsRoutes,
+      ),
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./modules/settings/settings.routing').then(
+        (m) => m.settingsRoutes,
       ),
   },
   {
     path: 'authentication',
     loadChildren: () =>
       import('./platform/authentication/authentication.routing').then(
-        (m) => m.authenticationRoutes
+        (m) => m.authenticationRoutes,
       ),
   },
   {
