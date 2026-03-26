@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MortgageLoanSettingsComponent } from './components/mortgage-loan-settings/mortgage-loan-settings.component';
+import { TransactionsSettingsComponent } from './components/transactions-settings/transactions-settings.component';
 import { SettingsComponent } from './settings.component';
 
 export const settingsRoutes: Routes = [
@@ -8,6 +9,7 @@ export const settingsRoutes: Routes = [
     component: SettingsComponent,
     children: [
       { path: 'mortgage-loan', component: MortgageLoanSettingsComponent },
+      { path: 'transactions', component: TransactionsSettingsComponent },
       { path: '', redirectTo: 'mortgage-loan', pathMatch: 'full' },
     ],
   },

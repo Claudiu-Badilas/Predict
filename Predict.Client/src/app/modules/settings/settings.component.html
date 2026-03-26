@@ -5,7 +5,7 @@
 <p-side-bar>
   <ng-container filters-full-size>
     @for (module of modules; track $index) {
-      <div>{{ module.name }}</div>
+      <div (click)="onNavigateTo(module.url)">{{ module.name }}</div>
     }
   </ng-container>
 
