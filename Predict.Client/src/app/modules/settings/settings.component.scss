@@ -1,0 +1,19 @@
+/* Menu items */
+.menu-item {
+  padding: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.menu-item:hover {
+  background: #41c5b7;
+  color: #ffffff;
+}
+
+/* Active state */
+.menu-item.active {
+  background: #41c5b7;
+  color: white;
+  font-weight: 500;
+  border-left: 3px solid #60a5fa;
+}
