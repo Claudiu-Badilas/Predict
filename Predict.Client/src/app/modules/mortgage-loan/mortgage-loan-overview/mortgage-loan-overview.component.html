@@ -1,12 +1,10 @@
 <p-top-bar>
   <ng-container module-navigation>
-    <div class="w-100">
-      <p-toggle-button
-        [options]="['Overview', 'Detailed', 'Compare']"
-        [selected]="'Overview'"
-        (selectionChange)="onSelectionChange($event)"
-      />
-    </div>
+    <p-toggle-button
+      [options]="['Overview', 'Detailed', 'Compare']"
+      [selected]="'Overview'"
+      (selectionChange)="onSelectionChange($event)"
+    />
   </ng-container>
 </p-top-bar>
 
