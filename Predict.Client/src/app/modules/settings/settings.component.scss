@@ -46,13 +46,10 @@
   color: #6366f1;
   white-space: nowrap;
 
-  &:hover:not(.active) {
-    color: #4f46e5;
-    border-radius: 8px 8px 0 0;
-  }
-
   &.active {
     color: #4f46e5;
+    background-color: #dadce4;
+    border-radius: 5px 5px 0 0 !important;
 
     .tab-indicator {
       opacity: 1;
