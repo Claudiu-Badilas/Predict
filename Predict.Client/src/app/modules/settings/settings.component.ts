@@ -1,23 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { SideBarComponent } from 'src/app/shared/components/side-bar/side-bar.component';
 import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 import * as NavigationAction from 'src/app/store/actions/navigation.actions';
 import * as fromAppStore from 'src/app/store/app-state.reducer';
 
 @Component({
   selector: 'p-settings',
-  imports: [RouterModule, TopBarComponent, SideBarComponent],
+  imports: [CommonModule, RouterModule, TopBarComponent],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
 export class SettingsComponent {
-  modules = [
-    { name: 'Mortgage', url: 'mortgage-loan' },
-    { name: 'Transactions', url: 'transactions' },
-    { name: 'Invoices', url: 'invoices' },
-    { name: 'Receipts', url: 'receipts' },
+  activeTab: string = 'tab1';
+
+  tabs = [
+    { id: 'tab1', label: 'Mortgage', url: 'mortgage-loan' },
+    { id: 'tab2', label: 'Transactions', url: 'transactions' },
+    { id: 'tab2', label: 'Invoices', url: 'invoices' },
+    { id: 'tab3', label: 'Receipts', url: 'receipts' },
   ];
 
   store = inject(Store<fromAppStore.AppState>);
