@@ -1,22 +1,26 @@
 <p-top-bar>
   <ng-container module-navigation></ng-container>
 </p-top-bar>
-<div class="tabs-wrapper">
-  <div class="tabs-header">
-    @for (tab of tabs; track $index) {
-      <div
-        class="tab"
-        [routerLink]="tab.url"
-        routerLinkActive="active "
-        [routerLinkActiveOptions]="{ exact: true }"
-        [class.active]="tab.id === activeTab"
-      >
-        {{ tab.label }}
-      </div>
-    }
-  </div>
 
-  <div class="tabs-content">
-    <router-outlet></router-outlet>
+<div class="settings-container">
+  <div class="tabs-wrapper">
+    <div class="tabs-header">
+      @for (tab of tabs; track tab.id) {
+        <button
+          class="tab-button"
+          [routerLink]="tab.url"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [attr.aria-selected]="tab.id === activeTab"
+        >
+          <span class="tab-label">{{ tab.label }}</span>
+          <span class="tab-indicator"></span>
+        </button>
+      }
+    </div>
+
+    <div class="tabs-content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
