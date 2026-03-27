@@ -11,10 +11,10 @@ import * as fromAppStore from 'src/app/store/app-state.reducer';
 
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
-import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
-
 import { RadioGroupComponent } from 'src/app/shared/components/radio-group/radio-group.component';
+import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
+
 import { MortgageLoanCompareBodyComponent } from './components/mortgage-loan-compare-body/mortgage-loan-compare-body.component';
 import { MortgageLoanCompareHeaderComponent } from './components/mortgage-loan-compare-header/mortgage-loan-compare-header.component';
 import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.chart.util';
@@ -56,18 +56,24 @@ export class MortgageLoanCompareComponent {
     ),
   );
 
-  repaymentSchedulesOptions = computed(() => [
-    'No Selection',
-    ...this.repaymentSchedules().map((r) => r.name),
-  ]);
+  repaymentSchedulesOptions = computed(() => {
+    const rs = this.repaymentSchedules();
+    return rs.length
+      ? ['No Selection', ...rs.map((r) => r.name)]
+      : ['No Selection'];
+  });
 
-  leftRepaymentSchedule = computed(() =>
-    this.repaymentSchedules().find((r) => r.name === this.selectedLeftValue()),
-  );
+  leftRepaymentSchedule = computed(() => {
+    const rs = this.repaymentSchedules();
+    const selected = this.selectedLeftValue();
+    return rs.find((r) => r.name === selected);
+  });
 
-  rightRepaymentSchedule = computed(() =>
-    this.repaymentSchedules().find((r) => r.name === this.selectedRightValue()),
-  );
+  rightRepaymentSchedule = computed(() => {
+    const rs = this.repaymentSchedules();
+    const selected = this.selectedRightValue();
+    return rs.find((r) => r.name === selected);
+  });
 
   chartView = signal<'rata' | 'dobanda' | 'principal'>('rata');
 
@@ -80,25 +86,41 @@ export class MortgageLoanCompareComponent {
   );
 
   constructor(private store: Store<fromAppStore.AppState>) {
+    this.initLeftSelectionEffect();
+    this.initRightSelectionEffect();
+  }
+
+  private initLeftSelectionEffect() {
     effect(() => {
       const rs = this.repaymentSchedules();
       if (!rs.length) return;
-      const [first] = rs.filter((r) => !r.isBasePayment);
-      const base = rs.find((r) => r.isBasePayment);
 
-      if (!this.selectedLeftValue()) {
-        if (!first) return;
+      const first = rs.find((r) => !r.isBasePayment);
+      if (!first) return;
 
+      const selectedLeft = this.selectedLeftValue();
+
+      if (!selectedLeft) {
         this.store.dispatch(
           MortgageLoanCompareActions.selectedLeftMortgageLoanChanged({
             selected: first.name,
           }),
         );
       }
+    });
+  }
 
-      if (!this.selectedRightValue()) {
-        if (!base) return;
+  private initRightSelectionEffect() {
+    effect(() => {
+      const rs = this.repaymentSchedules();
+      if (!rs.length) return;
 
+      const base = rs.find((r) => r.isBasePayment);
+      if (!base) return;
+
+      const selectedRight = this.selectedRightValue();
+
+      if (!selectedRight) {
         this.store.dispatch(
           MortgageLoanCompareActions.selectedRightMortgageLoanChanged({
             selected: base.name,
