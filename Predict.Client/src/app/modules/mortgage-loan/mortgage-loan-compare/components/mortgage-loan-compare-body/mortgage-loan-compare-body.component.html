@@ -1,16 +1,18 @@
 <div class="comparison mb-2">
   <!-- Totals -->
   <div class="comparison__card">
-    <div class="comparison__header">
-      <h2 class="comparison__title">Totals Comparison</h2>
-    </div>
-
     <table class="comparison__table">
       <thead>
         <tr>
-          <th></th>
+          <th>
+            <div>
+              <div class="comparison__title">Totals</div>
+            </div>
+          </th>
           @for (manager of validManagers(); track $index) {
-            <th>{{ manager.getBaseName() }}</th>
+            <th>
+              <div class="comparison__title">{{ manager.getBaseName() }}</div>
+            </th>
           }
         </tr>
       </thead>
@@ -83,16 +85,18 @@
 
   <!-- Yearly -->
   <div class="comparison__card" style="overflow-y: auto; height: 300px">
-    <div class="comparison__header">
-      <h2 class="comparison__title">Yearly Breakdown</h2>
-    </div>
-
     <table class="comparison__table">
       <thead>
         <tr>
-          <th></th>
+          <th>
+            <div>
+              <div class="comparison__title">Breakdown</div>
+            </div>
+          </th>
           @for (manager of validManagers(); track $index) {
-            <th>{{ manager.getBaseName() }}</th>
+            <th>
+              <div class="comparison__title">{{ manager.getBaseName() }}</div>
+            </th>
           }
         </tr>
       </thead>

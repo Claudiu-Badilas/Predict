@@ -22,16 +22,8 @@ $primary: #3182ce;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   }
 
-  &__header {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid $border;
-    padding: 0 16px;
-  }
-
   &__title {
     font-size: 16px;
-    padding: 5px;
     font-weight: 600;
     margin: 0;
   }
