@@ -100,20 +100,9 @@ export class MortgageLoanDetailedHeaderComponent {
     return schedule?.at(-1)?.paymentDate ?? null;
   });
 
-  readonly lastBaseInstalmentPaymentDate = computed(() => {
-    const schedule = this.baseRepaymentSchedule();
-    return schedule?.monthlyInstalments?.at(-1)?.paymentDate ?? null;
-  });
-
   readonly dateDiffYMD = computed(() => {
     const d1 = this.firstInstalmentPaymentDate();
     const d2 = this.lastInstalmentPaymentDate();
-    return JsDateUtils.dateDiffYMD(d1, d2);
-  });
-
-  readonly savedDateDiffYMD = computed(() => {
-    const d1 = this.lastInstalmentPaymentDate();
-    const d2 = this.lastBaseInstalmentPaymentDate();
     return JsDateUtils.dateDiffYMD(d1, d2);
   });
 }

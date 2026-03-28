@@ -51,33 +51,16 @@
 
     <div class="summary-section stat-item stat-item--teal">
       <div class="stat-row">
-        <span class="stat-item__label">Prima plata</span>
         <span class="stat-item__label">Ultima plata</span>
+        <span class="stat-item__label">Per. Ramasa</span>
       </div>
 
       <div class="stat-row">
-        <span class="stat-item__value">
-          {{ firstInstalmentPaymentDate() | date: "MMM-yyyy" }}
-        </span>
-
         <span class="stat-item__value">
           {{ lastInstalmentPaymentDate() | date: "MMM-yyyy" }}
         </span>
-      </div>
-    </div>
 
-    <div class="summary-section stat-item stat-item--violet">
-      <div class="stat-row">
-        <span class="stat-item__label">Per. Ramasa</span>
-        <span class="stat-item__label">Per. Anticipata</span>
-      </div>
-
-      <div class="stat-row">
         <span class="stat-item__value"> {{ dateDiffYMD() ?? "-" }} </span>
-
-        <span class="stat-item__value">
-          {{ savedDateDiffYMD() ?? "-" }}
-        </span>
       </div>
     </div>
   </div>
