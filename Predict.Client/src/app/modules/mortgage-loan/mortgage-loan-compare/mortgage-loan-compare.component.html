@@ -25,16 +25,12 @@
     />
   </div>
   <div class="mt-2 mx-2">
-    <p-radio-group
-      [options]="[
-        { label: 'Rata', value: 'rata' },
-        { label: 'Dobanda', value: 'dobanda' },
-        { label: 'Principal', value: 'principal' },
-      ]"
+    <p-toggle-button
+      [options]="['Rata', 'Dobanda', 'Principal']"
       [selected]="chartView()"
+      [gradient]="{ primaryColor: '#047f94', secondaryColor: '#d5a326' }"
       (selectionChange)="onChartViewChange($event)"
-    >
-    </p-radio-group>
+    />
   </div>
   <div class="m-2">
     <div class="mb-3">

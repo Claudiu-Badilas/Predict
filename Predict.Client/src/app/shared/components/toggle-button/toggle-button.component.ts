@@ -12,7 +12,7 @@ export class ToggleButtonComponent {
   @Input() set selected(value: string | null) {
     this._selected.set(!!value ? value : this.options[0]);
   }
-
+  @Input() gradient: { primaryColor: string; secondaryColor: string };
   @Output() selectionChange = new EventEmitter<string>();
 
   _selected = signal<string | null>(null);
@@ -22,5 +22,9 @@ export class ToggleButtonComponent {
     setTimeout(() => {
       this.selectionChange.emit(option);
     }, 200);
+  }
+
+  get gradientStyle(): string {
+    return `linear-gradient(135deg, ${this.gradient?.primaryColor ?? '#c61a54'}, ${this.gradient?.secondaryColor ?? '#d5a326'})`;
   }
 }

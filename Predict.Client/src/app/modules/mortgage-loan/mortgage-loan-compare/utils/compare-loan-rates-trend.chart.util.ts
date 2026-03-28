@@ -7,7 +7,7 @@ export namespace CompareRatesTrendChartUtils {
   export function getChart(
     left: RepaymentSchedule,
     right: RepaymentSchedule,
-    chartView: 'rata' | 'dobanda' | 'principal',
+    chartView: 'Rata' | 'Dobanda' | 'Principal',
   ): Highcharts.Options {
     const sources: Array<[RepaymentSchedule, string, string]> = [
       left ? [left, left.name, Colors.BS_TEAL] : null,
@@ -40,15 +40,15 @@ export namespace CompareRatesTrendChartUtils {
         })),
       };
 
-      if (chartView === 'rata') {
+      if (chartView === 'Rata') {
         series.push(principalSeries, interestSeries);
       }
 
-      if (chartView === 'principal') {
+      if (chartView === 'Principal') {
         series.push(principalSeries);
       }
 
-      if (chartView === 'dobanda') {
+      if (chartView === 'Dobanda') {
         series.push(interestSeries);
       }
     });

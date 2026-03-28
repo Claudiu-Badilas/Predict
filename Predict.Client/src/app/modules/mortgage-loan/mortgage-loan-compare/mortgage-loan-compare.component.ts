@@ -11,7 +11,6 @@ import * as fromAppStore from 'src/app/store/app-state.reducer';
 
 import { DropdownSelectComponent } from 'src/app/shared/components/dropdown-select/dropdown-select.component';
 import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-wrapper/highcharts-wrapper.component';
-import { RadioGroupComponent } from 'src/app/shared/components/radio-group/radio-group.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { TopBarComponent } from 'src/app/shared/components/top-bar/top-bar.component';
 
@@ -28,7 +27,6 @@ import { CompareRatesTrendChartUtils } from './utils/compare-loan-rates-trend.ch
     HighchartWrapperComponent,
     MortgageLoanCompareHeaderComponent,
     MortgageLoanCompareBodyComponent,
-    RadioGroupComponent,
     TopBarComponent,
   ],
   templateUrl: './mortgage-loan-compare.component.html',
@@ -75,7 +73,7 @@ export class MortgageLoanCompareComponent {
     return rs.find((r) => r.name === selected);
   });
 
-  chartView = signal<'rata' | 'dobanda' | 'principal'>('rata');
+  chartView = signal<'Rata' | 'Dobanda' | 'Principal'>('Rata');
 
   compareRatesTrendChart = computed(() =>
     CompareRatesTrendChartUtils.getChart(
@@ -155,6 +153,6 @@ export class MortgageLoanCompareComponent {
   }
 
   onChartViewChange(view: string) {
-    this.chartView.set(view as 'rata' | 'dobanda' | 'principal');
+    this.chartView.set(view as 'Rata' | 'Dobanda' | 'Principal');
   }
 }
