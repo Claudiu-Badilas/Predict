@@ -1,14 +1,10 @@
-<div class="comparison mb-2">
+<div class="comparison">
   <!-- Totals -->
   <div class="comparison__card">
     <table class="comparison__table">
       <thead>
         <tr>
-          <th>
-            <div>
-              <div class="comparison__title">Totals</div>
-            </div>
-          </th>
+          <th></th>
           @for (manager of validManagers(); track $index) {
             <th>
               <div class="comparison__title">{{ manager.getBaseName() }}</div>
@@ -88,11 +84,7 @@
     <table class="comparison__table">
       <thead>
         <tr>
-          <th>
-            <div>
-              <div class="comparison__title">Breakdown</div>
-            </div>
-          </th>
+          <th></th>
           @for (manager of validManagers(); track $index) {
             <th>
               <div class="comparison__title">{{ manager.getBaseName() }}</div>

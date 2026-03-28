@@ -9,7 +9,7 @@
 </p-top-bar>
 
 <div class="mt-2 mx-2">
-  <div class="d-flex align-items-center justify-content-start gap-3">
+  <div class="d-flex align-items-center justify-content-start">
     <p-dropdown-select
       [items]="repaymentSchedulesOptions()"
       [selectedItem]="selectedLeftValue()"
@@ -26,7 +26,7 @@
   </div>
   <div class="mt-2 mx-2"></div>
   <div>
-    <div class="mb-3">
+    <div class="mb-2">
       <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()">
         <ng-container p-highcharts-wrapper-content>
           <div class="m-2 d-flex align-items-center justify-content-between">
@@ -46,7 +46,7 @@
       ></p-highcharts-wrapper>
     </div>
     <div>
-      <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>
+      <p-mortgage-loan-compare-body />
     </div>
   </div>
 </div>
