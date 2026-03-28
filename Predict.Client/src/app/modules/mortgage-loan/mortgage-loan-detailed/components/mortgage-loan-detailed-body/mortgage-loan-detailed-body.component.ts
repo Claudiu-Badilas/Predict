@@ -8,7 +8,7 @@ import { HighchartWrapperComponent } from 'src/app/shared/components/highcharts-
 import { Colors } from 'src/app/shared/styles/colors';
 import { HistoricalInstalmentsTableComponent } from '../historical-instalments-table/historical-instalments-table.component';
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
-import { MortgageLoanPaymentsChartUtils } from '../../utils/charts/mortgage-loan-payments.chart.util';
+import { MortgageLoanMonthlyPaymentsChartUtils } from '../../utils/charts/mortgage-loan-monthly-payments.chart.util';
 import { map } from 'rxjs';
 
 @Component({
@@ -43,8 +43,8 @@ export class MortgageLoanDetailedBodyComponent {
     ),
   );
 
-  mortgageLoanPaymentsChart = computed(() =>
-    MortgageLoanPaymentsChartUtils.getChart(
+  mortgageLoanMonthlyPaymentsChart = computed(() =>
+    MortgageLoanMonthlyPaymentsChartUtils.getChart(
       this.historicalInstalments(),
       this.monthlyPaymentViewChange() === 'Prd. Fixa',
     ),

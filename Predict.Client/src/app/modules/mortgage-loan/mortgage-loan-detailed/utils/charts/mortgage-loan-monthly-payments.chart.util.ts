@@ -4,12 +4,11 @@ import { Calculator } from 'src/app/shared/utils/calculator.utils';
 import { ObjectUtil } from 'src/app/shared/utils/object.utils';
 import { HistoricalInstalmentPayment } from '../../models/base-loan-rate.model';
 
-export namespace MortgageLoanPaymentsChartUtils {
+export namespace MortgageLoanMonthlyPaymentsChartUtils {
   export function getChart(
     instalments: HistoricalInstalmentPayment[],
     fixedPeriod: boolean,
   ): Highcharts.Options {
-    console.log('🚀 ~ getChart ~ allInstalments:', instalments);
     if (!instalments.length) return null;
 
     const scheduledPayments = instalments.filter((r) => r.instalmentPayment);
