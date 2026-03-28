@@ -9,4 +9,9 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
+
+  .card {
+    border: none !important;
+    box-shadow: 0 0 20px rgba(5, 3, 3, 0.1);
+  }
 }

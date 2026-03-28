@@ -1,6 +1,9 @@
-@let baseManager = baseHistoricalInstalmentPaymentBatchesManager();
-@let leftManager = leftHistoricalInstalmentPaymentBatchesManager();
-@let rightManager = rightHistoricalInstalmentPaymentBatchesManager();
+@let managers =
+  [
+    leftHistoricalInstalmentPaymentBatchesManager(),
+    rightHistoricalInstalmentPaymentBatchesManager(),
+    baseHistoricalInstalmentPaymentBatchesManager(),
+  ];
 
 <div class="comparison">
   <!-- Totals -->
@@ -13,89 +16,65 @@
       <thead>
         <tr>
           <th></th>
-          <th>{{ baseManager.getBaseName() }}</th>
-          <th>{{ leftManager.getBaseName() }}</th>
-          <th>{{ rightManager.getBaseName() }}</th>
+          @for (manager of managers; track $index) {
+            <th>{{ manager.getBaseName() }}</th>
+          }
         </tr>
       </thead>
 
       <tbody>
+        <!-- Principal -->
         <tr>
           <td class="comparison__label">Principal</td>
-          <td>
-            {{ baseManager.getUnpaidPrincipalAmmount() | numberFormat: "0.00" }}
-          </td>
-          <td>
-            {{ leftManager.getUnpaidPrincipalAmmount() | numberFormat: "0.00" }}
-          </td>
-          <td>
-            {{
-              rightManager.getUnpaidPrincipalAmmount() | numberFormat: "0.00"
-            }}
-          </td>
+          @for (manager of managers; track $index) {
+            <td>
+              {{ manager.getUnpaidPrincipalAmmount() | numberFormat: "0.00" }}
+            </td>
+          }
         </tr>
 
+        <!-- Dobanda -->
         <tr>
           <td class="comparison__label">Dobanda</td>
-          <td>
-            {{ baseManager.getUnpaidAmmountInterest() | numberFormat: "0.00" }}
-          </td>
-          <td>
-            {{ leftManager.getUnpaidAmmountInterest() | numberFormat: "0.00" }}
-          </td>
-          <td>
-            {{ rightManager.getUnpaidAmmountInterest() | numberFormat: "0.00" }}
-          </td>
+          @for (manager of managers; track $index) {
+            <td>
+              {{ manager.getUnpaidAmmountInterest() | numberFormat: "0.00" }}
+            </td>
+          }
         </tr>
 
+        <!-- PAD -->
         <tr>
           <td class="comparison__label">PAD</td>
-          <td>
-            {{ baseManager.getUnpaidInsuranceAmmount() | numberFormat: "0.00" }}
-          </td>
-          <td>
-            {{ leftManager.getUnpaidInsuranceAmmount() | numberFormat: "0.00" }}
-          </td>
-          <td>
-            {{
-              rightManager.getUnpaidInsuranceAmmount() | numberFormat: "0.00"
-            }}
-          </td>
+          @for (manager of managers; track $index) {
+            <td>
+              {{ manager.getUnpaidInsuranceAmmount() | numberFormat: "0.00" }}
+            </td>
+          }
         </tr>
 
+        <!-- Paid -->
         <tr class="comparison__row comparison__row--bold">
           <td class="comparison__label">Paid</td>
-          <td>{{ baseManager.getPaidAmmount() | numberFormat: "0.00" }}</td>
-          <td>{{ leftManager.getPaidAmmount() | numberFormat: "0.00" }}</td>
-          <td>{{ rightManager.getPaidAmmount() | numberFormat: "0.00" }}</td>
+          @for (manager of managers; track $index) {
+            <td>
+              {{ manager.getPaidAmmount() | numberFormat: "0.00" }}
+            </td>
+          }
         </tr>
 
+        <!-- Duration -->
         <tr>
           <td class="comparison__label">Duration</td>
-
-          <td class="comparison__text comparison__text--primary">
-            {{
-              baseManager.selected.monthlyInstalments.at(-1)?.paymentDate
-                | date: "MMM yyy"
-            }}
-            ({{ baseManager.getDuration() ?? "-" }})
-          </td>
-
-          <td class="comparison__text comparison__text--primary">
-            {{
-              leftManager.selected.monthlyInstalments.at(-1)?.paymentDate
-                | date: "MMM yyy"
-            }}
-            ({{ leftManager.getDuration() ?? "-" }})
-          </td>
-
-          <td class="comparison__text comparison__text--primary">
-            {{
-              rightManager.selected.monthlyInstalments.at(-1)?.paymentDate
-                | date: "MMM yyy"
-            }}
-            ({{ rightManager.getDuration() ?? "-" }})
-          </td>
+          @for (manager of managers; track $index) {
+            <td class="comparison__text comparison__text--primary">
+              {{
+                manager.selected.monthlyInstalments.at(-1)?.paymentDate
+                  | date: "MMM yyy"
+              }}
+              ({{ manager.getDuration() ?? "-" }})
+            </td>
+          }
         </tr>
       </tbody>
     </table>
@@ -111,9 +90,9 @@
       <thead>
         <tr>
           <th></th>
-          <th>{{ baseManager.getBaseName() }}</th>
-          <th>{{ leftManager.getBaseName() }}</th>
-          <th>{{ rightManager.getBaseName() }}</th>
+          @for (manager of managers; track $index) {
+            <th>{{ manager.getBaseName() }}</th>
+          }
         </tr>
       </thead>
 
@@ -121,17 +100,12 @@
         @for (year of years(); track $index) {
           <tr>
             <td class="comparison__year">{{ year }}</td>
-            <td>
-              {{ getPrincipalAmount(year, baseManager) | numberFormat: "0.00" }}
-            </td>
-            <td>
-              {{ getPrincipalAmount(year, leftManager) | numberFormat: "0.00" }}
-            </td>
-            <td>
-              {{
-                getPrincipalAmount(year, rightManager) | numberFormat: "0.00"
-              }}
-            </td>
+
+            @for (manager of managers; track $index) {
+              <td>
+                {{ getPrincipalAmount(year, manager) | numberFormat: "0.00" }}
+              </td>
+            }
           </tr>
         }
       </tbody>

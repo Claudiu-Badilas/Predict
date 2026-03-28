@@ -18,6 +18,7 @@
   transition: color 0.25s;
   color: #1a1a1a;
   font-size: 11px;
+  user-select: none;
 
   &.active {
     color: #fff;

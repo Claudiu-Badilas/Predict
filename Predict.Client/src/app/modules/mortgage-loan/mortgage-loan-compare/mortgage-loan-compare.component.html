@@ -24,20 +24,29 @@
       (selectionChange)="onRightDropdownSelected($event)"
     />
   </div>
-  <div class="mt-2 mx-2">
-    <p-toggle-button
-      [options]="['Rata', 'Dobanda', 'Principal']"
-      [selected]="chartView()"
-      [gradient]="{ primaryColor: '#047f94', secondaryColor: '#d5a326' }"
-      (selectionChange)="onChartViewChange($event)"
-    />
-  </div>
-  <div class="m-2">
+  <div class="mt-2 mx-2"></div>
+  <div>
     <div class="mb-3">
       <p-mortgage-loan-compare-header></p-mortgage-loan-compare-header>
     </div>
     <div class="mb-3">
-      <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()" />
+      <p-highcharts-wrapper [chartOptions]="compareRatesTrendChart()">
+        <ng-container p-highcharts-wrapper-content>
+          <div class="m-2 d-flex align-items-center justify-content-between">
+            <div class="title">Trendul ratelor</div>
+            <div class="w-50">
+              <p-toggle-button
+                [options]="['Rata', 'Dobanda', 'Principal']"
+                [selected]="chartView()"
+                [gradient]="{
+                  primaryColor: '#047f94',
+                  secondaryColor: '#d5a326',
+                }"
+                (selectionChange)="onChartViewChange($event)"
+              />
+            </div>
+          </div> </ng-container
+      ></p-highcharts-wrapper>
     </div>
     <div>
       <p-mortgage-loan-compare-body></p-mortgage-loan-compare-body>

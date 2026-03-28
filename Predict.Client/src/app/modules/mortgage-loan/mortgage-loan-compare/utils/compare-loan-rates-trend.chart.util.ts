@@ -54,13 +54,21 @@ export namespace CompareRatesTrendChartUtils {
     });
 
     return {
-      title: {
-        text: 'Trendul de rambursare - Principal vs Dobandă',
-        align: 'left',
-      },
+      title: { text: null, align: 'left' },
       chart: { zooming: { type: 'x' } },
-      xAxis: { type: 'datetime', title: { text: 'Date' } },
-      yAxis: { title: { text: 'Amount' } },
+      xAxis: { type: 'datetime' },
+      yAxis: {
+        title: { text: null },
+        labels: {
+          formatter: function () {
+            const value = this.value as number;
+            if (value >= 1000) {
+              return value / 1000 + 'k';
+            }
+            return value.toString();
+          },
+        },
+      },
       plotOptions: { series: { marker: { enabled: false } } },
       tooltip: {
         shared: true,
@@ -70,19 +78,20 @@ export namespace CompareRatesTrendChartUtils {
           const date = points?.[0]?.point?.date;
 
           return `
-            <b>Date: ${date}</b><br/>
-            ${
-              points
-                ?.map(
-                  (p: any) =>
-                    `<span style="color:${p.series.color}">●</span>
-                   ${p.series.name}: <b>${p.y}</b><br/>`,
-                )
-                .join('') || ''
-            }
-          `;
+        <b>Date: ${date}</b><br/>
+        ${
+          points
+            ?.map(
+              (p: any) =>
+                `<span style="color:${p.series.color}">●</span>
+                 ${p.series.name}: <b>${p.y}</b><br/>`,
+            )
+            .join('') || ''
+        }
+      `;
         },
       },
+      legend: { enabled: false },
       series,
     };
   }
