@@ -10,6 +10,7 @@ import { HistoricalInstalmentsTableComponent } from '../historical-instalments-t
 import { ToggleButtonComponent } from 'src/app/shared/components/toggle-button/toggle-button.component';
 import { MortgageLoanMonthlyPaymentsChartUtils } from '../../utils/charts/mortgage-loan-monthly-payments.chart.util';
 import { map } from 'rxjs';
+import { MortgageInterestProgressChartUtils } from '../../utils/charts/mortgage-interest-progress.chart.util';
 
 @Component({
   selector: 'p-mortgage-loan-detailed-body',
@@ -23,9 +24,6 @@ import { map } from 'rxjs';
   styleUrl: './mortgage-loan-detailed-body.component.scss',
 })
 export class MortgageLoanDetailedBodyComponent {
-  mortgageInterestProgressChart$ = this.store.select(
-    fromMortgageLoanDetailed.getMortgageInterestProgressChart,
-  );
   mortgageLoanAmountChart$ = this.store.select(
     fromMortgageLoanDetailed.getMortgageLoanAmountChart,
   );
@@ -43,6 +41,13 @@ export class MortgageLoanDetailedBodyComponent {
     ),
   );
 
+  mortgageInterestProgressChart = computed(() =>
+    MortgageInterestProgressChartUtils.getChart(
+      this.historicalInstalments(),
+      this.progressPaymentViewChange(),
+    ),
+  );
+
   mortgageLoanMonthlyPaymentsChart = computed(() =>
     MortgageLoanMonthlyPaymentsChartUtils.getChart(
       this.historicalInstalments(),
@@ -54,8 +59,15 @@ export class MortgageLoanDetailedBodyComponent {
 
   colors = Colors;
   monthlyPaymentViewChange = signal<'Prd. Fixa' | 'Prd. Totala'>('Prd. Fixa');
+  progressPaymentViewChange = signal<'Credit' | 'Dobanda' | 'Total'>('Credit');
 
   onMonthlyPaymentViewChange($event: string) {
     this.monthlyPaymentViewChange.set($event as 'Prd. Fixa' | 'Prd. Totala');
+  }
+
+  onProgressPaymentViewChange($event: string) {
+    this.progressPaymentViewChange.set(
+      $event as 'Credit' | 'Dobanda' | 'Total',
+    );
   }
 }

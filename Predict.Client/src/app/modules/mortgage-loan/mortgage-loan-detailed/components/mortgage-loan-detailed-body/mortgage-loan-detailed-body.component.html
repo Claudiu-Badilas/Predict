@@ -1,7 +1,22 @@
 <div class="charts-container mb-3">
   <p-highcharts-wrapper
     class="chart-wrapper"
-    [chartOptions]="mortgageInterestProgressChart$ | async"
+    [chartOptions]="mortgageInterestProgressChart()"
+    ><ng-container p-highcharts-wrapper-content>
+      <div class="m-2 d-flex align-items-center justify-content-between">
+        <div class="title">Progress</div>
+        <div class="w-50">
+          <p-toggle-button
+            [options]="['Credit', 'Dobanda', 'Total']"
+            [selected]="progressPaymentViewChange()"
+            [gradient]="{
+              primaryColor: '#047f94',
+              secondaryColor: '#d5a326',
+            }"
+            (selectionChange)="onProgressPaymentViewChange($event)"
+          />
+        </div>
+      </div> </ng-container
   ></p-highcharts-wrapper>
 
   <p-highcharts-wrapper

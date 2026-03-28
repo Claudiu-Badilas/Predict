@@ -8,6 +8,7 @@ import { HistoricalInstalmentPayment } from '../../models/base-loan-rate.model';
 export namespace MortgageInterestProgressChartUtils {
   export function getChart(
     rates: HistoricalInstalmentPayment[],
+    selection: 'Credit' | 'Dobanda' | 'Total',
   ): Highcharts.Options {
     if (!rates.length) return null;
 
@@ -43,28 +44,79 @@ export namespace MortgageInterestProgressChartUtils {
       unpaidRates.map((r) => r.interestAmount),
     );
 
-    const total = Calculator.sum([
-      paidPrincipal,
-      unpaidPrincipal,
-      paidInterest,
-      paidInsurance,
-      savedInterest,
-      unpaidInterest,
-    ]);
+    // 🔹 Build data dynamically based on selection
+    const rawData: {
+      name: string;
+      nameShort: string;
+      value: number;
+      color: string;
+    }[] = [];
+
+    if (selection === 'Credit' || selection === 'Total') {
+      rawData.push(
+        {
+          name: 'Principal Platit',
+          nameShort: 'PP',
+          value: paidPrincipal,
+          color: Colors.TEAL_400,
+        },
+        {
+          name: 'Principal Neplatit',
+          nameShort: 'PN',
+          value: unpaidPrincipal,
+          color: Colors.BS_DANGER,
+        },
+      );
+    }
+
+    if (selection === 'Dobanda' || selection === 'Total') {
+      rawData.push(
+        {
+          name: 'Dobanda Platita',
+          nameShort: 'DP',
+          value: paidInterest,
+          color: Colors.BLUE_400,
+        },
+        {
+          name: 'PAD Platita',
+          nameShort: 'PAD',
+          value: paidInsurance,
+          color: Colors.YELLOW_400,
+        },
+        {
+          name: 'Economii',
+          nameShort: 'E',
+          value: savedInterest,
+          color: Colors.GREEN_400,
+        },
+        {
+          name: 'Dobanda Neplatita',
+          nameShort: 'DN',
+          value: unpaidInterest,
+          color: Colors.BS_ORANGE,
+        },
+      );
+    }
+
+    // 🔹 Total based on filtered selection
+    const total = Calculator.sum(rawData.map((d) => d.value));
 
     const percent = (value: number) =>
-      MathUtil.round(MathUtil.percent(value, total));
+      total ? MathUtil.round(MathUtil.percent(value, total)) : 0;
+
+    // 🔹 Final chart data
+    const chartData = rawData.map((d) => ({
+      name: d.name,
+      nameShort: d.nameShort,
+      y: percent(d.value),
+      amount: MathUtil.round(d.value),
+      amountCompact: NumberFormatPipe.numberFormat(d.value),
+      color: d.color,
+    }));
 
     return {
-      chart: {
-        type: 'pie',
-        spacing: [20, 20, 20, 20],
-      },
-      title: {
-        text: `Overview (${NumberFormatPipe.numberFormat(total)})`,
-        align: 'left',
-        style: { fontFamily: 'Inter, system-ui, sans-serif' },
-      },
+      chart: { type: 'pie', spacing: [20, 20, 20, 20] },
+      title: { text: null, align: 'left' },
       tooltip: {
         headerFormat: '',
         pointFormat:
@@ -90,60 +142,10 @@ export namespace MortgageInterestProgressChartUtils {
           },
         },
       },
-
       series: [
         {
           name: 'Mortgage',
-          data: [
-            {
-              name: 'Principal Platit',
-              nameShort: 'PP', // Shortened name
-              y: percent(paidPrincipal),
-              amount: MathUtil.round(paidPrincipal),
-              amountCompact: NumberFormatPipe.numberFormat(paidPrincipal),
-              color: Colors.TEAL_400,
-            },
-            {
-              name: 'Principal Neplatit',
-              nameShort: 'PN',
-              y: percent(unpaidPrincipal),
-              amount: MathUtil.round(unpaidPrincipal),
-              amountCompact: NumberFormatPipe.numberFormat(unpaidPrincipal),
-              color: Colors.BS_DANGER,
-            },
-            {
-              name: 'Dobanda Platita',
-              nameShort: 'DP',
-              y: percent(paidInterest),
-              amount: MathUtil.round(paidInterest),
-              amountCompact: NumberFormatPipe.numberFormat(paidInterest),
-              color: Colors.BLUE_400,
-            },
-            {
-              name: 'PAD Platita',
-              nameShort: 'PAD',
-              y: percent(paidInsurance),
-              amount: MathUtil.round(paidInsurance),
-              amountCompact: NumberFormatPipe.numberFormat(paidInsurance),
-              color: Colors.YELLOW_400,
-            },
-            {
-              name: 'Economii',
-              nameShort: 'E',
-              y: percent(savedInterest),
-              amount: MathUtil.round(savedInterest),
-              amountCompact: NumberFormatPipe.numberFormat(savedInterest),
-              color: Colors.GREEN_400,
-            },
-            {
-              name: 'Dobanda Neplatita',
-              nameShort: 'DN',
-              y: percent(unpaidInterest),
-              amount: MathUtil.round(unpaidInterest),
-              amountCompact: NumberFormatPipe.numberFormat(unpaidInterest),
-              color: Colors.BS_ORANGE,
-            },
-          ],
+          data: chartData,
         },
       ] as SeriesOptionsType[],
     };

@@ -47,11 +47,6 @@ export const getHistoricalInstalmentPaymentBatches = createSelector(
   HistoricalInstalmentPaymentBatchesUtils.getHistoricalInstalmentPaymentBatches,
 );
 
-export const getMortgageInterestProgressChart = createSelector(
-  getHistoricalInstalmentPayments,
-  MortgageInterestProgressChartUtils.getChart,
-);
-
 export const getMortgageLoanAmountChart = createSelector(
   getHistoricalInstalmentPayments,
   MortgageLoanAmountChartUtils.getChart,
