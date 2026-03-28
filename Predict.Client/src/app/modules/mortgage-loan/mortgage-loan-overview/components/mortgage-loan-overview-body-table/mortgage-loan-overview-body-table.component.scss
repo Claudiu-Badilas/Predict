@@ -6,7 +6,6 @@
 /* Wrapper */
 /* ============================= */
 .table-wrapper {
-  // border: 1px solid #e2e6ee;
   border-radius: 4px;
   margin: 10px 0;
   background: white;
@@ -23,7 +22,7 @@ table {
   table-layout: auto;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 11px; // 13px;
+  font-size: 11px;
 }
 
 th,
@@ -37,7 +36,7 @@ th {
   background: white;
   font-weight: 600;
   border-bottom: 2px solid #e2e6ee;
-  font-size: 11px; // 15px;
+  font-size: 11px;
 }
 
 /* ============================= */
@@ -48,6 +47,27 @@ thead th {
   top: 0;
   z-index: 25;
   background: white;
+}
+
+/* ============================= */
+/* ✅ Sticky First Column */
+/* ============================= */
+th:first-child,
+td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 30;
+  background: white;
+}
+
+/* Header first column above everything */
+thead th:first-child {
+  z-index: 50;
+}
+
+/* Body first column */
+tbody td:first-child {
+  z-index: 40;
 }
 
 /* ============================= */
@@ -74,7 +94,7 @@ thead th {
 /* ============================= */
 .menu-cell {
   position: relative;
-  z-index: 50;
+  z-index: 60;
 
   .burger-btn {
     background: transparent;
@@ -89,8 +109,8 @@ thead th {
 
   .column-menu {
     position: absolute;
-    top: 0; /* align top of menu with button */
-    left: 100%; /* open fully to the right of button */
+    top: 0;
+    left: 100%;
     background: #fff;
     border: 1px solid #dee2e6;
     padding: 10px;
@@ -115,38 +135,32 @@ thead th {
 /* ============================= */
 .group-header-subtotal-row {
   cursor: pointer;
-  // font-size: 13px;// 17px;
-
-  .group-title-cell {
-    font-size: 11px; // 19px;
-    padding: 7px;
-
-    .chevron {
-      width: 20px;
-      text-align: center;
-      color: #666;
-    }
-  }
 }
+
 .count {
   color: #f43f5e;
-  font-size: 11px; // 14px;
+  font-size: 11px;
   background: transparent;
   padding: 0 15px;
   border-radius: 30px;
   border: 1px solid #f43f5e;
 }
+
 /* ============================= */
 /* Row Colors */
 /* ============================= */
 .yellow {
   background: #fffbeb;
+
   td:first-child {
     border-left: 7px solid #f59e0b;
+    background: #fffbeb;
   }
+
   td:last-child {
     border-right: 7px solid #f59e0b;
   }
+
   td {
     border-bottom: 1px solid #f59e0b;
   }
@@ -157,10 +171,13 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #3b82f6;
+    background: #eff6ff;
   }
+
   td:last-child {
     border-right: 7px solid #3b82f6;
   }
+
   td {
     border-bottom: 1px solid #3b82f6;
   }
@@ -171,10 +188,13 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #f43f5e;
+    background: #fff1f2;
   }
+
   td:last-child {
     border-right: 7px solid #f43f5e;
   }
+
   td {
     border-bottom: 1px solid #f43f5e;
   }
@@ -185,7 +205,9 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #10b981;
+    background: #ecfdf5;
   }
+
   td:last-child {
     border-right: 7px solid #10b981;
   }
@@ -200,7 +222,9 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #f2a0b6;
+    background: #fef2f6;
   }
+
   td:last-child {
     border-right: 7px solid #f2a0b6;
   }
@@ -215,7 +239,9 @@ thead th {
 
   td:first-child {
     border-left: 7px solid #676c72;
+    background: #f8fafc;
   }
+
   td:last-child {
     border-right: 7px solid #676c72;
   }
