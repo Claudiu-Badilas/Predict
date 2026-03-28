@@ -49,7 +49,7 @@ export class HistoricalInstalmentPaymentBatchesManager {
   }
 
   getBaseName() {
-    return this.selected?.name ?? null;
+    return this.selected?.name?.split(' - ')[0] ?? null;
   }
 
   getPaidAmmount() {

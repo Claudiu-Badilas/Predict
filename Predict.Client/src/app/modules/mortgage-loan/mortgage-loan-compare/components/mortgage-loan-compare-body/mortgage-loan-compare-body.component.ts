@@ -48,15 +48,39 @@ export class MortgageLoanCompareBodyComponent {
 
     return this.getEvenlySpacedYears(
       [leftFirstDate, leftLastDate, rightFirstDate, rightLastDate],
-      5,
+      30,
     );
   });
+
+  validManagers = computed(() => {
+    const managers = [
+      this.leftHistoricalInstalmentPaymentBatchesManager(),
+      this.rightHistoricalInstalmentPaymentBatchesManager(),
+      this.baseHistoricalInstalmentPaymentBatchesManager(),
+    ];
+
+    const uniqueManagers = [];
+    const seenNames = new Set();
+
+    for (const manager of managers) {
+      if (!seenNames.has(manager.getBaseName())) {
+        seenNames.add(manager.getBaseName());
+        uniqueManagers.push(manager);
+      }
+    }
+    return uniqueManagers;
+  });
+
+  getLabelDate(year: number): Date {
+    const now = new Date();
+    return new Date(`${year}-${now.getMonth() + 1}-01`);
+  }
 
   getPrincipalAmount(
     year: number,
     manager: HistoricalInstalmentPaymentBatchesManager,
   ) {
-    const date = new Date(`${year}-01-01`);
+    const date = this.getLabelDate(year);
     const inst = manager.selected.monthlyInstalments.filter((i) =>
       JsDateUtils.isSameOrAfter(i.paymentDate, date),
     );
