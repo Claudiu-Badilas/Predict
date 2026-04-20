@@ -18,7 +18,7 @@ export function mapInstalementSimulation(
   for (let i = 0; i < base.monthlyInstalments.length; i++) {
     const instalment = base.monthlyInstalments[i];
     const tempAccAmount = accAmount + instalment.principalAmount;
-    const maxAmountTrashhold = monthlyAmount + monthlyAmount * 0.05;
+    const maxAmountTrashhold = monthlyAmount + 100;
 
     if (i === 0) {
       selectedInstalmentPayments.push(instalment.instalmentId);
