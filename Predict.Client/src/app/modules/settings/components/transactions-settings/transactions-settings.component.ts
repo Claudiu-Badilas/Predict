@@ -76,24 +76,6 @@ export class TransactionsSettingsComponent {
   }
 
   downloadItem(item: { key: string; storageType: 'local' | 'session' }): void {
-    const storage =
-      item.storageType === 'local' ? localStorage : sessionStorage;
-
-    const value = storage.getItem(item.key);
-
-    if (!value) {
-      alert('No data found for this key');
-      return;
-    }
-
-    const blob = new Blob([value], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${item.key}.json`;
-    a.click();
-
-    URL.revokeObjectURL(url);
+    this.settingsService.downloadItem(item);
   }
 }
