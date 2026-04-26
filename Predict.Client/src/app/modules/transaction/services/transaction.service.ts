@@ -15,12 +15,10 @@ export class TransactionService {
 
   getTransactions(
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ): Observable<TransactionDomain[]> {
     return this.httpClient
-      .get<TransactionResponse[]>(
-        `/server/api/v1/free-transactions/1?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
-      )
+      .get<TransactionResponse[]>(`/server/api/v1/all-transactions`)
       .pipe(map((res) => res.map((r) => new TransactionDomain(r))));
   }
 }
