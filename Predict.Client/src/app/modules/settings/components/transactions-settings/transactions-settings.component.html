@@ -1,1 +1,57 @@
-<p>transactions-settings works!</p>
+<div class="card w-100 shadow-sm">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="mb-0 d-flex justify-content-start align-items-center">
+      <div class="mr-2">Storage Keys</div>
+      <label class="btn btn-sm btn-outline-primary mb-0">
+        <div style="transform: rotate(90deg); display: inline-block">
+          <div style="transform: rotate(180deg); display: inline-block">
+            <strong>➜]</strong>
+          </div>
+        </div>
+        <input
+          type="file"
+          class="d-none"
+          accept=".json"
+          (change)="onFileSelected($event)"
+        />
+      </label>
+    </div>
+    <small class="text-muted">{{ storageKeys.length }}</small>
+  </div>
+
+  @if (storageKeys.length === 0) {
+    <div class="text-center text-muted py-3">No stored items</div>
+  } @else {
+    <ul class="list-group list-group-flush">
+      @for (item of storageKeys; track item.key) {
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <!-- Key -->
+          <span class="text-break small">
+            {{ item.key }}
+          </span>
+
+          <!-- Actions -->
+          <div class="d-flex">
+            <button
+              class="btn btn-sm btn-outline-primary mr-2 d-flex align-items-center justify-content-center"
+              (click)="downloadItem(item)"
+            >
+              <div style="transform: rotate(90deg); display: inline-block">
+                <strong>➜]</strong>
+              </div>
+            </button>
+
+            <button
+              class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center"
+              (click)="removeItem(item)"
+            >
+              <div><strong>✘</strong></div>
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</div>

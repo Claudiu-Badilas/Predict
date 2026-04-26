@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MortgageLoanService } from 'src/app/modules/mortgage-loan/services/overview-mortgage.service';
+import { Component, OnInit, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MortgageLoanService_STORAGE_KEY } from 'src/app/modules/mortgage-loan/services/overview-mortgage.service';
+import { SettingsService } from 'src/app/modules/mortgage-loan/services/settings.service';
 import { SuccessModalComponent } from 'src/app/shared/components/modals/success-modal/success-modal.component';
 
 @Component({
@@ -12,7 +13,7 @@ import { SuccessModalComponent } from 'src/app/shared/components/modals/success-
   styleUrls: ['./mortgage-loan-settings.component.scss'],
 })
 export class MortgageLoanSettingsComponent implements OnInit {
-  private mortgageService = inject(MortgageLoanService);
+  private settingsService = inject(SettingsService);
   private modalService = inject(NgbModal);
 
   storageKeys: {
@@ -24,15 +25,14 @@ export class MortgageLoanSettingsComponent implements OnInit {
     this.loadKeys();
   }
 
-  // Upload JSON file into service
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
     if (!file) return;
 
-    this.mortgageService
-      .uploadRepaymentSchedulesFromJson(file)
+    this.settingsService
+      .uploadStorageItemFromJson(MortgageLoanService_STORAGE_KEY, file)
       .then(() => {
         this.loadKeys();
         this.openSuccessModal('File uploaded successfully!');

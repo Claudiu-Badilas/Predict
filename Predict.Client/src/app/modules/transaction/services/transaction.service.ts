@@ -9,10 +9,10 @@ import {
   TransactionResponse,
 } from '../models/transactions.model';
 
+export const TransactionService_STORAGE_KEY = 'Transactions_Cache';
+
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  private readonly STORAGE_KEY = 'Transactions_Cache';
-
   constructor(
     private readonly httpClient: HttpClient,
     private readonly localStorage: LocalStorageService,
@@ -23,7 +23,7 @@ export class TransactionService {
     endDate: Date,
   ): Observable<TransactionDomain[]> {
     const cachedDtos = this.localStorage.getItem<TransactionResponse[]>(
-      this.STORAGE_KEY,
+      TransactionService_STORAGE_KEY,
     );
 
     const source$ = cachedDtos
@@ -31,7 +31,9 @@ export class TransactionService {
       : this.httpClient
           .get<TransactionResponse[]>('/server/api/v1/all-transactions')
           .pipe(
-            tap((dtos) => this.localStorage.setItem(this.STORAGE_KEY, dtos)),
+            tap((dtos) =>
+              this.localStorage.setItem(TransactionService_STORAGE_KEY, dtos),
+            ),
           );
 
     return source$.pipe(
