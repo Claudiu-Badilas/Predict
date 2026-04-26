@@ -45,16 +45,8 @@ export namespace DailyTransactionChartUtils {
 
     return {
       title: { text: null },
-
-      legend: {
-        enabled: false,
-      },
-
-      chart: {
-        zooming: { type: 'x' },
-        backgroundColor: 'transparent',
-      },
-
+      legend: { enabled: false },
+      chart: { zooming: { type: 'x' }, backgroundColor: 'transparent' },
       xAxis: {
         type: 'datetime',
         min: startDate.getTime(),
@@ -62,12 +54,7 @@ export namespace DailyTransactionChartUtils {
         lineColor: '#E0E0E0',
         tickColor: '#E0E0E0',
       },
-
-      yAxis: {
-        title: { text: null },
-        gridLineColor: '#F0F0F0',
-      },
-
+      yAxis: { title: { text: null }, gridLineColor: '#F0F0F0' },
       tooltip: {
         formatter: function (this: any) {
           const point = this.point as any;
@@ -120,22 +107,13 @@ export namespace DailyTransactionChartUtils {
         borderRadius: 8,
         shadow: true,
       },
-
       plotOptions: {
-        series: {
-          animation: true,
-        },
+        series: { animation: true },
         areaspline: {
           linecap: 'round',
           lineWidth: 1,
-          marker: {
-            enabled: false,
-          },
-          states: {
-            hover: {
-              lineWidthPlus: 1,
-            },
-          },
+          marker: { enabled: false },
+          states: { hover: { lineWidthPlus: 1 } },
           connectNulls: true,
           threshold: 0,
         },
@@ -147,7 +125,6 @@ export namespace DailyTransactionChartUtils {
           data: loadExpenses ? getData(expenses, -1) : getData(incomes, 1),
           name: loadExpenses ? 'Expenses' : 'Income',
           color: baseColor,
-
           fillColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
