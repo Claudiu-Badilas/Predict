@@ -1,30 +1,60 @@
-<div class="transaction-list">
-  <div
-    class="transaction-item"
-    *ngFor="let tx of transactions; trackBy: trackById"
-    [ngClass]="{ ignored: tx.ignored }"
-  >
-    <!-- Left: Icon / Color -->
-    <div
-      class="indicator"
-      [style.background]="tx.color"
-    ></div>
-
-    <!-- Middle: Info -->
-    <div class="info">
-      <div class="top">
-        <span class="provider">{{ tx.serviceProvider || 'Unknown' }}</span>
-        <span class="amount" [class.positive]="isPositive(tx)">
-          {{ formatAmount(tx) }}
-        </span>
-      </div>
-
-      <div class="bottom">
-        <span class="description">{{ tx.description }}</span>
-        <span class="date">
-          {{ tx.completionDate | date: 'dd MMM yyyy' }}
-        </span>
-      </div>
+<div class="card">
+  <div class="header">
+    <div class="header-title">Most Common Transactions</div>
+    <div class="header-stats">
+      <span class="stat positive">
+        <span class="stat-value"
+          >+{{ totalIncome() | numberFormat: "0.00" }}</span
+        >
+      </span>
+      <span class="stat negative">
+        <span class="stat-value"
+          >-{{ totalExpense() | numberFormat: "0.00" }}</span
+        >
+      </span>
     </div>
+  </div>
+
+  <div class="content">
+    @for (g of groupedMultiple(); track g.provider) {
+      <div class="group">
+        <div class="row">
+          <span class="provider">{{ g.provider }}</span>
+          <span class="count-badge">{{ g.count }}</span>
+          <span
+            class="amount"
+            [class.positive]="g.total > 0"
+            [class.negative]="g.total < 0"
+          >
+            {{ g.total > 0 ? "+" : "" }}{{ g.total | numberFormat: "0.00" }}
+          </span>
+        </div>
+      </div>
+    }
+
+    @if (groupedSingle().length) {
+      <div class="other-section">
+        <div class="other-title">Other</div>
+        @for (g of groupedSingle(); track g.provider) {
+          <div class="group">
+            <div class="row">
+              <span class="provider">{{ g.provider }}</span>
+              <span class="count-badge single">1</span>
+              <span
+                class="amount muted"
+                [class.positive]="g.total > 0"
+                [class.negative]="g.total < 0"
+              >
+                {{ g.total > 0 ? "+" : "" }}{{ g.total | numberFormat: "0.00" }}
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    @if (!groupedMultiple().length && !groupedSingle().length) {
+      <div class="empty">No transactions</div>
+    }
   </div>
 </div>
