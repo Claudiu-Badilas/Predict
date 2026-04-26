@@ -1,0 +1,30 @@
+<div class="transaction-list">
+  <div
+    class="transaction-item"
+    *ngFor="let tx of transactions; trackBy: trackById"
+    [ngClass]="{ ignored: tx.ignored }"
+  >
+    <!-- Left: Icon / Color -->
+    <div
+      class="indicator"
+      [style.background]="tx.color"
+    ></div>
+
+    <!-- Middle: Info -->
+    <div class="info">
+      <div class="top">
+        <span class="provider">{{ tx.serviceProvider || 'Unknown' }}</span>
+        <span class="amount" [class.positive]="isPositive(tx)">
+          {{ formatAmount(tx) }}
+        </span>
+      </div>
+
+      <div class="bottom">
+        <span class="description">{{ tx.description }}</span>
+        <span class="date">
+          {{ tx.completionDate | date: 'dd MMM yyyy' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
