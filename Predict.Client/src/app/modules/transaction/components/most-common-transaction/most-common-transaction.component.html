@@ -33,15 +33,14 @@
     }
 
     @if (groupedSingle().length) {
-      <div class="other-section">
-        <div class="other-title">Other</div>
+      <div class=" ">
         @for (g of groupedSingle(); track g.provider) {
           <div class="group">
             <div class="row">
               <span class="provider">{{ g.provider }}</span>
               <span class="count-badge single">1</span>
               <span
-                class="amount muted"
+                class="amount"
                 [class.positive]="g.total > 0"
                 [class.negative]="g.total < 0"
               >
