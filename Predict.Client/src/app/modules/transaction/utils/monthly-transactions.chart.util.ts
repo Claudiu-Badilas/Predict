@@ -68,13 +68,13 @@ export namespace MonthlyTransactionChartUtils {
           data: expensesData.map(([_, v]) => Math.abs(v)),
         },
         {
-          type: 'column',
+          type: 'spline',
           name: 'Saves',
           color: Colors.BLUE_500,
           data: savesData,
         },
         {
-          type: 'column',
+          type: 'spline',
           name: 'Loses',
           color: Colors.BS_BLACK,
           data: losesData,
