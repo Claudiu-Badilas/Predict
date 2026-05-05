@@ -20,10 +20,12 @@ export namespace MonthlyTransactionChartUtils {
           year: 'numeric',
         }),
       );
+
     const groupedIncomesByMonth = groupTransactionByDate(incomes);
     const groupedExpensesByMonth = groupTransactionByDate(expenses);
 
     const categories = getAvailableMonths(startDate, endDate);
+
     const getData = (
       group: Record<string, TransactionDomain[]>,
     ): [string, number][] =>
@@ -35,25 +37,40 @@ export namespace MonthlyTransactionChartUtils {
     const incomesData = getData(groupedIncomesByMonth);
     const expensesData = getData(groupedExpensesByMonth);
 
-    const savesData = categories.map((cat) => {
-      const incomesTotal = incomesData.find(([c, _]) => c === cat)[1];
-      const expensesTotal = expensesData.find(([c, _]) => c === cat)[1];
-      const total = incomesTotal - Math.abs(expensesTotal);
-      return total > 0 ? total : 0;
+    // ✅ Net amount (income - expenses)
+    const netAmountData = categories.map((cat) => {
+      const incomesTotal = incomesData.find(([c]) => c === cat)?.[1] ?? 0;
+      const expensesTotal = Math.abs(
+        expensesData.find(([c]) => c === cat)?.[1] ?? 0,
+      );
+
+      return incomesTotal - expensesTotal;
     });
 
-    const losesData = categories.map((cat) => {
-      const incomesTotal = incomesData.find(([c, _]) => c === cat)[1];
-      const expensesTotal = expensesData.find(([c, _]) => c === cat)[1];
-      const total = incomesTotal - Math.abs(expensesTotal);
-      return total < 0 ? Math.abs(total) : 0;
-    });
+    // Optional: symmetric axis for clean 0 alignment
+    const allValues = [
+      ...incomesData.map(([_, v]) => v),
+      ...expensesData.map(([_, v]) => v),
+      ...netAmountData,
+    ];
+    const maxAbs = Math.max(...allValues.map((v) => Math.abs(v)), 0);
 
     return {
       chart: { zooming: { type: 'xy' } },
       title: { text: 'Monthly Transactions', align: 'left' },
       xAxis: { categories },
-      yAxis: { title: null },
+      yAxis: {
+        title: null,
+        min: -maxAbs,
+        max: maxAbs,
+        plotLines: [
+          {
+            value: 0,
+            width: 1,
+            color: Colors.BS_BLACK,
+          },
+        ],
+      },
       series: [
         {
           type: 'column',
@@ -69,15 +86,9 @@ export namespace MonthlyTransactionChartUtils {
         },
         {
           type: 'spline',
-          name: 'Saves',
-          color: Colors.BLUE_500,
-          data: savesData,
-        },
-        {
-          type: 'spline',
-          name: 'Loses',
-          color: Colors.BS_BLACK,
-          data: losesData,
+          name: 'Net',
+          data: netAmountData,
+          color: Colors.YELLOW_500,
         },
       ],
     };
